@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6590B97E1DF9076F0052B00C /* DTChartBaseComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6590B97D1DF9076F0052B00C /* DTChartBaseComponent.m */; };
 		65C53E1A1DF8FA7300732385 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E191DF8FA7300732385 /* main.m */; };
 		65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1C1DF8FA7300732385 /* AppDelegate.m */; };
 		65C53E201DF8FA7300732385 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1F1DF8FA7300732385 /* ViewController.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6590B97C1DF9076F0052B00C /* DTChartBaseComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartBaseComponent.h; sourceTree = "<group>"; };
+		6590B97D1DF9076F0052B00C /* DTChartBaseComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartBaseComponent.m; sourceTree = "<group>"; };
 		65C53E151DF8FA7300732385 /* DTiseChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTiseChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C53E191DF8FA7300732385 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65C53E1B1DF8FA7300732385 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,6 +42,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6590B97B1DF9075F0052B00C /* DTChart */ = {
+			isa = PBXGroup;
+			children = (
+				6590B97C1DF9076F0052B00C /* DTChartBaseComponent.h */,
+				6590B97D1DF9076F0052B00C /* DTChartBaseComponent.m */,
+			);
+			path = DTChart;
+			sourceTree = "<group>";
+		};
 		65C53E0C1DF8FA7300732385 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +70,7 @@
 		65C53E171DF8FA7300732385 /* DTiseChart */ = {
 			isa = PBXGroup;
 			children = (
+				6590B97B1DF9075F0052B00C /* DTChart */,
 				65C53E1B1DF8FA7300732385 /* AppDelegate.h */,
 				65C53E1C1DF8FA7300732385 /* AppDelegate.m */,
 				65C53E1E1DF8FA7300732385 /* ViewController.h */,
@@ -152,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C53E201DF8FA7300732385 /* ViewController.m in Sources */,
+				6590B97E1DF9076F0052B00C /* DTChartBaseComponent.m in Sources */,
 				65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */,
 				65C53E1A1DF8FA7300732385 /* main.m in Sources */,
 			);
@@ -312,6 +326,7 @@
 				65C53E2E1DF8FA7300732385 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
