@@ -1,14 +1,14 @@
 //
-//  DTChartBaseComponent.m
+//  DTVerticalBarChart.m
 //  DTiseChart
 //
-//  Created by Jo Shin on 2016/12/8.
+//  Created by Jo Shin on 2016/12/9.
 //  Copyright © 2016年 studio.joshin. All rights reserved.
 //
 
-#import "DTChartBaseComponent.h"
+#import "DTVerticalBarChart.h"
 
-@implementation DTChartBaseComponent
+@implementation DTVerticalBarChart
 
 /*
 // Only override drawRect: if you perform custom drawing.
