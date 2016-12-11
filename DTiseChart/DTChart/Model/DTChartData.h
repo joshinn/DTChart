@@ -46,9 +46,9 @@ CG_INLINE ChartItemValue ChartItemValueMake(CGFloat x, CGFloat y) {
  */
 @property(nonatomic) CGFloat value;
 /**
- * 坐标轴上的点的值
+ * 坐标轴上的点的位置
  */
-@property(nonatomic) CGFloat axisPositionValue;
+@property(nonatomic) CGFloat axisPosition;
 
 - (instancetype)initWithTitle:(NSString *)title value:(CGFloat)value;
 

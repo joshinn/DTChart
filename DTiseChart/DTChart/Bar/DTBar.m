@@ -10,8 +10,13 @@
 
 @implementation DTBar
 
++ (instancetype)bar {
+    DTBar *bar = [[DTBar alloc] init];
+    return bar;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
-    if(self = [super initWithFrame:frame]){
+    if (self = [super initWithFrame:frame]) {
 
     }
     return self;

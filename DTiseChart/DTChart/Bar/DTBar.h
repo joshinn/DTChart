@@ -10,4 +10,5 @@
 
 @interface DTBar : UIView
 
++ (instancetype)bar;
 @end
