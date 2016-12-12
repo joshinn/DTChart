@@ -40,7 +40,7 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 /**
  * 坐标系单元格宽度，默认是15
  */
-@property(nonatomic) CGFloat coordinateAxisCellWidth;
+@property(nonatomic, readonly) CGFloat coordinateAxisCellWidth;
 /**
  * 坐标轴距离边界的距离，决定了坐标轴标签文字的大小
  * 一般是左边和下边
@@ -65,6 +65,10 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  */
 @property(nonatomic) BOOL showCoordinateAxisLine;
 /**
+ * 显示坐标系表格线，默认NO
+ */
+@property(nonatomic) BOOL showCoordinateAxisGrid;
+/**
  * 坐标轴值数据源
  */
 @property(nonatomic, copy) NSArray<DTChartItemData *> *values;
@@ -75,31 +79,31 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 /**
  * 整个Chart宽度，以单元格为单位
  */
-@property(nonatomic) NSUInteger xCount;
+@property(nonatomic, readonly) NSUInteger xCount;
 /**
  * 整个Chart高度，以单元格为单位
  */
-@property(nonatomic) NSUInteger yCount;
+@property(nonatomic, readonly) NSUInteger yCount;
 /**
  * x轴长度，xCount去除左右边距的大小
  */
-@property(nonatomic) NSUInteger xAxisCellCount;
+@property(nonatomic, readonly) NSUInteger xAxisCellCount;
 /**
  * y轴长度，yCount去除上下边距的大小
  */
-@property(nonatomic) NSUInteger yAxisCellCount;
+@property(nonatomic, readonly) NSUInteger yAxisCellCount;
 /**
  * 坐标轴原点
  */
-@property(nonatomic) CGPoint originPoint;
+@property(nonatomic, readonly) CGPoint originPoint;
 /**
  * 坐标轴线
  */
-@property(nonatomic) CAShapeLayer *coordinateAxisLine;
+@property(nonatomic, readonly) CAShapeLayer *coordinateAxisLine;
 /**
  * 坐标轴内容view，坐标轴不在里面
  */
-@property(nonatomic) UIView *contentView;
+@property(nonatomic, readonly) UIView *contentView;
 
 
 #pragma mark - ####### method #######

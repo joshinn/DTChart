@@ -7,6 +7,7 @@
 //
 
 #import "DTChartBaseComponent.h"
+#import "DTBar.h"
 
 @interface DTBarChart : DTChartBaseComponent
 
@@ -19,7 +20,10 @@
  * 是否显示动画，默认YES
  */
 @property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
-
+/**
+ * 柱状体风格
+ */
+@property(nonatomic) DTBarStyle barStyle;
 /**
  * 绘制x轴标签
  */

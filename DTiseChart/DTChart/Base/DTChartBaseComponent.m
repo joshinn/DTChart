@@ -13,19 +13,11 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 @interface DTChartBaseComponent ()
 
+@property(nonatomic) CAShapeLayer *coordinateAxisLine;
 
 @end
 
-@implementation DTChartBaseComponent {
-
-}
-
-@synthesize xCount = _xCount;
-@synthesize yCount = _yCount;
-@synthesize xAxisCellCount = _xAxisCellCount;
-@synthesize yAxisCellCount = _yAxisCellCount;
-@synthesize coordinateAxisLine = _coordinateAxisLine;
-
+@implementation DTChartBaseComponent
 
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
@@ -56,6 +48,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 - (void)initial {
     _showCoordinateAxis = YES;
     _showCoordinateAxisLine = YES;
+    _showCoordinateAxisGrid = NO;
 
 
     _originPoint = CGPointMake(_coordinateAxisInsets.left * _coordinateAxisCellWidth,
@@ -70,45 +63,47 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
 
 
-    // draw grid
-    {
-        CGFloat GAP = _coordinateAxisCellWidth;
-        NSUInteger ROW = _yAxisCellCount + _coordinateAxisInsets.top + _coordinateAxisInsets.bottom;
-        NSUInteger COLUMN = _xAxisCellCount + _coordinateAxisInsets.left + _coordinateAxisInsets.right;
+}
 
-        UIBezierPath *path = [UIBezierPath bezierPath];
+/**
+ * 绘制表格线
+ */
+- (void)drawGrid {
+    CGFloat GAP = _coordinateAxisCellWidth;
+    NSUInteger ROW = _yAxisCellCount + _coordinateAxisInsets.top + _coordinateAxisInsets.bottom;
+    NSUInteger COLUMN = _xAxisCellCount + _coordinateAxisInsets.left + _coordinateAxisInsets.right;
 
-
-        CGFloat x = 0;
-        CGFloat y = 0;
-
-        for (NSUInteger i = 0; i < ROW + 1; ++i) {
-            [path moveToPoint:CGPointMake(x, y)];
-            [path addLineToPoint:CGPointMake(x + COLUMN * GAP, y)];
-
-            y = y + GAP;
-        }
-
-        x = 0;
-        y = 0;
-        for (NSUInteger i = 0; i < COLUMN + 1; ++i) {
-            [path moveToPoint:CGPointMake(x, y)];
-            [path addLineToPoint:CGPointMake(x, y + ROW * GAP)];
-
-            x = x + GAP;
-        }
+    UIBezierPath *path = [UIBezierPath bezierPath];
 
 
-        CAShapeLayer *girdLine = [CAShapeLayer layer];
-        girdLine.strokeColor = [UIColor lightGrayColor].CGColor;
-        girdLine.lineWidth = 1;
-        girdLine.fillColor = nil;
-        girdLine.path = path.CGPath;
-        [self.layer insertSublayer:girdLine atIndex:0];
+    CGFloat x = 0;
+    CGFloat y = 0;
 
-        girdLine.hidden = NO;
+    for (NSUInteger i = 0; i < ROW + 1; ++i) {
+        [path moveToPoint:CGPointMake(x, y)];
+        [path addLineToPoint:CGPointMake(x + COLUMN * GAP, y)];
+
+        y = y + GAP;
     }
 
+    x = 0;
+    y = 0;
+    for (NSUInteger i = 0; i < COLUMN + 1; ++i) {
+        [path moveToPoint:CGPointMake(x, y)];
+        [path addLineToPoint:CGPointMake(x, y + ROW * GAP)];
+
+        x = x + GAP;
+    }
+
+
+    CAShapeLayer *girdLine = [CAShapeLayer layer];
+    girdLine.strokeColor = [UIColor lightGrayColor].CGColor;
+    girdLine.lineWidth = 1;
+    girdLine.fillColor = nil;
+    girdLine.path = path.CGPath;
+    [self.layer insertSublayer:girdLine atIndex:0];
+
+    girdLine.hidden = NO;
 }
 
 #pragma mark - delay init
@@ -133,8 +128,10 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
             CGRectGetHeight(self.frame) - (_coordinateAxisInsets.top + _coordinateAxisInsets.bottom) * _coordinateAxisCellWidth);
 }
 
-- (void)setCoordinateAxisCellWidth:(CGFloat)coordinateAxisCellWidth {
-    _coordinateAxisCellWidth = coordinateAxisCellWidth;
+- (void)setShowCoordinateAxisGrid:(BOOL)showCoordinateAxisGrid {
+    _showCoordinateAxisGrid = showCoordinateAxisGrid;
+
+    [self drawGrid];
 }
 
 

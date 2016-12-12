@@ -9,17 +9,16 @@
 #import "DTVerticalBarChart.h"
 #import "DTChartLabel.h"
 #import "DTChartData.h"
-#import "DTBar.h"
 
 @interface DTVerticalBarChart ()
 
-@property(nonatomic) DTBarStyle barStyle;
 
 @end
 
 
 @implementation DTVerticalBarChart
 
+@synthesize barStyle = _barStyle;
 
 - (void)initial {
     [super initial];
@@ -44,9 +43,11 @@
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
         if (sectionCellCount == 1) {
             // 如果单个区间长度只有1的话，则所有的柱状体在坐标轴上整体居中
+            // 坐标系原点在左下角
             data.axisPosition = i + (self.xAxisCellCount - self.xAxisLabelDatas.count) / 2;
         } else {
             // 单个区间长度大于1，则柱状体在区间中间位置
+            // 坐标系原点在左下角
             data.axisPosition = sectionCellCount * (i + 1) - sectionCellCount / 2;
         }
 
@@ -119,9 +120,10 @@
 
                 CGFloat width = self.coordinateAxisCellWidth * self.barWidth;
                 CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition;
-                CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth;
+                CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
                 CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
 
+                NSLog(@"x = %f", xData.axisPosition);
 
                 bar.frame = CGRectMake(x, y, width, height);
                 bar.hidden = YES;

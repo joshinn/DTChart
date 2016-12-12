@@ -60,11 +60,25 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     _barStyle = barStyle;
 }
 
+- (void)setBarColor:(UIColor *)barColor {
+    _barColor = barColor;
+
+    self.barFrontView.backgroundColor = barColor;
+}
+
+- (void)setBarBorderColor:(UIColor *)barBorderColor {
+    _barBorderColor = barBorderColor;
+
+    self.backgroundColor = barBorderColor;
+}
+
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
 
     [self resizeBarSubviewFrame];
 }
+
+#pragma mark - private method
 
 - (void)resizeBarSubviewFrame {
 

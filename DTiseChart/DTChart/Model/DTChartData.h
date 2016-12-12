@@ -27,8 +27,6 @@ CG_INLINE ChartItemValue ChartItemValueMake(CGFloat x, CGFloat y) {
 
 @property(nonatomic) ChartItemValue itemValue;
 
-@property(nonatomic) CGPoint axisPosition;
-
 + (instancetype)chartData;
 
 @end

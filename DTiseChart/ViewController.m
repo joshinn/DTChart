@@ -10,11 +10,13 @@
 #import "DTBarChart.h"
 #import "DTChartData.h"
 #import "DTVerticalBarChart.h"
+#import "DTHorizontalBarChart.h"
 
 @interface ViewController ()
 
 @property(nonatomic) NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas;
-@property (nonatomic) DTVerticalBarChart *barChart;
+@property(nonatomic) DTVerticalBarChart *barChart;
+@property(nonatomic) DTHorizontalBarChart *horizontalBarChart;
 
 @end
 
@@ -113,7 +115,8 @@
         [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:@"120" value:120]];
     }
 
-    DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 200) xAxis:22 yAxis:11];
+    // 竖直chart
+    DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 50) xAxis:22 yAxis:11];
     barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
     barChart.values = values;
@@ -126,6 +129,84 @@
 
     [barChart drawChart];
 
+
+    NSMutableArray<DTChartItemData *> *values2 = [NSMutableArray array];
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(60, 1);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(76, 2);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(54, 3);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(63, 4);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(82, 5);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(98, 6);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(116, 7);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(100, 8);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(45, 9);
+
+        [values2 addObject:data];
+    }
+    {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(70, 10);
+
+        [values2 addObject:data];
+    }
+
+
+    // 水平chart
+    DTHorizontalBarChart *horizontalBarChart = [[DTHorizontalBarChart alloc] initWithOrigin:CGPointMake(60, 260) xAxis:11 yAxis:22];
+    horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
+    horizontalBarChart.xAxisLabelDatas = yAxisLabelDatas;
+    horizontalBarChart.values = values2;
+    [self.view addSubview:horizontalBarChart];
+    self.horizontalBarChart = horizontalBarChart;
+//    barChart.showCoordinateAxisLine  = NO;
+//    barChart.showCoordinateAxis = NO;
+    horizontalBarChart.showCoordinateAxisGrid = YES;
+
+
+
+    [horizontalBarChart drawChart];
 }
 
 
@@ -143,6 +224,9 @@
 
     self.barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     [self.barChart drawChart];
+
+    self.horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
+    [self.horizontalBarChart drawChart];
 }
 
 @end
