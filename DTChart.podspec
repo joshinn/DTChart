@@ -7,7 +7,10 @@ Pod::Spec.new do |s|
   s.summary      = "a simple chart for DTise"
   s.author       = { "joshin" => "xjcute@gmail.com" }
   s.homepage     = "https://github.com/joshinn/DTChart"
-  s.description  = '为DTise定制的统计图表，第1版，支持柱状图和折线图。'
+  s.description  = <<-DESC
+                    A simple char customized for DTise.
+                    If you like the style of chart, you can import it, and use it as sample.
+                    DESC
   s.requires_arc = true
   s.platform     = :ios, "8.0"
   s.frameworks   = 'UIKit', 'Foundation'
