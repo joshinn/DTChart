@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.description  = '第1版'
   s.requires_arc = true
   s.platform     = :ios, "8.0"
-  s.frameworks   = UIKit', 'Foundation'
+  s.frameworks   = 'UIKit', 'Foundation'
 
   s.source       = { :git => "https://github.com/joshinn/DTChart.git", :tag => s.version.to_s }
   s.source_files  = "DTChart", "DTChart/**/*.{h,m}"
