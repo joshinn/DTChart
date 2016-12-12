@@ -126,7 +126,7 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     self.barFrontViewFrame = self.barFrontView.frame;
 
     CGRect fromFrame = self.barFrame;
-    CGRect frontViewFromFrameFront = self.barFrontViewFrame;
+//    CGRect frontViewFromFrameFront = self.barFrontViewFrame;
 
     switch (self.barOrientation) {
 
