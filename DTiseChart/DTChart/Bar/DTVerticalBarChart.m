@@ -11,21 +11,20 @@
 #import "DTChartData.h"
 #import "DTBar.h"
 
-NSUInteger const DefaultVerticalBarMaxCount = 10;
+@interface DTVerticalBarChart ()
+
+@property(nonatomic) DTBarStyle barStyle;
+
+@end
 
 
 @implementation DTVerticalBarChart
 
-@synthesize barMaxCount = _barMaxCount;
 
 - (void)initial {
     [super initial];
 
-    _barMaxCount = DefaultVerticalBarMaxCount;
-}
-
-- (void)setBarMaxCount:(NSUInteger)barMaxCount {
-    _barMaxCount = barMaxCount;
+    _barStyle = DTBarStyleTopBorder;
 }
 
 
@@ -34,10 +33,23 @@ NSUInteger const DefaultVerticalBarMaxCount = 10;
 - (void)drawXAxisLabels {
     NSUInteger sectionCellCount = self.xAxisCellCount / self.xAxisLabelDatas.count;
 
+    if (sectionCellCount > 1) {
+        self.barStyle = DTBarStyleTopBorder;
+    } else {
+        self.barStyle = DTBarStyleSidesBorder;
+    }
+
 
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
-        data.axisPosition = sectionCellCount * (i + 1) - 1;
+        if (sectionCellCount == 1) {
+            // 如果单个区间长度只有1的话，则所有的柱状体在坐标轴上整体居中
+            data.axisPosition = i + (self.xAxisCellCount - self.xAxisLabelDatas.count) / 2;
+        } else {
+            // 单个区间长度大于1，则柱状体在区间中间位置
+            data.axisPosition = sectionCellCount * (i + 1) - sectionCellCount / 2;
+        }
+
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
         xLabel.textColor = [UIColor blackColor];
@@ -47,7 +59,7 @@ NSUInteger const DefaultVerticalBarMaxCount = 10;
 
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
 
-        CGFloat x = (self.coordinateAxisInsets.left + sectionCellCount * (i + 1) - 0.5f) * self.coordinateAxisCellWidth;
+        CGFloat x = (self.coordinateAxisInsets.left + data.axisPosition + 0.5f) * self.coordinateAxisCellWidth;
         x -= size.width / 2;
         CGFloat y = CGRectGetMaxY(self.contentView.frame);
         if (size.height < self.coordinateAxisCellWidth) {
@@ -68,7 +80,7 @@ NSUInteger const DefaultVerticalBarMaxCount = 10;
 
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.yAxisLabelDatas[i];
-        data.axisPosition = sectionCellCount * i + 1;
+        data.axisPosition = sectionCellCount * i;
 
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
         yLabel.textColor = [UIColor blackColor];
@@ -78,7 +90,7 @@ NSUInteger const DefaultVerticalBarMaxCount = 10;
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: yLabel.font}];
 
         CGFloat x = CGRectGetMinX(self.contentView.frame) - size.width;
-        CGFloat y = (self.coordinateAxisInsets.top + self.yAxisCellCount - sectionCellCount * i) * self.coordinateAxisCellWidth - size.height / 2;
+        CGFloat y = (self.coordinateAxisInsets.top + self.yAxisCellCount - data.axisPosition) * self.coordinateAxisCellWidth - size.height / 2;
 
 
         yLabel.frame = (CGRect) {CGPointMake(x, y), size};
@@ -103,18 +115,21 @@ NSUInteger const DefaultVerticalBarMaxCount = 10;
 
             if (xData.value == itemData.itemValue.x) {
 
-
-                DTBar *bar = [DTBar bar];
-                bar.backgroundColor = [UIColor orangeColor];
+                DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barStyle];
 
                 CGFloat width = self.coordinateAxisCellWidth * self.barWidth;
-                CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - 1);
+                CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition;
                 CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth;
                 CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
 
 
                 bar.frame = CGRectMake(x, y, width, height);
+                bar.hidden = YES;
                 [self.contentView addSubview:bar];
+
+                if (self.showAnimation) {
+                    [bar startAnimation];
+                }
 
                 break;
             }

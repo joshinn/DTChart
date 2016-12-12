@@ -31,7 +31,7 @@
 
 - (void)initial {
     self.backgroundColor = [UIColor clearColor];
-    self.font = [UIFont systemFontOfSize:10];
+    self.font = [UIFont systemFontOfSize:9];
     self.textColor = [UIColor whiteColor];
     self.numberOfLines = 0;
     self.userInteractionEnabled = YES;

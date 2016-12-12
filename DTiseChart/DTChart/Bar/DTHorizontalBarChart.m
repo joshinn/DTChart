@@ -10,7 +10,6 @@
 
 @implementation DTHorizontalBarChart
 
-@synthesize barMaxCount = _barMaxCount;
 
 
 

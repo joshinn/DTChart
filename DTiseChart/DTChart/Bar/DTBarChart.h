@@ -11,11 +11,14 @@
 @interface DTBarChart : DTChartBaseComponent
 
 
-@property(nonatomic) NSUInteger barMaxCount;
 /**
  * 柱形图柱子宽度，默认是1个单元格
  */
 @property(nonatomic) CGFloat barWidth;
+/**
+ * 是否显示动画，默认YES
+ */
+@property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
 
 /**
  * 绘制x轴标签
@@ -36,4 +39,6 @@
  * 绘制坐标轴里的值
  */
 - (void)drawValues;
+
+- (void)clearChartContent;
 @end

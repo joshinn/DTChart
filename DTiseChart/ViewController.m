@@ -13,6 +13,9 @@
 
 @interface ViewController ()
 
+@property(nonatomic) NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas;
+@property (nonatomic) DTVerticalBarChart *barChart;
+
 @end
 
 @implementation ViewController
@@ -25,6 +28,13 @@
 }
 
 - (void)loadSubviews {
+    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(150, 600, 60, 48)];
+    [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
+    [changeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [changeBtn addTarget:self action:@selector(updateChart:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:changeBtn];
+
+
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     {
         DTChartItemData *data = [DTChartItemData chartData];
@@ -88,11 +98,11 @@
     }
 
     NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
-//    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州"];
-    NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas = [NSMutableArray array];
+//    NSArray<NSString *> *xTitles = @[@"新昌", @"上海"];
+    self.xAxisLabelDatas = [NSMutableArray array];
     {
         [xTitles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
-            [xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:idx + 1]];
+            [self.xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:idx + 1]];
         }];
     }
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
@@ -104,17 +114,35 @@
     }
 
     DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 200) xAxis:22 yAxis:11];
-    barChart.xAxisLabelDatas = xAxisLabelDatas;
+    barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
     barChart.values = values;
     [self.view addSubview:barChart];
+    self.barChart = barChart;
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
 
 
 
     [barChart drawChart];
+
 }
 
+
+- (void)updateChart:(UIButton *)sender {
+    NSArray<NSString *> *xTitles;
+    if (self.xAxisLabelDatas.count > 5) {
+        xTitles = @[@"新昌", @"上海"];
+    } else {
+        xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
+    }
+    [self.xAxisLabelDatas removeAllObjects];
+    [xTitles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
+        [self.xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:idx + 1]];
+    }];
+
+    self.barChart.xAxisLabelDatas = self.xAxisLabelDatas;
+    [self.barChart drawChart];
+}
 
 @end
