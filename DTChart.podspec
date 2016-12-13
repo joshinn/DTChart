@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DTChart"
-  s.version      = "0.1"
+  s.version      = "0.2"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.summary      = "a simple chart for DTise"
   s.author       = { "joshin" => "xjcute@gmail.com" }
