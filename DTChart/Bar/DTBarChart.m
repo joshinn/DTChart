@@ -25,6 +25,7 @@ static NSUInteger const DefaultBarWidth = 1;
 
     _barWidth = DefaultBarWidth;
     _showAnimation = YES;
+    _barSelectable = YES;
 }
 
 #pragma mark - delay init
@@ -55,7 +56,7 @@ static NSUInteger const DefaultBarWidth = 1;
     [path addLineToPoint:CGPointMake(self.originPoint.x, 0)];
 
     self.coordinateAxisLine.path = path.CGPath;
-    self.coordinateAxisLine.hidden = !self.showCoordinateAxisLine;
+    self.coordinateAxisLine.hidden = !self.isShowCoordinateAxisLine;
     [self.layer addSublayer:self.coordinateAxisLine];
 }
 

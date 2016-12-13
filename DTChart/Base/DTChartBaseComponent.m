@@ -7,7 +7,6 @@
 //
 
 #import "DTChartBaseComponent.h"
-#import "DTChartData.h"
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
 

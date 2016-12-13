@@ -9,8 +9,7 @@
 #import "DTChartBaseComponent.h"
 #import "DTBar.h"
 
-@interface DTBarChart : DTChartBaseComponent
-
+@interface DTBarChart : DTChartBaseComponent <DTBarDelegate>
 
 /**
  * 柱形图柱子宽度，默认是1个单元格
@@ -21,9 +20,31 @@
  */
 @property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
 /**
+ * 柱状体是否可点击选择
+ */
+@property(nonatomic, getter=isBarSelectable) BOOL barSelectable;
+/**
  * 柱状体风格
  */
 @property(nonatomic) DTBarStyle barStyle;
+/**
+ * 柱状体颜色
+ */
+@property(nonatomic) UIColor *barColor;
+/**
+ * 柱状体边线颜色
+ */
+@property(nonatomic) UIColor *barBorderColor;
+/**
+ * x轴label的文字颜色
+ */
+@property(nonatomic) UIColor *xAxisLabelColor;
+/**
+ * y轴label的文字颜色
+ */
+@property(nonatomic) UIColor *yAxisLabelColor;
+
+
 /**
  * 绘制x轴标签
  */
@@ -44,5 +65,8 @@
  */
 - (void)drawValues;
 
+/**
+ * 清除坐标轴label，和坐标内的柱状体
+ */
 - (void)clearChartContent;
 @end

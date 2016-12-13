@@ -33,12 +33,14 @@
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
 
-        DTChartLabel *yLabel = [DTChartLabel chartLabel];
-        yLabel.textColor = [UIColor blackColor];
-        yLabel.textAlignment = NSTextAlignmentCenter;
-        yLabel.text = data.title;
+        DTChartLabel *xLabel = [DTChartLabel chartLabel];
+        if (self.xAxisLabelColor) {
+            xLabel.textColor = self.xAxisLabelColor;
+        }
+        xLabel.textAlignment = NSTextAlignmentCenter;
+        xLabel.text = data.title;
 
-        CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: yLabel.font}];
+        CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
 
         CGFloat x = (self.coordinateAxisInsets.left + data.axisPosition) * self.coordinateAxisCellWidth - size.height / 2;
         CGFloat y = CGRectGetMaxY(self.contentView.frame);
@@ -47,10 +49,10 @@
         }
 
 
-        yLabel.frame = (CGRect) {CGPointMake(x, y), size};
+        xLabel.frame = (CGRect) {CGPointMake(x, y), size};
 
 
-        [self addSubview:yLabel];
+        [self addSubview:xLabel];
     }
 
 
@@ -75,11 +77,13 @@
         } else {
             // 单个区间长度大于1，则柱状体在区间中间位置
             // 坐标系原点在左下角
-            data.axisPosition = self.yAxisCellCount - 1 - sectionCellCount * (i + 1) + sectionCellCount / 2;
+            data.axisPosition = self.yAxisCellCount - 1 - sectionCellCount * (i + 1) + sectionCellCount / 2 - (self.yAxisCellCount - self.yAxisLabelDatas.count * sectionCellCount) / 2;
         }
 
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
-        yLabel.textColor = [UIColor blackColor];
+        if (self.yAxisLabelColor) {
+            yLabel.textColor = self.yAxisLabelColor;
+        }
         yLabel.textAlignment = NSTextAlignmentRight;
         yLabel.text = data.title;
 
@@ -114,6 +118,15 @@
             if (yData.value == itemData.itemValue.y) {
 
                 DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barStyle];
+                bar.barData = itemData;
+                bar.delegate = self;
+                bar.userInteractionEnabled = self.isBarSelectable;
+                if (self.barColor) {
+                    bar.barColor = self.barColor;
+                }
+                if (self.barBorderColor) {
+                    bar.barBorderColor = self.barBorderColor;
+                }
 
                 CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
                 CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
@@ -123,11 +136,10 @@
                 NSLog(@"y = %f title = %@, width = %.2f", yData.axisPosition, yData.title, width);
 
                 bar.frame = CGRectMake(x, y, width, height);
-                bar.hidden = YES;
                 [self.contentView addSubview:bar];
 
-                if (self.showAnimation) {
-                    [bar startAnimation];
+                if (self.isShowAnimation) {
+                    [bar startAppearAnimation];
                 }
 
                 break;
@@ -142,6 +154,13 @@
     [super drawChart];
 
     NSLog(@"#### end draw");
+}
+
+
+#pragma mark - DTBarDelegate
+
+- (void)dTBarSelected:(DTBar *)bar {
+
 }
 
 

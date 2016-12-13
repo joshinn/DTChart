@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class DTBar;
+@class DTChartItemData;
+
 typedef NS_ENUM(NSInteger, DTBarOrientation) {
     DTBarOrientationUp,         // 方向朝上，默认方向
     DTBarOrientationDown,       // 方向朝下
@@ -21,12 +24,25 @@ typedef NS_ENUM(NSInteger, DTBarStyle) {
 };
 
 
+@protocol DTBarDelegate <NSObject>
+
+@optional
+- (void)dTBarSelected:(DTBar *)bar;
+
+@end
+
 @interface DTBar : UIView
+
+@property(nonatomic, weak) id <DTBarDelegate> delegate;
 
 @property(nonatomic, readonly) DTBarOrientation barOrientation;
 @property(nonatomic, readonly) DTBarStyle barStyle;
 @property(nonatomic) UIColor *barColor;
 @property(nonatomic) UIColor *barBorderColor;
+/**
+ * 存储数据model
+ */
+@property(nonatomic, weak) DTChartItemData *barData;
 
 /**
  * 实例化，DTBarOrientationUp，DTBarStyleTopBorder
@@ -43,9 +59,13 @@ typedef NS_ENUM(NSInteger, DTBarStyle) {
 + (instancetype)bar:(DTBarOrientation)orientation style:(DTBarStyle)style;
 
 /**
- * 显示动画
+ * 显示柱状体出现动画
  */
-- (void)startAnimation;
+- (void)startAppearAnimation;
 
+/**
+ * 被选择的动画
+ */
+- (void)startSelectedAnimation;
 
 @end

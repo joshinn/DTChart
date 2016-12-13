@@ -59,15 +59,15 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 /**
  * 显示坐标轴，默认YES
  */
-@property(nonatomic) BOOL showCoordinateAxis;
+@property(nonatomic, getter=isShowCoordinateAxis) BOOL showCoordinateAxis;
 /**
  * 显示坐标轴线，默认YES
  */
-@property(nonatomic) BOOL showCoordinateAxisLine;
+@property(nonatomic, getter=isShowCoordinateAxisLine) BOOL showCoordinateAxisLine;
 /**
  * 显示坐标系表格线，默认NO
  */
-@property(nonatomic) BOOL showCoordinateAxisGrid;
+@property(nonatomic, getter=isShowCoordinateAxisGrid) BOOL showCoordinateAxisGrid;
 /**
  * 坐标轴值数据源
  */

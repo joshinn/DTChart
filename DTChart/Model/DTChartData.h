@@ -21,6 +21,10 @@ CG_INLINE ChartItemValue ChartItemValueMake(CGFloat x, CGFloat y) {
     return value;
 }
 
+CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
+    return [NSString stringWithFormat:@"{ x = %@, y = %@ }", @(value.x), @(value.y)];
+}
+
 #pragma mark - DTChartData 坐标系数据
 
 @interface DTChartItemData : NSObject

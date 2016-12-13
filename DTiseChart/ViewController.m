@@ -99,7 +99,8 @@
         [values addObject:data];
     }
 
-    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
+//    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
+    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委"];
 //    NSArray<NSString *> *xTitles = @[@"新昌", @"上海"];
     self.xAxisLabelDatas = [NSMutableArray array];
     {
@@ -120,10 +121,12 @@
     barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
     barChart.values = values;
+    barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor blackColor];
     [self.view addSubview:barChart];
     self.barChart = barChart;
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
+    barChart.showCoordinateAxisGrid = YES;
 
 
 
@@ -198,12 +201,14 @@
     horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
     horizontalBarChart.xAxisLabelDatas = yAxisLabelDatas;
     horizontalBarChart.values = values2;
+    horizontalBarChart.xAxisLabelColor = horizontalBarChart.yAxisLabelColor = [UIColor blackColor];
     [self.view addSubview:horizontalBarChart];
     self.horizontalBarChart = horizontalBarChart;
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
+    horizontalBarChart.showAnimation = NO;
     horizontalBarChart.showCoordinateAxisGrid = YES;
-
+    horizontalBarChart.barSelectable = NO;
 
 
     [horizontalBarChart drawChart];
