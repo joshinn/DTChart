@@ -86,7 +86,6 @@
         data.axisPosition = sectionCellCount * i;
 
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
-        yLabel.textColor = [UIColor blackColor];
         if (self.yAxisLabelColor) {
             yLabel.textColor = self.yAxisLabelColor;
         }

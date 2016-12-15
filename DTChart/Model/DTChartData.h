@@ -28,8 +28,14 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 #pragma mark - DTChartData 坐标系数据
 
 @interface DTChartItemData : NSObject
-
+/**
+ * 坐标系里具体的值
+ */
 @property(nonatomic) ChartItemValue itemValue;
+/**
+ * 在坐标系里的位置
+ */
+@property (nonatomic) CGPoint position;
 
 + (instancetype)chartData;
 

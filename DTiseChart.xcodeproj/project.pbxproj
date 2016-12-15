@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		654D1E631E0123A7004F2F1F /* DTLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E621E0123A7004F2F1F /* DTLine.m */; };
+		6575AFC61DFFFEBB00F06DDC /* LineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6575AFC51DFFFEBB00F06DDC /* LineViewController.m */; };
 		65C53E1A1DF8FA7300732385 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E191DF8FA7300732385 /* main.m */; };
 		65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1C1DF8FA7300732385 /* AppDelegate.m */; };
 		65C53E201DF8FA7300732385 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1F1DF8FA7300732385 /* ViewController.m */; };
@@ -24,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		654D1E611E0123A7004F2F1F /* DTLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLine.h; sourceTree = "<group>"; };
+		654D1E621E0123A7004F2F1F /* DTLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLine.m; sourceTree = "<group>"; };
+		6575AFC41DFFFEBB00F06DDC /* LineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineViewController.h; sourceTree = "<group>"; };
+		6575AFC51DFFFEBB00F06DDC /* LineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineViewController.m; sourceTree = "<group>"; };
 		65C53E151DF8FA7300732385 /* DTiseChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTiseChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C53E191DF8FA7300732385 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65C53E1B1DF8FA7300732385 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +98,8 @@
 				65C53E261DF8FA7300732385 /* LaunchScreen.storyboard */,
 				65C53E291DF8FA7300732385 /* Info.plist */,
 				65C53E181DF8FA7300732385 /* Supporting Files */,
+				6575AFC41DFFFEBB00F06DDC /* LineViewController.h */,
+				6575AFC51DFFFEBB00F06DDC /* LineViewController.m */,
 			);
 			path = DTiseChart;
 			sourceTree = "<group>";
@@ -146,6 +154,8 @@
 			children = (
 				65CD0F2F1DFEA42A007AFD8D /* DTLineChart.h */,
 				65CD0F301DFEA42A007AFD8D /* DTLineChart.m */,
+				654D1E611E0123A7004F2F1F /* DTLine.h */,
+				654D1E621E0123A7004F2F1F /* DTLine.m */,
 			);
 			path = Line;
 			sourceTree = "<group>";
@@ -233,6 +243,7 @@
 			files = (
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				65CD0F381DFEA42A007AFD8D /* DTChartBaseComponent.m in Sources */,
+				6575AFC61DFFFEBB00F06DDC /* LineViewController.m in Sources */,
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				65C53E201DF8FA7300732385 /* ViewController.m in Sources */,
 				65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */,
@@ -242,6 +253,7 @@
 				65C53E1A1DF8FA7300732385 /* main.m in Sources */,
 				65CD0F391DFEA42A007AFD8D /* DTChartLabel.m in Sources */,
 				65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */,
+				654D1E631E0123A7004F2F1F /* DTLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,10 +16,6 @@
  */
 @property(nonatomic) CGFloat barWidth;
 /**
- * 是否显示动画，默认YES
- */
-@property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
-/**
  * 柱状体是否可点击选择
  */
 @property(nonatomic, getter=isBarSelectable) BOOL barSelectable;
@@ -35,16 +31,6 @@
  * 柱状体边线颜色
  */
 @property(nonatomic) UIColor *barBorderColor;
-/**
- * x轴label的文字颜色
- */
-@property(nonatomic) UIColor *xAxisLabelColor;
-/**
- * y轴label的文字颜色
- */
-@property(nonatomic) UIColor *yAxisLabelColor;
-
-
 /**
  * 绘制x轴标签
  */

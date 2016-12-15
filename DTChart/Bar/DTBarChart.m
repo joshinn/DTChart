@@ -24,7 +24,6 @@ static NSUInteger const DefaultBarWidth = 1;
     [super initial];
 
     _barWidth = DefaultBarWidth;
-    _showAnimation = YES;
     _barSelectable = YES;
 }
 

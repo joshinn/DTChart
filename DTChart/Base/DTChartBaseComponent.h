@@ -55,6 +55,18 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  * y轴标签数组
  */
 @property(nonatomic, copy) NSArray<DTAxisLabelData *> *yAxisLabelDatas;
+/**
+ * x轴label的文字颜色
+ */
+@property(nonatomic) UIColor *xAxisLabelColor;
+/**
+ * y轴label的文字颜色
+ */
+@property(nonatomic) UIColor *yAxisLabelColor;
+/**
+ * 是否显示出现动画，默认YES
+ */
+@property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
 
 /**
  * 显示坐标轴，默认YES
@@ -69,9 +81,14 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  */
 @property(nonatomic, getter=isShowCoordinateAxisGrid) BOOL showCoordinateAxisGrid;
 /**
- * 坐标轴值数据源
+ * 坐标系值数据源
  */
 @property(nonatomic, copy) NSArray<DTChartItemData *> *values;
+/**
+ * 多组坐标系值数据源
+ * 多个values
+ */
+@property(nonatomic, copy) NSArray<NSArray<DTChartItemData *> *> *multiValues;
 
 
 #pragma mark - ####### protect property #######

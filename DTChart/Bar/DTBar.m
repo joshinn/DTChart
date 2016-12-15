@@ -174,7 +174,7 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     }
     self.frame = fromFrame;
     self.hidden = NO;
-    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.frame = self.barFrame;
     }                completion:^(BOOL finished) {
 

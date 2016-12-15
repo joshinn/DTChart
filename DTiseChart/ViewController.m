@@ -117,7 +117,7 @@
     }
 
     // 竖直chart
-    DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 50) xAxis:22 yAxis:11];
+    DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 70) xAxis:22 yAxis:11];
     barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
     barChart.values = values;
