@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class DTChartItemData;
+@class DTChartSingleData;
 
 typedef NS_ENUM(NSInteger, DTLinePointType) {
     DTLinePointTypeCircle,      // 圆圈
@@ -21,7 +22,7 @@ typedef NS_ENUM(NSInteger, DTLinePointType) {
 @property(nonatomic) DTLinePointType pointType;
 @property(nonatomic) UIColor *lineColor;
 @property(nonatomic) UIBezierPath *linePath;
-@property(nonatomic, weak) NSArray<DTChartItemData *> *values;
+@property(nonatomic) DTChartSingleData *singleData;
 
 
 + (instancetype)line:(DTLinePointType)pointType;

@@ -10,7 +10,11 @@
 
 @class DTAxisLabelData;
 @class DTChartItemData;
+@class DTChartSingleData;
 
+/**
+ * 默认一个单元格的宽度15
+ */
 UIKIT_EXTERN CGFloat const DefaultCoordinateAxisCellWidth;
 
 struct ChartEdgeInsets {
@@ -83,12 +87,12 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 /**
  * 坐标系值数据源
  */
-@property(nonatomic, copy) NSArray<DTChartItemData *> *values;
+@property(nonatomic) DTChartSingleData *singleData;
 /**
  * 多组坐标系值数据源
  * 多个values
  */
-@property(nonatomic, copy) NSArray<NSArray<DTChartItemData *> *> *multiValues;
+@property(nonatomic, copy) NSArray<DTChartSingleData *> *multiData;
 
 
 #pragma mark - ####### protect property #######

@@ -37,10 +37,15 @@
     self.strokeColor = lineColor.CGColor;
 }
 
-- (void)setValues:(NSArray<DTChartItemData *> *)values {
-    _values = values;
+- (void)setSingleData:(DTChartSingleData *)singleData {
+    _singleData = singleData;
 
+    self.lineWidth = singleData.lineWidth;
+    if (singleData.color) {
+        self.lineColor = singleData.color;
+    }
 }
+
 
 - (void)setLineWidth:(CGFloat)lineWidth {
     [super setLineWidth:lineWidth];
@@ -76,10 +81,10 @@
  * 绘制最大最小值点
  */
 - (void)drawEdgePoint {
-    DTChartItemData *minData = self.values.firstObject;
-    DTChartItemData *maxData = self.values.firstObject;
+    DTChartItemData *minData = self.singleData.itemValues.firstObject;
+    DTChartItemData *maxData = self.singleData.itemValues.firstObject;
 
-    for (DTChartItemData *data in self.values) {
+    for (DTChartItemData *data in self.singleData.itemValues) {
         if (data.itemValue.y >= maxData.itemValue.y) {
             maxData = data;
         }

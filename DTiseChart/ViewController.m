@@ -120,7 +120,7 @@
     DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 70) xAxis:22 yAxis:11];
     barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
-    barChart.values = values;
+    barChart.singleData = [DTChartSingleData singleData:values];
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor blackColor];
     [self.view addSubview:barChart];
     self.barChart = barChart;
@@ -200,7 +200,7 @@
     DTHorizontalBarChart *horizontalBarChart = [[DTHorizontalBarChart alloc] initWithOrigin:CGPointMake(60, 260) xAxis:11 yAxis:22];
     horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
     horizontalBarChart.xAxisLabelDatas = yAxisLabelDatas;
-    horizontalBarChart.values = values2;
+    horizontalBarChart.singleData = [DTChartSingleData singleData:values2];
     horizontalBarChart.xAxisLabelColor = horizontalBarChart.yAxisLabelColor = [UIColor blackColor];
     [self.view addSubview:horizontalBarChart];
     self.horizontalBarChart = horizontalBarChart;

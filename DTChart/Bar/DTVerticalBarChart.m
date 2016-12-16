@@ -123,8 +123,8 @@
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
 
-    for (NSUInteger i = 0; i < self.values.count; ++i) {
-        DTChartItemData *itemData = self.values[i];
+    for (NSUInteger i = 0; i < self.singleData.itemValues.count; ++i) {
+        DTChartItemData *itemData = self.singleData.itemValues[i];
 
         for (NSUInteger j = 0; j < self.xAxisLabelDatas.count; ++j) {
             DTAxisLabelData *xData = self.xAxisLabelDatas[j];

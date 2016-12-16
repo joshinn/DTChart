@@ -72,7 +72,7 @@
     DTLineChart *lineChart = [[DTLineChart alloc] initWithOrigin:CGPointMake(30, 260) xAxis:22 yAxis:11];
     lineChart.xAxisLabelDatas = self.xAxisLabelDatas;
     lineChart.yAxisLabelDatas = yAxisLabelDatas;
-    lineChart.multiValues = @[[self simulateData:4], [self simulateData:5], [self simulateData:8]];
+    lineChart.multiData = @[[self simulateData:4], [self simulateData:5], [self simulateData:8]];
     lineChart.xAxisLabelColor = lineChart.yAxisLabelColor = [UIColor blackColor];
     self.lineChart = lineChart;
     [self.view addSubview:lineChart];
@@ -88,16 +88,16 @@
 
 }
 
-- (NSMutableArray<DTChartItemData *> *)simulateData:(NSUInteger)count {
+- (DTChartSingleData *)simulateData:(NSUInteger)count {
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
         DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(90));
+        data.itemValue = ChartItemValueMake(i + arc4random_uniform(9) * 0.1f, 30 + arc4random_uniform(90));
 
         [values addObject:data];
     }
-
-    return values;
+    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    return singleData;
 }
 
 - (void)updateChart:(UIButton *)sender {
@@ -106,13 +106,13 @@
     for (NSUInteger i = 1; i <= count; ++i) {
         [values addObject:[self simulateData:8]];
     }
-    self.lineChart.multiValues = values;
+    self.lineChart.multiData = values;
     self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
     [self.lineChart drawChart];
 }
 
 - (void)reloadChart {
-    NSMutableArray *data = [self.lineChart.multiValues mutableCopy];
+    NSMutableArray *data = [self.lineChart.multiData mutableCopy];
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
 
     data[0] = [self simulateData:2 + arc4random_uniform(6)];
@@ -123,13 +123,13 @@
         [indexSet addIndex:1];
     }
 
-    self.lineChart.multiValues = data;
+    self.lineChart.multiData = data;
     self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
-    [self.lineChart reloadChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 == 1];
+    [self.lineChart reloadChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 != 1];
 }
 
 - (void)insertChart {
-    NSMutableArray *data = [self.lineChart.multiValues mutableCopy];
+    NSMutableArray<DTChartSingleData *> *data = [self.lineChart.multiData mutableCopy];
     [data insertObject:[self simulateData:2 + arc4random_uniform(6)] atIndex:0];
     [data insertObject:[self simulateData:2 + arc4random_uniform(6)] atIndex:0];
 
@@ -138,16 +138,16 @@
     [indexSet addIndex:0];
     [indexSet addIndex:1];
 
-    self.lineChart.multiValues = data;
+    self.lineChart.multiData = data;
     self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
-    [self.lineChart insertChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 == 1];
+    [self.lineChart insertChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 != 1];
 }
 
 - (void)delChart {
-    NSMutableArray *data = [self.lineChart.multiValues mutableCopy];
+    NSMutableArray *data = [self.lineChart.multiData mutableCopy];
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
 
-    if(data.count >= 3){
+    if (data.count >= 3) {
         [data removeObjectAtIndex:2];
         [data removeObjectAtIndex:0];
 
@@ -155,8 +155,8 @@
         [indexSet addIndex:2];
     }
 
-    self.lineChart.multiValues = data;
-    [self.lineChart deleteChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 == 1];
+    self.lineChart.multiData = data;
+    [self.lineChart deleteChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 != 1];
 }
 
 @end

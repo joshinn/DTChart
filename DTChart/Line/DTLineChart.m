@@ -17,7 +17,6 @@
 
 @property(nonatomic) NSMutableArray<DTLine *> *valueLines;
 
-@property(nonatomic) NSArray<UIColor *> *prefixColors;
 @property(nonatomic) NSMutableArray<UIColor *> *colors;
 
 @end
@@ -62,39 +61,37 @@
 
 /**
  * 创建单个数据对象的折线路径
- * @param itemValues  数据对象
+ * @param singleData 单个数据对象
+ * @param xMaxData x轴标签最大值
+ * @param xMinData x轴标签最小值
  * @param yMaxData y轴标签最大值
  * @param yMinData y轴标签最小值
  * @return 路径
  */
-- (UIBezierPath *)generateItemPath:(NSArray<DTChartItemData *> *)itemValues yAxisMaxVaule:(DTAxisLabelData *)yMaxData yAxisMinValue:(DTAxisLabelData *)yMinData {
+- (UIBezierPath *)generateItemPath:(DTChartSingleData *)singleData
+                     xAxisMaxVaule:(DTAxisLabelData *)xMaxData
+                     xAxisMinValue:(DTAxisLabelData *)xMinData
+                     yAxisMaxVaule:(DTAxisLabelData *)yMaxData
+                     yAxisMinValue:(DTAxisLabelData *)yMinData {
+
     UIBezierPath *path = nil;
 
-    for (NSUInteger i = 0; i < itemValues.count; ++i) {
-        DTChartItemData *itemData = itemValues[i];
+    for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
+        DTChartItemData *itemData = singleData.itemValues[i];
 
-        for (NSUInteger j = 0; j < self.xAxisLabelDatas.count; ++j) {
-            DTAxisLabelData *xData = self.xAxisLabelDatas[j];
+        DTLog(@"item = %@", NSStringFromChartItemValue(itemData.itemValue));
 
-            if (xData.value == itemData.itemValue.x) {
+        CGFloat x = self.coordinateAxisCellWidth * (xMinData.axisPosition + (xMaxData.axisPosition - xMinData.axisPosition) * (itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value));
+        CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
+        itemData.position = CGPointMake(x, y);
 
-                DTLog(@"item = %@", NSStringFromChartItemValue(itemData.itemValue));
-
-                CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth;
-                CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
-                itemData.position = CGPointMake(x, y);
-
-                if (path) {
-                    [path addLineToPoint:itemData.position];
-                } else {
-                    path = [UIBezierPath bezierPath];
-                    [path moveToPoint:itemData.position];
-                }
-
-
-                break;
-            }
+        if (path) {
+            [path addLineToPoint:itemData.position];
+        } else {
+            path = [UIBezierPath bezierPath];
+            [path moveToPoint:itemData.position];
         }
+
     }
 
     return path;
@@ -205,18 +202,24 @@
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
 
-    for (NSUInteger n = 0; n < self.multiValues.count; ++n) {
-        NSArray<DTChartItemData *> *itemValues = self.multiValues[n];
+    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
+    for (NSUInteger n = 0; n < self.multiData.count; ++n) {
+        DTChartSingleData *singleData = self.multiData[n];
 
-        UIBezierPath *path = [self generateItemPath:itemValues yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+        UIBezierPath *path = [self generateItemPath:singleData
+                                      xAxisMaxVaule:xMaxData
+                                      xAxisMinValue:xMinData
+                                      yAxisMaxVaule:yMaxData
+                                      yAxisMinValue:yMinData];
 
         if (path) {
 
             DTLine *line = [DTLine line:DTLinePointTypeCircle];
             line.lineColor = [self getColor];
-            line.values = itemValues;
             line.linePath = path;
+            line.singleData = singleData;
             [self.valueLines addObject:line];
             [self.contentView.layer addSublayer:line];
 
@@ -252,20 +255,27 @@
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
 
-    for (NSUInteger n = 0; n < self.multiValues.count; ++n) {
+    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.multiData.count; ++n) {
 
         if (![indexes containsIndex:n]) {
             continue;
         }
 
-        NSArray<DTChartItemData *> *itemValues = self.multiValues[n];
+        DTChartSingleData *singleData = self.multiData[n];
 
-        UIBezierPath *path = [self generateItemPath:itemValues yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+        UIBezierPath *path = [self generateItemPath:singleData
+                                      xAxisMaxVaule:xMaxData
+                                      xAxisMinValue:xMinData
+                                      yAxisMaxVaule:yMaxData
+                                      yAxisMinValue:yMinData];
 
         if (path) {
 
             DTLine *line = self.valueLines[n];
-            line.values = itemValues;
+            line.singleData = singleData;
 
             if (animation) {
                 [line removeEdgePoint];
@@ -287,20 +297,27 @@
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
 
-    for (NSUInteger n = 0; n < self.multiValues.count; ++n) {
+    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.multiData.count; ++n) {
         if (![indexes containsIndex:n]) {
             continue;
         }
 
-        NSArray<DTChartItemData *> *itemValues = self.multiValues[n];
+        DTChartSingleData *singleData = self.multiData[n];
 
-        UIBezierPath *path = [self generateItemPath:itemValues yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+        UIBezierPath *path = [self generateItemPath:singleData
+                                      xAxisMaxVaule:xMaxData
+                                      xAxisMinValue:xMinData
+                                      yAxisMaxVaule:yMaxData
+                                      yAxisMinValue:yMinData];
 
         if (path) {
 
             DTLine *line = [DTLine line:DTLinePointTypeCircle];
             line.lineColor = [self getColor];
-            line.values = itemValues;
+            line.singleData = singleData;
             line.linePath = path;
             if (self.valueLines.count >= n) {
                 [self.valueLines insertObject:line atIndex:n];

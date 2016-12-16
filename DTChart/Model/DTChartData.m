@@ -18,6 +18,31 @@
 @end
 
 
+@implementation DTChartSingleData
+
++ (instancetype)singleData {
+    DTChartSingleData *data = [DTChartSingleData singleData:nil];
+
+    return data;
+}
+
++ (instancetype)singleData:(NSArray<DTChartItemData *> *)values {
+    DTChartSingleData *data = [[DTChartSingleData alloc] init];
+    data.itemValues = values;
+    data.lineWidth = 2;
+    return data;
+}
+
+- (CGFloat)lineWidth {
+    if (_lineWidth == 0) {
+        _lineWidth = 2;
+    }
+    return _lineWidth;
+}
+
+
+@end
+
 @implementation DTAxisLabelData
 
 + (instancetype)axisLabelData {

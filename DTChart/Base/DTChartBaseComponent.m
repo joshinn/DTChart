@@ -7,6 +7,7 @@
 //
 
 #import "DTChartBaseComponent.h"
+#import "DTChartData.h"
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
@@ -146,8 +147,8 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 #pragma mark - public method
 
 - (void)drawChart {
-    if (!self.multiValues && self.values) {
-        self.multiValues = @[self.values];
+    if (!self.multiData && self.singleData) {
+        self.multiData = @[self.singleData];
     }
 }
 
