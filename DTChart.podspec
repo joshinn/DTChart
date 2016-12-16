@@ -2,14 +2,14 @@
 Pod::Spec.new do |s|
 
   s.name         = "DTChart"
-  s.version      = "0.2"
+  s.version      = "0.3"
   s.license      = { :type => "MIT", :file => "LICENSE" }
-  s.summary      = "a simple chart for DTise"
+  s.summary      = "A simple chart for DTise"
   s.author       = { "joshin" => "xjcute@gmail.com" }
   s.homepage     = "https://github.com/joshinn/DTChart"
   s.description  = <<-DESC
                     A simple char customized for DTise.
-                    If you like the style of chart, you can import it, and use it as sample.
+                    If you like the style of chart, you can import it, and use it as demo.
                     DESC
   s.requires_arc = true
   s.platform     = :ios, "8.0"
