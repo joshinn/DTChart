@@ -26,6 +26,11 @@
 #pragma mark - override
 
 - (void)drawXAxisLabels {
+    if(self.xAxisLabelDatas.count <= 1){
+        DTLog(@"Error: x轴标签数量小于2个");
+        return;
+    }
+
     NSUInteger sectionCellCount = self.xAxisCellCount / (self.xAxisLabelDatas.count - 1);
 
 
@@ -59,6 +64,10 @@
 }
 
 - (void)drawYAxisLabels {
+    if(self.yAxisLabelDatas.count == 0){
+        DTLog(@"Error: y轴标签数量是0");
+        return;
+    }
 
     NSUInteger sectionCellCount = self.yAxisCellCount / self.yAxisLabelDatas.count;
 
@@ -133,7 +142,7 @@
                 CGFloat x = 0;
                 CGFloat y = yData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
 
-                NSLog(@"y = %f title = %@, width = %.2f", yData.axisPosition, yData.title, width);
+                DTLog(@"y = %f title = %@, width = %.2f", yData.axisPosition, yData.title, width);
 
                 bar.frame = CGRectMake(x, y, width, height);
                 [self.contentView addSubview:bar];
@@ -149,11 +158,11 @@
 }
 
 - (void)drawChart {
-    NSLog(@"#### begin draw");
+    DTLog(@"#### begin draw");
 
     [super drawChart];
 
-    NSLog(@"#### end draw");
+    DTLog(@"#### end draw");
 }
 
 

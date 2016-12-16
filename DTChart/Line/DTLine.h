@@ -13,8 +13,7 @@
 typedef NS_ENUM(NSInteger, DTLinePointType) {
     DTLinePointTypeCircle,      // 圆圈
     DTLinePointTypedTriangle,   // 三角形
-    DTLinePointTypedSquare,     // 正方形
-    DTLinePointTypedRound       // 圆形
+    DTLinePointTypedSquare      // 正方形
 };
 
 @interface DTLine : CAShapeLayer
@@ -28,10 +27,17 @@ typedef NS_ENUM(NSInteger, DTLinePointType) {
 + (instancetype)line:(DTLinePointType)pointType;
 
 - (void)startAppearAnimation;
+
+- (void)startPathUpdateAnimation:(UIBezierPath *)updatePath;
+
+- (void)startDisappearAnimation;
+
 /**
  * 绘制最大最小值点
+ * @param delay 延迟
  */
-- (void)drawEdgePoint;
+- (void)drawEdgePoint:(NSTimeInterval)delay;
 
 - (void)removeEdgePoint;
+
 @end

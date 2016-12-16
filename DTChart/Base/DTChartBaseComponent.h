@@ -146,5 +146,22 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  * 绘制整个坐标系
  */
 - (void)drawChart;
-
+/**
+ * 刷新项
+ * @param indexes    项的序号
+ * @param animation 是否有动画
+ */
+- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+/**
+ * 插入新的项
+ * @param indexes 项的序号
+ * @param animation 是否有动画
+ */
+- (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+/**
+ * 删除项
+ * @param indexes 项的序号
+ * @param animation 是否有动画
+ */
+- (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
 @end

@@ -51,7 +51,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     _showCoordinateAxisGrid = NO;
 
 
-
     _originPoint = CGPointMake(_coordinateAxisInsets.left * _coordinateAxisCellWidth,
             CGRectGetHeight(self.frame) - _coordinateAxisInsets.bottom * _coordinateAxisCellWidth);
 
@@ -147,8 +146,18 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 #pragma mark - public method
 
 - (void)drawChart {
-
+    if (!self.multiValues && self.values) {
+        self.multiValues = @[self.values];
+    }
 }
 
+- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+}
+
+- (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+}
+
+- (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+}
 
 @end

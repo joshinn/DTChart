@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		654D1E631E0123A7004F2F1F /* DTLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E621E0123A7004F2F1F /* DTLine.m */; };
+		654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */; };
 		6575AFC61DFFFEBB00F06DDC /* LineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6575AFC51DFFFEBB00F06DDC /* LineViewController.m */; };
 		65C53E1A1DF8FA7300732385 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E191DF8FA7300732385 /* main.m */; };
 		65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1C1DF8FA7300732385 /* AppDelegate.m */; };
@@ -28,6 +29,10 @@
 /* Begin PBXFileReference section */
 		654D1E611E0123A7004F2F1F /* DTLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLine.h; sourceTree = "<group>"; };
 		654D1E621E0123A7004F2F1F /* DTLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLine.m; sourceTree = "<group>"; };
+		654D1E651E0267BA004F2F1F /* UIBezierPath+DTExternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+DTExternal.h"; sourceTree = "<group>"; };
+		654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+DTExternal.m"; sourceTree = "<group>"; };
+		654D1E6C1E02A57F004F2F1F /* DTChart-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DTChart-Prefix.pch"; sourceTree = "<group>"; };
+		654D1E6D1E02ABD9004F2F1F /* DTColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTColor.h; sourceTree = "<group>"; };
 		6575AFC41DFFFEBB00F06DDC /* LineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineViewController.h; sourceTree = "<group>"; };
 		6575AFC51DFFFEBB00F06DDC /* LineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineViewController.m; sourceTree = "<group>"; };
 		65C53E151DF8FA7300732385 /* DTiseChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTiseChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		654D1E641E0267A7004F2F1F /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				654D1E651E0267BA004F2F1F /* UIBezierPath+DTExternal.h */,
+				654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		65C53E0C1DF8FA7300732385 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +129,8 @@
 		65CD0F1F1DFEA42A007AFD8D /* DTChart */ = {
 			isa = PBXGroup;
 			children = (
+				654D1E6C1E02A57F004F2F1F /* DTChart-Prefix.pch */,
+				654D1E641E0267A7004F2F1F /* Category */,
 				65CD0F201DFEA42A007AFD8D /* Bar */,
 				65CD0F291DFEA42A007AFD8D /* Base */,
 				65CD0F2E1DFEA42A007AFD8D /* Line */,
@@ -145,6 +161,7 @@
 				65CD0F2B1DFEA42A007AFD8D /* DTChartBaseComponent.m */,
 				65CD0F2C1DFEA42A007AFD8D /* DTChartLabel.h */,
 				65CD0F2D1DFEA42A007AFD8D /* DTChartLabel.m */,
+				654D1E6D1E02ABD9004F2F1F /* DTColor.h */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -243,6 +260,7 @@
 			files = (
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				65CD0F381DFEA42A007AFD8D /* DTChartBaseComponent.m in Sources */,
+				654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */,
 				6575AFC61DFFFEBB00F06DDC /* LineViewController.m in Sources */,
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				65C53E201DF8FA7300732385 /* ViewController.m in Sources */,
@@ -374,6 +392,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 63E5UW9WDT;
+				GCC_PREFIX_HEADER = "DTChart/DTChart-Prefix.pch";
 				INFOPLIST_FILE = DTiseChart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -387,6 +406,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 63E5UW9WDT;
+				GCC_PREFIX_HEADER = "DTChart/DTChart-Prefix.pch";
 				INFOPLIST_FILE = DTiseChart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -30,6 +30,11 @@
 #pragma mark - override
 
 - (void)drawXAxisLabels {
+    if(self.xAxisLabelDatas.count == 0){
+        DTLog(@"Error: x轴标签数量是0");
+        return;
+    }
+
     NSUInteger sectionCellCount = self.xAxisCellCount / self.xAxisLabelDatas.count;
 
     if (sectionCellCount > 1) {
@@ -77,6 +82,11 @@
 }
 
 - (void)drawYAxisLabels {
+    if(self.yAxisLabelDatas.count <= 1){
+        DTLog(@"Error: y轴标签数量小于2个");
+        return;
+    }
+
 
     NSUInteger sectionCellCount = self.yAxisCellCount / (self.yAxisLabelDatas.count - 1);
 
@@ -137,7 +147,7 @@
                 CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
                 CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
 
-                NSLog(@"x = %f", xData.axisPosition);
+                DTLog(@"x = %f", xData.axisPosition);
 
                 bar.frame = CGRectMake(x, y, width, height);
                 [self.contentView addSubview:bar];
@@ -153,18 +163,18 @@
 }
 
 - (void)drawChart {
-    NSLog(@"#### begin draw");
+    DTLog(@"#### begin draw");
 
     [super drawChart];
 
-    NSLog(@"#### end draw");
+    DTLog(@"#### end draw");
 }
 
 
 #pragma mark - DTBarDelegate
 
 - (void)dTBarSelected:(DTBar *)bar {
-    NSLog(@"%@", NSStringFromChartItemValue(bar.barData.itemValue));
+    DTLog(@"%@", NSStringFromChartItemValue(bar.barData.itemValue));
 }
 
 @end

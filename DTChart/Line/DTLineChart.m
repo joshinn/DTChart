@@ -10,12 +10,15 @@
 #import "DTChartLabel.h"
 #import "DTChartData.h"
 #import "DTLine.h"
+#import "DTColor.h"
+
 
 @interface DTLineChart ()
 
 @property(nonatomic) NSMutableArray<DTLine *> *valueLines;
 
-@property(nonatomic) NSArray<UIColor *> *colors;
+@property(nonatomic) NSArray<UIColor *> *prefixColors;
+@property(nonatomic) NSMutableArray<UIColor *> *colors;
 
 @end
 
@@ -24,7 +27,7 @@
 - (void)initial {
     [super initial];
 
-    _colors = @[[UIColor orangeColor], [UIColor lightGrayColor], [UIColor grayColor], [UIColor yellowColor], [UIColor redColor], [UIColor magentaColor]];
+    _colors = [DTColorArray mutableCopy];
 }
 
 - (NSMutableArray<DTLine *> *)valueLines {
@@ -34,7 +37,7 @@
     return _valueLines;
 }
 
-#pragma mark - method
+#pragma mark - private method
 
 /**
  * 清除坐标系里的轴标签和值线条
@@ -58,6 +61,59 @@
 }
 
 /**
+ * 创建单个数据对象的折线路径
+ * @param itemValues  数据对象
+ * @param yMaxData y轴标签最大值
+ * @param yMinData y轴标签最小值
+ * @return 路径
+ */
+- (UIBezierPath *)generateItemPath:(NSArray<DTChartItemData *> *)itemValues yAxisMaxVaule:(DTAxisLabelData *)yMaxData yAxisMinValue:(DTAxisLabelData *)yMinData {
+    UIBezierPath *path = nil;
+
+    for (NSUInteger i = 0; i < itemValues.count; ++i) {
+        DTChartItemData *itemData = itemValues[i];
+
+        for (NSUInteger j = 0; j < self.xAxisLabelDatas.count; ++j) {
+            DTAxisLabelData *xData = self.xAxisLabelDatas[j];
+
+            if (xData.value == itemData.itemValue.x) {
+
+                DTLog(@"item = %@", NSStringFromChartItemValue(itemData.itemValue));
+
+                CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth;
+                CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
+                itemData.position = CGPointMake(x, y);
+
+                if (path) {
+                    [path addLineToPoint:itemData.position];
+                } else {
+                    path = [UIBezierPath bezierPath];
+                    [path moveToPoint:itemData.position];
+                }
+
+
+                break;
+            }
+        }
+    }
+
+    return path;
+}
+
+/**
+ * 获取预定义好的颜色
+ * @return 颜色
+ */
+- (UIColor *)getColor {
+    UIColor *color = self.colors.firstObject;
+    [self.colors removeObjectAtIndex:0];
+    [self.colors addObject:color];
+    return color;
+}
+
+#pragma mark - override
+
+/**
  * 绘制坐标轴线
  */
 - (void)drawAxisLine {
@@ -65,6 +121,11 @@
 }
 
 - (void)drawXAxisLabels {
+    if (self.xAxisLabelDatas.count == 0) {
+        DTLog(@"Error: x轴标签数量是0");
+        return;
+    }
+
     // 第一个单元格空余出来
     NSUInteger sectionCellCount = (self.xAxisCellCount - 1) / (self.xAxisLabelDatas.count + 1);
 
@@ -101,6 +162,10 @@
 }
 
 - (void)drawYAxisLabels {
+    if (self.yAxisLabelDatas.count <= 1) {
+        DTLog(@"Error: y轴标签数量小于2个");
+        return;
+    }
 
     NSUInteger sectionCellCount = self.yAxisCellCount / (self.yAxisLabelDatas.count - 1);
 
@@ -131,13 +196,11 @@
 
 }
 
+
 - (void)drawValues {
 
+    self.colors = [DTColorArray mutableCopy];
     [self.valueLines removeAllObjects];
-
-    if (!self.multiValues && self.values) {
-        self.multiValues = @[self.values];
-    }
 
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
@@ -146,61 +209,29 @@
         NSArray<DTChartItemData *> *itemValues = self.multiValues[n];
 
 
-        UIBezierPath *path = nil;
-
-        for (NSUInteger i = 0; i < itemValues.count; ++i) {
-            DTChartItemData *itemData = itemValues[i];
-
-            for (NSUInteger j = 0; j < self.xAxisLabelDatas.count; ++j) {
-                DTAxisLabelData *xData = self.xAxisLabelDatas[j];
-
-                if (xData.value == itemData.itemValue.x) {
-
-                    NSLog(@"item = %@", NSStringFromChartItemValue(itemData.itemValue));
-
-
-                    CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth;
-                    CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
-                    itemData.position = CGPointMake(x, y);
-
-                    if (path) {
-                        [path addLineToPoint:itemData.position];
-                    } else {
-                        path = [UIBezierPath bezierPath];
-                        [path moveToPoint:itemData.position];
-                    }
-
-
-                    break;
-                }
-            }
-        }
+        UIBezierPath *path = [self generateItemPath:itemValues yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
 
         if (path) {
-            UIColor *color = self.colors[n % self.colors.count];
+
             DTLine *line = [DTLine line:DTLinePointTypeCircle];
-            line.lineColor = color;
+            line.lineColor = [self getColor];
             line.values = itemValues;
             line.linePath = path;
             [self.valueLines addObject:line];
             [self.contentView.layer addSublayer:line];
-            [line drawEdgePoint];
-        }
 
 
-        if (self.isShowAnimation) {
-            [self startAppearAnimation];
+            if (self.isShowAnimation) {
+                [line startAppearAnimation];
+                [line drawEdgePoint:0.8];
+            } else {
+                [line drawEdgePoint:0];
+            }
         }
 
     }
 }
 
-- (void)startAppearAnimation {
-    for (NSUInteger i = 0; i < self.valueLines.count; ++i) {
-        DTLine *line = self.valueLines[i];
-        [line startAppearAnimation];
-    }
-}
 
 - (void)drawChart {
 
@@ -216,5 +247,96 @@
     [self drawValues];
 }
 
+- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+
+    DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
+    DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.multiValues.count; ++n) {
+
+        if (![indexes containsIndex:n]) {
+            continue;
+        }
+
+        NSArray<DTChartItemData *> *itemValues = self.multiValues[n];
+
+        UIBezierPath *path = [self generateItemPath:itemValues yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+
+        if (path) {
+
+            DTLine *line = self.valueLines[n];
+            line.values = itemValues;
+
+            if (animation) {
+                [line removeEdgePoint];
+                [line startPathUpdateAnimation:path];
+                [line drawEdgePoint:0.3];
+            } else {
+                [line removeEdgePoint];
+                line.linePath = path;
+                [line drawEdgePoint:0];
+            }
+        }
+
+    }
+
+}
+
+- (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+
+    DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
+    DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.multiValues.count; ++n) {
+        if (![indexes containsIndex:n]) {
+            continue;
+        }
+
+        NSArray<DTChartItemData *> *itemValues = self.multiValues[n];
+
+        UIBezierPath *path = [self generateItemPath:itemValues yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+
+        if (path) {
+
+            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            line.lineColor = [self getColor];
+            line.values = itemValues;
+            line.linePath = path;
+            if (self.valueLines.count >= n) {
+                [self.valueLines insertObject:line atIndex:n];
+                [self.contentView.layer insertSublayer:line atIndex:(unsigned int) n];
+            } else {
+                [self.valueLines addObject:line];
+                [self.contentView.layer addSublayer:line];
+            }
+
+
+            if (animation) {
+                [line startAppearAnimation];
+                [line drawEdgePoint:0.8];
+            } else {
+                [line drawEdgePoint:0];
+            }
+        }
+
+    }
+
+}
+
+- (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        DTLog(@"enum index = %@", @(index));
+        DTLine *line = self.valueLines[index];
+        [line removeEdgePoint];
+
+        if (animation) {
+            [line startDisappearAnimation];
+        } else {
+            [line removeFromSuperlayer];
+        }
+    }];
+
+    [self.valueLines removeObjectsAtIndexes:indexes];
+}
 
 @end

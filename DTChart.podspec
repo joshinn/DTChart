@@ -17,5 +17,6 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/joshinn/DTChart.git", :tag => s.version.to_s }
   s.source_files  = "DTChart", "DTChart/**/*.{h,m}"
+  s.prefix_header_file = 'DTChart/DTChart-Prefix.pch'
 
 end
