@@ -26,7 +26,7 @@
 #pragma mark - override
 
 - (void)drawXAxisLabels {
-    if(self.xAxisLabelDatas.count <= 1){
+    if (self.xAxisLabelDatas.count <= 1) {
         DTLog(@"Error: x轴标签数量小于2个");
         return;
     }
@@ -64,7 +64,7 @@
 }
 
 - (void)drawYAxisLabels {
-    if(self.yAxisLabelDatas.count == 0){
+    if (self.yAxisLabelDatas.count == 0) {
         DTLog(@"Error: y轴标签数量是0");
         return;
     }
@@ -79,15 +79,13 @@
 
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.yAxisLabelDatas[i];
-        if (sectionCellCount == 1) {
-            // 如果单个区间长度只有1的话，则所有的柱状体在坐标轴上整体居中
-            // 坐标系原点在左下角
-            data.axisPosition = self.yAxisCellCount - 1 - i * sectionCellCount - (self.yAxisCellCount - self.yAxisLabelDatas.count) / 2;
-        } else {
-            // 单个区间长度大于1，则柱状体在区间中间位置
-            // 坐标系原点在左下角
-            data.axisPosition = self.yAxisCellCount - 1 - sectionCellCount * (i + 1) + sectionCellCount / 2 - (self.yAxisCellCount - self.yAxisLabelDatas.count * sectionCellCount) / 2;
-        }
+
+        // 相对于坐标轴内（contentView）位置
+        // 所有的柱状体在坐标轴上整体居中
+        // 坐标系原点在左下角
+        data.axisPosition = self.yAxisCellCount - sectionCellCount * i - (sectionCellCount - 1) / 2
+                - (self.yAxisCellCount - self.yAxisLabelDatas.count * sectionCellCount) / 2;
+
 
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
         if (self.yAxisLabelColor) {
@@ -100,7 +98,7 @@
 
         CGFloat x = CGRectGetMinX(self.contentView.frame) - size.width;
 
-        CGFloat y = (self.coordinateAxisInsets.top + data.axisPosition + 0.5f) * self.coordinateAxisCellWidth;
+        CGFloat y = (self.coordinateAxisInsets.top + data.axisPosition - 0.5f) * self.coordinateAxisCellWidth;
         y -= size.height / 2;
 
         yLabel.frame = (CGRect) {CGPointMake(x, y), size};
@@ -140,7 +138,7 @@
                 CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
                 CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
                 CGFloat x = 0;
-                CGFloat y = yData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
+                CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
 
                 DTLog(@"y = %f title = %@, width = %.2f", yData.axisPosition, yData.title, width);
 

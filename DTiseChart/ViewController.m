@@ -117,7 +117,7 @@
     }
 
     // 竖直chart
-    DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 70) xAxis:22 yAxis:11];
+    DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 70) xAxis:21 yAxis:11];
     barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
     barChart.singleData = [DTChartSingleData singleData:values];
@@ -127,8 +127,6 @@
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
     barChart.showCoordinateAxisGrid = YES;
-
-
 
     [barChart drawChart];
 
@@ -197,21 +195,21 @@
 
 
     // 水平chart
-    DTHorizontalBarChart *horizontalBarChart = [[DTHorizontalBarChart alloc] initWithOrigin:CGPointMake(60, 260) xAxis:11 yAxis:22];
-    horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
-    horizontalBarChart.xAxisLabelDatas = yAxisLabelDatas;
-    horizontalBarChart.singleData = [DTChartSingleData singleData:values2];
-    horizontalBarChart.xAxisLabelColor = horizontalBarChart.yAxisLabelColor = [UIColor blackColor];
-    [self.view addSubview:horizontalBarChart];
-    self.horizontalBarChart = horizontalBarChart;
+    DTHorizontalBarChart *hBarChart = [[DTHorizontalBarChart alloc] initWithOrigin:CGPointMake(60, 260) xAxis:11 yAxis:21];
+    hBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
+    hBarChart.xAxisLabelDatas = yAxisLabelDatas;
+    hBarChart.singleData = [DTChartSingleData singleData:values2];
+    hBarChart.xAxisLabelColor = hBarChart.yAxisLabelColor = [UIColor blackColor];
+    [self.view addSubview:hBarChart];
+    self.horizontalBarChart = hBarChart;
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
-    horizontalBarChart.showAnimation = NO;
-    horizontalBarChart.showCoordinateAxisGrid = YES;
-    horizontalBarChart.barSelectable = NO;
+    hBarChart.showAnimation = NO;
+    hBarChart.showCoordinateAxisGrid = YES;
+    hBarChart.barSelectable = NO;
 
 
-    [horizontalBarChart drawChart];
+    [hBarChart drawChart];
 }
 
 

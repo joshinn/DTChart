@@ -30,7 +30,7 @@
 #pragma mark - override
 
 - (void)drawXAxisLabels {
-    if(self.xAxisLabelDatas.count == 0){
+    if (self.xAxisLabelDatas.count == 0) {
         DTLog(@"Error: x轴标签数量是0");
         return;
     }
@@ -46,15 +46,12 @@
 
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
-        if (sectionCellCount == 1) {
-            // 如果单个区间长度只有1的话，则所有的柱状体在坐标轴上整体居中
-            // 坐标系原点在左下角
-            data.axisPosition = i * sectionCellCount + (self.xAxisCellCount - self.xAxisLabelDatas.count * sectionCellCount) / 2;
-        } else {
-            // 单个区间长度大于1，则柱状体在区间中间位置
-            // 坐标系原点在左下角
-            data.axisPosition = sectionCellCount * (i + 1) - sectionCellCount / 2 + (self.xAxisCellCount - self.xAxisLabelDatas.count * sectionCellCount) / 2;
-        }
+
+        // 相对于坐标轴内（contentView）位置
+        // 所有的柱状体在坐标轴上整体居中
+        // 坐标系原点在左下角
+        data.axisPosition = sectionCellCount * i + (sectionCellCount - 1) / 2
+                + (self.xAxisCellCount - self.xAxisLabelDatas.count * sectionCellCount) / 2;
 
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
@@ -82,7 +79,7 @@
 }
 
 - (void)drawYAxisLabels {
-    if(self.yAxisLabelDatas.count <= 1){
+    if (self.yAxisLabelDatas.count <= 1) {
         DTLog(@"Error: y轴标签数量小于2个");
         return;
     }
