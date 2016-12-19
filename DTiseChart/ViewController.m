@@ -37,71 +37,10 @@
     [self.view addSubview:changeBtn];
 
 
-    NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(1, 60);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(2, 76);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(3, 54);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(4, 63);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(5, 82);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(6, 98);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(7, 116);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(8, 100);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(9, 45);
-
-        [values addObject:data];
-    }
-    {
-        DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(10, 70);
-
-        [values addObject:data];
-    }
 
 //    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
-    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委"];
-//    NSArray<NSString *> *xTitles = @[@"新昌", @"上海"];
+//    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委"];
+    NSArray<NSString *> *xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州"];
     self.xAxisLabelDatas = [NSMutableArray array];
     {
         [xTitles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
@@ -116,11 +55,16 @@
         [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:@"120" value:120]];
     }
 
+    NSMutableArray<DTChartSingleData *> *values = [NSMutableArray array];
+    for (NSUInteger i = 1; i <= 3; ++i) {
+        [values addObject:[self simulateData:8]];
+    }
+
     // 竖直chart
     DTVerticalBarChart *barChart = [[DTVerticalBarChart alloc] initWithOrigin:CGPointMake(15, 70) xAxis:21 yAxis:11];
     barChart.xAxisLabelDatas = self.xAxisLabelDatas;
     barChart.yAxisLabelDatas = yAxisLabelDatas;
-    barChart.singleData = [DTChartSingleData singleData:values];
+    barChart.multiData = values;
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor blackColor];
     [self.view addSubview:barChart];
     self.barChart = barChart;
@@ -212,23 +156,63 @@
     [hBarChart drawChart];
 }
 
+- (DTChartSingleData *)simulateData:(NSUInteger)count {
+    NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
+    for (NSUInteger i = 1; i <= count; ++i) {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(90));
+
+        [values addObject:data];
+    }
+    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    return singleData;
+}
+
+- (DTChartSingleData *)simulateHorizontalData:(NSUInteger)count {
+    NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
+    for (NSUInteger i = 1; i <= count; ++i) {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(30 + arc4random_uniform(90), i);
+
+        [values addObject:data];
+    }
+    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    return singleData;
+}
+
 
 - (void)updateChart:(UIButton *)sender {
-    NSArray<NSString *> *xTitles;
-    if (self.xAxisLabelDatas.count > 5) {
-        xTitles = @[@"新昌", @"上海"];
-    } else {
-        xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
-    }
-    [self.xAxisLabelDatas removeAllObjects];
-    [xTitles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
-        [self.xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:idx + 1]];
-    }];
+//    NSArray<NSString *> *xTitles;
+//    if (self.xAxisLabelDatas.count > 5) {
+//        xTitles = @[@"新昌", @"上海"];
+//    } else {
+//        xTitles = @[@"新昌", @"上海", @"南京", @"杭州", @"绍兴", @"苏州", @"无锡", @"发改委", @"徐州", @"中南海"];
+//    }
+//    [self.xAxisLabelDatas removeAllObjects];
+//    [xTitles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
+//        [self.xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:idx + 1]];
+//    }];
+//
+//    self.barChart.xAxisLabelDatas = self.xAxisLabelDatas;
+//    [self.barChart drawChart];
+//
+//    self.horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
+//    [self.horizontalBarChart drawChart];
 
-    self.barChart.xAxisLabelDatas = self.xAxisLabelDatas;
+
+    NSMutableArray<DTChartSingleData *> *values = [NSMutableArray array];
+    for (NSUInteger i = 1; i <= 1 + arc4random_uniform(3); ++i) {
+        [values addObject:[self simulateData:8]];
+    }
+    self.barChart.multiData = values;
     [self.barChart drawChart];
 
-    self.horizontalBarChart.yAxisLabelDatas = self.xAxisLabelDatas;
+    NSMutableArray<DTChartSingleData *> *values2 = [NSMutableArray array];
+    for (NSUInteger i = 1; i <= 1 + arc4random_uniform(3); ++i) {
+        [values2 addObject:[self simulateHorizontalData:8]];
+    }
+    self.horizontalBarChart.multiData = values2;
+    self.horizontalBarChart.showAnimation = YES;
     [self.horizontalBarChart drawChart];
 }
 

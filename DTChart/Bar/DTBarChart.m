@@ -25,6 +25,7 @@ static NSUInteger const DefaultBarWidth = 1;
 
     _barWidth = DefaultBarWidth;
     _barSelectable = YES;
+    _barChartStyle = DTBarChartStyleStartingLine;
 }
 
 #pragma mark - delay init

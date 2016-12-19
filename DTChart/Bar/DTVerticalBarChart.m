@@ -27,6 +27,64 @@
 }
 
 
+#pragma mark - private method
+
+
+/**
+ * 绘制DTBarChartStyleStartingLine风格的柱状图
+ * @param singleData 单个数据对象
+ * @param index 当前singleData在所有数据中的序号
+ * @param yMaxData y轴标签最大值
+ * @param yMinData y轴标签最小值
+ */
+- (void)generateStartingLineBars:(DTChartSingleData *)singleData
+                           index:(NSUInteger)index
+                   yAxisMaxVaule:(DTAxisLabelData *)yMaxData
+                   yAxisMinValue:(DTAxisLabelData *)yMinData {
+
+    CGFloat xOffset = self.barWidth / 2 * (self.multiData.count - 1);
+
+    for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
+        DTChartItemData *itemData = singleData.itemValues[i];
+
+        for (NSUInteger j = 0; j < self.xAxisLabelDatas.count; ++j) {
+            DTAxisLabelData *xData = self.xAxisLabelDatas[j];
+
+            if (xData.value == itemData.itemValue.x) {
+
+                DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barStyle];
+                bar.barData = itemData;
+                bar.delegate = self;
+                bar.userInteractionEnabled = self.isBarSelectable;
+                if (self.barColor) {
+                    bar.barColor = self.barColor;
+                }
+                if (self.barBorderColor) {
+                    bar.barBorderColor = self.barBorderColor;
+                }
+
+                CGFloat width = self.coordinateAxisCellWidth * self.barWidth;
+                CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition;
+                CGFloat x = (xData.axisPosition + xOffset - index) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
+                CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
+
+                DTLog(@"x = %f", xData.axisPosition);
+
+                bar.frame = CGRectMake(x, y, width, height);
+                [self.contentView addSubview:bar];
+
+                if (self.isShowAnimation) {
+                    [bar startAppearAnimation];
+                }
+
+                break;
+            }
+        }
+
+    }
+}
+
+
 #pragma mark - override
 
 - (void)drawXAxisLabels {
@@ -120,41 +178,22 @@
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
 
-    for (NSUInteger i = 0; i < self.singleData.itemValues.count; ++i) {
-        DTChartItemData *itemData = self.singleData.itemValues[i];
+    for (NSUInteger n = 0; n < self.multiData.count; ++n) {
+        DTChartSingleData *singleData = self.multiData[n];
 
-        for (NSUInteger j = 0; j < self.xAxisLabelDatas.count; ++j) {
-            DTAxisLabelData *xData = self.xAxisLabelDatas[j];
+        switch (self.barChartStyle) {
 
-            if (xData.value == itemData.itemValue.x) {
-
-                DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barStyle];
-                bar.barData = itemData;
-                bar.delegate = self;
-                bar.userInteractionEnabled = self.isBarSelectable;
-                if (self.barColor) {
-                    bar.barColor = self.barColor;
-                }
-                if (self.barBorderColor) {
-                    bar.barBorderColor = self.barBorderColor;
-                }
-
-                CGFloat width = self.coordinateAxisCellWidth * self.barWidth;
-                CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition;
-                CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
-                CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
-
-                DTLog(@"x = %f", xData.axisPosition);
-
-                bar.frame = CGRectMake(x, y, width, height);
-                [self.contentView addSubview:bar];
-
-                if (self.isShowAnimation) {
-                    [bar startAppearAnimation];
-                }
-
-                break;
+            case DTBarChartStyleStartingLine: {
+                [self generateStartingLineBars:singleData
+                                         index:n
+                                 yAxisMaxVaule:yMaxData
+                                 yAxisMinValue:yMinData];
             }
+                break;
+            case DTBarChartStyleHeap:
+                break;
+            case DTBarChartStyleLump:
+                break;
         }
     }
 }

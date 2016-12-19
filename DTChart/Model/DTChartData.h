@@ -86,6 +86,10 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  */
 @property(nonatomic) CGFloat value;
 /**
+ * 是否隐藏，默认NO
+ */
+@property (nonatomic) BOOL hidden;
+/**
  * 坐标轴上的点的位置
  */
 @property(nonatomic) CGFloat axisPosition;
