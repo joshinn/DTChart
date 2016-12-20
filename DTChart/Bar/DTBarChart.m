@@ -33,11 +33,12 @@ static NSUInteger const DefaultBarWidth = 1;
 
 #pragma mark - method
 
-- (void)drawXAxisLabels {
-
+- (BOOL)drawXAxisLabels {
+    return [super drawXAxisLabels];
 }
 
-- (void)drawYAxisLabels {
+- (BOOL)drawYAxisLabels {
+    return [super drawYAxisLabels];
 }
 
 /**
@@ -82,14 +83,6 @@ static NSUInteger const DefaultBarWidth = 1;
 
     [super drawChart];
 
-    [self clearChartContent];
-
-    [self drawAxisLine];
-
-    [self drawXAxisLabels];
-    [self drawYAxisLabels];
-
-    [self drawValues];
 }
 
 

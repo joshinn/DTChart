@@ -110,28 +110,21 @@
 
 #pragma mark - override
 
-/**
- * 绘制坐标轴线
- */
-- (void)drawAxisLine {
 
-}
-
-- (void)drawXAxisLabels {
-    if (self.xAxisLabelDatas.count == 0) {
-        DTLog(@"Error: x轴标签数量是0");
-        return;
+- (BOOL)drawXAxisLabels {
+    if(![super drawXAxisLabels]){
+        return NO;
     }
 
     // 第一个单元格空余出来
-    NSUInteger sectionCellCount = (self.xAxisCellCount - 1) / (self.xAxisLabelDatas.count + 1);
+    NSUInteger sectionCellCount = (self.xAxisCellCount - 1) / (self.xAxisLabelDatas.count - 1);
 
 
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
 
         // 每个label位于section内最后一个单元格线上，所有label在x轴上整体居中
-        data.axisPosition = sectionCellCount * i + sectionCellCount + 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count + 1) * sectionCellCount) / 2;
+        data.axisPosition = sectionCellCount * i + 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCellCount) / 2;
 
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
@@ -156,12 +149,13 @@
         [self addSubview:xLabel];
     }
 
+    return YES;
 }
 
-- (void)drawYAxisLabels {
-    if (self.yAxisLabelDatas.count <= 1) {
-        DTLog(@"Error: y轴标签数量小于2个");
-        return;
+
+- (BOOL)drawYAxisLabels {
+    if(![super drawYAxisLabels]){
+        return NO;
     }
 
     NSUInteger sectionCellCount = self.yAxisCellCount / (self.yAxisLabelDatas.count - 1);
@@ -191,6 +185,7 @@
         [self addSubview:yLabel];
     }
 
+    return YES;
 }
 
 
@@ -240,14 +235,6 @@
 
     [super drawChart];
 
-    [self clearChartContent];
-
-    [self drawAxisLine];
-
-    [self drawXAxisLabels];
-    [self drawYAxisLabels];
-
-    [self drawValues];
 }
 
 - (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {

@@ -48,7 +48,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 - (void)initial {
     _showAnimation = YES;
     _showCoordinateAxis = YES;
-    _showCoordinateAxisLine = YES;
+    _showCoordinateAxisLine = NO;
     _showCoordinateAxisGrid = NO;
 
 
@@ -146,9 +146,56 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 #pragma mark - public method
 
+- (BOOL)drawXAxisLabels {
+    if (self.xAxisLabelDatas.count == 0) {
+        DTLog(@"Error: x轴标签数量是0");
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)drawYAxisLabels {
+    if (self.yAxisLabelDatas.count == 0) {
+        DTLog(@"Error: y轴标签数量是0");
+        return NO;
+    }
+    return YES;
+}
+
+- (void)drawAxisLine {
+
+    // x axis line
+    UIBezierPath *path = [UIBezierPath bezierPath];
+
+    [path moveToPoint:self.originPoint];
+    [path addLineToPoint:CGPointMake(CGRectGetWidth(self.frame), self.originPoint.y)];
+
+    // y axis line
+    [path moveToPoint:self.originPoint];
+    [path addLineToPoint:CGPointMake(self.originPoint.x, 0)];
+
+    self.coordinateAxisLine.path = path.CGPath;
+    self.coordinateAxisLine.hidden = !self.isShowCoordinateAxisLine;
+    [self.layer addSublayer:self.coordinateAxisLine];
+}
+
+- (void)drawValues {
+}
+
+- (void)clearChartContent {
+}
+
 - (void)drawChart {
     if (!self.multiData && self.singleData) {
         self.multiData = @[self.singleData];
+    }
+
+    [self clearChartContent];
+
+    [self drawAxisLine];
+
+    if ([self drawXAxisLabels] && [self drawYAxisLabels]) {
+        [self drawValues];
     }
 }
 

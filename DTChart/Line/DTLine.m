@@ -129,6 +129,9 @@
     }
     [minPointPath appendPath:maxPointPath];
     self.pointLayer.strokeColor = self.lineColor.CGColor;
+    if (self.singleData.secondColor) {
+        self.pointLayer.fillColor = self.singleData.secondColor.CGColor;
+    }
     self.pointLayer.path = minPointPath.CGPath;
 }
 

@@ -47,7 +47,7 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 @property(nonatomic, readonly) CGFloat coordinateAxisCellWidth;
 /**
  * 坐标轴距离边界的距离，决定了坐标轴标签文字的大小
- * 一般是左边和下边
+ * @note 一般是左边和下边
  */
 @property(nonatomic) ChartEdgeInsets coordinateAxisInsets;
 
@@ -77,7 +77,7 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  */
 @property(nonatomic, getter=isShowCoordinateAxis) BOOL showCoordinateAxis;
 /**
- * 显示坐标轴线，默认YES
+ * 显示坐标轴线，NO
  */
 @property(nonatomic, getter=isShowCoordinateAxisLine) BOOL showCoordinateAxisLine;
 /**
@@ -90,7 +90,7 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 @property(nonatomic) DTChartSingleData *singleData;
 /**
  * 多组坐标系值数据源
- * 多个values
+ * @note 多个values
  */
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *multiData;
 
@@ -146,6 +146,38 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  */
 - (void)initial __attribute__((objc_requires_super));
 
+/**
+ * 绘制x轴标签
+ * @return 绘制是否成功
+ * @attention 父类判断了x轴标签是否过少
+ * @attention 子类需要实现方法
+ */
+- (BOOL)drawXAxisLabels;
+
+/**
+ * 绘制y轴标签
+ * @return 绘制是否成功
+ * @attention 父类判断了y轴标签是否过少
+ * @attention 子类需要实现方法
+ */
+- (BOOL)drawYAxisLabels;
+
+/**
+ * 绘制坐标轴线
+ */
+- (void)drawAxisLine;
+
+/**
+ * 绘制坐标轴里的值
+ * @attention 子类实现
+ */
+- (void)drawValues;
+
+/**
+ * 清除坐标轴label，和坐标内的柱状体
+ * @note 子类实现
+ */
+- (void)clearChartContent;
 /**
  * 绘制整个坐标系
  */

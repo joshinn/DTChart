@@ -51,11 +51,11 @@
                 bar.barData = itemData;
                 bar.delegate = self;
                 bar.userInteractionEnabled = self.isBarSelectable;
-                if (self.barColor) {
-                    bar.barColor = self.barColor;
+                if (singleData.color) {
+                    bar.barColor = singleData.color;
                 }
-                if (self.barBorderColor) {
-                    bar.barBorderColor = self.barBorderColor;
+                if (singleData.secondColor) {
+                    bar.barBorderColor = singleData.secondColor;
                 }
 
                 CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
@@ -81,14 +81,13 @@
 
 #pragma mark - override
 
-- (void)drawXAxisLabels {
-    if (self.xAxisLabelDatas.count <= 1) {
-        DTLog(@"Error: x轴标签数量小于2个");
-        return;
+- (BOOL)drawXAxisLabels {
+    if(![super drawXAxisLabels]){
+        return NO;
     }
 
-    NSUInteger sectionCellCount = self.xAxisCellCount / (self.xAxisLabelDatas.count - 1);
 
+    NSUInteger sectionCellCount = self.xAxisCellCount / (self.xAxisLabelDatas.count - 1);
 
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
@@ -120,13 +119,12 @@
         [self addSubview:xLabel];
     }
 
-
+    return YES;
 }
 
-- (void)drawYAxisLabels {
-    if (self.yAxisLabelDatas.count == 0) {
-        DTLog(@"Error: y轴标签数量是0");
-        return;
+- (BOOL)drawYAxisLabels {
+    if(![super drawYAxisLabels]){
+        return NO;
     }
 
     NSUInteger sectionCellCount = self.yAxisCellCount / self.yAxisLabelDatas.count;
@@ -170,6 +168,7 @@
         [self addSubview:yLabel];
     }
 
+    return YES;
 }
 
 
@@ -201,11 +200,7 @@
 }
 
 - (void)drawChart {
-    DTLog(@"#### begin draw");
-
     [super drawChart];
-
-    DTLog(@"#### end draw");
 }
 
 

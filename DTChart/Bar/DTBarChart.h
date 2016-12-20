@@ -35,37 +35,6 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
  * 柱状体风格
  */
 @property(nonatomic) DTBarStyle barStyle;
-/**
- * 柱状体颜色
- */
-@property(nonatomic) UIColor *barColor;
-/**
- * 柱状体边线颜色
- */
-@property(nonatomic) UIColor *barBorderColor;
 
-/**
- * 绘制x轴标签
- */
-- (void)drawXAxisLabels;
 
-/**
- * 绘制y轴标签
- */
-- (void)drawYAxisLabels;
-
-/**
- * 绘制坐标轴线
- */
-- (void)drawAxisLine;
-
-/**
- * 绘制坐标轴里的值
- */
-- (void)drawValues;
-
-/**
- * 清除坐标轴label，和坐标内的柱状体
- */
-- (void)clearChartContent;
 @end

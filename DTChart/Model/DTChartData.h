@@ -26,8 +26,6 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 }
 
 
-
-
 #pragma mark - DTChartData 坐标系里具体的每个点数据
 
 @interface DTChartItemData : NSObject
@@ -45,9 +43,6 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 @end
 
 
-
-
-
 #pragma mark - DTChartSingleData 一组坐标系数据，包含了DTChartData集合
 
 @interface DTChartSingleData : NSObject
@@ -60,6 +55,11 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  */
 @property(nonatomic) UIColor *color;
 /**
+ * 坐标系里图形的颜色（柱状体、折线、饼图的颜色==）
+ * 辅助颜色，柱状图边线颜色，折线图点中心颜色==
+ */
+@property(nonatomic) UIColor *secondColor;
+/**
  * 折线图，折线宽度，默认是2
  */
 @property(nonatomic) CGFloat lineWidth;
@@ -69,9 +69,6 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 + (instancetype)singleData:(NSArray<DTChartItemData *> *)values;
 
 @end
-
-
-
 
 
 #pragma mark - DTAxisLabelData 坐标轴标签数据
@@ -88,7 +85,7 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 /**
  * 是否隐藏，默认NO
  */
-@property (nonatomic) BOOL hidden;
+@property(nonatomic) BOOL hidden;
 /**
  * 坐标轴上的点的位置
  */
