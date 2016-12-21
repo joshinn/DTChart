@@ -11,6 +11,7 @@
 #import "DTChartData.h"
 #import "DTVerticalBarChart.h"
 #import "DTHorizontalBarChart.h"
+#import "DTColor.h"
 
 @interface ViewController ()
 
@@ -160,11 +161,12 @@
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
         DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(90));
+        data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(40));
 
         [values addObject:data];
     }
     DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    singleData.color = DTColorArray[arc4random_uniform(9)];
     return singleData;
 }
 
@@ -177,6 +179,7 @@
         [values addObject:data];
     }
     DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    singleData.color = DTColorArray[arc4random_uniform(9)];
     return singleData;
 }
 
@@ -201,17 +204,19 @@
 
 
     NSMutableArray<DTChartSingleData *> *values = [NSMutableArray array];
-    for (NSUInteger i = 1; i <= 1 + arc4random_uniform(3); ++i) {
+    for (NSUInteger i = 1; i <= 3; ++i) {
         [values addObject:[self simulateData:8]];
     }
     self.barChart.multiData = values;
+    self.barChart.barChartStyle = DTBarChartStyleHeap;
     [self.barChart drawChart];
 
     NSMutableArray<DTChartSingleData *> *values2 = [NSMutableArray array];
-    for (NSUInteger i = 1; i <= 1 + arc4random_uniform(3); ++i) {
+    for (NSUInteger i = 1; i <= 3; ++i) {
         [values2 addObject:[self simulateHorizontalData:8]];
     }
     self.horizontalBarChart.multiData = values2;
+    self.horizontalBarChart.barChartStyle = DTBarChartStyleLump;
     self.horizontalBarChart.showAnimation = YES;
     [self.horizontalBarChart drawChart];
 }

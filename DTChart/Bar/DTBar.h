@@ -13,30 +13,37 @@
 
 typedef NS_ENUM(NSInteger, DTBarOrientation) {
     DTBarOrientationUp,         // 方向朝上，默认方向
-    DTBarOrientationDown,       // 方向朝下
-    DTBarOrientationLeft,       // 方向朝左
+//    DTBarOrientationDown,       // 方向朝下
+//    DTBarOrientationLeft,       // 方向朝左
     DTBarOrientationRight       // 方向朝右
 };
 
-typedef NS_ENUM(NSInteger, DTBarStyle) {
-    DTBarStyleTopBorder,         // 边线在顶部
-    DTBarStyleSidesBorder        // 边线在两侧
+typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
+    DTBarBorderStyleNone,              // 没有边线
+    DTBarBorderStyleTopBorder,         // 边线在顶部
+    DTBarBorderStyleSidesBorder        // 边线在两侧
 };
 
 
 @protocol DTBarDelegate <NSObject>
 
 @optional
-- (void)dTBarSelected:(DTBar *)bar;
+- (void)_DTBarSelected:(DTBar *)bar;
 
 @end
 
+
+/**
+ * 柱状图里的柱状体
+ *
+ * @attention 不要直接使用init初始化
+ */
 @interface DTBar : UIView
 
 @property(nonatomic, weak) id <DTBarDelegate> delegate;
 
-@property(nonatomic, readonly) DTBarOrientation barOrientation;
-@property(nonatomic, readonly) DTBarStyle barStyle;
+@property(nonatomic) DTBarOrientation barOrientation;
+@property(nonatomic) DTBarBorderStyle barBorderStyle;
 @property(nonatomic) UIColor *barColor;
 @property(nonatomic) UIColor *barBorderColor;
 /**
@@ -45,7 +52,7 @@ typedef NS_ENUM(NSInteger, DTBarStyle) {
 @property(nonatomic, weak) DTChartItemData *barData;
 
 /**
- * 实例化，DTBarOrientationUp，DTBarStyleTopBorder
+ * 实例化，DTBarOrientationUp，DTBarBorderStyleTopBorder
  * @return instance
  */
 + (instancetype)bar;
@@ -56,7 +63,7 @@ typedef NS_ENUM(NSInteger, DTBarStyle) {
  * @param style 柱状体样式
  * @return instance
  */
-+ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarStyle)style;
++ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style;
 
 /**
  * 显示柱状体出现动画

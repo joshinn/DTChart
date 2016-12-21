@@ -9,17 +9,18 @@
 #import "DTHorizontalBarChart.h"
 #import "DTChartLabel.h"
 #import "DTChartData.h"
+#import "DTHeapBar.h"
 
 
 @implementation DTHorizontalBarChart
 
-@synthesize barStyle = _barStyle;
+@synthesize barBorderStyle = _barBorderStyle;
 
 
 - (void)initial {
     [super initial];
 
-    _barStyle = DTBarStyleTopBorder;
+    _barBorderStyle = DTBarBorderStyleTopBorder;
 }
 
 #pragma mark - private method
@@ -47,7 +48,7 @@
 
             if (yData.value == itemData.itemValue.y) {
 
-                DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barStyle];
+                DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                 bar.barData = itemData;
                 bar.delegate = self;
                 bar.userInteractionEnabled = self.isBarSelectable;
@@ -79,10 +80,144 @@
 }
 
 
+- (void)generateHeapBars:(DTChartSingleData *)singleData
+                   index:(NSUInteger)index
+           xAxisMaxVaule:(DTAxisLabelData *)xMaxData
+           xAxisMinValue:(DTAxisLabelData *)xMinData {
+
+
+    for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
+        DTChartItemData *itemData = singleData.itemValues[i];
+
+        for (NSUInteger j = 0; j < self.yAxisLabelDatas.count; ++j) {
+            DTAxisLabelData *yData = self.yAxisLabelDatas[j];
+
+            if (yData.value == itemData.itemValue.y) {
+
+                __block DTHeapBar *bar = nil;
+                [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *v, NSUInteger idx, BOOL *stop) {
+                    if([v isKindOfClass:[DTHeapBar class]]){
+                        DTHeapBar *b = v;
+                        if(b.barTag == itemData.itemValue.y){
+                            bar = b;
+                            *stop = YES;
+                        }
+                    }
+                }];
+
+
+                if(!bar){
+                    bar = [DTHeapBar bar:DTBarOrientationRight];
+                }
+
+                bar.barTag = itemData.itemValue.y;
+
+                bar.barData = itemData;
+                bar.delegate = self;
+                bar.userInteractionEnabled = self.isBarSelectable;
+                if (singleData.color) {
+                    bar.barColor = singleData.color;
+                }
+                if (singleData.secondColor) {
+                    bar.barBorderColor = singleData.secondColor;
+                }
+
+                CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
+                CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                CGFloat x = 0;
+                CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
+
+                bar.frame = CGRectMake(x, y, width, height);
+
+                [bar appendData:itemData barLength:width barColor:bar.barColor];
+
+                [self.contentView addSubview:bar];
+
+                if (self.isShowAnimation) {
+                    [bar startAppearAnimation];
+                }
+
+                break;
+            }
+
+        }
+
+    }
+
+}
+
+- (void)generateLumpBars:(DTChartSingleData *)singleData
+                   index:(NSUInteger)index
+           xAxisMaxVaule:(DTAxisLabelData *)xMaxData
+           xAxisMinValue:(DTAxisLabelData *)xMinData {
+
+    for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
+        DTChartItemData *itemData = singleData.itemValues[i];
+
+        for (NSUInteger j = 0; j < self.yAxisLabelDatas.count; ++j) {
+            DTAxisLabelData *yData = self.yAxisLabelDatas[j];
+
+            if (yData.value == itemData.itemValue.y) {
+
+                if (index == 0) {
+
+
+                    DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
+                    bar.barData = itemData;
+                    bar.delegate = self;
+                    bar.userInteractionEnabled = self.isBarSelectable;
+                    if (singleData.color) {
+                        bar.barColor = singleData.color;
+                    }
+                    if (singleData.secondColor) {
+                        bar.barBorderColor = singleData.secondColor;
+                    }
+
+                    CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
+                    CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                    CGFloat x = 0;
+                    CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
+
+                    bar.frame = CGRectMake(x, y, width, height);
+                    [self.contentView addSubview:bar];
+
+                    if (self.isShowAnimation) {
+                        [bar startAppearAnimation];
+                    }
+
+                } else {
+
+                    UIView *lumpView = [UIView new];
+                    if (singleData.color) {
+                        lumpView.backgroundColor = singleData.color;
+                    } else{
+                        lumpView.backgroundColor = [UIColor yellowColor];
+                    }
+
+                    CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
+                    CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                    CGFloat x = width - self.coordinateAxisCellWidth / 3;
+                    CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
+                    width = self.coordinateAxisCellWidth / 3;
+
+                    lumpView.frame = CGRectMake(x, y, width, height);
+                    [self.contentView addSubview:lumpView];
+
+                }
+
+
+                break;
+            }
+
+        }
+
+    }
+}
+
 #pragma mark - override
 
 - (BOOL)drawXAxisLabels {
-    if(![super drawXAxisLabels]){
+    if (![super drawXAxisLabels]) {
         return NO;
     }
 
@@ -123,16 +258,18 @@
 }
 
 - (BOOL)drawYAxisLabels {
-    if(![super drawYAxisLabels]){
+    if (![super drawYAxisLabels]) {
         return NO;
     }
 
     NSUInteger sectionCellCount = self.yAxisCellCount / self.yAxisLabelDatas.count;
 
-    if (sectionCellCount > 1) {
-        self.barStyle = DTBarStyleTopBorder;
+    if (self.barChartStyle == DTBarChartStyleLump) {
+        self.barBorderStyle = DTBarBorderStyleNone;
+    } else if (sectionCellCount > 1) {
+        self.barBorderStyle = DTBarBorderStyleTopBorder;
     } else {
-        self.barStyle = DTBarStyleSidesBorder;
+        self.barBorderStyle = DTBarBorderStyleSidesBorder;
     }
 
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
@@ -184,15 +321,16 @@
         switch (self.barChartStyle) {
 
             case DTBarChartStyleStartingLine: {
-                [self generateStartingLineBars:singleData
-                                         index:n
-                                 xAxisMaxVaule:xMaxData
-                                 xAxisMinValue:xMinData];
+                [self generateStartingLineBars:singleData index:n xAxisMaxVaule:xMaxData xAxisMinValue:xMinData];
             }
                 break;
-            case DTBarChartStyleHeap:
+            case DTBarChartStyleHeap: {
+                [self generateHeapBars:singleData index:n xAxisMaxVaule:xMaxData xAxisMinValue:xMinData];
+            }
                 break;
-            case DTBarChartStyleLump:
+            case DTBarChartStyleLump: {
+                [self generateLumpBars:singleData index:n xAxisMaxVaule:xMaxData xAxisMinValue:xMinData];
+            }
                 break;
         }
 
@@ -206,7 +344,7 @@
 
 #pragma mark - DTBarDelegate
 
-- (void)dTBarSelected:(DTBar *)bar {
+- (void)_DTBarSelected:(DTBar *)bar {
 
 }
 

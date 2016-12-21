@@ -16,6 +16,7 @@
 		65C53E231DF8FA7300732385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E211DF8FA7300732385 /* Main.storyboard */; };
 		65C53E251DF8FA7300732385 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E241DF8FA7300732385 /* Assets.xcassets */; };
 		65C53E281DF8FA7300732385 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E261DF8FA7300732385 /* LaunchScreen.storyboard */; };
+		65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */; };
 		65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F221DFEA42A007AFD8D /* DTBar.m */; };
 		65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F241DFEA42A007AFD8D /* DTBarChart.m */; };
 		65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F261DFEA42A007AFD8D /* DTHorizontalBarChart.m */; };
@@ -45,6 +46,8 @@
 		65C53E241DF8FA7300732385 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65C53E271DF8FA7300732385 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65C53E291DF8FA7300732385 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65CC6DF01E0A640E00E2C36B /* DTHeapBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTHeapBar.h; sourceTree = "<group>"; };
+		65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHeapBar.m; sourceTree = "<group>"; };
 		65CD0F211DFEA42A007AFD8D /* DTBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBar.h; sourceTree = "<group>"; };
 		65CD0F221DFEA42A007AFD8D /* DTBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTBar.m; sourceTree = "<group>"; };
 		65CD0F231DFEA42A007AFD8D /* DTBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBarChart.h; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 			children = (
 				65CD0F211DFEA42A007AFD8D /* DTBar.h */,
 				65CD0F221DFEA42A007AFD8D /* DTBar.m */,
+				65CC6DF01E0A640E00E2C36B /* DTHeapBar.h */,
+				65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */,
 				65CD0F231DFEA42A007AFD8D /* DTBarChart.h */,
 				65CD0F241DFEA42A007AFD8D /* DTBarChart.m */,
 				65CD0F251DFEA42A007AFD8D /* DTHorizontalBarChart.h */,
@@ -261,6 +266,7 @@
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				65CD0F381DFEA42A007AFD8D /* DTChartBaseComponent.m in Sources */,
 				654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */,
+				65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */,
 				6575AFC61DFFFEBB00F06DDC /* LineViewController.m in Sources */,
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				65C53E201DF8FA7300732385 /* ViewController.m in Sources */,

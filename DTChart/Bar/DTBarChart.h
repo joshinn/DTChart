@@ -32,9 +32,9 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
  */
 @property(nonatomic, getter=isBarSelectable) BOOL barSelectable;
 /**
- * 柱状体风格
+ * 柱状体边线风格
  */
-@property(nonatomic) DTBarStyle barStyle;
+@property(nonatomic) DTBarBorderStyle barBorderStyle;
 
 
 @end

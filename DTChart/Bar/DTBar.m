@@ -24,13 +24,13 @@ static CGFloat const DTBarTopBorderWidth = 5;
 static CGFloat const DTBarSidesBorderWidth = 2;
 
 + (instancetype)bar {
-    return [DTBar bar:DTBarOrientationUp style:DTBarStyleTopBorder];
+    return [DTBar bar:DTBarOrientationUp style:DTBarBorderStyleTopBorder];
 }
 
-+ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarStyle)style {
++ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style {
     DTBar *bar = [[DTBar alloc] init];
     bar.barOrientation = orientation;
-    bar.barStyle = style;
+    bar.barBorderStyle = style;
     return bar;
 }
 
@@ -45,10 +45,13 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
         self.backgroundColor = _barBorderColor;
 
-        _barFrontView = [[UIView alloc] initWithFrame:CGRectZero];
-        _barFrontView.backgroundColor = _barColor;
+        if (_barBorderStyle != DTBarBorderStyleNone) {
 
-        [self addSubview:_barFrontView];
+            _barFrontView = [[UIView alloc] initWithFrame:CGRectZero];
+            _barFrontView.backgroundColor = _barColor;
+
+            [self addSubview:_barFrontView];
+        }
 
     }
     return self;
@@ -58,20 +61,39 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     _barOrientation = barOrientation;
 }
 
-- (void)setBarStyle:(DTBarStyle)barStyle {
-    _barStyle = barStyle;
+- (void)setBarBorderStyle:(DTBarBorderStyle)barStyle {
+    _barBorderStyle = barStyle;
+
+    if (_barBorderStyle != DTBarBorderStyleNone) {
+
+        _barFrontView = [[UIView alloc] initWithFrame:CGRectZero];
+        _barFrontView.backgroundColor = _barColor;
+
+        [self addSubview:_barFrontView];
+    } else {
+        [_barFrontView removeFromSuperview];
+        _barFrontView = nil;
+    }
 }
 
 - (void)setBarColor:(UIColor *)barColor {
     _barColor = barColor;
 
-    self.barFrontView.backgroundColor = barColor;
+    if (_barBorderStyle == DTBarBorderStyleNone) {
+        self.backgroundColor = barColor;
+    } else {
+        self.barFrontView.backgroundColor = barColor;
+    }
 }
 
 - (void)setBarBorderColor:(UIColor *)barBorderColor {
     _barBorderColor = barBorderColor;
 
-    self.backgroundColor = barBorderColor;
+    if (_barBorderStyle == DTBarBorderStyleNone) {
+        self.barFrontView.backgroundColor = barBorderColor;
+    } else {
+        self.backgroundColor = barBorderColor;
+    }
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -87,33 +109,41 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     switch (self.barOrientation) {
 
         case DTBarOrientationUp: {
-            if (self.barStyle == DTBarStyleTopBorder) {
+            if (self.barBorderStyle == DTBarBorderStyleNone) {
+//                self.barFrontView.frame = self.bounds;
+
+            } else if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
                 self.barFrontView.frame = CGRectMake(0, DTBarTopBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarTopBorderWidth);
-            } else if (self.barStyle == DTBarStyleSidesBorder) {
+            } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
                 self.barFrontView.frame = CGRectMake(DTBarSidesBorderWidth, 0, CGRectGetWidth(self.frame) - DTBarSidesBorderWidth * 2, CGRectGetHeight(self.frame));
             }
         }
             break;
-        case DTBarOrientationDown: {
-            if (self.barStyle == DTBarStyleTopBorder) {
-                self.barFrontView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarTopBorderWidth);
-            } else if (self.barStyle == DTBarStyleSidesBorder) {
-                self.barFrontView.frame = CGRectMake(DTBarSidesBorderWidth, 0, CGRectGetWidth(self.frame) - DTBarSidesBorderWidth * 2, CGRectGetHeight(self.frame));
-            }
-        }
-            break;
-        case DTBarOrientationLeft: {
-            if (self.barStyle == DTBarStyleTopBorder) {
-                self.barFrontView.frame = CGRectMake(DTBarTopBorderWidth, 0, CGRectGetWidth(self.frame) - DTBarTopBorderWidth, CGRectGetHeight(self.frame));
-            } else if (self.barStyle == DTBarStyleSidesBorder) {
-                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
-            }
-        }
-            break;
+
+//        case DTBarOrientationDown: {
+//            if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
+//                self.barFrontView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarTopBorderWidth);
+//            } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
+//                self.barFrontView.frame = CGRectMake(DTBarSidesBorderWidth, 0, CGRectGetWidth(self.frame) - DTBarSidesBorderWidth * 2, CGRectGetHeight(self.frame));
+//            }
+//        }
+//            break;
+//        case DTBarOrientationLeft: {
+//            if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
+//                self.barFrontView.frame = CGRectMake(DTBarTopBorderWidth, 0, CGRectGetWidth(self.frame) - DTBarTopBorderWidth, CGRectGetHeight(self.frame));
+//            } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
+//                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
+//            }
+//        }
+//            break;
+
         case DTBarOrientationRight: {
-            if (self.barStyle == DTBarStyleTopBorder) {
+            if (self.barBorderStyle == DTBarBorderStyleNone) {
+//                self.barFrontView.frame = self.bounds;
+
+            } else if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
                 self.barFrontView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame) - DTBarTopBorderWidth, CGRectGetHeight(self.frame));
-            } else if (self.barStyle == DTBarStyleSidesBorder) {
+            } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
                 self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
             }
         }
@@ -137,8 +167,8 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     [self startSelectedAnimation];
 
     id <DTBarDelegate> o = self.delegate;
-    if ([o respondsToSelector:@selector(dTBarSelected:)]) {
-        [o dTBarSelected:self];
+    if ([o respondsToSelector:@selector(_DTBarSelected:)]) {
+        [o _DTBarSelected:self];
     }
 }
 
@@ -156,17 +186,16 @@ static CGFloat const DTBarSidesBorderWidth = 2;
         case DTBarOrientationUp: {
             fromFrame = CGRectMake(CGRectGetMinX(self.barFrame), CGRectGetMaxY(self.barFrame), CGRectGetWidth(self.barFrame), 0);
         }
-
             break;
-        case DTBarOrientationDown: {
-            fromFrame = CGRectMake(CGRectGetMinX(self.barFrame), 0, CGRectGetWidth(self.barFrame), 0);
-        }
-
-            break;
-        case DTBarOrientationLeft: {
-            fromFrame = CGRectMake(CGRectGetMaxX(self.barFrame), CGRectGetMinY(self.barFrame), 0, CGRectGetHeight(self.barFrame));
-        }
-            break;
+//        case DTBarOrientationDown: {
+//            fromFrame = CGRectMake(CGRectGetMinX(self.barFrame), 0, CGRectGetWidth(self.barFrame), 0);
+//        }
+//
+//            break;
+//        case DTBarOrientationLeft: {
+//            fromFrame = CGRectMake(CGRectGetMaxX(self.barFrame), CGRectGetMinY(self.barFrame), 0, CGRectGetHeight(self.barFrame));
+//        }
+//            break;
         case DTBarOrientationRight: {
             fromFrame = CGRectMake(CGRectGetMinX(self.barFrame), CGRectGetMinY(self.barFrame), 0, CGRectGetHeight(self.barFrame));
         }
