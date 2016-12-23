@@ -54,6 +54,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     _showCoordinateAxis = YES;
     _showCoordinateAxisLine = NO;
     _showCoordinateAxisGrid = NO;
+    _valueSelectable = NO;
 
 
     _originPoint = CGPointMake(_coordinateAxisInsets.left * _coordinateAxisCellWidth,

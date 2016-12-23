@@ -154,7 +154,7 @@
 //    barChart.showCoordinateAxis = NO;
     hBarChart.showAnimation = NO;
     hBarChart.showCoordinateAxisGrid = YES;
-    hBarChart.barSelectable = NO;
+    hBarChart.valueSelectable = NO;
 
 
     [hBarChart drawChart];

@@ -51,7 +51,7 @@
                 DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isBarSelectable;
+                bar.barSelectable = self.isValueSelectable;
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -114,7 +114,7 @@
 
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isBarSelectable;
+                bar.barSelectable = self.isValueSelectable;
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -164,7 +164,7 @@
                     DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                     bar.barData = itemData;
                     bar.delegate = self;
-                    bar.barSelectable = self.isBarSelectable;
+                    bar.barSelectable = self.isValueSelectable;
                     if (singleData.color) {
                         bar.barColor = singleData.color;
                     }
@@ -187,7 +187,7 @@
                 } else {
 
                     DTBar *lump = [DTBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
-                    lump.barSelectable = self.isBarSelectable;
+                    lump.barSelectable = self.isValueSelectable;
                     if (singleData.color) {
                         lump.barColor = singleData.color;
                     } else{

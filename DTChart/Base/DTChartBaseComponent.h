@@ -12,6 +12,15 @@
 @class DTChartItemData;
 @class DTChartSingleData;
 
+
+
+CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
+    CGFloat fx = (point2.x - point1.x);
+    CGFloat fy = (point2.y - point1.y);
+    return sqrtf((fx * fx + fy * fy));
+}
+
+
 /**
  * 默认一个单元格的宽度15
  */
@@ -87,6 +96,11 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
  */
 @property(nonatomic, getter=isShowCoordinateAxisGrid) BOOL showCoordinateAxisGrid;
 /**
+ * 坐标系里的点、柱状体等是否可点击选择，默认NO
+ */
+@property(nonatomic, getter=isValueSelectable) BOOL valueSelectable;
+
+/**
  * 坐标系值数据源
  */
 @property(nonatomic) DTChartSingleData *singleData;
@@ -98,6 +112,8 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
 
 
 @property (nonatomic, copy) ColorsCompletionBlock colorsCompletionBlock;
+
+
 
 #pragma mark - ####### protect property #######
 
@@ -129,6 +145,8 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
  * 坐标轴内容view，坐标轴不在里面
  */
 @property(nonatomic, readonly) UIView *contentView;
+
+
 
 
 #pragma mark - ####### method #######

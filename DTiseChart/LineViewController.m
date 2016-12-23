@@ -83,6 +83,9 @@
     lineChart.showCoordinateAxisGrid = YES;
 //    lineChart.barSelectable = NO;
 
+    [lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, DTChartItemData *itemData) {
+        DTLog(@"index = %@, %@ touch point = %@", @(lineIndex), @(pointIndex), NSStringFromCGPoint(itemData.position));
+    }];
 
     [lineChart drawChart];
 

@@ -56,7 +56,7 @@
                 DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isBarSelectable;
+                bar.barSelectable = self.isValueSelectable;
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -119,7 +119,7 @@
 
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isBarSelectable;
+                bar.barSelectable = self.isValueSelectable;
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -169,7 +169,7 @@
                     DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                     bar.barData = itemData;
                     bar.delegate = self;
-                    bar.barSelectable = self.isBarSelectable;
+                    bar.barSelectable = self.isValueSelectable;
                     if (singleData.color) {
                         bar.barColor = singleData.color;
                     }

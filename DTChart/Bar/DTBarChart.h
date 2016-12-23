@@ -28,10 +28,6 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
  */
 @property(nonatomic) CGFloat barWidth;
 /**
- * 柱状体是否可点击选择
- */
-@property(nonatomic, getter=isBarSelectable) BOOL barSelectable;
-/**
  * 柱状体边线风格
  */
 @property(nonatomic) DTBarBorderStyle barBorderStyle;

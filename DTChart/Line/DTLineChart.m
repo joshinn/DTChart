@@ -10,14 +10,11 @@
 #import "DTChartLabel.h"
 #import "DTChartData.h"
 #import "DTLine.h"
-#import "DTColor.h"
 
 
 @interface DTLineChart ()
 
 @property(nonatomic) NSMutableArray<DTLine *> *valueLines;
-
-@property(nonatomic) NSMutableArray<UIColor *> *colors;
 
 @end
 
@@ -27,7 +24,7 @@
     [super initial];
 
     _xAxisAlignGrid = NO;
-    _colors = [DTColorArray mutableCopy];
+    self.userInteractionEnabled = YES;
 }
 
 - (NSMutableArray<DTLine *> *)valueLines {
@@ -39,25 +36,53 @@
 
 #pragma mark - private method
 
-/**
- * 清除坐标系里的轴标签和值线条
- */
-- (void)clearChartContent {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchKeyPoint:touches withEvent:event];
+}
 
-    NSArray<CALayer *> *layers = [self.contentView.layer.sublayers copy];
-    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[DTLine class]]) {
-            DTLine *line = (DTLine *) obj;
-            [line removeEdgePoint];
-            [line removeFromSuperlayer];
-        }
-    }];
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchKeyPoint:touches withEvent:event];
+}
 
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[DTChartLabel class]]) {
-            [obj removeFromSuperview];
+- (void)touchKeyPoint:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    CGFloat minDistance = -100;
+    NSInteger n1 = -1;
+    NSInteger n2 = -1;
+
+    for (NSUInteger i = 0; i < self.multiData.count; ++i) {
+        DTChartSingleData *sData = self.multiData[i];
+
+        for (NSUInteger n = 0; n < sData.itemValues.count; ++n) {
+            DTChartItemData *itemData = sData.itemValues[n];
+
+            CGFloat distance = CGPointGetDistance(touchPoint, itemData.position);
+            if (distance < 10) {
+                if (minDistance == -100) {
+
+                    minDistance = distance;
+                    n1 = i;
+                    n2 = n;
+                } else {
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        n1 = i;
+                        n2 = n;
+                    }
+                }
+            }
+
         }
-    }];
+    }
+
+
+    if (n1 >= 0 && n2 >= 0 && self.lineChartTouchBlock) {
+
+        DTChartItemData *itemData = self.multiData[(NSUInteger) n1].itemValues[(NSUInteger) n2];
+        self.lineChartTouchBlock(n1, n2, itemData);
+    }
 }
 
 /**
@@ -88,6 +113,7 @@
         CGFloat x = self.coordinateAxisCellWidth * (xMinData.axisPosition + ratioPosition);
         CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
         itemData.position = CGPointMake(x, y);
+        DTLog(@"position = %@", NSStringFromCGPoint(itemData.position));
 
         if (path) {
             [path addLineToPoint:itemData.position];
@@ -103,6 +129,27 @@
 
 
 #pragma mark - override
+
+/**
+ * 清除坐标系里的轴标签和值线条
+ */
+- (void)clearChartContent {
+
+    NSArray<CALayer *> *layers = [self.contentView.layer.sublayers copy];
+    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTLine class]]) {
+            DTLine *line = (DTLine *) obj;
+            [line removeEdgePoint];
+            [line removeFromSuperlayer];
+        }
+    }];
+
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTChartLabel class]]) {
+            [obj removeFromSuperview];
+        }
+    }];
+}
 
 
 - (BOOL)drawXAxisLabels {
@@ -209,7 +256,6 @@
 
 - (void)drawValues {
 
-    self.colors = [DTColorArray mutableCopy];
     [self.valueLines removeAllObjects];
 
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
@@ -332,7 +378,6 @@
                 [self.valueLines addObject:line];
                 [self.contentView.layer addSublayer:line];
             }
-
 
             if (animation) {
                 [line startAppearAnimation];
