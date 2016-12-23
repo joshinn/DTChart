@@ -12,6 +12,9 @@
 
 @interface DTLineChart : DTChartBaseComponent
 
-
+/**
+ * x轴标签是否与格子对齐
+ */
+@property (nonatomic) BOOL xAxisAlignGrid;
 
 @end

@@ -107,6 +107,7 @@
         [values addObject:[self simulateData:8]];
     }
     self.lineChart.multiData = values;
+    self.lineChart.xAxisAlignGrid = arc4random_uniform(2) % 2 != 1;
     self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
     [self.lineChart drawChart];
 }

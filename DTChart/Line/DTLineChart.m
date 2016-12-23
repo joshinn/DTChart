@@ -26,6 +26,7 @@
 - (void)initial {
     [super initial];
 
+    _xAxisAlignGrid = NO;
     _colors = [DTColorArray mutableCopy];
 }
 
@@ -120,11 +121,15 @@
     }
 
     // 第一个单元格空余出来
-    NSUInteger sectionCellCount = 0;
+    CGFloat sectionCellCount = 0;
     if (self.xAxisLabelDatas.count == 1) {
         sectionCellCount = self.xAxisCellCount / 2 + 1;
     } else {
-        sectionCellCount = (self.xAxisCellCount - 1) / (self.xAxisLabelDatas.count - 1);
+        if (self.xAxisAlignGrid) {
+            sectionCellCount = (self.xAxisCellCount - 1) * 1 / (self.xAxisLabelDatas.count - 1);
+        } else {
+            sectionCellCount = (self.xAxisCellCount - 1) * 1.0f / (self.xAxisLabelDatas.count - 1);
+        }
     }
 
 
