@@ -101,16 +101,6 @@
     return path;
 }
 
-/**
- * 获取预定义好的颜色
- * @return 颜色
- */
-- (UIColor *)getColor {
-    UIColor *color = self.colors.firstObject;
-    [self.colors removeObjectAtIndex:0];
-    [self.colors addObject:color];
-    return color;
-}
 
 #pragma mark - override
 
@@ -240,7 +230,6 @@
         if (path) {
 
             DTLine *line = [DTLine line:DTLinePointTypeCircle];
-            line.lineColor = [self getColor];
             line.linePath = path;
             line.singleData = singleData;
             [self.valueLines addObject:line];
@@ -266,6 +255,7 @@
 }
 
 - (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [super reloadChartItems:indexes withAnimation:animation];
 
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
@@ -308,6 +298,8 @@
 }
 
 - (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [super insertChartItems:indexes withAnimation:animation];
+
 
     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
@@ -331,7 +323,6 @@
         if (path) {
 
             DTLine *line = [DTLine line:DTLinePointTypeCircle];
-            line.lineColor = [self getColor];
             line.singleData = singleData;
             line.linePath = path;
             if (self.valueLines.count >= n) {
@@ -356,6 +347,8 @@
 }
 
 - (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [super deleteChartItems:indexes withAnimation:animation];
+
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         DTLog(@"enum index = %@", @(index));
         DTLine *line = self.valueLines[index];

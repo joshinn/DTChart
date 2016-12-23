@@ -72,6 +72,9 @@
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
     barChart.showCoordinateAxisGrid = YES;
+    barChart.colorsCompletionBlock = ^(NSArray<UIColor *> *colors){
+        NSLog(@"colors = %@", colors);
+    };
 
     [barChart drawChart];
 
@@ -166,7 +169,6 @@
         [values addObject:data];
     }
     DTChartSingleData *singleData = [DTChartSingleData singleData:values];
-    singleData.color = DTColorArray[arc4random_uniform(9)];
     return singleData;
 }
 
@@ -179,7 +181,6 @@
         [values addObject:data];
     }
     DTChartSingleData *singleData = [DTChartSingleData singleData:values];
-    singleData.color = DTColorArray[arc4random_uniform(9)];
     return singleData;
 }
 

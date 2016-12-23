@@ -51,7 +51,7 @@
                 DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.userInteractionEnabled = self.isBarSelectable;
+                bar.barSelectable = self.isBarSelectable;
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -114,7 +114,7 @@
 
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.userInteractionEnabled = self.isBarSelectable;
+                bar.barSelectable = self.isBarSelectable;
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }

@@ -35,6 +35,8 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 }
 
 
+typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
+
 @interface DTChartBaseComponent : UIView {
 
 }
@@ -94,6 +96,8 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  */
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *multiData;
 
+
+@property (nonatomic, copy) ColorsCompletionBlock colorsCompletionBlock;
 
 #pragma mark - ####### protect property #######
 
@@ -178,26 +182,30 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
  * @note 子类实现
  */
 - (void)clearChartContent;
+
 /**
  * 绘制整个坐标系
  */
 - (void)drawChart;
+
 /**
  * 刷新项
  * @param indexes    项的序号
  * @param animation 是否有动画
  */
-- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
+
 /**
  * 插入新的项
  * @param indexes 项的序号
  * @param animation 是否有动画
  */
-- (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+- (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
+
 /**
  * 删除项
  * @param indexes 项的序号
  * @param animation 是否有动画
  */
-- (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+- (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 @end

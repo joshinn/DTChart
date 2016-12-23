@@ -44,6 +44,9 @@
     if (singleData.color) {
         self.lineColor = singleData.color;
     }
+    if(singleData.secondColor){
+        self.pointLayer.fillColor = singleData.secondColor.CGColor;
+    }
 }
 
 
@@ -94,10 +97,6 @@
         }
     }
 
-
-//    if (minData == maxData) {
-//        return;
-//    }
 
     CGFloat r = self.lineWidth * 2;
     UIBezierPath *minPointPath;

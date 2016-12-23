@@ -6,8 +6,21 @@
 //  Copyright © 2016年 studio.joshin. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import UIKit;
 
 @interface DTColorManager : NSObject
++ (instancetype)manager;
 
+/**
+ * 获取主颜色
+ * @return 颜色
+ */
+- (UIColor *)getColor;
+
+/**
+ * 获取副颜色
+ * @param color 主颜色
+ * @return 副颜色
+ */
+- (UIColor *)getLightColor:(UIColor *)color;
 @end

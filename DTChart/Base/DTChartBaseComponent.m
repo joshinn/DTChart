@@ -8,12 +8,16 @@
 
 #import "DTChartBaseComponent.h"
 #import "DTChartData.h"
+#import "DTColorManager.h"
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 @interface DTChartBaseComponent ()
 
 @property(nonatomic) CAShapeLayer *coordinateAxisLine;
+@property(nonatomic) CAShapeLayer *gridLine;
+@property (nonatomic) DTColorManager *colorManager;
+
 
 @end
 
@@ -97,17 +101,25 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     }
 
 
-    CAShapeLayer *girdLine = [CAShapeLayer layer];
-    girdLine.strokeColor = [UIColor lightGrayColor].CGColor;
-    girdLine.lineWidth = 1;
-    girdLine.fillColor = nil;
-    girdLine.path = path.CGPath;
-    [self.layer insertSublayer:girdLine atIndex:0];
-
-    girdLine.hidden = NO;
+    self.gridLine.path = path.CGPath;
+    if (!self.gridLine.superlayer) {
+        [self.layer insertSublayer:self.gridLine atIndex:0];
+    }
+    self.gridLine.hidden = !self.showCoordinateAxisGrid;
 }
 
 #pragma mark - delay init
+
+- (CAShapeLayer *)gridLine {
+    if (!_gridLine) {
+        _gridLine = [CAShapeLayer layer];
+        _gridLine.strokeColor = [UIColor lightGrayColor].CGColor;
+        _gridLine.lineWidth = 1;
+        _gridLine.fillColor = nil;
+    }
+    return _gridLine;
+}
+
 
 - (CAShapeLayer *)coordinateAxisLine {
     if (!_coordinateAxisLine) {
@@ -132,7 +144,11 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 - (void)setShowCoordinateAxisGrid:(BOOL)showCoordinateAxisGrid {
     _showCoordinateAxisGrid = showCoordinateAxisGrid;
 
-    [self drawGrid];
+    if (showCoordinateAxisGrid) {
+        [self drawGrid];
+    } else{
+        self.gridLine.hidden = !showCoordinateAxisGrid;
+    }
 }
 
 
@@ -143,6 +159,27 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     lineLayer.fillColor = nil;
     return lineLayer;
 }
+
+#pragma mark - private method
+
+/**
+ * 给没有颜色的数据 生成数据
+ */
+-(void)generateColors{
+    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+    for(DTChartSingleData *sData in self.multiData){
+        if(!sData.color){
+            sData.color = [self.colorManager getColor];
+            sData.secondColor = [self.colorManager getLightColor:sData.color];
+        }
+        [colors addObject:sData.color];
+    }
+    if(colors.count > 0 && self.colorsCompletionBlock){
+        self.colorsCompletionBlock(colors);
+    }
+}
+
+
 
 #pragma mark - public method
 
@@ -190,6 +227,10 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
         self.multiData = @[self.singleData];
     }
 
+    self.colorManager = [DTColorManager manager];
+    [self generateColors];
+
+
     [self clearChartContent];
 
     [self drawAxisLine];
@@ -203,6 +244,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 }
 
 - (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [self generateColors];
 }
 
 - (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {

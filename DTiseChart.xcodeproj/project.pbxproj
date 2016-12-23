@@ -18,6 +18,7 @@
 		65C53E281DF8FA7300732385 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E261DF8FA7300732385 /* LaunchScreen.storyboard */; };
 		65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */; };
 		65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF71E0CFAE700E2C36B /* DTColorManager.m */; };
+		65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DFA1E0D0AC300E2C36B /* UIColor+DTExternal.m */; };
 		65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F221DFEA42A007AFD8D /* DTBar.m */; };
 		65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F241DFEA42A007AFD8D /* DTBarChart.m */; };
 		65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F261DFEA42A007AFD8D /* DTHorizontalBarChart.m */; };
@@ -51,6 +52,8 @@
 		65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHeapBar.m; sourceTree = "<group>"; };
 		65CC6DF61E0CFAE700E2C36B /* DTColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTColorManager.h; sourceTree = "<group>"; };
 		65CC6DF71E0CFAE700E2C36B /* DTColorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTColorManager.m; sourceTree = "<group>"; };
+		65CC6DF91E0D0AC300E2C36B /* UIColor+DTExternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+DTExternal.h"; sourceTree = "<group>"; };
+		65CC6DFA1E0D0AC300E2C36B /* UIColor+DTExternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DTExternal.m"; sourceTree = "<group>"; };
 		65CD0F211DFEA42A007AFD8D /* DTBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBar.h; sourceTree = "<group>"; };
 		65CD0F221DFEA42A007AFD8D /* DTBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTBar.m; sourceTree = "<group>"; };
 		65CD0F231DFEA42A007AFD8D /* DTBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBarChart.h; sourceTree = "<group>"; };
@@ -85,6 +88,8 @@
 			children = (
 				654D1E651E0267BA004F2F1F /* UIBezierPath+DTExternal.h */,
 				654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */,
+				65CC6DF91E0D0AC300E2C36B /* UIColor+DTExternal.h */,
+				65CC6DFA1E0D0AC300E2C36B /* UIColor+DTExternal.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -273,6 +278,7 @@
 				654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */,
 				65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */,
 				6575AFC61DFFFEBB00F06DDC /* LineViewController.m in Sources */,
+				65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */,
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				65C53E201DF8FA7300732385 /* ViewController.m in Sources */,
 				65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */,

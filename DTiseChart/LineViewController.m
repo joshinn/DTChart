@@ -72,7 +72,7 @@
     DTLineChart *lineChart = [[DTLineChart alloc] initWithOrigin:CGPointMake(30, 260) xAxis:22 yAxis:11];
     lineChart.xAxisLabelDatas = self.xAxisLabelDatas;
     lineChart.yAxisLabelDatas = yAxisLabelDatas;
-    lineChart.multiData = @[[self simulateData:8],[self simulateData:8],[self simulateData:8]];
+    lineChart.multiData = @[[self simulateData:8], [self simulateData:8], [self simulateData:8]];
     lineChart.xAxisLabelColor = lineChart.yAxisLabelColor = [UIColor blackColor];
     self.lineChart = lineChart;
     [self.view addSubview:lineChart];
@@ -109,7 +109,9 @@
     self.lineChart.multiData = values;
     self.lineChart.xAxisAlignGrid = arc4random_uniform(2) % 2 != 1;
     self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
+    self.lineChart.showCoordinateAxisGrid = arc4random_uniform(2) % 2 == 1;
     [self.lineChart drawChart];
+
 }
 
 - (void)reloadChart {
