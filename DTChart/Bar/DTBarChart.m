@@ -24,7 +24,7 @@ static NSUInteger const DefaultBarWidth = 1;
     [super initial];
 
     _barWidth = DefaultBarWidth;
-    _barSelectable = YES;
+    _barSelectable = NO;
     _barChartStyle = DTBarChartStyleStartingLine;
 }
 

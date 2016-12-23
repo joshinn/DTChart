@@ -149,7 +149,7 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 /**
  * 绘制x轴标签
  * @return 绘制是否成功
- * @attention 父类判断了x轴标签是否过少
+ * @attention 父类判断了x轴标签是否过少(0)
  * @attention 子类需要实现方法
  */
 - (BOOL)drawXAxisLabels;
@@ -157,7 +157,7 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 /**
  * 绘制y轴标签
  * @return 绘制是否成功
- * @attention 父类判断了y轴标签是否过少
+ * @attention 父类判断了y轴标签是否过少(0)
  * @attention 子类需要实现方法
  */
 - (BOOL)drawYAxisLabels;

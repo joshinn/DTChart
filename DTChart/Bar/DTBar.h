@@ -8,21 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@class DTBar;
-@class DTChartItemData;
-
 typedef NS_ENUM(NSInteger, DTBarOrientation) {
     DTBarOrientationUp,         // 方向朝上，默认方向
-//    DTBarOrientationDown,       // 方向朝下
-//    DTBarOrientationLeft,       // 方向朝左
     DTBarOrientationRight       // 方向朝右
 };
+
 
 typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
     DTBarBorderStyleNone,              // 没有边线
     DTBarBorderStyleTopBorder,         // 边线在顶部
     DTBarBorderStyleSidesBorder        // 边线在两侧
 };
+
+@class DTChartItemData;
+@class DTBar;
 
 
 @protocol DTBarDelegate <NSObject>
@@ -41,21 +40,36 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
 @interface DTBar : UIView
 
 @property(nonatomic, weak) id <DTBarDelegate> delegate;
-
+/**
+ * 柱状体方向
+ */
 @property(nonatomic) DTBarOrientation barOrientation;
+/**
+ * 柱状体边线风格
+ */
 @property(nonatomic) DTBarBorderStyle barBorderStyle;
-@property(nonatomic) UIColor *barColor;
-@property(nonatomic) UIColor *barBorderColor;
+/**
+ * 标记用
+ */
+@property(nonatomic) CGFloat barTag;
+
 /**
  * 存储数据model
  */
 @property(nonatomic, weak) DTChartItemData *barData;
-
 /**
- * 实例化，DTBarOrientationUp，DTBarBorderStyleTopBorder
- * @return instance
+ * 柱状体主颜色
  */
-+ (instancetype)bar;
+@property(nonatomic) UIColor *barColor;
+/**
+ * 柱状体边线颜色
+ */
+@property(nonatomic) UIColor *barBorderColor;
+/**
+ * 是否可以被选中
+ */
+@property(nonatomic, getter=isBarSelectable) BOOL barSelectable;
+
 
 /**
  * 实例化
@@ -64,6 +78,11 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
  * @return instance
  */
 + (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style;
+
+/**
+ * 柱状体被选中
+ */
+- (void)barDidSelected;
 
 /**
  * 显示柱状体出现动画

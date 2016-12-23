@@ -86,7 +86,7 @@
 }
 
 - (void)generateHeapBars:(DTChartSingleData *)singleData
-                   index:(NSUInteger)index
+                    last:(BOOL)isLast
            yAxisMaxVaule:(DTAxisLabelData *)yMaxData
            yAxisMinValue:(DTAxisLabelData *)yMinData {
 
@@ -112,9 +112,11 @@
 
                 if (!bar) {
                     bar = [DTHeapBar bar:DTBarOrientationUp];
+                    bar.barTag = itemData.itemValue.x;
+                    [self.contentView addSubview:bar];
                 }
 
-                bar.barTag = itemData.itemValue.x;
+
                 bar.barData = itemData;
                 bar.delegate = self;
                 bar.userInteractionEnabled = self.isBarSelectable;
@@ -134,11 +136,10 @@
 
                 bar.frame = CGRectMake(x, y, width, height);
 
-                [bar appendData:itemData barLength:height barColor:bar.barColor];
+                [bar appendData:itemData barLength:height barColor:bar.barColor needLayout:isLast];
 
-                [self.contentView addSubview:bar];
 
-                if (self.isShowAnimation) {
+                if (isLast && self.isShowAnimation) {
                     [bar startAppearAnimation];
                 }
 
@@ -246,6 +247,9 @@
         data.axisPosition = sectionCellCount * i + (sectionCellCount - 1) / 2
                 + (self.xAxisCellCount - self.xAxisLabelDatas.count * sectionCellCount) / 2;
 
+        if(data.hidden){
+            continue;
+        }
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
         if (self.xAxisLabelColor) {
@@ -273,7 +277,8 @@
 }
 
 - (BOOL)drawYAxisLabels {
-    if (![super drawYAxisLabels]) {
+    if (self.yAxisLabelDatas.count < 2) {
+        DTLog(@"Error: y轴标签数量小于2");
         return NO;
     }
 
@@ -284,6 +289,10 @@
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.yAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
+
+        if(data.hidden){
+            continue;
+        }
 
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
         if (self.yAxisLabelColor) {
@@ -324,7 +333,7 @@
             }
                 break;
             case DTBarChartStyleHeap: {
-                [self generateHeapBars:singleData index:n yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+                [self generateHeapBars:singleData last:n == (self.multiData.count - 1) yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
             }
                 break;
             case DTBarChartStyleLump: {

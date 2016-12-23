@@ -72,7 +72,7 @@
     DTLineChart *lineChart = [[DTLineChart alloc] initWithOrigin:CGPointMake(30, 260) xAxis:22 yAxis:11];
     lineChart.xAxisLabelDatas = self.xAxisLabelDatas;
     lineChart.yAxisLabelDatas = yAxisLabelDatas;
-    lineChart.multiData = @[[self simulateData:4], [self simulateData:5], [self simulateData:8]];
+    lineChart.multiData = @[[self simulateData:8],[self simulateData:8],[self simulateData:8]];
     lineChart.xAxisLabelColor = lineChart.yAxisLabelColor = [UIColor blackColor];
     self.lineChart = lineChart;
     [self.view addSubview:lineChart];
@@ -92,7 +92,7 @@
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
         DTChartItemData *data = [DTChartItemData chartData];
-        data.itemValue = ChartItemValueMake(i + arc4random_uniform(9) * 0.1f, 30 + arc4random_uniform(90));
+        data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(90));
 
         [values addObject:data];
     }

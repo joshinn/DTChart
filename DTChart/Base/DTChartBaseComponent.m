@@ -147,7 +147,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 #pragma mark - public method
 
 - (BOOL)drawXAxisLabels {
-    if (self.xAxisLabelDatas.count == 0) {
+    if (self.xAxisLabelDatas.count <= 0) {
         DTLog(@"Error: x轴标签数量是0");
         return NO;
     }

@@ -79,9 +79,12 @@
     for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
         DTChartItemData *itemData = singleData.itemValues[i];
 
-        DTLog(@"item = %@", NSStringFromChartItemValue(itemData.itemValue));
 
-        CGFloat x = self.coordinateAxisCellWidth * (xMinData.axisPosition + (xMaxData.axisPosition - xMinData.axisPosition) * (itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value));
+        CGFloat ratioPosition = 0;
+        if (xMaxData.value != xMinData.value) {
+            ratioPosition = (xMaxData.axisPosition - xMinData.axisPosition) * (itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value);
+        }
+        CGFloat x = self.coordinateAxisCellWidth * (xMinData.axisPosition + ratioPosition);
         CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
         itemData.position = CGPointMake(x, y);
 
@@ -112,20 +115,35 @@
 
 
 - (BOOL)drawXAxisLabels {
-    if(![super drawXAxisLabels]){
+    if (![super drawXAxisLabels]) {
         return NO;
     }
 
     // 第一个单元格空余出来
-    NSUInteger sectionCellCount = (self.xAxisCellCount - 1) / (self.xAxisLabelDatas.count - 1);
+    NSUInteger sectionCellCount = 0;
+    if (self.xAxisLabelDatas.count == 1) {
+        sectionCellCount = self.xAxisCellCount / 2 + 1;
+    } else {
+        sectionCellCount = (self.xAxisCellCount - 1) / (self.xAxisLabelDatas.count - 1);
+    }
 
 
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
 
+        // 每个label位于section内最后一个单元格线上，所有label在x轴上整体居左
+//        if (self.xAxisLabelDatas.count == 1) {
+//            data.axisPosition = 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCellCount) / 2;
+//        } else {
+//            data.axisPosition = sectionCellCount * i + 1;
+//        }
+
         // 每个label位于section内最后一个单元格线上，所有label在x轴上整体居中
         data.axisPosition = sectionCellCount * i + 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCellCount) / 2;
 
+        if (data.hidden) {
+            continue;
+        }
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
         if (self.xAxisLabelColor) {
@@ -154,7 +172,8 @@
 
 
 - (BOOL)drawYAxisLabels {
-    if(![super drawYAxisLabels]){
+    if (self.yAxisLabelDatas.count < 2) {
+        DTLog(@"Error: y轴标签数量小于2");
         return NO;
     }
 
@@ -164,6 +183,10 @@
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.yAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
+
+        if (data.hidden) {
+            continue;
+        }
 
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
         if (self.yAxisLabelColor) {

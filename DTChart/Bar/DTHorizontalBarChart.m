@@ -81,7 +81,7 @@
 
 
 - (void)generateHeapBars:(DTChartSingleData *)singleData
-                   index:(NSUInteger)index
+                   last:(BOOL)isLast
            xAxisMaxVaule:(DTAxisLabelData *)xMaxData
            xAxisMinValue:(DTAxisLabelData *)xMinData {
 
@@ -108,9 +108,9 @@
 
                 if(!bar){
                     bar = [DTHeapBar bar:DTBarOrientationRight];
+                    [self.contentView addSubview:bar];
+                    bar.barTag = itemData.itemValue.y;
                 }
-
-                bar.barTag = itemData.itemValue.y;
 
                 bar.barData = itemData;
                 bar.delegate = self;
@@ -129,11 +129,10 @@
 
                 bar.frame = CGRectMake(x, y, width, height);
 
-                [bar appendData:itemData barLength:width barColor:bar.barColor];
+                [bar appendData:itemData barLength:width barColor:bar.barColor needLayout:isLast];
 
-                [self.contentView addSubview:bar];
 
-                if (self.isShowAnimation) {
+                if (isLast && self.isShowAnimation) {
                     [bar startAppearAnimation];
                 }
 
@@ -165,7 +164,7 @@
                     DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                     bar.barData = itemData;
                     bar.delegate = self;
-                    bar.userInteractionEnabled = self.isBarSelectable;
+                    bar.barSelectable = self.isBarSelectable;
                     if (singleData.color) {
                         bar.barColor = singleData.color;
                     }
@@ -187,11 +186,12 @@
 
                 } else {
 
-                    UIView *lumpView = [UIView new];
+                    DTBar *lump = [DTBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
+                    lump.barSelectable = self.isBarSelectable;
                     if (singleData.color) {
-                        lumpView.backgroundColor = singleData.color;
+                        lump.barColor = singleData.color;
                     } else{
-                        lumpView.backgroundColor = [UIColor yellowColor];
+                        lump.barColor = [UIColor yellowColor];
                     }
 
                     CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
@@ -200,8 +200,8 @@
                     CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
                     width = self.coordinateAxisCellWidth / 3;
 
-                    lumpView.frame = CGRectMake(x, y, width, height);
-                    [self.contentView addSubview:lumpView];
+                    lump.frame = CGRectMake(x, y, width, height);
+                    [self.contentView addSubview:lump];
 
                 }
 
@@ -217,7 +217,9 @@
 #pragma mark - override
 
 - (BOOL)drawXAxisLabels {
-    if (![super drawXAxisLabels]) {
+
+    if (self.xAxisLabelDatas.count < 2) {
+        DTLog(@"Error: x轴标签数量小于2");
         return NO;
     }
 
@@ -325,7 +327,7 @@
             }
                 break;
             case DTBarChartStyleHeap: {
-                [self generateHeapBars:singleData index:n xAxisMaxVaule:xMaxData xAxisMinValue:xMinData];
+                [self generateHeapBars:singleData last:n == (self.multiData.count - 1) xAxisMaxVaule:xMaxData xAxisMinValue:xMinData];
             }
                 break;
             case DTBarChartStyleLump: {

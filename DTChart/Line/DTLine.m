@@ -95,9 +95,9 @@
     }
 
 
-    if (minData == maxData) {
-        return;
-    }
+//    if (minData == maxData) {
+//        return;
+//    }
 
     CGFloat r = self.lineWidth * 2;
     UIBezierPath *minPointPath;
