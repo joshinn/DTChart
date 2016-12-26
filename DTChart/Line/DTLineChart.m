@@ -32,7 +32,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     [super initial];
 
     _xAxisAlignGrid = NO;
-    self.userInteractionEnabled = YES;
+    self.userInteractionEnabled = NO;
 }
 
 - (NSMutableArray<DTLine *> *)valueLines {
@@ -47,6 +47,12 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         _prevSelectIndex = [NSIndexPath indexPathForItem:-1 inSection:-1];
     }
     return _prevSelectIndex;
+}
+
+- (void)setValueSelectable:(BOOL)valueSelectable {
+    [super setValueSelectable:valueSelectable];
+
+    self.userInteractionEnabled = valueSelectable;
 }
 
 #pragma mark - private method
