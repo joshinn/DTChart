@@ -15,10 +15,18 @@
 @interface DTLineChart ()
 
 @property(nonatomic) NSMutableArray<DTLine *> *valueLines;
+@property(nonatomic) NSIndexPath *prevSelectIndex;
+
 
 @end
 
 @implementation DTLineChart
+
+/**
+ * 触摸点最大的偏移距离
+ */
+static CGFloat const TouchOffsetMaxDistance = 10;
+
 
 - (void)initial {
     [super initial];
@@ -34,17 +42,25 @@
     return _valueLines;
 }
 
+- (NSIndexPath *)prevSelectIndex {
+    if (!_prevSelectIndex) {
+        _prevSelectIndex = [NSIndexPath indexPathForItem:-1 inSection:-1];
+    }
+    return _prevSelectIndex;
+}
+
 #pragma mark - private method
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchKeyPoint:touches withEvent:event];
+    [self touchKeyPoint:touches isMoving:NO];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchKeyPoint:touches withEvent:event];
+    [self touchKeyPoint:touches isMoving:YES];
 }
 
-- (void)touchKeyPoint:(NSSet *)touches withEvent:(UIEvent *)event {
+
+- (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.contentView];
 
@@ -52,36 +68,61 @@
     NSInteger n1 = -1;
     NSInteger n2 = -1;
 
+
     for (NSUInteger i = 0; i < self.multiData.count; ++i) {
         DTChartSingleData *sData = self.multiData[i];
+
+        CGRect bound = CGRectMake(sData.itemValues.firstObject.position.x - TouchOffsetMaxDistance,
+                sData.itemValues[sData.maxValueIndex].position.y - 2 * TouchOffsetMaxDistance,
+                sData.itemValues.lastObject.position.x - sData.itemValues.firstObject.position.x + 2 * TouchOffsetMaxDistance,
+                sData.itemValues[sData.minValueIndex].position.y - sData.itemValues[sData.maxValueIndex].position.y + 2 * TouchOffsetMaxDistance);
+
+        // 不在这个区域，直接忽略
+        if (!CGRectContainsPoint(bound, touchPoint)) {
+            continue;
+        }
 
         for (NSUInteger n = 0; n < sData.itemValues.count; ++n) {
             DTChartItemData *itemData = sData.itemValues[n];
 
             CGFloat distance = CGPointGetDistance(touchPoint, itemData.position);
-            if (distance < 10) {
+            if (distance < TouchOffsetMaxDistance) {
                 if (minDistance == -100) {
 
                     minDistance = distance;
                     n1 = i;
                     n2 = n;
-                } else {
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        n1 = i;
-                        n2 = n;
-                    }
+                } else if (distance < minDistance) {
+                    minDistance = distance;
+                    n1 = i;
+                    n2 = n;
                 }
+
             }
 
         }
     }
 
+    // 过滤掉手指移动造成的重复点选择
+    if (moving) {
+        if ((n1 >= 0 && n2 >= 0)
+                && (self.prevSelectIndex.section != n1 || self.prevSelectIndex.item != n2)
+                && self.lineChartTouchBlock) {
 
-    if (n1 >= 0 && n2 >= 0 && self.lineChartTouchBlock) {
+            self.prevSelectIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
 
-        DTChartItemData *itemData = self.multiData[(NSUInteger) n1].itemValues[(NSUInteger) n2];
-        self.lineChartTouchBlock(n1, n2, itemData);
+            DTChartItemData *itemData = self.multiData[(NSUInteger) n1].itemValues[(NSUInteger) n2];
+            self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, itemData);
+        }
+    } else {
+        if ((n1 >= 0 && n2 >= 0)
+                && self.lineChartTouchBlock) {
+
+            self.prevSelectIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
+
+            DTChartItemData *itemData = self.multiData[(NSUInteger) n1].itemValues[(NSUInteger) n2];
+            self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, itemData);
+        }
     }
 }
 

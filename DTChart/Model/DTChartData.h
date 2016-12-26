@@ -64,6 +64,17 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  */
 @property(nonatomic) CGFloat lineWidth;
 
+/**
+ * DTChartItemData里ChartItemValue的y值最大的项序号
+ */
+@property (nonatomic, readonly) NSUInteger maxValueIndex;
+/**
+ * DTChartItemData里ChartItemValue的y值最小的项序号
+ */
+@property (nonatomic, readonly) NSUInteger minValueIndex;
+
+
+
 + (instancetype)singleData;
 
 + (instancetype)singleData:(NSArray<DTChartItemData *> *)values;
@@ -90,8 +101,6 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  * 坐标轴上的点的位置
  */
 @property(nonatomic) CGFloat axisPosition;
-
-+ (instancetype)axisLabelData;
 
 - (instancetype)initWithTitle:(NSString *)title value:(CGFloat)value;
 

@@ -84,18 +84,8 @@
  * 绘制最大最小值点
  */
 - (void)drawEdgePoint {
-    DTChartItemData *minData = self.singleData.itemValues.firstObject;
-    DTChartItemData *maxData = self.singleData.itemValues.firstObject;
-
-    for (DTChartItemData *data in self.singleData.itemValues) {
-        if (data.itemValue.y >= maxData.itemValue.y) {
-            maxData = data;
-        }
-
-        if (data.itemValue.y < minData.itemValue.y) {
-            minData = data;
-        }
-    }
+    DTChartItemData *minData = self.singleData.itemValues[self.singleData.minValueIndex];
+    DTChartItemData *maxData = self.singleData.itemValues[self.singleData.maxValueIndex];
 
 
     CGFloat r = self.lineWidth * 2;
@@ -103,8 +93,8 @@
     UIBezierPath *maxPointPath;
     switch (self.pointType) {
         case DTLinePointTypeCircle: {
-            minPointPath = [UIBezierPath bezierPathWithArcCenter:minData.position radius:r startAngle:0 endAngle:2 * M_PI clockwise:YES];
-            maxPointPath = [UIBezierPath bezierPathWithArcCenter:maxData.position radius:r startAngle:0 endAngle:2 * M_PI clockwise:YES];
+            minPointPath = [UIBezierPath bezierPathWithArcCenter:minData.position radius:r startAngle:0 endAngle:(CGFloat) (2 * M_PI) clockwise:YES];
+            maxPointPath = [UIBezierPath bezierPathWithArcCenter:maxData.position radius:r startAngle:0 endAngle:(CGFloat) (2 * M_PI) clockwise:YES];
         }
             break;
         case DTLinePointTypedTriangle: {
@@ -118,8 +108,8 @@
         }
             break;
         default: {
-            minPointPath = [UIBezierPath bezierPathWithArcCenter:minData.position radius:r startAngle:0 endAngle:2 * M_PI clockwise:YES];
-            maxPointPath = [UIBezierPath bezierPathWithArcCenter:maxData.position radius:r startAngle:0 endAngle:2 * M_PI clockwise:YES];
+            minPointPath = [UIBezierPath bezierPathWithArcCenter:minData.position radius:r startAngle:0 endAngle:(CGFloat) (2 * M_PI) clockwise:YES];
+            maxPointPath = [UIBezierPath bezierPathWithArcCenter:maxData.position radius:r startAngle:0 endAngle:(CGFloat) (2 * M_PI) clockwise:YES];
         }
     }
 

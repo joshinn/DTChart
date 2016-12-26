@@ -15,7 +15,7 @@ typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex
 
 @property(nonatomic, copy) DTLineChartTouchBlock lineChartTouchBlock;
 /**
- * x轴标签是否与格子对齐
+ * x轴标签是否与格子对齐，默认是NO
  */
 @property(nonatomic) BOOL xAxisAlignGrid;
 

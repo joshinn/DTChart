@@ -33,6 +33,34 @@
     return data;
 }
 
+- (void)setItemValues:(NSArray<DTChartItemData *> *)itemValues {
+    _itemValues = itemValues;
+
+    DTChartItemData *minData = itemValues.firstObject;
+    DTChartItemData *maxData = itemValues.firstObject;
+    NSUInteger minIndex = 0;
+    NSUInteger maxIndex = 0;
+
+    for(NSUInteger i = 0; i < itemValues.count; ++i){
+        DTChartItemData *data = itemValues[i];
+
+        if (data.itemValue.y >= maxData.itemValue.y) {
+            maxData = data;
+            maxIndex = i;
+        }
+
+        if (data.itemValue.y < minData.itemValue.y) {
+            minData = data;
+            minIndex = i;
+        }
+    }
+
+    self.maxValueIndex = maxIndex;
+    self.minValueIndex = minIndex;
+
+
+}
+
 - (CGFloat)lineWidth {
     if (_lineWidth == 0) {
         _lineWidth = 2;
@@ -40,15 +68,19 @@
     return _lineWidth;
 }
 
+- (void)setMaxValueIndex:(NSUInteger)maxValueIndex {
+    _maxValueIndex = maxValueIndex;
+}
+
+- (void)setMinValueIndex:(NSUInteger)minValueIndex {
+    _minValueIndex = minValueIndex;
+}
 
 @end
 
 @implementation DTAxisLabelData
 
-+ (instancetype)axisLabelData {
-    DTAxisLabelData *labelData = [[DTAxisLabelData alloc] init];
-    return labelData;
-}
+
 
 - (instancetype)initWithTitle:(NSString *)title value:(CGFloat)value {
     if (self = [super init]) {
