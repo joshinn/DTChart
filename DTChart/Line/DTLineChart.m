@@ -49,11 +49,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return _prevSelectIndex;
 }
 
-- (void)setValueSelectable:(BOOL)valueSelectable {
-    [super setValueSelectable:valueSelectable];
-
-    self.userInteractionEnabled = valueSelectable;
-}
 
 #pragma mark - private method
 

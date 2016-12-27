@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4lT-gQ-MOL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4lT-gQ-MOL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Bar Chart-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Bar Chart" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController title="Bar Chart" id="BYZ-38-t0r" customClass="BarViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -44,6 +44,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="du4-uW-Xye" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="966" y="966"/>
+        </scene>
+        <!--Pie Chart-->
+        <scene sceneID="oKm-NH-w6b">
+            <objects>
+                <viewController title="Pie Chart" id="Ojt-GT-n31" customClass="PieViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g7S-0Z-nRo"/>
+                        <viewControllerLayoutGuide type="bottom" id="hQH-Ph-bV0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nLp-fA-YQr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F3J-ni-xMf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1770" y="966"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PZu-Ei-mzw">
@@ -93,15 +111,28 @@
                                     <segue destination="Q0J-Ez-XpM" kind="show" id="5Fl-eR-lsY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mED-I6-oiT">
+                                <rect key="frame" x="0.0" y="233" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="WWf-od-Nbm"/>
+                                </constraints>
+                                <state key="normal" title="PieChart"/>
+                                <connections>
+                                    <segue destination="Ojt-GT-n31" kind="show" id="cn8-KD-thc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mED-I6-oiT" secondAttribute="trailing" id="ACQ-m6-dJ6"/>
                             <constraint firstItem="XYY-Tf-o8l" firstAttribute="top" secondItem="y6U-pc-dwU" secondAttribute="bottom" constant="15" id="SSx-0g-ZrC"/>
                             <constraint firstItem="XYY-Tf-o8l" firstAttribute="leading" secondItem="qwz-Y4-Y3w" secondAttribute="leading" id="UgC-jm-fWX"/>
                             <constraint firstAttribute="trailing" secondItem="XYY-Tf-o8l" secondAttribute="trailing" id="fFf-Dx-ogd"/>
                             <constraint firstItem="y6U-pc-dwU" firstAttribute="leading" secondItem="qwz-Y4-Y3w" secondAttribute="leading" id="gIo-q0-5iD"/>
                             <constraint firstItem="y6U-pc-dwU" firstAttribute="top" secondItem="Ino-id-XGI" secondAttribute="bottom" constant="79" id="nJM-yT-LxW"/>
+                            <constraint firstItem="mED-I6-oiT" firstAttribute="leading" secondItem="qwz-Y4-Y3w" secondAttribute="leading" id="pJZ-sx-lMY"/>
                             <constraint firstAttribute="trailing" secondItem="y6U-pc-dwU" secondAttribute="trailing" id="s4j-BO-V7q"/>
+                            <constraint firstItem="mED-I6-oiT" firstAttribute="top" secondItem="XYY-Tf-o8l" secondAttribute="bottom" constant="15" id="wP2-PI-V7j"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="z0e-WM-0nA"/>

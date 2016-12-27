@@ -7,8 +7,8 @@
 //
 
 #import "DTChartBaseComponent.h"
-#import "DTChartData.h"
-#import "DTColorManager.h"
+
+
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
@@ -16,8 +16,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 @property(nonatomic) CAShapeLayer *coordinateAxisLine;
 @property(nonatomic) CAShapeLayer *gridLine;
-@property (nonatomic) DTColorManager *colorManager;
-
 
 @end
 
@@ -51,7 +49,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 - (void)initial {
     _showAnimation = YES;
-    _showCoordinateAxis = YES;
     _showCoordinateAxisLine = NO;
     _showCoordinateAxisGrid = NO;
     _valueSelectable = NO;
@@ -111,6 +108,13 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 #pragma mark - delay init
 
+- (void)setValueSelectable:(BOOL)valueSelectable {
+    _valueSelectable = valueSelectable;
+
+    self.userInteractionEnabled = valueSelectable;
+}
+
+
 - (CAShapeLayer *)gridLine {
     if (!_gridLine) {
         _gridLine = [CAShapeLayer layer];
@@ -147,7 +151,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
     if (showCoordinateAxisGrid) {
         [self drawGrid];
-    } else{
+    } else {
         self.gridLine.hidden = !showCoordinateAxisGrid;
     }
 }
@@ -163,10 +167,18 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 #pragma mark - private method
 
-/**
- * 给没有颜色的数据 生成数据
- */
--(void)generateColors{
+
+
+
+#pragma mark - public method
+
+
+- (void)generateMultiDataColors:(BOOL)needInitial {
+
+    if (needInitial) {
+        self.colorManager = [DTColorManager manager];
+    }
+
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
     for(DTChartSingleData *sData in self.multiData){
         if(!sData.color){
@@ -178,11 +190,11 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     if(colors.count > 0 && self.colorsCompletionBlock){
         self.colorsCompletionBlock(colors);
     }
+
 }
 
 
 
-#pragma mark - public method
 
 - (BOOL)drawXAxisLabels {
     if (self.xAxisLabelDatas.count <= 0) {
@@ -228,8 +240,9 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
         self.multiData = @[self.singleData];
     }
 
-    self.colorManager = [DTColorManager manager];
-    [self generateColors];
+    [self generateMultiDataColors:YES];
+
+
 
 
     [self clearChartContent];
@@ -245,7 +258,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 }
 
 - (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
-    [self generateColors];
+    [self generateMultiDataColors:NO];
 }
 
 - (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {

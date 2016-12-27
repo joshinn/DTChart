@@ -15,6 +15,12 @@
     return chartData;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"{ itemValue = %@,\n Position = %@ }",
+                                      NSStringFromChartItemValue(self.itemValue),
+                                      NSStringFromCGPoint(self.position)];
+}
+
 @end
 
 
@@ -41,7 +47,7 @@
     NSUInteger minIndex = 0;
     NSUInteger maxIndex = 0;
 
-    for(NSUInteger i = 0; i < itemValues.count; ++i){
+    for (NSUInteger i = 0; i < itemValues.count; ++i) {
         DTChartItemData *data = itemValues[i];
 
         if (data.itemValue.y >= maxData.itemValue.y) {
@@ -76,10 +82,19 @@
     _minValueIndex = minValueIndex;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"{ itemValues = %@,\n maxValueIndex = %@,\n minValueIndex = %@,\n color = %@,\n secondColor = %@,\n lineWidth = %@ }",
+                                      self.itemValues,
+                                      @(self.maxValueIndex),
+                                      @(self.minValueIndex),
+                                      self.color,
+                                      self.secondColor,
+                                      @(self.lineWidth)];
+}
+
 @end
 
 @implementation DTAxisLabelData
-
 
 
 - (instancetype)initWithTitle:(NSString *)title value:(CGFloat)value {
@@ -88,5 +103,13 @@
         _value = value;
     }
     return self;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"{ title = %@,\n value = %@,\n axisPosition = %@,\n hidden = %@ }",
+                                      self.title,
+                                      @(self.value),
+                                      @(self.axisPosition),
+                                      self.hidden ? @"YES" : @"NO"];
 }
 @end

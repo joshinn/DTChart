@@ -1,19 +1,19 @@
 //
-//  ViewController.m
+//  BarViewController.m
 //  DTiseChart
 //
 //  Created by 徐进 on 2016/12/8.
 //  Copyright © 2016年 studio.joshin. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "BarViewController.h"
 #import "DTBarChart.h"
 #import "DTChartData.h"
 #import "DTVerticalBarChart.h"
 #import "DTHorizontalBarChart.h"
 #import "DTColor.h"
 
-@interface ViewController ()
+@interface BarViewController ()
 
 @property(nonatomic) NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas;
 @property(nonatomic) DTVerticalBarChart *barChart;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation ViewController
+@implementation BarViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,7 +73,7 @@
 //    barChart.showCoordinateAxis = NO;
     barChart.showCoordinateAxisGrid = YES;
     barChart.colorsCompletionBlock = ^(NSArray<UIColor *> *colors){
-        NSLog(@"colors = %@", colors);
+        DTLog(@"colors = %@", colors);
     };
 
     [barChart drawChart];

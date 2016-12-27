@@ -37,6 +37,20 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  * 在坐标系里的位置(x,y)
  */
 @property(nonatomic) CGPoint position;
+/**
+ * 坐标系里图形的颜色（柱状体、折线、饼图的颜色==）
+ * @note 如果需要一组数据里的每个元素颜色区别显示，则使用该属性，默认nil
+ * @note 和DTChartSingleData.color区别开
+ */
+@property(nonatomic) UIColor *color;
+/**
+ * 坐标系里图形的颜色（柱状体、折线、饼图的颜色==）
+ * @note 如果需要一组数据里的每个元素颜色区别显示，则使用该属性，默认nil
+ * @note 辅助颜色，柱状图边线颜色，折线图点中心颜色==
+ * @note 和DTChartSingleData.secondColor区别开
+ */
+@property(nonatomic) UIColor *secondColor;
+
 
 + (instancetype)chartData;
 
@@ -56,7 +70,7 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 @property(nonatomic) UIColor *color;
 /**
  * 坐标系里图形的颜色（柱状体、折线、饼图的颜色==）
- * 辅助颜色，柱状图边线颜色，折线图点中心颜色==
+ * @note 辅助颜色，柱状图边线颜色，折线图点中心颜色==
  */
 @property(nonatomic) UIColor *secondColor;
 /**

@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class DTAxisLabelData;
-@class DTChartItemData;
-@class DTChartSingleData;
-
+#import "DTColorManager.h"
+#import "DTChartData.h"
 
 
 CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
@@ -84,10 +81,6 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
 @property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
 
 /**
- * 显示坐标轴，默认YES
- */
-@property(nonatomic, getter=isShowCoordinateAxis) BOOL showCoordinateAxis;
-/**
  * 显示坐标轴线，NO
  */
 @property(nonatomic, getter=isShowCoordinateAxisLine) BOOL showCoordinateAxisLine;
@@ -135,6 +128,8 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
 @property(nonatomic, readonly) NSUInteger yAxisCellCount;
 /**
  * 坐标轴原点
+ * @note xy轴坐标系，在左下角，默认
+ * @note pie图坐标系在圆心
  */
 @property(nonatomic, readonly) CGPoint originPoint;
 /**
@@ -145,7 +140,10 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
  * 坐标轴内容view，坐标轴不在里面
  */
 @property(nonatomic, readonly) UIView *contentView;
-
+/**
+ * 颜色管理
+ */
+@property(nonatomic) DTColorManager *colorManager;
 
 
 

@@ -1,15 +1,13 @@
 //
-//  ViewController.h
+//  PieViewController.h
 //  DTiseChart
 //
-//  Created by 徐进 on 2016/12/8.
+//  Created by Jo Shin on 2016/12/26.
 //  Copyright © 2016年 studio.joshin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface PieViewController : UIViewController
 
 @end
-
