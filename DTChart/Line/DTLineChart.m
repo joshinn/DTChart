@@ -15,12 +15,14 @@
 @interface DTLineChart ()
 
 @property(nonatomic) NSMutableArray<DTLine *> *valueLines;
+@property(nonatomic) NSMutableArray<DTLine *> *secondValueLines;
 @property(nonatomic) NSIndexPath *prevSelectIndex;
 
 
 @end
 
 @implementation DTLineChart
+
 
 /**
  * 触摸点最大的偏移距离
@@ -33,6 +35,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     _xAxisAlignGrid = NO;
     self.userInteractionEnabled = NO;
+    self.coordinateAxisInsets = ChartEdgeInsetsMake(self.coordinateAxisInsets.left, self.coordinateAxisInsets.top, 1, self.coordinateAxisInsets.bottom);
 }
 
 - (NSMutableArray<DTLine *> *)valueLines {
@@ -40,6 +43,13 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         _valueLines = [[NSMutableArray<DTLine *> alloc] init];
     }
     return _valueLines;
+}
+
+- (NSMutableArray<DTLine *> *)secondValueLines {
+    if (!_secondValueLines) {
+        _secondValueLines = [[NSMutableArray<DTLine *> alloc] init];
+    }
+    return _secondValueLines;
 }
 
 - (NSIndexPath *)prevSelectIndex {
@@ -51,6 +61,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
 
 #pragma mark - private method
+
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self touchKeyPoint:touches isMoving:NO];
@@ -155,7 +166,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         CGFloat x = self.coordinateAxisCellWidth * (xMinData.axisPosition + ratioPosition);
         CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
         itemData.position = CGPointMake(x, y);
-        DTLog(@"position = %@", NSStringFromCGPoint(itemData.position));
 
         if (path) {
             [path addLineToPoint:itemData.position];
@@ -169,6 +179,259 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return path;
 }
 
+#pragma mark - 副轴绘制
+
+- (void)generateSecondMultiDataColors:(BOOL)needInitial {
+
+    if (needInitial) {
+        self.colorManager = [DTColorManager manager];
+    }
+
+    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
+    for (DTChartSingleData *sData in self.secondMultiData) {
+        if (!sData.color) {
+            sData.color = [self.colorManager getColor];
+            sData.secondColor = [self.colorManager getLightColor:sData.color];
+        }
+        [colors addObject:sData.color];
+    }
+    if (colors.count > 0 && self.secondAxisColorsCompletionBlock) {
+        self.secondAxisColorsCompletionBlock(colors);
+    }
+
+}
+
+/**
+ * 清除坐标系里的副轴轴标签和值线条
+ */
+- (void)clearSecondChartContent {
+
+    [self.secondValueLines enumerateObjectsUsingBlock:^(DTLine *line, NSUInteger idx, BOOL *stop) {
+        [line removeEdgePoint];
+        [line removeFromSuperlayer];
+    }];
+
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTChartLabel class]]) {
+            DTChartLabel *label = obj;
+            if (label.isSecondAxis) {
+                [label removeFromSuperview];
+            }
+        }
+    }];
+}
+
+/**
+ * 绘制y轴副轴
+ * @return 绘制结果
+ */
+- (BOOL)drawYSecondAxisLabels {
+    if (self.ySecondAxisLabelDatas.count < 2) {
+        DTLog(@"Error: y轴副轴标签数量小于2");
+        return NO;
+    }
+
+    NSUInteger sectionCellCount = self.yAxisCellCount / (self.ySecondAxisLabelDatas.count - 1);
+
+
+    for (NSUInteger i = 0; i < self.ySecondAxisLabelDatas.count; ++i) {
+        DTAxisLabelData *data = self.ySecondAxisLabelDatas[i];
+        data.axisPosition = sectionCellCount * i;
+
+        if (data.hidden) {
+            continue;
+        }
+
+        DTChartLabel *yLabel = [DTChartLabel chartLabel];
+        if (self.yAxisLabelColor) {
+            yLabel.textColor = self.yAxisLabelColor;
+        }
+        yLabel.secondAxis = YES;
+
+        yLabel.textAlignment = NSTextAlignmentRight;
+        yLabel.text = data.title;
+
+        CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: yLabel.font}];
+
+        CGFloat x = CGRectGetMaxX(self.contentView.frame);
+        CGFloat y = (self.coordinateAxisInsets.top + self.yAxisCellCount - data.axisPosition) * self.coordinateAxisCellWidth - size.height / 2;
+
+
+        yLabel.frame = (CGRect) {CGPointMake(x, y), size};
+
+
+        [self addSubview:yLabel];
+    }
+
+    return YES;
+}
+
+/**
+ * 绘制副轴折线
+ */
+- (void)drawSecondValues {
+
+    [self.secondValueLines removeAllObjects];
+
+    DTAxisLabelData *yMaxData = self.ySecondAxisLabelDatas.lastObject;
+    DTAxisLabelData *yMinData = self.ySecondAxisLabelDatas.firstObject;
+
+    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.secondMultiData.count; ++n) {
+        DTChartSingleData *singleData = self.secondMultiData[n];
+
+        UIBezierPath *path = [self generateItemPath:singleData
+                                      xAxisMaxVaule:xMaxData
+                                      xAxisMinValue:xMinData
+                                      yAxisMaxVaule:yMaxData
+                                      yAxisMinValue:yMinData];
+
+        if (path) {
+
+            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            line.linePath = path;
+            line.singleData = singleData;
+            [self.secondValueLines addObject:line];
+            [self.contentView.layer addSublayer:line];
+
+
+            if (self.isShowAnimation) {
+                [line startAppearAnimation];
+                [line drawEdgePoint:0.8];
+            } else {
+                [line drawEdgePoint:0];
+            }
+        }
+
+    }
+}
+
+#pragma mark - public method
+
+- (void)drawSecondChart {
+
+    [self clearSecondChartContent];
+
+    if ([self drawYSecondAxisLabels]) {
+
+        if (!self.secondMultiData && self.secondSingleData) {
+            self.secondMultiData = @[self.secondSingleData];
+        }
+
+        [self generateSecondMultiDataColors:NO];
+
+        [self drawSecondValues];
+    }
+}
+
+- (void)reloadChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+
+    DTAxisLabelData *yMaxData = self.ySecondAxisLabelDatas.lastObject;
+    DTAxisLabelData *yMinData = self.ySecondAxisLabelDatas.firstObject;
+
+    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.secondMultiData.count; ++n) {
+
+        if (![indexes containsIndex:n]) {
+            continue;
+        }
+
+        DTChartSingleData *singleData = self.secondMultiData[n];
+
+        UIBezierPath *path = [self generateItemPath:singleData
+                                      xAxisMaxVaule:xMaxData
+                                      xAxisMinValue:xMinData
+                                      yAxisMaxVaule:yMaxData
+                                      yAxisMinValue:yMinData];
+
+        if (path) {
+
+            DTLine *line = self.secondValueLines[n];
+            line.singleData = singleData;
+
+            if (animation) {
+                [line removeEdgePoint];
+                [line startPathUpdateAnimation:path];
+                [line drawEdgePoint:0.3];
+            } else {
+                [line removeEdgePoint];
+                line.linePath = path;
+                [line drawEdgePoint:0];
+            }
+        }
+
+    }
+
+}
+
+- (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [self generateSecondMultiDataColors:NO];
+
+    DTAxisLabelData *yMaxData = self.ySecondAxisLabelDatas.lastObject;
+    DTAxisLabelData *yMinData = self.ySecondAxisLabelDatas.firstObject;
+
+    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+    for (NSUInteger n = 0; n < self.secondMultiData.count; ++n) {
+        if (![indexes containsIndex:n]) {
+            continue;
+        }
+
+        DTChartSingleData *singleData = self.secondMultiData[n];
+
+        UIBezierPath *path = [self generateItemPath:singleData
+                                      xAxisMaxVaule:xMaxData
+                                      xAxisMinValue:xMinData
+                                      yAxisMaxVaule:yMaxData
+                                      yAxisMinValue:yMinData];
+
+        if (path) {
+
+            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            line.singleData = singleData;
+            line.linePath = path;
+            if (self.secondValueLines.count >= n) {
+                [self.secondValueLines insertObject:line atIndex:n];
+                [self.contentView.layer insertSublayer:line atIndex:(unsigned int) n];
+            } else {
+                [self.secondValueLines addObject:line];
+                [self.contentView.layer addSublayer:line];
+            }
+
+            if (animation) {
+                [line startAppearAnimation];
+                [line drawEdgePoint:0.8];
+            } else {
+                [line drawEdgePoint:0];
+            }
+        }
+
+    }
+
+}
+
+- (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        DTLog(@"enum index = %@", @(index));
+        DTLine *line = self.secondValueLines[index];
+        [line removeEdgePoint];
+
+        if (animation) {
+            [line startDisappearAnimation];
+        } else {
+            [line removeFromSuperlayer];
+        }
+    }];
+
+    [self.secondValueLines removeObjectsAtIndexes:indexes];
+}
+
 
 #pragma mark - override
 
@@ -177,14 +440,18 @@ static CGFloat const TouchOffsetMaxDistance = 10;
  */
 - (void)clearChartContent {
 
-    NSArray<CALayer *> *layers = [self.contentView.layer.sublayers copy];
-    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[DTLine class]]) {
-            DTLine *line = (DTLine *) obj;
-            [line removeEdgePoint];
-            [line removeFromSuperlayer];
-        }
+    [self.valueLines enumerateObjectsUsingBlock:^(DTLine *line, NSUInteger idx, BOOL *stop) {
+        [line removeEdgePoint];
+        [line removeFromSuperlayer];
     }];
+//    NSArray<CALayer *> *layers = [self.contentView.layer.sublayers copy];
+//    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
+//        if ([obj isKindOfClass:[DTLine class]]) {
+//            DTLine *line = (DTLine *) obj;
+//            [line removeEdgePoint];
+//            [line removeFromSuperlayer];
+//        }
+//    }];
 
     [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[DTChartLabel class]]) {
@@ -335,12 +602,13 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }
 }
 
-
 - (void)drawChart {
 
     [super drawChart];
 
+    [self drawSecondChart];
 }
+
 
 - (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
     [super reloadChartItems:indexes withAnimation:animation];
@@ -450,5 +718,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     [self.valueLines removeObjectsAtIndexes:indexes];
 }
+
 
 @end

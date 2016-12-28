@@ -27,29 +27,7 @@
 }
 
 - (void)loadSubviews {
-    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(50, 600, 60, 48)];
-    [changeBtn setTitle:@"随机" forState:UIControlStateNormal];
-    [changeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [changeBtn addTarget:self action:@selector(updateChart:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:changeBtn];
-
-    UIButton *reloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(120, 600, 60, 48)];
-    [reloadBtn setTitle:@"刷新" forState:UIControlStateNormal];
-    [reloadBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [reloadBtn addTarget:self action:@selector(reloadChart) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:reloadBtn];
-
-    UIButton *insertBtn = [[UIButton alloc] initWithFrame:CGRectMake(180, 600, 60, 48)];
-    [insertBtn setTitle:@"新增" forState:UIControlStateNormal];
-    [insertBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [insertBtn addTarget:self action:@selector(insertChart) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:insertBtn];
-
-    UIButton *delBtn = [[UIButton alloc] initWithFrame:CGRectMake(240, 600, 60, 48)];
-    [delBtn setTitle:@"删除" forState:UIControlStateNormal];
-    [delBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [delBtn addTarget:self action:@selector(delChart) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:delBtn];
+    [self buttons];
 
 
     NSArray<NSString *> *xTitles = @[@"9/5", @"9/6", @"9/7", @"9/8", @"9/9", @"9/10", @"9/11", @"9/12"];
@@ -91,6 +69,26 @@
 
 }
 
+- (void)buttons {
+    [self buttonFactory:@"随机" frame:CGRectMake(0, 600, 60, 48) action:@selector(updateChart)];
+    [self buttonFactory:@"刷新" frame:CGRectMake(60, 600, 60, 48) action:@selector(reloadChart)];
+    [self buttonFactory:@"新增" frame:CGRectMake(120, 600, 60, 48) action:@selector(insertChart)];
+    [self buttonFactory:@"删除" frame:CGRectMake(180, 600, 60, 48) action:@selector(delChart)];
+    [self buttonFactory:@"副轴" frame:CGRectMake(240, 600, 60, 48) action:@selector(addChartSecondAxis)];
+    [self buttonFactory:@"副轴新增" frame:CGRectMake(300, 600, 60, 48) action:@selector(secondAxisChartInsert)];
+
+}
+
+- (UIButton *)buttonFactory:(NSString *)title frame:(CGRect)frame action:(SEL)action {
+    UIButton *button = [[UIButton alloc] initWithFrame:frame];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.view addSubview:button];
+    return button;
+}
+
 - (DTChartSingleData *)simulateData:(NSUInteger)count {
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
@@ -103,7 +101,19 @@
     return singleData;
 }
 
-- (void)updateChart:(UIButton *)sender {
+- (DTChartSingleData *)simulateSecondData:(NSUInteger)count {
+    NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
+    for (NSUInteger i = 1; i <= count; ++i) {
+        DTChartItemData *data = [DTChartItemData chartData];
+        data.itemValue = ChartItemValueMake(i, 3000 + arc4random_uniform(90) * 100);
+        [values addObject:data];
+        DTLog(@"second y = %@", @(data.itemValue.y));
+    }
+    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    return singleData;
+}
+
+- (void)updateChart {
     NSUInteger count = 1 + arc4random_uniform(6);
     NSMutableArray *values = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 1; i <= count; ++i) {
@@ -164,6 +174,35 @@
 
     self.lineChart.multiData = data;
     [self.lineChart deleteChartItems:indexSet withAnimation:arc4random_uniform(2) % 2 != 1];
+}
+
+- (void)addChartSecondAxis {
+    NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
+    {
+        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:@"3k" value:3000]];
+        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:@"6k" value:6000]];
+        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:@"9k" value:9000]];
+        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:@"12k" value:12000]];
+    }
+    self.lineChart.ySecondAxisLabelDatas = yAxisLabelDatas;
+    self.lineChart.secondMultiData = @[[self simulateSecondData:5], [self simulateSecondData:8]];
+    self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
+    [self.lineChart drawSecondChart];
+}
+
+
+- (void)secondAxisChartInsert {
+    NSMutableArray<DTChartSingleData *> *data = [self.lineChart.secondMultiData mutableCopy];
+    [data insertObject:[self simulateSecondData:2 + arc4random_uniform(6)] atIndex:0];
+    [data insertObject:[self simulateSecondData:2 + arc4random_uniform(6)] atIndex:0];
+
+
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    [indexSet addIndex:0];
+    [indexSet addIndex:1];
+
+    self.lineChart.secondMultiData = data;
+    [self.lineChart insertChartSecondAxisItems:indexSet withAnimation:arc4random_uniform(2) % 2 != 1];
 }
 
 @end

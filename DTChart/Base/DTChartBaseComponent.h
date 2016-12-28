@@ -99,7 +99,7 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
 @property(nonatomic) DTChartSingleData *singleData;
 /**
  * 多组坐标系值数据源
- * @note 多个values
+ * @note 多个singleData
  */
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *multiData;
 

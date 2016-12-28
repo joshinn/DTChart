@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface DTChartLabel : UILabel
+/**
+ * 是否是副轴标签
+ * @note 暂时只有DTLineChart使用到
+ */
+@property(nonatomic, getter=isSecondAxis) BOOL secondAxis;
 
 + (instancetype)chartLabel;
 

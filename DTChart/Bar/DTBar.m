@@ -38,7 +38,7 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
 - (instancetype)init {
     if (self = [super init]) {
-//        self.clipsToBounds = YES;
+        self.clipsToBounds = YES;
         self.userInteractionEnabled = YES;
         _barSelectable = NO;
 
