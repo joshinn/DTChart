@@ -16,7 +16,7 @@
 
 @property(nonatomic) NSMutableArray<DTLine *> *valueLines;
 @property(nonatomic) NSMutableArray<DTLine *> *secondValueLines;
-@property(nonatomic) NSIndexPath *prevSelectIndex;
+@property(nonatomic) NSIndexPath *prevTouchIndex;
 
 
 @end
@@ -52,11 +52,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return _secondValueLines;
 }
 
-- (NSIndexPath *)prevSelectIndex {
-    if (!_prevSelectIndex) {
-        _prevSelectIndex = [NSIndexPath indexPathForItem:-1 inSection:-1];
+- (NSIndexPath *)prevTouchIndex {
+    if (!_prevTouchIndex) {
+        _prevTouchIndex = [NSIndexPath indexPathForItem:-1 inSection:-1];
     }
-    return _prevSelectIndex;
+    return _prevTouchIndex;
 }
 
 
@@ -81,8 +81,13 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     NSInteger n2 = -1;
 
 
-    for (NSUInteger i = 0; i < self.multiData.count; ++i) {
-        DTChartSingleData *sData = self.multiData[i];
+    for (NSUInteger i = 0; i < (self.multiData.count + self.secondMultiData.count); ++i) {
+        DTChartSingleData *sData;
+        if (i < self.multiData.count) {
+            sData = self.multiData[i];
+        } else {
+            sData = self.secondMultiData[i - self.multiData.count];
+        }
 
         CGRect bound = CGRectMake(sData.itemValues.firstObject.position.x - TouchOffsetMaxDistance,
                 sData.itemValues[sData.maxValueIndex].position.y - 2 * TouchOffsetMaxDistance,
@@ -115,28 +120,32 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         }
     }
 
-    // 过滤掉手指移动造成的重复点选择
-    if (moving) {
-        if ((n1 >= 0 && n2 >= 0)
-                && (self.prevSelectIndex.section != n1 || self.prevSelectIndex.item != n2)
-                && self.lineChartTouchBlock) {
+    if (n1 >= 0 && n2 >= 0 && self.lineChartTouchBlock) {
+        // 过滤掉手指移动造成的重复点选择
+        if (moving) {
+            if (self.prevTouchIndex.section != n1 || self.prevTouchIndex.item != n2) {
 
-            self.prevSelectIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
+                self.prevTouchIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
+                BOOL isMainAxis = n1 < self.multiData.count;
+                if (!isMainAxis) {
+                    n1 -= self.multiData.count;
+                }
 
-            DTChartItemData *itemData = self.multiData[(NSUInteger) n1].itemValues[(NSUInteger) n2];
-            self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, itemData);
-        }
-    } else {
-        if ((n1 >= 0 && n2 >= 0)
-                && self.lineChartTouchBlock) {
+                self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
+            }
+        } else {
+            self.prevTouchIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
+            BOOL isMainAxis = n1 < self.multiData.count;
+            if (!isMainAxis) {
+                n1 -= self.multiData.count;
+            }
 
-            self.prevSelectIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
-
-            DTChartItemData *itemData = self.multiData[(NSUInteger) n1].itemValues[(NSUInteger) n2];
-            self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, itemData);
+            self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
         }
     }
+
 }
+
 
 /**
  * 创建单个数据对象的折线路径

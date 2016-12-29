@@ -61,8 +61,9 @@
     lineChart.showCoordinateAxisGrid = YES;
 //    lineChart.barSelectable = NO;
 
-    [lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, DTChartItemData *itemData) {
-        DTLog(@"index = %@, %@ touch point = %@", @(lineIndex), @(pointIndex), NSStringFromCGPoint(itemData.position));
+
+    [lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
+        DTLog(@"line touch index = %@, %@, %@", @(lineIndex), @(pointIndex) , isMainAxis?@"Main axis":@"Second axis");
     }];
 
     [lineChart drawChart];
