@@ -95,11 +95,13 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
 
 /**
  * 坐标系值数据源
+ * @attention 和multiData同时只能赋值一个
  */
 @property(nonatomic) DTChartSingleData *singleData;
 /**
  * 多组坐标系值数据源
  * @note 多个singleData
+ * @attention 和singleData同时只能赋值一个
  */
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *multiData;
 

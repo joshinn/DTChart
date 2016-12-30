@@ -63,7 +63,7 @@
 
 
     [lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
-        DTLog(@"line touch index = %@, %@, %@", @(lineIndex), @(pointIndex) , isMainAxis?@"Main axis":@"Second axis");
+        DTLog(@"line touch index = %@, %@, %@", @(lineIndex), @(pointIndex), isMainAxis ? @"Main axis" : @"Second axis");
     }];
 
     [lineChart drawChart];

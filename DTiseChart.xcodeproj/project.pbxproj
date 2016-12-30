@@ -15,6 +15,7 @@
 		658F7FBE1E10F81F0024AB62 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FBB1E10F81F0024AB62 /* BarViewController.m */; };
 		658F7FC11E110E5A0024AB62 /* DTPiePart.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FC01E110E5A0024AB62 /* DTPiePart.m */; };
 		65C027EA1E139E7A001EB1C7 /* DTChart.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 65C027E91E139E7A001EB1C7 /* DTChart.podspec */; };
+		65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */; };
 		65C53E1A1DF8FA7300732385 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E191DF8FA7300732385 /* main.m */; };
 		65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1C1DF8FA7300732385 /* AppDelegate.m */; };
 		65C53E231DF8FA7300732385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E211DF8FA7300732385 /* Main.storyboard */; };
@@ -51,6 +52,8 @@
 		658F7FBF1E110E5A0024AB62 /* DTPiePart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTPiePart.h; sourceTree = "<group>"; };
 		658F7FC01E110E5A0024AB62 /* DTPiePart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTPiePart.m; sourceTree = "<group>"; };
 		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
+		65C027EC1E15EFCE001EB1C7 /* DTDistributionChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDistributionChart.h; sourceTree = "<group>"; };
+		65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDistributionChart.m; sourceTree = "<group>"; };
 		65C53E151DF8FA7300732385 /* DTiseChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTiseChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C53E191DF8FA7300732385 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65C53E1B1DF8FA7300732385 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -129,6 +132,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		65C027EB1E15EFA0001EB1C7 /* Distribution */ = {
+			isa = PBXGroup;
+			children = (
+				65C027EC1E15EFCE001EB1C7 /* DTDistributionChart.h */,
+				65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */,
+			);
+			path = Distribution;
+			sourceTree = "<group>";
+		};
 		65C53E0C1DF8FA7300732385 = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +191,7 @@
 				65CD0F291DFEA42A007AFD8D /* Base */,
 				65CD0F2E1DFEA42A007AFD8D /* Line */,
 				658F7FAE1E10F7060024AB62 /* Pie */,
+				65C027EB1E15EFA0001EB1C7 /* Distribution */,
 				65CD0F311DFEA42A007AFD8D /* Model */,
 			);
 			path = DTChart;
@@ -326,6 +339,7 @@
 				65CD0F391DFEA42A007AFD8D /* DTChartLabel.m in Sources */,
 				65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */,
 				65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */,
+				65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */,
 				654D1E631E0123A7004F2F1F /* DTLine.m in Sources */,
 				658F7FC11E110E5A0024AB62 /* DTPiePart.m in Sources */,
 			);

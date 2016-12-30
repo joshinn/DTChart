@@ -38,6 +38,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(self.coordinateAxisInsets.left, self.coordinateAxisInsets.top, 1, self.coordinateAxisInsets.bottom);
 }
 
+#pragma mark - delay init
+
 - (NSMutableArray<DTLine *> *)valueLines {
     if (!_valueLines) {
         _valueLines = [[NSMutableArray<DTLine *> alloc] init];
@@ -57,6 +59,18 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         _prevTouchIndex = [NSIndexPath indexPathForItem:-1 inSection:-1];
     }
     return _prevTouchIndex;
+}
+
+- (void)setSecondSingleData:(DTChartSingleData *)secondSingleData {
+    _secondSingleData = secondSingleData;
+
+    _secondMultiData = nil;
+}
+
+- (void)setSecondMultiData:(NSArray<DTChartSingleData *> *)secondMultiData {
+    _secondMultiData = [secondMultiData copy];
+
+    _secondSingleData = nil;
 }
 
 

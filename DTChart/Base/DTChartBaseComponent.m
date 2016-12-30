@@ -165,6 +165,18 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     return lineLayer;
 }
 
+- (void)setMultiData:(NSArray<DTChartSingleData *> *)multiData {
+    _multiData = [multiData copy];
+
+    _singleData = nil;
+}
+
+- (void)setSingleData:(DTChartSingleData *)singleData {
+    _singleData = singleData;
+
+    _multiData = nil;
+}
+
 #pragma mark - private method
 
 

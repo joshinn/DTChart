@@ -29,17 +29,23 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
  * x轴标签是否与格子对齐，默认是NO
  */
 @property(nonatomic) BOOL xAxisAlignGrid;
+
+
+#pragma mark - 副轴相关
+
 /**
  * y轴副轴标签数组
  */
 @property(nonatomic, copy) NSArray<DTAxisLabelData *> *ySecondAxisLabelDatas;
 /**
  * 副轴坐标系值数据源
+ * @attention 和secondMultiData同时只能赋值一个
  */
 @property(nonatomic) DTChartSingleData *secondSingleData;
 /**
  * 副轴多组坐标系值数据源
  * @note 多个secondSingleData
+ * @attention 和secondSingleData同时只能赋值一个
  */
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *secondMultiData;
 
