@@ -123,7 +123,7 @@
     self.lineChart.multiData = values;
     self.lineChart.xAxisAlignGrid = arc4random_uniform(2) % 2 != 1;
     self.lineChart.showAnimation = arc4random_uniform(2) % 2 == 1;
-    self.lineChart.showCoordinateAxisGrid = arc4random_uniform(2) % 2 == 1;
+//    self.lineChart.showCoordinateAxisGrid = arc4random_uniform(2) % 2 == 1;
     self.lineChart.valueSelectable = YES;
     [self.lineChart drawChart];
 

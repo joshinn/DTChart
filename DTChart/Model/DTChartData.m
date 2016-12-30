@@ -35,7 +35,7 @@
 + (instancetype)singleData:(NSArray<DTChartItemData *> *)values {
     DTChartSingleData *data = [[DTChartSingleData alloc] init];
     data.itemValues = values;
-    data.lineWidth = 2;
+    data.lineWidth = 5;
     return data;
 }
 

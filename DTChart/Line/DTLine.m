@@ -18,13 +18,15 @@
 
 @implementation DTLine
 
+static CGFloat const DTLineDefaultLineWidth = 5;
+
 
 + (instancetype)line:(DTLinePointType)pointType {
     DTLine *dtLine = [DTLine layer];
     dtLine.fillColor = nil;
     dtLine.lineCap = kCALineCapRound;
     dtLine.lineJoin = kCALineJoinBevel;
-    dtLine.lineWidth = 2;
+    dtLine.lineWidth = DTLineDefaultLineWidth;
     dtLine.pointType = pointType;
     dtLine.strokeStart = 0;
     dtLine.strokeEnd = 1;
@@ -44,7 +46,7 @@
     if (singleData.color) {
         self.lineColor = singleData.color;
     }
-    if(singleData.secondColor){
+    if (singleData.secondColor) {
         self.pointLayer.fillColor = singleData.secondColor.CGColor;
     }
 }
@@ -53,7 +55,7 @@
 - (void)setLineWidth:(CGFloat)lineWidth {
     [super setLineWidth:lineWidth];
 
-    self.pointLayer.lineWidth = lineWidth;
+    self.pointLayer.lineWidth = MAX(lineWidth / 2, 1);
 }
 
 
@@ -63,7 +65,7 @@
         _pointLayer.fillColor = [UIColor whiteColor].CGColor;
         _pointLayer.lineCap = kCALineCapRound;
         _pointLayer.lineJoin = kCALineJoinBevel;
-        _pointLayer.lineWidth = 2;
+        _pointLayer.lineWidth = DTLineDefaultLineWidth / 2;
         _pointLayer.strokeStart = 0;
         _pointLayer.strokeEnd = 1;
     }
@@ -88,7 +90,7 @@
     DTChartItemData *maxData = self.singleData.itemValues[self.singleData.maxValueIndex];
 
 
-    CGFloat r = self.lineWidth * 2;
+    CGFloat r = self.lineWidth;
     UIBezierPath *minPointPath;
     UIBezierPath *maxPointPath;
     switch (self.pointType) {

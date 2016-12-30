@@ -39,6 +39,7 @@
         DTLog(@"colors = %@", colors);
     }];
 
+    self.pieChart.pieMargin = 3;
     [self.view addSubview:self.pieChart];
     [self.pieChart drawChart];
 }

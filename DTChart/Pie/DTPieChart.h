@@ -21,4 +21,9 @@ typedef void(^DTPieChartTouchBlock)(NSUInteger index);
  */
 @property(nonatomic) NSInteger drawSingleDataIndex;
 
+/**
+ * pie图距离边界的距离，默认是2
+ */
+@property (nonatomic) CGFloat pieMargin;
+
 @end

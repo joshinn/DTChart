@@ -85,15 +85,17 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     [self touchKeyPoint:touches isMoving:YES];
 }
 
-
 - (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
+    if(!self.valueSelectable){
+        return;
+    }
+
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.contentView];
 
     CGFloat minDistance = -100;
     NSInteger n1 = -1;
     NSInteger n2 = -1;
-
 
     for (NSUInteger i = 0; i < (self.multiData.count + self.secondMultiData.count); ++i) {
         DTChartSingleData *sData;
@@ -157,7 +159,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
         }
     }
-
 }
 
 
@@ -180,7 +181,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
         DTChartItemData *itemData = singleData.itemValues[i];
-
 
         CGFloat ratioPosition = 0;
         if (xMaxData.value != xMinData.value) {
@@ -256,7 +256,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     NSUInteger sectionCellCount = self.yAxisCellCount / (self.ySecondAxisLabelDatas.count - 1);
 
-
     for (NSUInteger i = 0; i < self.ySecondAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.ySecondAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
@@ -279,9 +278,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         CGFloat x = CGRectGetMaxX(self.contentView.frame);
         CGFloat y = (self.coordinateAxisInsets.top + self.yAxisCellCount - data.axisPosition) * self.coordinateAxisCellWidth - size.height / 2;
 
-
         yLabel.frame = (CGRect) {CGPointMake(x, y), size};
-
 
         [self addSubview:yLabel];
     }
@@ -327,7 +324,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
                 [line drawEdgePoint:0];
             }
         }
-
     }
 }
 
@@ -386,9 +382,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
                 [line drawEdgePoint:0];
             }
         }
-
     }
-
 }
 
 - (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
@@ -494,7 +488,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     if (self.xAxisLabelDatas.count == 1) {
         sectionCellCount = self.xAxisCellCount / 2 + 1;
     } else {
-        if (self.xAxisAlignGrid) {
+        if (self.xAxisAlignGrid) {  // 卡格子线
             sectionCellCount = (self.xAxisCellCount - 1) * 1 / (self.xAxisLabelDatas.count - 1);
         } else {
             sectionCellCount = (self.xAxisCellCount - 1) * 1.0f / (self.xAxisLabelDatas.count - 1);
@@ -505,15 +499,14 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
 
-        // 每个label位于section内最后一个单元格线上，所有label在x轴上整体居左
-//        if (self.xAxisLabelDatas.count == 1) {
-//            data.axisPosition = 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCellCount) / 2;
-//        } else {
-//            data.axisPosition = sectionCellCount * i + 1;
-//        }
 
         // 每个label位于section内最后一个单元格线上，所有label在x轴上整体居中
-        data.axisPosition = sectionCellCount * i + 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCellCount) / 2;
+        if (self.xAxisAlignGrid) {  // 卡格子线
+            NSUInteger sectionCount2 = (NSUInteger) sectionCellCount;
+            data.axisPosition = sectionCount2 * i + 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCount2) / 2;
+        } else {
+            data.axisPosition = sectionCellCount * i + 1 + (self.xAxisCellCount - 1 - (self.xAxisLabelDatas.count - 1) * sectionCellCount) / 2;
+        }
 
         if (data.hidden) {
             continue;

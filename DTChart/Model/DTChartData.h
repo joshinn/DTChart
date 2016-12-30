@@ -74,7 +74,7 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  */
 @property(nonatomic) UIColor *secondColor;
 /**
- * 折线图，折线宽度，默认是2
+ * 折线图，折线宽度，默认是5
  * @attention 折线图
  */
 @property(nonatomic) CGFloat lineWidth;

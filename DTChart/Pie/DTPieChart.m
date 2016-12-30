@@ -37,6 +37,7 @@
     self.userInteractionEnabled = YES;
     _prevSelectedIndex = -1;
     _drawSingleDataIndex = -1;
+    _pieMargin = 2;
 }
 
 - (void)setOriginPoint:(CGPoint)originPoint {
@@ -70,6 +71,10 @@
 
 
 - (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
+    if(!self.valueSelectable){
+        return;
+    }
+
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.contentView];
 
@@ -276,7 +281,7 @@
 
     [self.percentages removeAllObjects];
 
-    self.radius = MIN(CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame)) / 2 - 2 * self.coordinateAxisCellWidth;
+    self.radius = MIN(CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame)) / 2 - self.pieMargin * self.coordinateAxisCellWidth;
     self.originPoint = CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
 
     self.containerLayer.frame = self.contentView.bounds;
