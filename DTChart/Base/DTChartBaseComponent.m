@@ -9,7 +9,6 @@
 #import "DTChartBaseComponent.h"
 
 
-
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 @interface DTChartBaseComponent ()
@@ -48,6 +47,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 
 - (void)initial {
+    self.userInteractionEnabled = NO;
     _showAnimation = YES;
     _showCoordinateAxisLine = NO;
     _showCoordinateAxisGrid = NO;
@@ -180,32 +180,30 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 #pragma mark - private method
 
 
-
-
 #pragma mark - public method
 
 
 - (void)generateMultiDataColors:(BOOL)needInitial {
 
     if (needInitial) {
-        self.colorManager = [DTColorManager manager];
+        self.colorManager = [DTColorManager randomManager];
     }
 
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
-    for(DTChartSingleData *sData in self.multiData){
-        if(!sData.color){
+    for (DTChartSingleData *sData in self.multiData) {
+        if (!sData.color) {
             sData.color = [self.colorManager getColor];
+        }
+        if (!sData.secondColor) {
             sData.secondColor = [self.colorManager getLightColor:sData.color];
         }
         [colors addObject:sData.color];
     }
-    if(colors.count > 0 && self.colorsCompletionBlock){
+    if (colors.count > 0 && self.colorsCompletionBlock) {
         self.colorsCompletionBlock(colors);
     }
 
 }
-
-
 
 
 - (BOOL)drawXAxisLabels {
@@ -253,8 +251,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     }
 
     [self generateMultiDataColors:YES];
-
-
 
 
     [self clearChartContent];

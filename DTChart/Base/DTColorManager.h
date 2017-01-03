@@ -9,7 +9,19 @@
 @import UIKit;
 
 @interface DTColorManager : NSObject
+
+/**
+ * 颜色管理实例
+ * @return instance
+ */
 + (instancetype)manager;
+/**
+ * 颜色管理实例，颜色会随便排序
+ * @return instance
+ */
++ (instancetype)randomManager;
+
++ (UIColor *)getLightColor:(UIColor *)color;
 
 /**
  * 获取主颜色

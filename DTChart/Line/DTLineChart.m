@@ -34,7 +34,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     [super initial];
 
     _xAxisAlignGrid = NO;
-    self.userInteractionEnabled = NO;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(self.coordinateAxisInsets.left, self.coordinateAxisInsets.top, 1, self.coordinateAxisInsets.bottom);
 }
 
@@ -207,13 +206,15 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 - (void)generateSecondMultiDataColors:(BOOL)needInitial {
 
     if (needInitial) {
-        self.colorManager = [DTColorManager manager];
+        self.colorManager = [DTColorManager randomManager];
     }
 
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
     for (DTChartSingleData *sData in self.secondMultiData) {
         if (!sData.color) {
             sData.color = [self.colorManager getColor];
+        }
+        if (!sData.secondColor) {
             sData.secondColor = [self.colorManager getLightColor:sData.color];
         }
         [colors addObject:sData.color];

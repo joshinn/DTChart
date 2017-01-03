@@ -24,9 +24,28 @@
     return colorManager;
 }
 
++ (instancetype)randomManager {
+    DTColorManager *colorManager = [[DTColorManager alloc] initWithRandom];
+    return colorManager;
+}
+
+
 - (instancetype)init {
     if (self = [super init]) {
         _colors = [DTColorArray mutableCopy];
+    }
+    return self;
+}
+
+- (instancetype)initWithRandom {
+    if (self = [super init]) {
+        NSMutableArray<UIColor *> *tempColors = [DTColorArray mutableCopy];
+        _colors = [NSMutableArray array];
+        while (tempColors.count > 0) {
+            UIColor *color = tempColors[arc4random_uniform((uint32_t) tempColors.count)];
+            [_colors addObject:color];
+            [tempColors removeObject:color];
+        }
     }
     return self;
 }
@@ -39,7 +58,21 @@
     return color;
 }
 
+
 - (UIColor *)getLightColor:(UIColor *)color {
+    UIColor *lightColor = nil;
+    for (NSUInteger i = 0; i < DTColorArray.count; ++i) {
+        UIColor *c = DTColorArray[i];
+        if ([c compare:color]) {
+            lightColor = DTLightColorArray[i];
+            break;
+        }
+    }
+
+    return lightColor;
+}
+
++ (UIColor *)getLightColor:(UIColor *)color {
     UIColor *lightColor = nil;
     for (NSUInteger i = 0; i < DTColorArray.count; ++i) {
         UIColor *c = DTColorArray[i];

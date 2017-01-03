@@ -34,7 +34,6 @@
 - (void)initial {
     [super initial];
 
-    self.userInteractionEnabled = YES;
     _prevSelectedIndex = -1;
     _drawSingleDataIndex = -1;
     _pieMargin = 2;
@@ -211,7 +210,7 @@
         return;
     }
 
-    self.colorManager = [DTColorManager manager];
+    self.colorManager = [DTColorManager randomManager];
 
     CGFloat sum = 0;    // 所有数据总和
     for (DTChartItemData *itemData in sData.itemValues) {
@@ -220,6 +219,9 @@
         // 颜色
         if(!itemData.color){
             itemData.color = [self.colorManager getColor];
+
+        }
+        if (!itemData.secondColor) {
             itemData.secondColor = [self.colorManager getLightColor:itemData.color];
         }
     }
