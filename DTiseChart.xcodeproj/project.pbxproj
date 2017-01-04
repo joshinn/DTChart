@@ -14,6 +14,7 @@
 		658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FB91E10F81F0024AB62 /* PieViewController.m */; };
 		658F7FBE1E10F81F0024AB62 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FBB1E10F81F0024AB62 /* BarViewController.m */; };
 		658F7FC11E110E5A0024AB62 /* DTPiePart.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FC01E110E5A0024AB62 /* DTPiePart.m */; };
+		65920D0B1E1B481F006EA012 /* DTDistributionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65920D0A1E1B481F006EA012 /* DTDistributionBar.m */; };
 		65C027EA1E139E7A001EB1C7 /* DTChart.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 65C027E91E139E7A001EB1C7 /* DTChart.podspec */; };
 		65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */; };
 		65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */; };
@@ -52,6 +53,8 @@
 		658F7FBB1E10F81F0024AB62 /* BarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarViewController.m; sourceTree = "<group>"; };
 		658F7FBF1E110E5A0024AB62 /* DTPiePart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTPiePart.h; sourceTree = "<group>"; };
 		658F7FC01E110E5A0024AB62 /* DTPiePart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTPiePart.m; sourceTree = "<group>"; };
+		65920D091E1B481F006EA012 /* DTDistributionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDistributionBar.h; sourceTree = "<group>"; };
+		65920D0A1E1B481F006EA012 /* DTDistributionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDistributionBar.m; sourceTree = "<group>"; };
 		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
 		65C027EC1E15EFCE001EB1C7 /* DTDistributionChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDistributionChart.h; sourceTree = "<group>"; };
 		65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDistributionChart.m; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 			children = (
 				65C027EC1E15EFCE001EB1C7 /* DTDistributionChart.h */,
 				65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */,
+				65920D091E1B481F006EA012 /* DTDistributionBar.h */,
+				65920D0A1E1B481F006EA012 /* DTDistributionBar.m */,
 			);
 			path = Distribution;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */,
 				65CD0F381DFEA42A007AFD8D /* DTChartBaseComponent.m in Sources */,
 				658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */,
+				65920D0B1E1B481F006EA012 /* DTDistributionBar.m in Sources */,
 				654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */,
 				658F7FBC1E10F81F0024AB62 /* LineViewController.m in Sources */,
 				65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */,

@@ -61,11 +61,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
             _coordinateAxisInsets.top * _coordinateAxisCellWidth,
             (_xCount - _coordinateAxisInsets.left - _coordinateAxisInsets.right) * _coordinateAxisCellWidth,
             (_yCount - _coordinateAxisInsets.top - _coordinateAxisInsets.bottom) * _coordinateAxisCellWidth)];
-    _contentView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
     [self addSubview:_contentView];
-    self.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
-
-
 }
 
 /**
@@ -118,8 +114,8 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 - (CAShapeLayer *)gridLine {
     if (!_gridLine) {
         _gridLine = [CAShapeLayer layer];
-        _gridLine.strokeColor = [UIColor lightGrayColor].CGColor;
-        _gridLine.lineWidth = 1;
+        _gridLine.strokeColor = DTRGBColor(0x686868, 1).CGColor;
+        _gridLine.lineWidth = 0.5;
         _gridLine.fillColor = nil;
     }
     return _gridLine;
