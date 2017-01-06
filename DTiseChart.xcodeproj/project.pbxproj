@@ -27,6 +27,8 @@
 		65C53E281DF8FA7300732385 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E261DF8FA7300732385 /* LaunchScreen.storyboard */; };
 		65C8E2C11E1E49AE00F20B87 /* DTTableChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C8E2C01E1E49AE00F20B87 /* DTTableChartCell.m */; };
 		65C8E2C31E1F446400F20B87 /* resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 65C8E2C21E1F446400F20B87 /* resources.bundle */; };
+		65C8E2C61E1F96C600F20B87 /* DTTableAxisLabelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C8E2C51E1F96C600F20B87 /* DTTableAxisLabelData.m */; };
+		65C8E2C91E1F973500F20B87 /* DTLineChartSingleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C8E2C81E1F973500F20B87 /* DTLineChartSingleData.m */; };
 		65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */; };
 		65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF71E0CFAE700E2C36B /* DTColorManager.m */; };
 		65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DFA1E0D0AC300E2C36B /* UIColor+DTExternal.m */; };
@@ -79,6 +81,10 @@
 		65C8E2BF1E1E49AE00F20B87 /* DTTableChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChartCell.h; sourceTree = "<group>"; };
 		65C8E2C01E1E49AE00F20B87 /* DTTableChartCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChartCell.m; sourceTree = "<group>"; };
 		65C8E2C21E1F446400F20B87 /* resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = resources.bundle; sourceTree = "<group>"; };
+		65C8E2C41E1F96C600F20B87 /* DTTableAxisLabelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableAxisLabelData.h; sourceTree = "<group>"; };
+		65C8E2C51E1F96C600F20B87 /* DTTableAxisLabelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableAxisLabelData.m; sourceTree = "<group>"; };
+		65C8E2C71E1F973500F20B87 /* DTLineChartSingleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLineChartSingleData.h; sourceTree = "<group>"; };
+		65C8E2C81E1F973500F20B87 /* DTLineChartSingleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLineChartSingleData.m; sourceTree = "<group>"; };
 		65CC6DF01E0A640E00E2C36B /* DTHeapBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTHeapBar.h; sourceTree = "<group>"; };
 		65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHeapBar.m; sourceTree = "<group>"; };
 		65CC6DF61E0CFAE700E2C36B /* DTColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTColorManager.h; sourceTree = "<group>"; };
@@ -280,6 +286,10 @@
 			children = (
 				65CD0F321DFEA42A007AFD8D /* DTChartData.h */,
 				65CD0F331DFEA42A007AFD8D /* DTChartData.m */,
+				65C8E2C41E1F96C600F20B87 /* DTTableAxisLabelData.h */,
+				65C8E2C51E1F96C600F20B87 /* DTTableAxisLabelData.m */,
+				65C8E2C71E1F973500F20B87 /* DTLineChartSingleData.h */,
+				65C8E2C81E1F973500F20B87 /* DTLineChartSingleData.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -362,6 +372,7 @@
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */,
 				65920D0F1E1CD20A006EA012 /* DTTableChart.m in Sources */,
+				65C8E2C91E1F973500F20B87 /* DTLineChartSingleData.m in Sources */,
 				65CD0F381DFEA42A007AFD8D /* DTChartBaseComponent.m in Sources */,
 				658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */,
 				65920D0B1E1B481F006EA012 /* DTDistributionBar.m in Sources */,
@@ -377,6 +388,7 @@
 				65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */,
 				65C53E1A1DF8FA7300732385 /* main.m in Sources */,
 				65CD0F391DFEA42A007AFD8D /* DTChartLabel.m in Sources */,
+				65C8E2C61E1F96C600F20B87 /* DTTableAxisLabelData.m in Sources */,
 				65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */,
 				65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */,
 				65C8E2C11E1E49AE00F20B87 /* DTTableChartCell.m in Sources */,

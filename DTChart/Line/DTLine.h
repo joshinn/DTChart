@@ -7,15 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DTLineChartSingleData.h"
 
-@class DTChartItemData;
-@class DTChartSingleData;
-
-typedef NS_ENUM(NSInteger, DTLinePointType) {
-    DTLinePointTypeCircle,      // 圆圈
-    DTLinePointTypedTriangle,   // 三角形
-    DTLinePointTypedSquare      // 正方形
-};
 
 @interface DTLine : CAShapeLayer
 

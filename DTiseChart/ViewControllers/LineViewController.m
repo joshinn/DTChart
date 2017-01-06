@@ -9,6 +9,7 @@
 #import "LineViewController.h"
 #import "DTChartData.h"
 #import "DTLineChart.h"
+#import "DTLineChartSingleData.h"
 
 @interface LineViewController ()
 
@@ -90,19 +91,34 @@
     return button;
 }
 
-- (DTChartSingleData *)simulateData:(NSUInteger)count {
+- (DTLineChartSingleData *)simulateData:(NSUInteger)count {
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
         DTChartItemData *data = [DTChartItemData chartData];
         data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(90));
-
         [values addObject:data];
     }
-    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    DTLineChartSingleData *singleData = [DTLineChartSingleData singleData:values];
+    DTLinePointType type;
+    switch (arc4random_uniform(3)) {
+        case 0:
+            type = DTLinePointTypeCircle;
+            break;
+        case 1:
+            type = DTLinePointTypeTriangle;
+            break;
+        case 2:
+            type = DTLinePointTypeSquare;
+            break;
+        default:
+            type = DTLinePointTypeCircle;
+            break;
+    }
+    singleData.pointType = type;
     return singleData;
 }
 
-- (DTChartSingleData *)simulateSecondData:(NSUInteger)count {
+- (DTLineChartSingleData *)simulateSecondData:(NSUInteger)count {
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
         DTChartItemData *data = [DTChartItemData chartData];
@@ -110,7 +126,23 @@
         [values addObject:data];
         DTLog(@"second y = %@", @(data.itemValue.y));
     }
-    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    DTLineChartSingleData *singleData = [DTLineChartSingleData singleData:values];
+    DTLinePointType type;
+    switch (arc4random_uniform(3)) {
+        case 0:
+            type = DTLinePointTypeCircle;
+            break;
+        case 1:
+            type = DTLinePointTypeTriangle;
+            break;
+        case 2:
+            type = DTLinePointTypeSquare;
+            break;
+        default:
+            type = DTLinePointTypeCircle;
+            break;
+    }
+    singleData.pointType = type;
     return singleData;
 }
 
@@ -193,7 +225,7 @@
 
 
 - (void)secondAxisChartInsert {
-    NSMutableArray<DTChartSingleData *> *data = [self.lineChart.secondMultiData mutableCopy];
+    NSMutableArray<DTLineChartSingleData *> *data = [self.lineChart.secondMultiData mutableCopy];
     [data insertObject:[self simulateSecondData:2 + arc4random_uniform(6)] atIndex:0];
     [data insertObject:[self simulateSecondData:2 + arc4random_uniform(6)] atIndex:0];
 

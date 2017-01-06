@@ -9,9 +9,10 @@
 #import "DTTableChartCell.h"
 #import "DTChartLabel.h"
 #import "DTChartData.h"
+#import "DTTableAxisLabelData.h"
 
 
-CGFloat const DTTableChartCellHeight = 35;
+ CGFloat const DTTableChartCellHeight = 35;
 
 @interface DTTableChartCell ()
 
@@ -31,6 +32,8 @@ static NSInteger const IconViewTag = 10101;
 
 - (instancetype)initWithWidths:(NSArray *)widths reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
+
+        DTLog(@"DTTableChartCell init");
 
         CGFloat x = 0;
         _containerViews = [NSArray array];

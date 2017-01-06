@@ -8,7 +8,7 @@
 
 #import "DTLineChart.h"
 #import "DTChartLabel.h"
-#import "DTChartData.h"
+#import "DTLineChartSingleData.h"
 #import "DTLine.h"
 
 
@@ -60,13 +60,13 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return _prevTouchIndex;
 }
 
-- (void)setSecondSingleData:(DTChartSingleData *)secondSingleData {
+- (void)setSecondSingleData:(DTLineChartSingleData *)secondSingleData {
     _secondSingleData = secondSingleData;
 
     _secondMultiData = nil;
 }
 
-- (void)setSecondMultiData:(NSArray<DTChartSingleData *> *)secondMultiData {
+- (void)setSecondMultiData:(NSArray<DTLineChartSingleData *> *)secondMultiData {
     _secondMultiData = [secondMultiData copy];
 
     _secondSingleData = nil;
@@ -97,9 +97,9 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     NSInteger n2 = -1;
 
     for (NSUInteger i = 0; i < (self.multiData.count + self.secondMultiData.count); ++i) {
-        DTChartSingleData *sData;
+        DTLineChartSingleData *sData;
         if (i < self.multiData.count) {
-            sData = self.multiData[i];
+            sData = (DTLineChartSingleData *) self.multiData[i];
         } else {
             sData = self.secondMultiData[i - self.multiData.count];
         }
@@ -170,7 +170,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
  * @param yMinData y轴标签最小值
  * @return 路径
  */
-- (UIBezierPath *)generateItemPath:(DTChartSingleData *)singleData
+- (UIBezierPath *)generateItemPath:(DTLineChartSingleData *)singleData
                      xAxisMaxVaule:(DTAxisLabelData *)xMaxData
                      xAxisMinValue:(DTAxisLabelData *)xMinData
                      yAxisMaxVaule:(DTAxisLabelData *)yMaxData
@@ -210,7 +210,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }
 
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
-    for (DTChartSingleData *sData in self.secondMultiData) {
+    for (DTLineChartSingleData *sData in self.secondMultiData) {
         if (!sData.color) {
             sData.color = [self.colorManager getColor];
         }
@@ -301,7 +301,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
     for (NSUInteger n = 0; n < self.secondMultiData.count; ++n) {
-        DTChartSingleData *singleData = self.secondMultiData[n];
+        DTLineChartSingleData *singleData = self.secondMultiData[n];
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -311,7 +311,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         if (path) {
 
-            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            DTLine *line = [DTLine line:singleData.pointType];
             line.linePath = path;
             line.singleData = singleData;
             [self.secondValueLines addObject:line];
@@ -360,7 +360,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             continue;
         }
 
-        DTChartSingleData *singleData = self.secondMultiData[n];
+        DTLineChartSingleData *singleData = self.secondMultiData[n];
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -400,7 +400,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             continue;
         }
 
-        DTChartSingleData *singleData = self.secondMultiData[n];
+        DTLineChartSingleData *singleData = self.secondMultiData[n];
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -410,7 +410,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         if (path) {
 
-            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            DTLine *line = [DTLine line:singleData.pointType];
             line.singleData = singleData;
             line.linePath = path;
             if (self.secondValueLines.count >= n) {
@@ -462,14 +462,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         [line removeEdgePoint];
         [line removeFromSuperlayer];
     }];
-//    NSArray<CALayer *> *layers = [self.contentView.layer.sublayers copy];
-//    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
-//        if ([obj isKindOfClass:[DTLine class]]) {
-//            DTLine *line = (DTLine *) obj;
-//            [line removeEdgePoint];
-//            [line removeFromSuperlayer];
-//        }
-//    }];
 
     [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[DTChartLabel class]]) {
@@ -591,7 +583,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
     for (NSUInteger n = 0; n < self.multiData.count; ++n) {
-        DTChartSingleData *singleData = self.multiData[n];
+        DTLineChartSingleData *singleData = (DTLineChartSingleData *) self.multiData[n];
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -601,7 +593,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         if (path) {
 
-            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            DTLine *line = [DTLine line:singleData.pointType];
             line.linePath = path;
             line.singleData = singleData;
             [self.valueLines addObject:line];
@@ -642,7 +634,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             continue;
         }
 
-        DTChartSingleData *singleData = self.multiData[n];
+        DTLineChartSingleData *singleData = (DTLineChartSingleData *) self.multiData[n];
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -685,7 +677,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             continue;
         }
 
-        DTChartSingleData *singleData = self.multiData[n];
+        DTLineChartSingleData *singleData = (DTLineChartSingleData *) self.multiData[n];
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -695,7 +687,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         if (path) {
 
-            DTLine *line = [DTLine line:DTLinePointTypeCircle];
+            DTLine *line = [DTLine line:singleData.pointType];
             line.singleData = singleData;
             line.linePath = path;
             if (self.valueLines.count >= n) {

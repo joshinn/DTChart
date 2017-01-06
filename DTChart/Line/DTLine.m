@@ -7,8 +7,8 @@
 //
 
 #import "DTLine.h"
-#import "DTChartData.h"
 #import "UIBezierPath+DTExternal.h"
+
 
 @interface DTLine ()
 
@@ -99,12 +99,12 @@ static CGFloat const DTLineDefaultLineWidth = 5;
             maxPointPath = [UIBezierPath bezierPathWithArcCenter:maxData.position radius:r startAngle:0 endAngle:(CGFloat) (2 * M_PI) clockwise:YES];
         }
             break;
-        case DTLinePointTypedTriangle: {
+        case DTLinePointTypeTriangle: {
             minPointPath = [UIBezierPath bezierPathWithTriangle:minData.position radius:2 * r];
             maxPointPath = [UIBezierPath bezierPathWithTriangle:maxData.position radius:2 * r];
         }
             break;
-        case DTLinePointTypedSquare: {
+        case DTLinePointTypeSquare: {
             minPointPath = [UIBezierPath bezierPathWithRect:CGRectMake(minData.position.x - r, minData.position.y - r, 2 * r, 2 * r)];
             maxPointPath = [UIBezierPath bezierPathWithRect:CGRectMake(maxData.position.x - r, maxData.position.y - r, 2 * r, 2 * r)];
         }

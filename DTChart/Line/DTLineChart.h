@@ -8,6 +8,8 @@
 
 #import "DTChartBaseComponent.h"
 
+@class DTLineChartSingleData;
+
 /**
  * 触摸手势回调
  * @param lineIndex 折线的序号(哪一组数据)
@@ -19,6 +21,12 @@ typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex
 typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
 
 
+
+/**
+ * 折线图
+ *
+ * @attention DTChartSingleData 需要使用子类 DTLineChartSingleData，扩展了折线点的形状
+ */
 @interface DTLineChart : DTChartBaseComponent
 
 /**
@@ -41,13 +49,13 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
  * 副轴坐标系值数据源
  * @attention 和secondMultiData同时只能赋值一个
  */
-@property(nonatomic) DTChartSingleData *secondSingleData;
+@property(nonatomic) DTLineChartSingleData *secondSingleData;
 /**
  * 副轴多组坐标系值数据源
  * @note 多个secondSingleData
  * @attention 和secondSingleData同时只能赋值一个
  */
-@property(nonatomic, copy) NSArray<DTChartSingleData *> *secondMultiData;
+@property(nonatomic, copy) NSArray<DTLineChartSingleData *> *secondMultiData;
 
 @property(nonatomic, copy) SecondAxisColorsCompletionBlock secondAxisColorsCompletionBlock;
 

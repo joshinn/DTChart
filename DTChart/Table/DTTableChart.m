@@ -266,10 +266,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellReuse
 #pragma mark - override
 
 /**
- * 清除坐标系里的轴标签和值线条
+ * 清除坐标系里的值
  */
 - (void)clearChartContent {
-
 
 }
 
@@ -278,7 +277,6 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellReuse
     if (![super drawXAxisLabels]) {
         return NO;
     }
-
 
     return YES;
 }

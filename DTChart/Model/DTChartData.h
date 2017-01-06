@@ -92,7 +92,6 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  */
 @property(nonatomic, readonly) NSUInteger minValueIndex;
 
-
 + (instancetype)singleData;
 
 + (instancetype)singleData:(NSArray<DTChartItemData *> *)values;
@@ -126,16 +125,3 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 @end
 
 
-#pragma mark - DTTableAxisLabelData DTTableChart坐标轴标签数据
-
-@interface DTTableAxisLabelData : DTAxisLabelData
-/**
- * 是否显示升降序按钮，默认YES
- */
-@property(nonatomic, getter=isShowOrder) BOOL showOrder;
-/**
- * 是否是升序，默认YES
- */
-@property(nonatomic, getter=isAscending) BOOL ascending;
-
-@end

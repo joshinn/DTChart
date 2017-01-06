@@ -8,6 +8,7 @@
 
 #import "TableChartViewController.h"
 #import "DTTableChart.h"
+#import "DTTableAxisLabelData.h"
 
 @interface TableChartViewController ()
 
@@ -29,7 +30,7 @@
 - (void)loadSubviews {
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
-    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(150, 600, 60, 48)];
+    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 48)];
     [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
     [changeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [changeBtn addTarget:self action:@selector(updateChart) forControlEvents:UIControlEventTouchUpInside];
@@ -49,11 +50,11 @@
     xAxisLabelDatas.firstObject.showOrder = NO;
     xAxisLabelDatas[3].ascending = NO;
 
-    self.tableChart = [DTTableChart tableChart:DTTableChartStyleC1C6 origin:CGPointMake(30, 100) heightCellCount:60];
+    self.tableChart = [DTTableChart tableChart:DTTableChartStyleC1C6 origin:CGPointMake(200, 100) heightCellCount:60];
     self.tableChart.headViewHeight = 500;
     self.tableChart.headView.backgroundColor = [UIColor lightGrayColor];
     self.tableChart.xAxisLabelDatas = xAxisLabelDatas;
-    self.tableChart.multiData = @[[self simulateData:7], [self simulateData:70], [self simulateData:60], [self simulateData:66], [self simulateData:50], [self simulateData:56], [self simulateData:68]];
+    self.tableChart.multiData = @[[self simulateData:7], [self simulateData:700], [self simulateData:600], [self simulateData:466], [self simulateData:550], [self simulateData:256], [self simulateData:368]];
     [self.view addSubview:self.tableChart];
     [self.tableChart drawChart];
 }
