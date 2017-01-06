@@ -11,7 +11,7 @@
 @implementation UIColor (DTExternal)
 
 - (BOOL)compare:(UIColor *)color {
-    return [self compare:color withTolerance:0.00001];
+    return [self compare:color withTolerance:1.0f / 255];
 }
 
 - (BOOL)compare:(UIColor *)color withTolerance:(CGFloat)tolerance {

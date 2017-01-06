@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DTChart"
-  s.version      = "0.11"
+  s.version      = "0.12"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.summary      = "A simple chart for DTise"
   s.author       = { "joshin" => "xjcute@gmail.com" }
@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/joshinn/DTChart.git", :tag => s.version.to_s }
   s.source_files  = "DTChart", "DTChart/**/*.{h,m}"
+  s.resource     = 'DTChart/resources.bundle'
   s.prefix_header_file = 'DTChart/DTChart-Prefix.pch'
 
 end

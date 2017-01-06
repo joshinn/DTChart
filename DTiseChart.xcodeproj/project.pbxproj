@@ -15,6 +15,8 @@
 		658F7FBE1E10F81F0024AB62 /* BarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FBB1E10F81F0024AB62 /* BarViewController.m */; };
 		658F7FC11E110E5A0024AB62 /* DTPiePart.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FC01E110E5A0024AB62 /* DTPiePart.m */; };
 		65920D0B1E1B481F006EA012 /* DTDistributionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65920D0A1E1B481F006EA012 /* DTDistributionBar.m */; };
+		65920D0F1E1CD20A006EA012 /* DTTableChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65920D0E1E1CD20A006EA012 /* DTTableChart.m */; };
+		65920D121E1CE947006EA012 /* TableChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65920D111E1CE947006EA012 /* TableChartViewController.m */; };
 		65C027EA1E139E7A001EB1C7 /* DTChart.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 65C027E91E139E7A001EB1C7 /* DTChart.podspec */; };
 		65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */; };
 		65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */; };
@@ -23,6 +25,8 @@
 		65C53E231DF8FA7300732385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E211DF8FA7300732385 /* Main.storyboard */; };
 		65C53E251DF8FA7300732385 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E241DF8FA7300732385 /* Assets.xcassets */; };
 		65C53E281DF8FA7300732385 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E261DF8FA7300732385 /* LaunchScreen.storyboard */; };
+		65C8E2C11E1E49AE00F20B87 /* DTTableChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C8E2C01E1E49AE00F20B87 /* DTTableChartCell.m */; };
+		65C8E2C31E1F446400F20B87 /* resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 65C8E2C21E1F446400F20B87 /* resources.bundle */; };
 		65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */; };
 		65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DF71E0CFAE700E2C36B /* DTColorManager.m */; };
 		65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC6DFA1E0D0AC300E2C36B /* UIColor+DTExternal.m */; };
@@ -55,6 +59,10 @@
 		658F7FC01E110E5A0024AB62 /* DTPiePart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTPiePart.m; sourceTree = "<group>"; };
 		65920D091E1B481F006EA012 /* DTDistributionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDistributionBar.h; sourceTree = "<group>"; };
 		65920D0A1E1B481F006EA012 /* DTDistributionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDistributionBar.m; sourceTree = "<group>"; };
+		65920D0D1E1CD20A006EA012 /* DTTableChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChart.h; sourceTree = "<group>"; };
+		65920D0E1E1CD20A006EA012 /* DTTableChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChart.m; sourceTree = "<group>"; };
+		65920D101E1CE947006EA012 /* TableChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableChartViewController.h; sourceTree = "<group>"; };
+		65920D111E1CE947006EA012 /* TableChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableChartViewController.m; sourceTree = "<group>"; };
 		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
 		65C027EC1E15EFCE001EB1C7 /* DTDistributionChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDistributionChart.h; sourceTree = "<group>"; };
 		65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDistributionChart.m; sourceTree = "<group>"; };
@@ -68,6 +76,9 @@
 		65C53E241DF8FA7300732385 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65C53E271DF8FA7300732385 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65C53E291DF8FA7300732385 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65C8E2BF1E1E49AE00F20B87 /* DTTableChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChartCell.h; sourceTree = "<group>"; };
+		65C8E2C01E1E49AE00F20B87 /* DTTableChartCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChartCell.m; sourceTree = "<group>"; };
+		65C8E2C21E1F446400F20B87 /* resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = resources.bundle; sourceTree = "<group>"; };
 		65CC6DF01E0A640E00E2C36B /* DTHeapBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTHeapBar.h; sourceTree = "<group>"; };
 		65CC6DF11E0A640E00E2C36B /* DTHeapBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHeapBar.m; sourceTree = "<group>"; };
 		65CC6DF61E0CFAE700E2C36B /* DTColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTColorManager.h; sourceTree = "<group>"; };
@@ -136,8 +147,21 @@
 				658F7FB91E10F81F0024AB62 /* PieViewController.m */,
 				65C027EF1E15F1B1001EB1C7 /* DistributionViewController.h */,
 				65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */,
+				65920D101E1CE947006EA012 /* TableChartViewController.h */,
+				65920D111E1CE947006EA012 /* TableChartViewController.m */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		65920D0C1E1CD1F0006EA012 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				65920D0D1E1CD20A006EA012 /* DTTableChart.h */,
+				65920D0E1E1CD20A006EA012 /* DTTableChart.m */,
+				65C8E2BF1E1E49AE00F20B87 /* DTTableChartCell.h */,
+				65C8E2C01E1E49AE00F20B87 /* DTTableChartCell.m */,
+			);
+			path = Table;
 			sourceTree = "<group>";
 		};
 		65C027EB1E15EFA0001EB1C7 /* Distribution */ = {
@@ -195,6 +219,7 @@
 		65CD0F1F1DFEA42A007AFD8D /* DTChart */ = {
 			isa = PBXGroup;
 			children = (
+				65C8E2C21E1F446400F20B87 /* resources.bundle */,
 				654D1E6C1E02A57F004F2F1F /* DTChart-Prefix.pch */,
 				654D1E641E0267A7004F2F1F /* Category */,
 				65CD0F201DFEA42A007AFD8D /* Bar */,
@@ -202,6 +227,7 @@
 				65CD0F2E1DFEA42A007AFD8D /* Line */,
 				658F7FAE1E10F7060024AB62 /* Pie */,
 				65C027EB1E15EFA0001EB1C7 /* Distribution */,
+				65920D0C1E1CD1F0006EA012 /* Table */,
 				65CD0F311DFEA42A007AFD8D /* Model */,
 			);
 			path = DTChart;
@@ -318,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C53E281DF8FA7300732385 /* LaunchScreen.storyboard in Resources */,
+				65C8E2C31E1F446400F20B87 /* resources.bundle in Resources */,
 				65C027EA1E139E7A001EB1C7 /* DTChart.podspec in Resources */,
 				65C53E251DF8FA7300732385 /* Assets.xcassets in Resources */,
 				65C53E231DF8FA7300732385 /* Main.storyboard in Resources */,
@@ -334,6 +361,7 @@
 				65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */,
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */,
+				65920D0F1E1CD20A006EA012 /* DTTableChart.m in Sources */,
 				65CD0F381DFEA42A007AFD8D /* DTChartBaseComponent.m in Sources */,
 				658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */,
 				65920D0B1E1B481F006EA012 /* DTDistributionBar.m in Sources */,
@@ -351,9 +379,11 @@
 				65CD0F391DFEA42A007AFD8D /* DTChartLabel.m in Sources */,
 				65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */,
 				65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */,
+				65C8E2C11E1E49AE00F20B87 /* DTTableChartCell.m in Sources */,
 				65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */,
 				654D1E631E0123A7004F2F1F /* DTLine.m in Sources */,
 				658F7FC11E110E5A0024AB62 /* DTPiePart.m in Sources */,
+				65920D121E1CE947006EA012 /* TableChartViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

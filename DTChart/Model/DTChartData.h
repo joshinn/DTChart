@@ -34,6 +34,10 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  */
 @property(nonatomic) ChartItemValue itemValue;
 /**
+ * 对应的文字内容
+ */
+@property(nonatomic, copy) NSString *title;
+/**
  * 在坐标系里的位置(x,y)
  */
 @property(nonatomic) CGPoint position;
@@ -82,12 +86,11 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 /**
  * DTChartItemData里ChartItemValue的y值最大的项序号
  */
-@property (nonatomic, readonly) NSUInteger maxValueIndex;
+@property(nonatomic, readonly) NSUInteger maxValueIndex;
 /**
  * DTChartItemData里ChartItemValue的y值最小的项序号
  */
-@property (nonatomic, readonly) NSUInteger minValueIndex;
-
+@property(nonatomic, readonly) NSUInteger minValueIndex;
 
 
 + (instancetype)singleData;
@@ -119,5 +122,20 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 
 - (instancetype)initWithTitle:(NSString *)title value:(CGFloat)value;
 
+
+@end
+
+
+#pragma mark - DTTableAxisLabelData DTTableChart坐标轴标签数据
+
+@interface DTTableAxisLabelData : DTAxisLabelData
+/**
+ * 是否显示升降序按钮，默认YES
+ */
+@property(nonatomic, getter=isShowOrder) BOOL showOrder;
+/**
+ * 是否是升序，默认YES
+ */
+@property(nonatomic, getter=isAscending) BOOL ascending;
 
 @end
