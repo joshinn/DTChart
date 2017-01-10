@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DTTableChart.h"
 
 @class DTChartLabel;
 @class DTChartItemData;
@@ -18,16 +19,18 @@ extern CGFloat const DTTableChartCellHeight;
 typedef void(^DTTableChartCellOrderClickBlock)(NSInteger index);
 
 @interface DTTableChartCell : UITableViewCell
-
-@property (nonatomic, copy) DTTableChartCellOrderClickBlock orderClickBlock;
+/**
+ * 升降序排列回调
+ */
+@property(nonatomic, copy) DTTableChartCellOrderClickBlock orderClickBlock;
 
 /**
- * 初始化
+ * 设置cell风格
+ * @param style cell风格
  * @param widths label和gap的宽度
- * @param reuseIdentifier 复用id
- * @return cell
  */
-- (instancetype)initWithWidths:(NSArray *)widths reuseIdentifier:(NSString *)reuseIdentifier;
+- (void)setStyle:(DTTableChartStyle)style widths:(NSArray *)widths;
+
 /**
  *  设置table的标题，即第一行
  * @param titleDatas 标题数据

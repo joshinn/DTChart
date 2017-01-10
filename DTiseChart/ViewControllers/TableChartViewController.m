@@ -33,6 +33,7 @@
     UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 48)];
     [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
     [changeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [changeBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [changeBtn addTarget:self action:@selector(updateChart) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:changeBtn];
 
@@ -50,7 +51,7 @@
     xAxisLabelDatas.firstObject.showOrder = NO;
     xAxisLabelDatas[3].ascending = NO;
 
-    self.tableChart = [DTTableChart tableChart:DTTableChartStyleC1C6 origin:CGPointMake(200, 100) heightCellCount:60];
+    self.tableChart = [DTTableChart tableChart:DTTableChartStyleC1C6 origin:CGPointMake(200, 100) widthCellCount:75 heightCellCount:45];
     self.tableChart.headViewHeight = 500;
     self.tableChart.headView.backgroundColor = [UIColor lightGrayColor];
     self.tableChart.xAxisLabelDatas = xAxisLabelDatas;
@@ -73,7 +74,8 @@
 
 
 - (void)updateChart {
-
+    self.tableChart.tableChartStyle = DTTableChartStyleC1C3;
+    [self.tableChart drawChart];
 }
 
 @end

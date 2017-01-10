@@ -7,12 +7,12 @@ A simple chart for DTise.
 
 ##Install
 
-`pod 'DTChart','~> 0.1'`
+`pod 'DTChart'`
 
 
 ##Guide
 
-* The demo project demonstrate how it works;
+* The demo project demonstrate how it works; 
 
 * `DTAxisLabelData`: Coordinate axis label data model, property `title` and `value`;
 
