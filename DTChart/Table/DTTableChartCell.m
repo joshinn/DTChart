@@ -147,6 +147,7 @@ static NSInteger const IconViewTag = 10101;
         DTChartLabel *label = [container viewWithTag:LabelViewTag];
         UIButton *icon = [container viewWithTag:IconViewTag];
 
+        label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.userInteractionEnabled = YES;
 
         if (i < titleDatas.count) {
@@ -179,6 +180,7 @@ static NSInteger const IconViewTag = 10101;
         icon.hidden = YES;
 
         DTChartLabel *label = [container viewWithTag:LabelViewTag];
+        label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.userInteractionEnabled = NO;
 
         if (i < items.count) {
