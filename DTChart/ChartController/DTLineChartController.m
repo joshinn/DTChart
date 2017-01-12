@@ -54,7 +54,6 @@ static NSUInteger const ChartModeThumbXAxisMaxCount = 5;
 - (void)addItem:(NSString *)itemId seriesName:(NSString *)seriesName values:(NSArray<DTCommonData *> *)values {
     [super addItem:itemId seriesName:seriesName values:values];
 
-    BOOL isOverLimit = values.count > self.lineChart.xAxisCellCount;
     NSUInteger maxXAxisCount = ChartModeThumbXAxisMaxCount;
     NSUInteger maxYAxisCount = ChartModeThumbYAxisCount;
     switch (self.chartMode) {
@@ -88,38 +87,18 @@ static NSUInteger const ChartModeThumbXAxisMaxCount = 5;
         DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:data.ptName value:i];
         if (values.count > maxXAxisCount) {
 
-            if (isOverLimit) { // x轴跳点
-
-                if (i % divide != 0) {
-                    xLabelData.hidden = YES;
-                } else {
-                    xLabelData.hidden = NO;
-                }
-
-            } else { // 最多显示maxXAxisCount个点
-                xLabelData.hidden = i % divide != 0;
-            }
+            xLabelData.hidden = i % divide != 0;
 
         } else {    // 全部显示
             xLabelData.hidden = NO;
         }
-        if (xLabelData) {
-            [xAxisLabelDatas addObject:xLabelData];
-        }
 
+        [xAxisLabelDatas addObject:xLabelData];
 
-        if (isOverLimit) {
-            NSUInteger pointDivide = values.count / self.lineChart.xAxisCellCount + 1;
-            if (i % pointDivide != 0) {
-                DTLog(@"hide point index = %@", @(i));
-                continue;
-            }
-        }
 
         DTChartItemData *itemData = [DTChartItemData chartData];
-        itemData.itemValue = ChartItemValueMake(i, data.ptValue);
+        itemData.itemValue = ChartItemValueMake(xLabelData.value, data.ptValue);
         [points addObject:itemData];
-
 
         if (data.ptValue > maxY) {
             maxY = data.ptValue;

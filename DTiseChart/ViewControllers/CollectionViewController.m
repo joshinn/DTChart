@@ -73,7 +73,7 @@ static NSString *const LineGridCellId = @"LineGridCell";
 //        [listLineData addObject:data];
 //    }
 
-    self.listLineData = [self simulateCommonData:32];
+    self.listLineData = [self simulateCommonData:10];
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
