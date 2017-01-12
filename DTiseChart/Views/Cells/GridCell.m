@@ -19,6 +19,7 @@
     if (self = [super initWithFrame:frame]) {
 
         [self drawGrid];
+        [self layoutButtons];
     }
     return self;
 }
@@ -94,5 +95,30 @@
     [self.contentView.layer insertSublayer:grid2Line above:gridLine];
 }
 
+/**
+ * 添加按钮
+ */
+- (void)layoutButtons {
+    UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - 30 * 4, 15, 28, 28)];
+    addBtn.tag = 101;
+    [addBtn setImage:[UIImage imageNamed:@"addBtn"] forState:UIControlStateNormal];
+    [addBtn addTarget:self action:@selector(handleButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:addBtn];
+
+    UIButton *delBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - 30 * 2, 15, 28, 28)];
+    delBtn.tag = 102;
+    [delBtn setImage:[UIImage imageNamed:@"delBtn"] forState:UIControlStateNormal];
+    [delBtn addTarget:self action:@selector(handleButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:delBtn];
+}
+
+
+- (void)handleButtonEvent:(UIButton *)sender {
+    if (sender.tag == 101) {
+        [self.delegate gridCellAdd:self];
+    } else if (sender.tag == 102) {
+        [self.delegate gridCellDel:self];
+    }
+}
 
 @end

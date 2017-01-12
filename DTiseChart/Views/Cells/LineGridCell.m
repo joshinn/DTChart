@@ -9,10 +9,10 @@
 #import "LineGridCell.h"
 #import "DTLineChartController.h"
 #import "DTCommonData.h"
+#import "DTChartBaseComponent.h"
 
 @interface LineGridCell ()
 
-@property(nonatomic) DTLineChartController *lineChartController;
 
 @end
 
@@ -21,16 +21,24 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
 
-        self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(15, 3 * 15) xAxis:23 yAxis:11];
-        [self.contentView addSubview:self.lineChartController.chartView];
 
     }
     return self;
 }
 
 
-- (void)setLineChartData:(NSString *)seriesName data:(NSArray<DTCommonData *> *)listData {
-    [self.lineChartController addItem:@"10086" seriesName:seriesName values:listData];
+- (void)setLineChartData:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData {
+
+    [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTChartBaseComponent class]]) {
+            [obj removeFromSuperview];
+        }
+    }];
+
+    self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(15, 3 * 15) xAxis:23 yAxis:11];
+    [self.contentView addSubview:self.lineChartController.chartView];
+
+    [self.lineChartController setItems:chartId listData:listData axisFormat:@"%.0f"];
     [self.lineChartController drawChart];
 }
 

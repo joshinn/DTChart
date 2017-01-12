@@ -85,7 +85,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 }
 
 - (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
-    if(!self.valueSelectable){
+    if (!self.valueSelectable) {
         return;
     }
 
@@ -201,22 +201,46 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return path;
 }
 
+
 #pragma mark - 副轴绘制
 
 - (void)generateSecondMultiDataColors:(BOOL)needInitial {
 
     if (needInitial) {
-        self.colorManager = [DTColorManager randomManager];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        self.colorManager = [DTColorManager randomManagerExistColors:existColors];
     }
+
+    NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
 
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
     for (DTLineChartSingleData *sData in self.secondMultiData) {
-        if (!sData.color) {
-            sData.color = [self.colorManager getColor];
+
+        DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
+
+        if (cachedData) { // 已经有相同的singleName，取相同颜色
+
+            sData.color = cachedData.color;
+            sData.secondColor = cachedData.secondColor;
+            sData.pointType = cachedData.pointType + 1;
+
+        } else {
+            cachedSingleDataDic[sData.singleName] = sData;
+
+            if (!sData.color) {
+                sData.color = [self.colorManager getColor];
+            }
+            if (!sData.secondColor) {
+                sData.secondColor = [self.colorManager getLightColor:sData.color];
+            }
         }
-        if (!sData.secondColor) {
-            sData.secondColor = [self.colorManager getLightColor:sData.color];
-        }
+
+
         [colors addObject:sData.color];
     }
     if (colors.count > 0 && self.secondAxisColorsCompletionBlock) {
@@ -320,7 +344,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (self.isShowAnimation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0.8];
+                [line drawEdgePoint:0];
             } else {
                 [line drawEdgePoint:0];
             }
@@ -423,7 +447,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (animation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0.8];
+                [line drawEdgePoint:0];
             } else {
                 [line drawEdgePoint:0];
             }
@@ -470,6 +494,49 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }];
 }
 
+- (void)generateMultiDataColors:(BOOL)needInitial {
+
+    if (needInitial) {
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        self.colorManager = [DTColorManager randomManagerExistColors:existColors];
+    }
+
+    NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
+    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+
+    for (DTLineChartSingleData *sData in self.multiData) {
+
+        DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
+
+        if (cachedData) { // 已经有相同的singleName，取相同颜色
+
+            sData.color = cachedData.color;
+            sData.secondColor = cachedData.secondColor;
+            sData.pointType = cachedData.pointType + 1;
+
+        } else {
+            cachedSingleDataDic[sData.singleName] = sData;
+
+            if (!sData.color) {
+                sData.color = [self.colorManager getColor];
+            }
+            if (!sData.secondColor) {
+                sData.secondColor = [self.colorManager getLightColor:sData.color];
+            }
+        }
+
+        [colors addObject:sData.color];
+    }
+    if (colors.count > 0 && self.colorsCompletionBlock) {
+        self.colorsCompletionBlock(colors);
+    }
+
+}
 
 - (BOOL)drawXAxisLabels {
     if (![super drawXAxisLabels]) {
@@ -602,7 +669,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (self.isShowAnimation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0.8];
+                [line drawEdgePoint:0];
             } else {
                 [line drawEdgePoint:0];
             }
@@ -700,7 +767,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (animation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0.8];
+                [line drawEdgePoint:0];
             } else {
                 [line drawEdgePoint:0];
             }

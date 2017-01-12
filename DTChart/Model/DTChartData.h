@@ -65,6 +65,15 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
 
 @interface DTChartSingleData : NSObject
 /**
+ * 一组数据的id
+ */
+@property(nonatomic) NSString *singleId;
+/**
+ * 一组数据的业务名称
+ * @attention singleName相同，则颜色等一致
+ */
+@property(nonatomic) NSString *singleName;
+/**
  * 坐标系里具体的值
  */
 @property(nonatomic, copy) NSArray<DTChartItemData *> *itemValues;
@@ -82,7 +91,6 @@ CG_INLINE NSString *NSStringFromChartItemValue(ChartItemValue value) {
  * @attention 折线图
  */
 @property(nonatomic) CGFloat lineWidth;
-
 /**
  * DTChartItemData里ChartItemValue的y值最大的项序号
  */

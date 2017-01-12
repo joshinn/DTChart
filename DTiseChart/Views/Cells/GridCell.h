@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class GridCell;
+
+@protocol GridCellDelegate <NSObject>
+
+- (void)gridCellAdd:(GridCell *)cell;
+
+- (void)gridCellDel:(GridCell *)cell;
+
+@end
+
 @interface GridCell : UICollectionViewCell
+
+@property(nonatomic, weak) id <GridCellDelegate> delegate;
+
+@property (nonatomic) NSIndexPath *indexPath;
 
 @end

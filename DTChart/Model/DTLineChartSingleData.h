@@ -10,13 +10,17 @@
 
 typedef NS_ENUM(NSInteger, DTLinePointType) {
     DTLinePointTypeCircle,      // 圆圈
-    DTLinePointTypeTriangle,   // 三角形
-    DTLinePointTypeSquare      // 正方形
+    DTLinePointTypeSquare,      // 正方形
+    DTLinePointTypeTriangle,    // 三角形
 };
 
 
 @interface DTLineChartSingleData : DTChartSingleData
 
+/**
+ * 顶点类型
+ * @attention singleName相同，pointType不一致
+ */
 @property(nonatomic) DTLinePointType pointType;
 
 @end

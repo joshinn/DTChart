@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @class DTCommonData;
+@class DTListCommonData;
+
 
 
 typedef NS_ENUM(NSInteger, DTChartMode) {
     DTChartModeThumb = 0,
     DTChartModePresentation = 1,
 };
+
+#define DTManager DTDataManager.shareManager
 
 @interface DTChartController : NSObject
 
@@ -24,9 +28,17 @@ typedef NS_ENUM(NSInteger, DTChartMode) {
 
 @property(nonatomic) DTChartMode chartMode;
 
+@property(nonatomic) NSString *axisFormat;
+
+@property (nonatomic, getter=isShowAnimation) BOOL showAnimation;
+
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount;
 
-- (void)addItem:(NSString *)itemId seriesName:(NSString *)seriesName values:(NSArray<DTCommonData *> *)values;
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(NSString *)axisFormat;
 
 - (void)drawChart;
+
+- (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation;
+
+- (void)dismissChart;
 @end

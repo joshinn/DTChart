@@ -8,10 +8,13 @@
 
 #import "GridCell.h"
 
-@class DTCommonData;
+@class DTListCommonData;
+@class DTLineChartController;
 
 @interface LineGridCell : GridCell
 
+@property(nonatomic) DTLineChartController *lineChartController;
 
-- (void)setLineChartData:(NSString *)seriesName data:(NSArray<DTCommonData *> *)listData;
+- (void)setLineChartData:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData;
+
 @end

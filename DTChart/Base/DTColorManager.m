@@ -29,6 +29,11 @@
     return colorManager;
 }
 
++ (instancetype)randomManagerExistColors:(NSArray<UIColor *> *)colors {
+    DTColorManager *colorManager = [[DTColorManager alloc] initWithRandomExceptExistColors:colors];
+    return colorManager;
+}
+
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -45,6 +50,24 @@
             UIColor *color = tempColors[arc4random_uniform((uint32_t) tempColors.count)];
             [_colors addObject:color];
             [tempColors removeObject:color];
+        }
+    }
+    return self;
+}
+
+- (instancetype)initWithRandomExceptExistColors:(NSArray<UIColor *> *)colors {
+    if (self = [[DTColorManager alloc] initWithRandom]) {
+
+        for (UIColor *color in colors) {
+
+            for (NSUInteger i = 0; i < _colors.count; ++i) {
+                UIColor *c = _colors[i];
+                if ([color compare:c]) {
+                    [_colors removeObject:c];
+                    [_colors addObject:c];
+                    break;
+                }
+            }
         }
     }
     return self;

@@ -19,3 +19,19 @@
 
 - (instancetype)initWithName:(NSString *)name value:(CGFloat)value;
 @end
+
+
+@interface DTListCommonData : NSObject
+
+@property(nonatomic) NSString *seriesId;
+/**
+ * 单组数据业务名称
+ * @attention 同一个seriesName，颜色等相同
+ */
+@property(nonatomic) NSString *seriesName;
+@property(nonatomic) NSArray<DTCommonData *> *commonDatas;
+@property(nonatomic, getter=isMainAxis) BOOL mainAxis;
+
++ (instancetype)listCommonData:(NSString *)seriesId seriesName:(NSString *)seriesName arrayData:(NSArray<DTCommonData *> *)array mainAxis:(BOOL)isMainAxis;
+
+@end

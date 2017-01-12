@@ -24,3 +24,17 @@
 }
 
 @end
+
+
+@implementation DTListCommonData
+
++ (instancetype)listCommonData:(NSString *)seriesId seriesName:(NSString *)seriesName arrayData:(NSArray<DTCommonData *> *)array mainAxis:(BOOL)isMainAxis {
+    DTListCommonData *listCommonData = [[DTListCommonData alloc] init];
+    listCommonData.seriesId = seriesId;
+    listCommonData.seriesName = seriesName;
+    listCommonData.commonDatas = array;
+    listCommonData.mainAxis = isMainAxis;
+    return listCommonData;
+}
+
+@end

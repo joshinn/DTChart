@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		654284E11E24B29C00267603 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E01E24B29C00267603 /* DataManager.m */; };
+		654284E11E24B29C00267603 /* DTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E01E24B29C00267603 /* DTDataManager.m */; };
 		654284E51E24B71E00267603 /* DTLineChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E41E24B71E00267603 /* DTLineChartController.m */; };
 		654284E81E24B74B00267603 /* DTChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E71E24B74B00267603 /* DTChartController.m */; };
 		654284EB1E24EBBB00267603 /* LineCtrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284EA1E24EBBB00267603 /* LineCtrlViewController.m */; };
@@ -51,8 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		654284DF1E24B29C00267603 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		654284E01E24B29C00267603 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		654284DF1E24B29C00267603 /* DTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDataManager.h; sourceTree = "<group>"; };
+		654284E01E24B29C00267603 /* DTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDataManager.m; sourceTree = "<group>"; };
 		654284E31E24B71E00267603 /* DTLineChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLineChartController.h; sourceTree = "<group>"; };
 		654284E41E24B71E00267603 /* DTLineChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLineChartController.m; sourceTree = "<group>"; };
 		654284E61E24B74B00267603 /* DTChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartController.h; sourceTree = "<group>"; };
@@ -147,8 +147,8 @@
 		654284DE1E24B28900267603 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				654284DF1E24B29C00267603 /* DataManager.h */,
-				654284E01E24B29C00267603 /* DataManager.m */,
+				654284DF1E24B29C00267603 /* DTDataManager.h */,
+				654284E01E24B29C00267603 /* DTDataManager.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -449,7 +449,7 @@
 				658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */,
 				65920D0B1E1B481F006EA012 /* DTDistributionBar.m in Sources */,
 				654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */,
-				654284E11E24B29C00267603 /* DataManager.m in Sources */,
+				654284E11E24B29C00267603 /* DTDataManager.m in Sources */,
 				658F7FBC1E10F81F0024AB62 /* LineViewController.m in Sources */,
 				65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */,
 				65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */,

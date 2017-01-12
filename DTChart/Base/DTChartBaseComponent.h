@@ -169,6 +169,12 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
 - (void)initial __attribute__((objc_requires_super));
 
 /**
+ * 给multiData生成颜色
+ * @param needInitial 颜色是否需要重置
+ */
+- (void)generateMultiDataColors:(BOOL)needInitial;
+
+/**
  * 绘制x轴标签
  * @return 绘制是否成功
  * @attention 父类判断了x轴标签是否过少(0)

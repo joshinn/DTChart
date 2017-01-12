@@ -6,7 +6,7 @@
 //  Copyright © 2016年 studio.joshin. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface DTColorManager : NSObject
 
@@ -15,11 +15,20 @@
  * @return instance
  */
 + (instancetype)manager;
+
 /**
  * 颜色管理实例，颜色会随便排序
  * @return instance
  */
 + (instancetype)randomManager;
+
+/**
+ * 颜色管理实例，颜色会随便排序
+ * 已存在的颜色会排在后面
+ * @param colors 已存在的颜色
+ * @return instance
+ */
++ (instancetype)randomManagerExistColors:(NSArray<UIColor *> *)colors;
 
 + (UIColor *)getLightColor:(UIColor *)color;
 
