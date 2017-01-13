@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Base/DTTableChartController.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Base/DTTableChartController.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTBarChartController.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTBarChartController.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTiseChart/Views/Cells/BarGridCell.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTiseChart/Views/Cells/BarGridCell.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTiseChart/Views/Cells/TableGridCell.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTiseChart/Views/Cells/TableGridCell.m" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTChartController.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTChartController.m" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h" afterPath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m" afterPath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Line/DTLine.m" afterPath="$PROJECT_DIR$/DTChart/Line/DTLine.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Line/DTLineChart.h" afterPath="$PROJECT_DIR$/DTChart/Line/DTLineChart.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Line/DTLineChart.m" afterPath="$PROJECT_DIR$/DTChart/Line/DTLineChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Model/DTChartData.m" afterPath="$PROJECT_DIR$/DTChart/Model/DTChartData.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/DTiseChart.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/BarViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/BarViewController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/PieViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/PieViewController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/Views/Cells/LineGridCell.m" afterPath="$PROJECT_DIR$/DTiseChart/Views/Cells/LineGridCell.m" />
-    </list>
+    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="" />
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,8 +23,8 @@
       <file leaf-file-name="DTLineChartController.m" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="430" column="0" lean-forward="true" selection-start-line="430" selection-start-column="0" selection-end-line="430" selection-end-column="0" />
+            <state relative-caret-position="176">
+              <caret line="412" column="0" lean-forward="true" selection-start-line="412" selection-start-column="0" selection-end-line="412" selection-end-column="0" />
               <folding>
                 <element signature="e#148#181#0" expanded="true" />
               </folding>
@@ -404,12 +377,12 @@
       <workItem from="1484097315698" duration="27898000" />
       <workItem from="1484183981379" duration="28578000" />
       <workItem from="1484270503599" duration="9304000" />
-      <workItem from="1484291475424" duration="9212000" />
+      <workItem from="1484291475424" duration="9283000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="430231000" />
+    <option name="totallyTimeSpent" value="430302000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -431,7 +404,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3096591" sideWeight="0.5059571" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882413" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40955284" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40955284" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15165877" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -972,8 +945,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="430" column="0" lean-forward="true" selection-start-line="430" selection-start-column="0" selection-end-line="430" selection-end-column="0" />
+        <state relative-caret-position="176">
+          <caret line="412" column="0" lean-forward="true" selection-start-line="412" selection-start-column="0" selection-end-line="412" selection-end-column="0" />
           <folding>
             <element signature="e#148#181#0" expanded="true" />
           </folding>
