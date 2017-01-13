@@ -14,6 +14,7 @@
 		654284EE1E24F24E00267603 /* DTCommonData.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284ED1E24F24E00267603 /* DTCommonData.m */; };
 		654D1E631E0123A7004F2F1F /* DTLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E621E0123A7004F2F1F /* DTLine.m */; };
 		654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */; };
+		657C87D71E287ED700BBD558 /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657C87D61E287ED700BBD558 /* PresentationViewController.m */; };
 		658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FB01E10F7290024AB62 /* DTPieChart.m */; };
 		658F7FBC1E10F81F0024AB62 /* LineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FB71E10F81F0024AB62 /* LineViewController.m */; };
 		658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FB91E10F81F0024AB62 /* PieViewController.m */; };
@@ -67,6 +68,8 @@
 		654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+DTExternal.m"; sourceTree = "<group>"; };
 		654D1E6C1E02A57F004F2F1F /* DTChart-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DTChart-Prefix.pch"; sourceTree = "<group>"; };
 		654D1E6D1E02ABD9004F2F1F /* DTColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTColor.h; sourceTree = "<group>"; };
+		657C87D51E287ED700BBD558 /* PresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationViewController.h; sourceTree = "<group>"; };
+		657C87D61E287ED700BBD558 /* PresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationViewController.m; sourceTree = "<group>"; };
 		658F7FAF1E10F7290024AB62 /* DTPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTPieChart.h; sourceTree = "<group>"; };
 		658F7FB01E10F7290024AB62 /* DTPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTPieChart.m; sourceTree = "<group>"; };
 		658F7FB61E10F81F0024AB62 /* LineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineViewController.h; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				654284EA1E24EBBB00267603 /* LineCtrlViewController.m */,
 				65B7BE461E25D1EA00DC152B /* CollectionViewController.h */,
 				65B7BE471E25D1EA00DC152B /* CollectionViewController.m */,
+				657C87D51E287ED700BBD558 /* PresentationViewController.h */,
+				657C87D61E287ED700BBD558 /* PresentationViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				654284EB1E24EBBB00267603 /* LineCtrlViewController.m in Sources */,
 				65B7BE4D1E25D96E00DC152B /* GridCell.m in Sources */,
+				657C87D71E287ED700BBD558 /* PresentationViewController.m in Sources */,
 				65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */,
 				65CD0F371DFEA42A007AFD8D /* DTVerticalBarChart.m in Sources */,
 				65CD0F3B1DFEA42A007AFD8D /* DTChartData.m in Sources */,

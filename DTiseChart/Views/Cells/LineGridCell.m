@@ -18,14 +18,6 @@
 
 @implementation LineGridCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-
-
-    }
-    return self;
-}
-
 
 - (void)setLineChartData:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData {
 
@@ -36,6 +28,12 @@
     }];
 
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(15, 3 * 15) xAxis:23 yAxis:11];
+    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
+        DTLog(@"main axis colors = %@", colors);
+    }];
+    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
+        DTLog(@"second axis colors = %@", colors);
+    }];
     [self.contentView addSubview:self.lineChartController.chartView];
 
     [self.lineChartController setItems:chartId listData:listData axisFormat:@"%.0f"];

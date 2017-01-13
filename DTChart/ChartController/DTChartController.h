@@ -10,35 +10,106 @@
 
 @class DTCommonData;
 @class DTListCommonData;
-
+@class DTAxisLabelData;
 
 
 typedef NS_ENUM(NSInteger, DTChartMode) {
-    DTChartModeThumb = 0,
-    DTChartModePresentation = 1,
+    DTChartModeThumb = 0,   // 小图模式
+    DTChartModePresentation = 1,    // 大图模式
 };
 
 #define DTManager DTDataManager.shareManager
 
+typedef void(^MainAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
+
+typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
+
+
 @interface DTChartController : NSObject
 
-@property(nonatomic) UIView *chartView;
-
+@property(nonatomic, readonly) UIView *chartView;
+/**
+ * DTChart的id，对应一系列独立的数据
+ * 会根据该id缓存数据的信息，比如颜色等
+ *
+ */
 @property(nonatomic) NSString *chartId;
-
+/**
+ * DtChart的模式，小图/大图
+ */
 @property(nonatomic) DTChartMode chartMode;
-
+/**
+ * y轴的文字格式
+ */
 @property(nonatomic) NSString *axisFormat;
+/**
+ * 绘制DTChart，是否有动画
+ */
+@property(nonatomic, getter=isShowAnimation) BOOL showAnimation;
+/**
+ * 坐标系里的点、柱状体等是否可点击选择，默认NO
+ */
+@property(nonatomic, getter=isValueSelectable) BOOL valueSelectable;
+/**
+ * 主轴数据量
+ */
+@property (nonatomic, readonly) NSUInteger mainAxisDataCount;
+/**
+ * 主轴颜色回调
+ */
+@property(nonatomic, copy) MainAxisColorsCompletionBlock mainAxisColorsCompletionBlock;
+/**
+ * 副轴颜色回调
+ */
+@property(nonatomic, copy) SecondAxisColorsCompletionBlock secondAxisColorsCompletionBlock;
 
-@property (nonatomic, getter=isShowAnimation) BOOL showAnimation;
-
+/**
+ * 实例化
+ * @param origin 等同于frame.origin
+ * @param xCount frame.size.width 换算成单元格数
+ * @param yCount frame.size.height 换算成单元格数
+ * @return instance
+ */
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount;
 
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(NSString *)axisFormat;
+/**
+ * 构造y轴数据
+ * @param maxYAxisCount y轴限制的label数量
+ * @param maxY y轴最大值
+ * @return y轴labelData数据
+ */
+- (NSMutableArray<DTAxisLabelData *> *)generateYAxisLabelData:(NSUInteger)maxYAxisCount yAxisMaxValue:(CGFloat)maxY;
 
+/**
+ * 设置DTChart内容
+ * @param chartId chartId
+ * @param listData 数据内容
+ * @param axisFormat y轴格式
+ */
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(NSString *)axisFormat __attribute__((objc_requires_super));
+
+/**
+ * 绘制DTChart
+ */
 - (void)drawChart;
 
+/**
+ * 添加数据
+ * @param listData 若干组数据
+ * @param animation 是否动画
+ */
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation;
 
-- (void)dismissChart;
+/**
+ * 删除指定主副轴某些数据
+ * @param indexSet 要删除的序号
+ * @param isMainAxis 主副轴
+ * @param animation 动画
+ */
+- (void)deleteItems:(NSIndexSet *)indexSet isMainAxis:(BOOL)isMainAxis withAnimation:(BOOL)animation;
+
+/**
+ * 彻底销毁DTChart和缓存的数据
+ */
+- (void)destroyChart __attribute__((objc_requires_super));
 @end

@@ -16,6 +16,11 @@
 
 @property(nonatomic) DTLineChart *lineChart;
 
+@property(nonatomic) NSUInteger mMaxXAxisCount;
+@property(nonatomic) NSUInteger mMaxYAxisCount;
+
+@property(nonatomic, readwrite) NSUInteger secondAxisDataCount;
+
 @end
 
 
@@ -32,17 +37,30 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
-
         _lineChart = [[DTLineChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
-        _lineChart.contentView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3];
+
+        _lineChart.contentView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
+
+        __weak typeof(self) weakSelf = self;
+        [_lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
+            if (weakSelf.lineChartTouchBlock) {
+                weakSelf.lineChartTouchBlock(lineIndex, pointIndex, isMainAxis);
+            }
+        }];
+        [_lineChart setColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
+            if (weakSelf.mainAxisColorsCompletionBlock) {
+                weakSelf.mainAxisColorsCompletionBlock(colors);
+            }
+        }];
+        [_lineChart setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
+            if (weakSelf.secondAxisColorsCompletionBlock) {
+                weakSelf.secondAxisColorsCompletionBlock(colors);
+            }
+        }];
     }
     return self;
 }
 
-
-- (void)initial {
-
-}
 
 
 - (UIView *)chartView {
@@ -51,6 +69,46 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     }
     return _chartView;
 }
+
+- (NSUInteger)secondAxisDataCount {
+    _secondAxisDataCount = 0;
+    if ([self.chartView isKindOfClass:[DTLineChart class]]) {
+        _secondAxisDataCount = ((DTLineChart *) self.chartView).secondMultiData.count;
+    }
+
+    return _secondAxisDataCount;
+}
+
+
+- (NSUInteger)mMaxXAxisCount {
+    _mMaxXAxisCount = ChartModeThumbXAxisMaxCount;
+    switch (self.chartMode) {
+        case DTChartModeThumb:
+            _mMaxXAxisCount = ChartModeThumbXAxisMaxCount;
+            break;
+        case DTChartModePresentation:
+            _mMaxXAxisCount = ChartModePresentationXAxisMaxCount;
+            break;
+    }
+    return _mMaxXAxisCount;
+}
+
+- (NSUInteger)mMaxYAxisCount {
+    _mMaxYAxisCount = ChartModeThumbYAxisCount;
+    switch (self.chartMode) {
+        case DTChartModeThumb:
+            _mMaxYAxisCount = ChartModeThumbYAxisCount;
+            break;
+        case DTChartModePresentation:
+            _mMaxYAxisCount = ChartModePresentationYAxisCount;
+            break;
+    }
+
+    return _mMaxYAxisCount;
+}
+
+
+#pragma mark - private method
 
 
 /**
@@ -61,18 +119,9 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     NSArray<DTCommonData *> *values = listData.firstObject.commonDatas;
 
-    NSUInteger maxXAxisCount = ChartModeThumbXAxisMaxCount;
-    NSUInteger maxYAxisCount = ChartModeThumbYAxisCount;
-    switch (self.chartMode) {
-        case DTChartModeThumb:
-            maxYAxisCount = ChartModeThumbYAxisCount;
-            maxXAxisCount = ChartModeThumbXAxisMaxCount;
-            break;
-        case DTChartModePresentation:
-            maxYAxisCount = ChartModePresentationYAxisCount;
-            maxXAxisCount = ChartModePresentationXAxisMaxCount;
-            break;
-    }
+    NSUInteger maxXAxisCount = self.mMaxXAxisCount;
+    NSUInteger maxYAxisCount = self.mMaxYAxisCount;
+
 
     CGFloat maxY = 0;
 
@@ -146,16 +195,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     self.lineChart.multiData = lines;
 
     // y轴label data
-    NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
-
-    for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
-        CGFloat y = maxY / maxYAxisCount * i;
-
-        NSString *title = [NSString stringWithFormat:self.axisFormat, y];
-        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
-    }
-
-    self.lineChart.yAxisLabelDatas = yAxisLabelDatas;
+    self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY];
 
     if (listSecondAxisData.count > 0) {
         [self processSecondAxisLabelDataAndLines:listSecondAxisData];
@@ -164,66 +204,19 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 - (void)processSecondAxisLabelDataAndLines:(NSArray<DTListCommonData *> *)listData {
 
-    NSUInteger maxYAxisCount = ChartModeThumbYAxisCount;
-    switch (self.chartMode) {
-        case DTChartModeThumb:
-            maxYAxisCount = ChartModeThumbYAxisCount;
-            break;
-        case DTChartModePresentation:
-            maxYAxisCount = ChartModePresentationYAxisCount;
-            break;
-    }
+    NSUInteger maxYAxisCount = self.mMaxYAxisCount;
 
     CGFloat maxY = 0;
 
-
     NSMutableArray<DTLineChartSingleData *> *lines = [NSMutableArray arrayWithCapacity:listData.count];
 
-    for (NSUInteger n = 0; n < listData.count; ++n) {
+    [self generatePoints:listData yMaxValue:&maxY lines:lines constainIndexs:nil];
 
-        DTListCommonData *listCommonData = listData[n];
-        NSArray<DTCommonData *> *values = listCommonData.commonDatas;
-
-        NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
-
-        for (NSUInteger i = 0; i < values.count; ++i) {
-
-            DTCommonData *data = values[i];
-
-            // 找出y轴最大值
-            if (data.ptValue > maxY) {
-                maxY = data.ptValue;
-            }
-
-
-            // 单条折线里的点
-            DTChartItemData *itemData = [DTChartItemData chartData];
-            itemData.itemValue = ChartItemValueMake(i, data.ptValue);
-            [points addObject:itemData];
-        }
-
-
-        // 单条折线
-        DTLineChartSingleData *singleData = [DTLineChartSingleData singleData:points];
-        singleData.singleId = listCommonData.seriesId;
-        singleData.singleName = listCommonData.seriesName;
-        [lines addObject:singleData];
-    }
-
-    // 赋值折线数据
+    // 赋值副轴折线数据
     self.lineChart.secondMultiData = lines;
 
-    // y轴label data
-    NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
-
-    for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
-        CGFloat y = maxY / maxYAxisCount * i;
-
-        NSString *title = [NSString stringWithFormat:self.axisFormat, y];
-        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
-    }
-
-    self.lineChart.ySecondAxisLabelDatas = yAxisLabelDatas;
+    // y副轴label data
+    self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY];
 }
 
 /**
@@ -231,21 +224,26 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
  * @param cachedMultiData 已缓存的数据
  * @param multiData 当前的新数据
  */
-- (void)checkMultiData:(NSArray<DTLineChartSingleData *> *)cachedMultiData compare:(NSArray<DTLineChartSingleData *> *)multiData {
+- (void)checkMultiData:(NSArray<DTChartSingleData *> *)cachedMultiData compare:(NSArray<DTChartSingleData *> *)multiData {
     if (cachedMultiData.count == 0 || multiData.count == 0) {
         return;
     }
 
     NSMutableArray *cachedArray = [cachedMultiData mutableCopy];
 
-    for (DTLineChartSingleData *sData in multiData) {
-        for (DTLineChartSingleData *s2Data in cachedArray) {
+    for (DTChartSingleData *sData in multiData) {
+        for (DTChartSingleData *s2Data in cachedArray) {
 
             if ([sData.singleId isEqualToString:s2Data.singleId]) {
                 sData.color = s2Data.color;
                 sData.secondColor = s2Data.secondColor;
                 sData.lineWidth = s2Data.lineWidth;
-                sData.pointType = s2Data.pointType;
+
+                if ([sData isKindOfClass:[DTLineChartSingleData class]] && [s2Data isKindOfClass:[DTLineChartSingleData class]]) {
+                    DTLineChartSingleData *sLineData = (DTLineChartSingleData *) sData;
+                    DTLineChartSingleData *s2LineData = (DTLineChartSingleData *) s2Data;
+                    sLineData.pointType = s2LineData.pointType;
+                }
 
                 [cachedArray removeObject:s2Data];
                 break;
@@ -269,11 +267,54 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     [DTManager addChart:self.chartId object:@{@"data": dataDic}];
 }
 
+/**
+ * 生成折线里点数据
+ * @param listData 所有点数据
+ * @param maxY 顺带计算y轴最大值
+ * @param lines 存储折线数据的数组
+ * @param indexSet 生成的折线所在的位置（添加折线使用）
+ */
+
+- (void)generatePoints:(nonnull NSArray<DTListCommonData *> *)listData yMaxValue:(nullable CGFloat *)maxY lines:(nonnull NSMutableArray<DTLineChartSingleData *> *)lines constainIndexs:(nullable NSMutableIndexSet *)indexSet {
+    for (NSUInteger n = 0; n < listData.count; ++n) {
+
+        DTListCommonData *listCommonData = listData[n];
+        NSArray<DTCommonData *> *values = listCommonData.commonDatas;
+
+        NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
+
+        for (NSUInteger i = 0; i < values.count; ++i) {
+
+            DTCommonData *data = values[i];
+
+            // 找出y轴最大值
+            if (maxY && data.ptValue > *maxY) {
+                *maxY = data.ptValue;
+            }
+
+
+            // 单条折线里的点
+            DTChartItemData *itemData = [DTChartItemData chartData];
+            itemData.itemValue = ChartItemValueMake(i, data.ptValue);
+            [points addObject:itemData];
+        }
+
+
+        // 单条折线
+        DTLineChartSingleData *singleData = [DTLineChartSingleData singleData:points];
+        singleData.singleId = listCommonData.seriesId;
+        singleData.singleName = listCommonData.seriesName;
+        if (indexSet) {
+            [indexSet addIndex:lines.count];
+        }
+        [lines addObject:singleData];
+    }
+}
+
 #pragma mark - override
 
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(NSString *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
-
 
     [self processMainAxisLabelDataAndLines:listData];
 }
@@ -281,7 +322,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 - (void)drawChart {
     [super drawChart];
-
 
     if (![DTManager checkExistByChartId:self.chartId]) {
 
@@ -304,7 +344,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
         [self.lineChart drawChart];
     }
-
 }
 
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation {
@@ -340,30 +379,13 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     BOOL needRedrawAxis = NO;
 
-    NSUInteger maxYAxisCount = ChartModeThumbYAxisCount;
-    switch (self.chartMode) {
-        case DTChartModeThumb:
-            maxYAxisCount = ChartModeThumbYAxisCount;
-            break;
-        case DTChartModePresentation:
-            maxYAxisCount = ChartModePresentationYAxisCount;
-            break;
-    }
+    NSUInteger maxYAxisCount = self.mMaxYAxisCount;
 
     if (maxMainAxisY > yAxisLabelData.value) {    // y主轴需要重绘了
         needRedrawAxis = YES;
 
         // y轴label data
-        NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
-
-        for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
-            CGFloat y = maxMainAxisY / maxYAxisCount * i;
-
-            NSString *title = [NSString stringWithFormat:self.axisFormat, y];
-            [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
-        }
-
-        self.lineChart.yAxisLabelDatas = yAxisLabelDatas;
+        self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxMainAxisY];
     }
 
     CGFloat ySecondAxisValue = (ySecondAxisLabelData != nil) ? ySecondAxisLabelData.value : 0;
@@ -371,16 +393,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         needRedrawAxis = YES;
 
         // y轴label data
-        NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
-
-        for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
-            CGFloat y = maxSecondAxisY / maxYAxisCount * i;
-
-            NSString *title = [NSString stringWithFormat:self.axisFormat, y];
-            [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
-        }
-
-        self.lineChart.ySecondAxisLabelDatas = yAxisLabelDatas;
+        self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxSecondAxisY];
     }
 
 
@@ -392,39 +405,44 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     }
 
 
-    NSMutableArray<DTLineChartSingleData *> *lines = self.lineChart.multiData.mutableCopy;
-    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-
-    for (NSUInteger n = 0; n < mainAxisDatas.count; ++n) {
-
-        DTListCommonData *listCommonData = mainAxisDatas[n];
-        NSArray<DTCommonData *> *values = listCommonData.commonDatas;
-
-        NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
-
-        for (NSUInteger i = 0; i < values.count; ++i) {
-
-            DTCommonData *data = values[i];
-
-            // 单条折线里的点
-            DTChartItemData *itemData = [DTChartItemData chartData];
-            itemData.itemValue = ChartItemValueMake(i, data.ptValue);
-            [points addObject:itemData];
-        }
-
-        // 单条折线
-        DTLineChartSingleData *singleData = [DTLineChartSingleData singleData:points];
-        singleData.singleId = listCommonData.seriesId;
-        singleData.singleName = listCommonData.seriesName;
-
-        [indexSet addIndex:lines.count];
-        [lines addObject:singleData];
+    // 主轴的点
+    NSMutableArray<DTLineChartSingleData *> *mainAxisLines = self.lineChart.multiData.mutableCopy;
+    if (!mainAxisLines) {
+        mainAxisLines = [NSMutableArray array];
     }
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    [self generatePoints:mainAxisDatas yMaxValue:nil lines:mainAxisLines constainIndexs:indexSet];
+
+
+    // 副轴的点
+    NSMutableArray<DTLineChartSingleData *> *secondAxisLines = self.lineChart.secondMultiData.mutableCopy;
+    if (!secondAxisLines) {
+        secondAxisLines = [NSMutableArray array];
+    }
+    NSMutableIndexSet *secondIndexSet = [NSMutableIndexSet indexSet];
+
+    [self generatePoints:secondAxisDatas yMaxValue:nil lines:secondAxisLines constainIndexs:secondIndexSet];
 
     // 赋值折线数据
-    self.lineChart.multiData = lines;
-
+    self.lineChart.multiData = mainAxisLines;
     [self.lineChart insertChartItems:indexSet withAnimation:animation];
+
+    if (secondIndexSet.count > 0) {
+        self.lineChart.secondMultiData = secondAxisLines;
+        [self.lineChart insertChartSecondAxisItems:secondIndexSet withAnimation:animation];
+    }
+
+    // 保存数据
+    [self cacheMultiData];
+}
+
+
+- (void)deleteItems:(NSIndexSet *)indexSet isMainAxis:(BOOL)isMainAxis withAnimation:(BOOL)animation {
+    if (isMainAxis) {
+        [self.lineChart deleteChartItems:indexSet withAnimation:animation];
+    } else {
+        [self.lineChart deleteChartSecondAxisItems:indexSet withAnimation:animation];
+    }
 
     // 保存数据
     [self cacheMultiData];

@@ -12,12 +12,13 @@
 #import "DTCommonData.h"
 #import "DTChartController.h"
 #import "DTLineChartController.h"
+#import "PresentationViewController.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
 @property(nonatomic) UICollectionView *collectionView;
-@property(nonatomic) NSMutableArray<DTListCommonData *> *listLineData;
-@property(nonatomic) NSMutableArray<DTListCommonData *> *listLineData2;
+@property(nonatomic) NSMutableArray<DTListCommonData *> *listLineData0;
+@property(nonatomic) NSMutableArray<DTListCommonData *> *listLineData7;
 
 @end
 
@@ -38,10 +39,10 @@ static NSString *const LineGridCellId = @"LineGridCell";
     [self simulateData];
 
     UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 6 * 15, 60, 48)];
-    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
+    [addBtn setTitle:@"大图" forState:UIControlStateNormal];
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [addBtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
+    [addBtn addTarget:self action:@selector(presentation) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
 
     self.collectionView.frame = CGRectMake(8 * 15, 6 * 15, GridCellSize.width * 3, GridCellSize.height * 3);
@@ -49,52 +50,22 @@ static NSString *const LineGridCellId = @"LineGridCell";
 }
 
 
-- (void)add {
-
+- (void)presentation {
+    PresentationViewController *pVC = [[PresentationViewController alloc] init];
+    pVC.chartId = @"10088";
+    pVC.listLineData = self.listLineData7;
+    [self.navigationController pushViewController:pVC animated:YES];
 }
 
 
 - (void)simulateData {
-//    NSMutableArray<DTCommonData *> *listLineData = [NSMutableArray array];
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-10" value:1310];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-11" value:1200];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-12" value:1220];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-13" value:1020];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-14" value:1890];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-15" value:1210];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-16" value:1299];
-//        [listLineData addObject:data];
-//    }
-//    {
-//        DTCommonData *data = [DTCommonData commonData:@"12-17" value:1799];
-//        [listLineData addObject:data];
-//    }
 
-    self.listLineData = [NSMutableArray arrayWithArray:[self simulateListCommonData:3 pointCount:8 mainAxis:YES]];
-    [self.listLineData addObjectsFromArray:[self simulateListCommonData:2 pointCount:8 mainAxis:NO]];
+    self.listLineData0 = [NSMutableArray arrayWithArray:[self simulateListCommonData:3 pointCount:8 mainAxis:YES]];
+    [self.listLineData0 addObjectsFromArray:[self simulateListCommonData:2 pointCount:8 mainAxis:NO]];
 
-    self.listLineData2 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:7 mainAxis:YES]];
-    DTListCommonData *listCommonData1 = self.listLineData2[self.listLineData2.count - 1];
-    DTListCommonData *listCommonData2 = self.listLineData2[self.listLineData2.count - 2];
+    self.listLineData7 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:7 mainAxis:YES]];
+    DTListCommonData *listCommonData1 = self.listLineData7[self.listLineData7.count - 1];
+    DTListCommonData *listCommonData2 = self.listLineData7[self.listLineData7.count - 2];
     listCommonData2.seriesName = listCommonData1.seriesName;
 }
 
@@ -102,7 +73,7 @@ static NSString *const LineGridCellId = @"LineGridCell";
     return [self simulateCommonData:count baseValue:300];
 }
 
-- (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count baseValue:(CGFloat)baseValue{
+- (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count baseValue:(CGFloat)baseValue {
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"12-%@", @(i + 1)];
@@ -161,14 +132,14 @@ static NSString *const LineGridCellId = @"LineGridCell";
         LineGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:LineGridCellId forIndexPath:indexPath];
         cell.indexPath = indexPath;
         cell.delegate = self;
-        [cell setLineChartData:@"10086" listData:self.listLineData];
+        [cell setLineChartData:@"10086" listData:self.listLineData0];
         return cell;
     } else if (indexPath.item == 7) {
 
         LineGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:LineGridCellId forIndexPath:indexPath];
         cell.indexPath = indexPath;
         cell.delegate = self;
-        [cell setLineChartData:@"10088" listData:self.listLineData2];
+        [cell setLineChartData:@"10088" listData:self.listLineData7];
         return cell;
 
     } else {
@@ -182,29 +153,64 @@ static NSString *const LineGridCellId = @"LineGridCell";
 
 
 - (void)gridCellAdd:(GridCell *)cell {
-    if(cell.indexPath.item == 7){
+    if (cell.indexPath.item == 7) {
         LineGridCell *lineCell = (LineGridCell *) cell;
 
         NSMutableArray<DTListCommonData *> *array = [self simulateListCommonData:2 pointCount:7 mainAxis:YES];
-        DTListCommonData * obj1 = array[0];
+        DTListCommonData *obj1 = array[0];
         obj1.seriesId = @"601";
         obj1.seriesName = @"jiu";
         obj1.commonDatas[3].ptValue = 3200;
 
-        DTListCommonData * obj2 = array[1];
+        DTListCommonData *obj2 = array[1];
         obj2.seriesId = @"602";
         obj2.seriesName = @"piu";
-        obj2.commonDatas[3].ptValue = 4000;
+        obj2.mainAxis = NO;
+        obj2.commonDatas[4].ptValue = 4000;
 
 
         [lineCell.lineChartController addItemsListData:array withAnimation:YES];
 
-        [self.listLineData2 addObjectsFromArray:array];
+        [self.listLineData7 addObjectsFromArray:array];
     }
 }
 
 - (void)gridCellDel:(GridCell *)cell {
+    if (cell.indexPath.item == 7) {
+        LineGridCell *lineCell = (LineGridCell *) cell;
 
+
+        NSUInteger count = lineCell.lineChartController.mainAxisDataCount;
+        if (count > 0) {
+            NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+            [indexSet addIndex:count - 1];
+            [lineCell.lineChartController deleteItems:indexSet isMainAxis:YES withAnimation:YES];
+
+            for (NSInteger i = self.listLineData7.count - 1; i >= 0; --i) {
+                DTListCommonData *listCommonData = self.listLineData7[i];
+                if (listCommonData.isMainAxis) {
+                    [self.listLineData7 removeObject:listCommonData];
+                    break;
+                }
+            }
+        }
+
+        count = lineCell.lineChartController.secondAxisDataCount;
+        if (count > 0) {
+            NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+            [indexSet addIndex:count - 1];
+            [lineCell.lineChartController deleteItems:indexSet isMainAxis:NO withAnimation:YES];
+
+            for (NSInteger i = self.listLineData7.count - 1; i >= 0; --i) {
+                DTListCommonData *listCommonData = self.listLineData7[i];
+                if (!listCommonData.isMainAxis) {
+                    [self.listLineData7 removeObject:listCommonData];
+                    break;
+                }
+            }
+        }
+
+    }
 }
 
 
