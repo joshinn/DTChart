@@ -69,7 +69,11 @@
 
 
 - (NSMutableArray<DTAxisLabelData *> *)generateYAxisLabelData:(NSUInteger)maxYAxisCount yAxisMaxValue:(CGFloat)maxY {
-    // y轴label data
+
+    if(maxY == 0){
+        maxY = 10;
+    }
+
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
 
     for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
