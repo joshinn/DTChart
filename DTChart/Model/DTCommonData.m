@@ -10,18 +10,14 @@
 
 @implementation DTCommonData
 
-+ (instancetype)commonData:(NSString *)name value:(CGFloat)value {
-    DTCommonData *data = [[DTCommonData alloc] initWithName:name value:value];
++ (instancetype)commonData:(NSString *)name fullName:(NSString *)fullName value:(CGFloat)value {
+    DTCommonData *data = [[DTCommonData alloc] init];
+    data.ptName = name;
+    data.ptFullName = fullName;
+    data.ptValue = value;
     return data;
 }
 
-- (instancetype)initWithName:(NSString *)name value:(CGFloat)value {
-    if (self = [super init]) {
-        _ptName = name;
-        _ptValue = value;
-    }
-    return self;
-}
 
 @end
 
@@ -35,6 +31,13 @@
     listCommonData.commonDatas = array;
     listCommonData.mainAxis = isMainAxis;
     return listCommonData;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _mainAxis = YES;
+    }
+    return self;
 }
 
 @end

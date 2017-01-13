@@ -77,7 +77,7 @@ static NSString *const LineGridCellId = @"LineGridCell";
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"12-%@", @(i + 1)];
-        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
+        DTCommonData *data = [DTCommonData commonData:title fullName:title value:baseValue + arc4random_uniform(160) * 10];
         [list addObject:data];
     }
 

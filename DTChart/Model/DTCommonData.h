@@ -12,12 +12,17 @@
 
 @interface DTCommonData : NSObject
 
+/**
+ * 坐标轴显示用
+ */
 @property(nonatomic) NSString *ptName;
+/**
+ * 全名
+ */
+@property(nonatomic) NSString *ptFullName;
 @property(nonatomic) CGFloat ptValue;
 
-+ (instancetype)commonData:(NSString *)name value:(CGFloat)value;
-
-- (instancetype)initWithName:(NSString *)name value:(CGFloat)value;
++ (instancetype)commonData:(NSString *)name fullName:(NSString *)fullName value:(CGFloat)value;
 @end
 
 
@@ -30,6 +35,9 @@
  */
 @property(nonatomic) NSString *seriesName;
 @property(nonatomic) NSArray<DTCommonData *> *commonDatas;
+/**
+ * 是否主坐标轴，默认YES
+ */
 @property(nonatomic, getter=isMainAxis) BOOL mainAxis;
 
 + (instancetype)listCommonData:(NSString *)seriesId seriesName:(NSString *)seriesName arrayData:(NSArray<DTCommonData *> *)array mainAxis:(BOOL)isMainAxis;
