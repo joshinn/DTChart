@@ -30,15 +30,18 @@
     [self.lineChartController setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
         DTLog(@"touch line index = %@ point = %@", @(lineIndex), @(pointIndex));
     }];
-    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
-        DTLog(@"main axis colors = %@", colors);
+
+    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
+        DTLog(@"main axis colors = %@ \nseriesIds = %@", colors, seriesIds);
     }];
-    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
-        DTLog(@"second axis colors = %@", colors);
+    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
+        DTLog(@"second axis colors = %@ \nseriesIds = %@", colors, seriesIds);
     }];
     [self.view addSubview:self.lineChartController.chartView];
 
-    [self.lineChartController setItems:self.chartId listData:self.listLineData axisFormat:@"%.0f"];
+    DTChartControllerAxisFormatter *formatter = [DTChartControllerAxisFormatter axisFormatter];
+
+    [self.lineChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];
 
 }
 

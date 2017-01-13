@@ -28,15 +28,17 @@
     }];
 
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(15, 3 * 15) xAxis:23 yAxis:11];
-    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
-        DTLog(@"main axis colors = %@", colors);
+    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
+        DTLog(@"main axis colors = %@ \nseriesIds = %@", colors, seriesIds);
     }];
-    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
-        DTLog(@"second axis colors = %@", colors);
+    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
+        DTLog(@"second axis colors = %@ \nseriesIds = %@", colors, seriesIds);
     }];
     [self.contentView addSubview:self.lineChartController.chartView];
 
-    [self.lineChartController setItems:chartId listData:listData axisFormat:@"%.0f"];
+    DTChartControllerAxisFormatter *formatter = [DTChartControllerAxisFormatter axisFormatter];
+
+    [self.lineChartController setItems:chartId listData:listData axisFormat:formatter];
     [self.lineChartController drawChart];
 }
 

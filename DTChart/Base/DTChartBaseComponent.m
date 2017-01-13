@@ -186,6 +186,8 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     }
 
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.multiData.count];
+
     for (DTChartSingleData *sData in self.multiData) {
         if (!sData.color) {
             sData.color = [self.colorManager getColor];
@@ -193,10 +195,12 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
         if (!sData.secondColor) {
             sData.secondColor = [self.colorManager getLightColor:sData.color];
         }
+
+        [seriesIds addObject:sData.singleId];
         [colors addObject:sData.color];
     }
     if (colors.count > 0 && self.colorsCompletionBlock) {
-        self.colorsCompletionBlock(colors);
+        self.colorsCompletionBlock(colors, seriesIds);
     }
 
 }
@@ -266,6 +270,42 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 }
 
 - (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    NSMutableArray *datas = self.multiData.mutableCopy;
+    [datas removeObjectsAtIndexes:indexes];
+    self.multiData = datas;
 }
+
+#pragma mark - #pragma mark - 副轴相关
+
+- (void)setSecondSingleData:(DTChartSingleData *)secondSingleData {
+    _secondSingleData = secondSingleData;
+
+    _secondMultiData = nil;
+}
+
+- (void)setSecondMultiData:(NSArray<DTChartSingleData *> *)secondMultiData {
+    _secondMultiData = [secondMultiData copy];
+
+    _secondSingleData = nil;
+}
+
+- (void)drawSecondChart {
+
+}
+
+- (void)reloadChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+
+}
+
+- (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+
+}
+
+- (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    NSMutableArray *datas = self.secondMultiData.mutableCopy;
+    [datas removeObjectsAtIndexes:indexes];
+    self.secondMultiData = datas;
+}
+
 
 @end

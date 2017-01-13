@@ -60,18 +60,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return _prevTouchIndex;
 }
 
-- (void)setSecondSingleData:(DTLineChartSingleData *)secondSingleData {
-    _secondSingleData = secondSingleData;
-
-    _secondMultiData = nil;
-}
-
-- (void)setSecondMultiData:(NSArray<DTLineChartSingleData *> *)secondMultiData {
-    _secondMultiData = [secondMultiData copy];
-
-    _secondSingleData = nil;
-}
-
 
 #pragma mark - private method
 
@@ -97,12 +85,18 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     NSInteger n2 = -1;
 
     for (NSUInteger i = 0; i < (self.multiData.count + self.secondMultiData.count); ++i) {
-        DTLineChartSingleData *sData;
+        DTChartSingleData *item;
         if (i < self.multiData.count) {
-            sData = (DTLineChartSingleData *) self.multiData[i];
+            item = self.multiData[i];
         } else {
-            sData = self.secondMultiData[i - self.multiData.count];
+            item = self.secondMultiData[i - self.multiData.count];
         }
+
+        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
+            continue;
+        }
+
+        DTLineChartSingleData *sData = (DTLineChartSingleData *) item;
 
         CGRect bound = CGRectMake(sData.itemValues.firstObject.position.x - TouchOffsetMaxDistance,
                 sData.itemValues[sData.maxValueIndex].position.y - 2 * TouchOffsetMaxDistance,
@@ -219,7 +213,16 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
 
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
-    for (DTLineChartSingleData *sData in self.secondMultiData) {
+    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
+
+
+    for (NSUInteger i = 0; i < self.secondMultiData.count; ++i) {
+        DTChartSingleData *item = self.secondMultiData[i];
+        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
+            continue;
+        }
+
+        DTLineChartSingleData *sData = (DTLineChartSingleData *) item;
 
         DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
 
@@ -240,11 +243,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             }
         }
 
-
+        [seriesIds addObject:sData.singleId];
         [colors addObject:sData.color];
     }
     if (colors.count > 0 && self.secondAxisColorsCompletionBlock) {
-        self.secondAxisColorsCompletionBlock(colors);
+        self.secondAxisColorsCompletionBlock(colors, seriesIds);
     }
 
 }
@@ -255,7 +258,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 - (void)clearSecondChartContent {
 
     [self.secondValueLines enumerateObjectsUsingBlock:^(DTLine *line, NSUInteger idx, BOOL *stop) {
-        [line removeEdgePoint];
         [line removeFromSuperlayer];
     }];
 
@@ -325,7 +327,12 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
     for (NSUInteger n = 0; n < self.secondMultiData.count; ++n) {
-        DTLineChartSingleData *singleData = self.secondMultiData[n];
+        DTChartSingleData *item = self.secondMultiData[n];
+        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
+            continue;
+        }
+
+        DTLineChartSingleData *singleData = (DTLineChartSingleData *) item;
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -344,10 +351,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (self.isShowAnimation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0];
-            } else {
-                [line drawEdgePoint:0];
             }
+            [line drawEdgePoint:0];
         }
     }
 }
@@ -384,7 +389,12 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             continue;
         }
 
-        DTLineChartSingleData *singleData = self.secondMultiData[n];
+        DTChartSingleData *item = self.secondMultiData[n];
+        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
+            continue;
+        }
+
+        DTLineChartSingleData *singleData = (DTLineChartSingleData *) item;
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -397,15 +407,13 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             DTLine *line = self.secondValueLines[n];
             line.singleData = singleData;
 
+
             if (animation) {
-                [line removeEdgePoint];
                 [line startPathUpdateAnimation:path];
-                [line drawEdgePoint:0.3];
             } else {
-                [line removeEdgePoint];
                 line.linePath = path;
-                [line drawEdgePoint:0];
             }
+            [line drawEdgePoint:0];
         }
     }
 }
@@ -424,7 +432,12 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             continue;
         }
 
-        DTLineChartSingleData *singleData = self.secondMultiData[n];
+        DTChartSingleData *item = self.secondMultiData[n];
+        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
+            continue;
+        }
+
+        DTLineChartSingleData *singleData = (DTLineChartSingleData *) item;
 
         UIBezierPath *path = [self generateItemPath:singleData
                                       xAxisMaxVaule:xMaxData
@@ -437,9 +450,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             DTLine *line = [DTLine line:singleData.pointType];
             line.singleData = singleData;
             line.linePath = path;
+
             if (self.secondValueLines.count >= n) {
                 [self.secondValueLines insertObject:line atIndex:n];
-                [self.contentView.layer insertSublayer:line atIndex:(unsigned int) n];
+                NSInteger index = MIN(self.multiData.count + n, self.contentView.layer.sublayers.count);
+                [self.contentView.layer insertSublayer:line atIndex:(unsigned int) index];
             } else {
                 [self.secondValueLines addObject:line];
                 [self.contentView.layer addSublayer:line];
@@ -447,10 +462,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (animation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0];
-            } else {
-                [line drawEdgePoint:0];
             }
+            [line drawEdgePoint:0];
         }
 
     }
@@ -458,13 +471,14 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 }
 
 - (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
+    [super deleteChartSecondAxisItems:indexes withAnimation:animation];
 
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         DTLog(@"enum index = %@", @(index));
         DTLine *line = self.secondValueLines[index];
-        [line removeEdgePoint];
 
         if (animation) {
+            [line removeEdgePoint];
             [line startDisappearAnimation];
         } else {
             [line removeFromSuperlayer];
@@ -483,7 +497,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 - (void)clearChartContent {
 
     [self.valueLines enumerateObjectsUsingBlock:^(DTLine *line, NSUInteger idx, BOOL *stop) {
-        [line removeEdgePoint];
         [line removeFromSuperlayer];
     }];
 
@@ -508,8 +521,15 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
     NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
-    for (DTLineChartSingleData *sData in self.multiData) {
+    for (NSUInteger i = 0; i < self.multiData.count; ++i) {
+        DTChartSingleData *item = self.multiData[i];
+        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
+            continue;
+        }
+
+        DTLineChartSingleData *sData = (DTLineChartSingleData *) item;
 
         DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
 
@@ -530,10 +550,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             }
         }
 
+        [seriesIds addObject:sData.singleId];
         [colors addObject:sData.color];
     }
     if (colors.count > 0 && self.colorsCompletionBlock) {
-        self.colorsCompletionBlock(colors);
+        self.colorsCompletionBlock(colors, seriesIds);
     }
 
 }
@@ -669,10 +690,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (self.isShowAnimation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0];
-            } else {
-                [line drawEdgePoint:0];
             }
+            [line drawEdgePoint:0];
         }
 
     }
@@ -715,14 +734,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             line.singleData = singleData;
 
             if (animation) {
-                [line removeEdgePoint];
                 [line startPathUpdateAnimation:path];
-                [line drawEdgePoint:0.3];
             } else {
-                [line removeEdgePoint];
                 line.linePath = path;
-                [line drawEdgePoint:0];
             }
+            [line drawEdgePoint:0];
         }
 
     }
@@ -767,10 +783,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             if (animation) {
                 [line startAppearAnimation];
-                [line drawEdgePoint:0];
-            } else {
-                [line drawEdgePoint:0];
             }
+            [line drawEdgePoint:0];
         }
 
     }
@@ -783,9 +797,9 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         DTLog(@"enum index = %@", @(index));
         DTLine *line = self.valueLines[index];
-        [line removeEdgePoint];
 
         if (animation) {
+            [line removeEdgePoint];
             [line startDisappearAnimation];
         } else {
             [line removeFromSuperlayer];

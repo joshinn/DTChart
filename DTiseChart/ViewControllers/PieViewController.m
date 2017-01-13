@@ -35,9 +35,7 @@
     [self.pieChart setPieChartTouchBlock:^(NSUInteger index) {
         [weakSelf itemClicked:index];
     }];
-    [self.pieChart setColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
-        DTLog(@"colors = %@", colors);
-    }];
+
 
     self.pieChart.pieMargin = 3;
     [self.view addSubview:self.pieChart];

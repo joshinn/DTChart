@@ -41,7 +41,9 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 }
 
 
-typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
+typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
+
+typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
 
 @interface DTChartBaseComponent : UIView {
 
@@ -105,10 +107,14 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
  */
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *multiData;
 
-
-@property (nonatomic, copy) ColorsCompletionBlock colorsCompletionBlock;
-
-
+/**
+ * 主轴颜色回调
+ */
+@property(nonatomic, copy) ColorsCompletionBlock colorsCompletionBlock;
+/**
+ * 副轴颜色回调
+ */
+@property(nonatomic, copy) SecondAxisColorsCompletionBlock secondAxisColorsCompletionBlock;
 
 #pragma mark - ####### protect property #######
 
@@ -146,7 +152,6 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
  * 颜色管理
  */
 @property(nonatomic) DTColorManager *colorManager;
-
 
 
 #pragma mark - ####### method #######
@@ -212,24 +217,72 @@ typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors);
  */
 - (void)drawChart;
 
+#pragma mark - 主轴相关
+
 /**
- * 刷新项
+ * 刷新主轴项
  * @param indexes    项的序号
  * @param animation 是否有动画
  */
 - (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 
 /**
- * 插入新的项
+ * 插入新的主轴项
  * @param indexes 项的序号
  * @param animation 是否有动画
  */
 - (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 
+
 /**
- * 删除项
+ * 删除主轴项
  * @param indexes 项的序号
  * @param animation 是否有动画
  */
 - (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
+
+
+#pragma mark - 副轴相关
+
+/**
+ * y轴副轴标签数组
+ */
+@property(nonatomic, copy) NSArray<DTAxisLabelData *> *ySecondAxisLabelDatas;
+/**
+ * 副轴坐标系值数据源
+ * @attention 和secondMultiData同时只能赋值一个
+ */
+@property(nonatomic) DTChartSingleData *secondSingleData;
+/**
+ * 副轴多组坐标系值数据源
+ * @note 多个secondSingleData
+ * @attention 和secondSingleData同时只能赋值一个
+ */
+@property(nonatomic, copy) NSArray<DTChartSingleData *> *secondMultiData;
+
+/**
+ * 刷新副轴有关的所有(y轴、折线)
+ */
+- (void)drawSecondChart;
+
+/**
+ * 刷新副轴指定折线
+ * @param indexes 要刷新的副轴折线序号
+ * @param animation 是否有动画
+ */
+- (void)reloadChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+
+/**
+ * 插入副轴折线
+ * @param indexes 要插入的副轴折线序号
+ * @param animation 是否有动画
+ */
+- (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+
+/**
+ * 删除副轴指定折线
+ * @param indexes 要删除的副轴折线序号
+ * @param animation 是否有动画
+ */
+- (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 @end

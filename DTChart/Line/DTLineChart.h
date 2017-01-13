@@ -18,8 +18,6 @@
  */
 typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis);
 
-typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
-
 
 
 /**
@@ -38,50 +36,4 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors);
  */
 @property(nonatomic) BOOL xAxisAlignGrid;
 
-
-#pragma mark - 副轴相关
-
-/**
- * y轴副轴标签数组
- */
-@property(nonatomic, copy) NSArray<DTAxisLabelData *> *ySecondAxisLabelDatas;
-/**
- * 副轴坐标系值数据源
- * @attention 和secondMultiData同时只能赋值一个
- */
-@property(nonatomic) DTLineChartSingleData *secondSingleData;
-/**
- * 副轴多组坐标系值数据源
- * @note 多个secondSingleData
- * @attention 和secondSingleData同时只能赋值一个
- */
-@property(nonatomic, copy) NSArray<DTLineChartSingleData *> *secondMultiData;
-
-@property(nonatomic, copy) SecondAxisColorsCompletionBlock secondAxisColorsCompletionBlock;
-
-/**
- * 刷新副轴有关的所有(y轴、折线)
- */
-- (void)drawSecondChart;
-
-/**
- * 刷新副轴指定折线
- * @param indexes 要刷新的副轴折线序号
- * @param animation 是否有动画
- */
-- (void)reloadChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
-
-/**
- * 插入副轴折线
- * @param indexes 要插入的副轴折线序号
- * @param animation 是否有动画
- */
-- (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
-
-/**
- * 删除副轴指定折线
- * @param indexes 要删除的副轴折线序号
- * @param animation 是否有动画
- */
-- (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
 @end

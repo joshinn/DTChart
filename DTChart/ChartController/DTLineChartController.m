@@ -47,20 +47,19 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
                 weakSelf.lineChartTouchBlock(lineIndex, pointIndex, isMainAxis);
             }
         }];
-        [_lineChart setColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
+        [_lineChart setColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
             if (weakSelf.mainAxisColorsCompletionBlock) {
-                weakSelf.mainAxisColorsCompletionBlock(colors);
+                weakSelf.mainAxisColorsCompletionBlock(colors, seriesIds);
             }
         }];
-        [_lineChart setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors) {
+        [_lineChart setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
             if (weakSelf.secondAxisColorsCompletionBlock) {
-                weakSelf.secondAxisColorsCompletionBlock(colors);
+                weakSelf.secondAxisColorsCompletionBlock(colors, seriesIds);
             }
         }];
     }
     return self;
 }
-
 
 
 - (UIView *)chartView {
@@ -110,6 +109,13 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 #pragma mark - private method
 
+/**
+ * 给chartId加上前缀
+ * @return 加工过的chartId
+ */
+- (NSString *)lineChartId {
+    return [@"line-" stringByAppendingString:self.chartId];
+}
 
 /**
  * 处理主坐标轴数据和折线数据
@@ -195,7 +201,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     self.lineChart.multiData = lines;
 
     // y轴label data
-    self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY];
+    self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:YES];
 
     if (listSecondAxisData.count > 0) {
         [self processSecondAxisLabelDataAndLines:listSecondAxisData];
@@ -216,7 +222,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     self.lineChart.secondMultiData = lines;
 
     // y副轴label data
-    self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY];
+    self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:NO];
 }
 
 /**
@@ -264,7 +270,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         dataDic[@"secondMultiData"] = self.lineChart.secondMultiData;
     }
 
-    [DTManager addChart:self.chartId object:@{@"data": dataDic}];
+    [DTManager addChart:[self lineChartId] object:@{@"data": dataDic}];
 }
 
 /**
@@ -313,7 +319,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 #pragma mark - override
 
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(NSString *)axisFormat {
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTChartControllerAxisFormatter *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
 
     [self processMainAxisLabelDataAndLines:listData];
@@ -323,7 +329,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (void)drawChart {
     [super drawChart];
 
-    if (![DTManager checkExistByChartId:self.chartId]) {
+    if (![DTManager checkExistByChartId:[self lineChartId]]) {
 
         [self.lineChart drawChart];
 
@@ -333,7 +339,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     } else {
 
         // 加载保存的数据信息（颜色等）
-        NSDictionary *chartDic = [DTManager queryByChartId:self.chartId];
+        NSDictionary *chartDic = [DTManager queryByChartId:[self lineChartId]];
         NSDictionary *dataDic = chartDic[@"data"];
         NSArray *multiData = dataDic[@"multiData"];
         NSArray *secondMultiData = dataDic[@"secondMultiData"];
@@ -385,7 +391,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         needRedrawAxis = YES;
 
         // y轴label data
-        self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxMainAxisY];
+        self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxMainAxisY isMainAxis:YES];
     }
 
     CGFloat ySecondAxisValue = (ySecondAxisLabelData != nil) ? ySecondAxisLabelData.value : 0;
@@ -393,7 +399,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         needRedrawAxis = YES;
 
         // y轴label data
-        self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxSecondAxisY];
+        self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxSecondAxisY isMainAxis:NO];
     }
 
 

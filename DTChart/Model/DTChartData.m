@@ -67,6 +67,20 @@
 
 }
 
+- (NSString *)singleId {
+    if (!_singleId) {
+        _singleId = @"0";
+    }
+    return _singleId;
+}
+
+- (NSString *)singleName {
+    if (!_singleName) {
+        _singleName = @"sName";
+    }
+    return _singleName;
+}
+
 - (CGFloat)lineWidth {
     if (_lineWidth == 0) {
         _lineWidth = 2;
@@ -93,7 +107,6 @@
 }
 
 @end
-
 
 
 @implementation DTAxisLabelData

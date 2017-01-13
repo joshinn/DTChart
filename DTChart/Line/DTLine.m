@@ -116,7 +116,7 @@ static CGFloat const DTLineDefaultLineWidth = 5;
     }
 
     if (self.superlayer) {
-        [self.superlayer addSublayer:self.pointLayer];
+        [self addSublayer:self.pointLayer];
     }
     [minPointPath appendPath:maxPointPath];
     self.pointLayer.strokeColor = self.lineColor.CGColor;
@@ -174,7 +174,7 @@ static CGFloat const DTLineDefaultLineWidth = 5;
 }
 
 
-- (void)drawEdgePoint:(NSTimeInterval)delay {
+- (void)drawEdgePoint:(NSTimeInterval)delay{
     if (delay == 0) {
         [self drawEdgePoint];
     } else {

@@ -12,6 +12,39 @@
 #import "DTChartBaseComponent.h"
 #import "DTChartData.h"
 
+
+@implementation DTChartControllerAxisFormatter
+
++ (instancetype)axisFormatter {
+    DTChartControllerAxisFormatter *formatter = [[DTChartControllerAxisFormatter alloc] init];
+    return formatter;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _mainAxisScale = 1;
+        _secondAxisScale = 1;
+    }
+    return self;
+}
+
+- (NSString *)mainAxisFormat {
+    if (!_mainAxisFormat) {
+        _mainAxisFormat = @"%.0f";
+    }
+    return _mainAxisFormat;
+}
+
+- (NSString *)secondAxisFormat {
+    if (!_secondAxisFormat) {
+        _secondAxisFormat = @"%.0f";
+    }
+    return _secondAxisFormat;
+}
+
+@end
+
+
 @interface DTChartController ()
 
 @property(nonatomic, readwrite) NSUInteger mainAxisDataCount;
@@ -35,11 +68,11 @@
     _chartView = chartView;
 }
 
-- (NSString *)axisFormat {
-    if (!_axisFormat) {
-        _axisFormat = @"%.0f";
+- (DTChartControllerAxisFormatter *)axisFormatter {
+    if (!_axisFormatter) {
+        _axisFormatter = [DTChartControllerAxisFormatter axisFormatter];
     }
-    return _axisFormat;
+    return _axisFormatter;
 }
 
 - (NSUInteger)mainAxisDataCount {
@@ -68,9 +101,9 @@
 #pragma mark - public method
 
 
-- (NSMutableArray<DTAxisLabelData *> *)generateYAxisLabelData:(NSUInteger)maxYAxisCount yAxisMaxValue:(CGFloat)maxY {
+- (NSMutableArray<DTAxisLabelData *> *)generateYAxisLabelData:(NSUInteger)maxYAxisCount yAxisMaxValue:(CGFloat)maxY isMainAxis:(BOOL)isMainAxis {
 
-    if(maxY == 0){
+    if (maxY == 0) {
         maxY = 10;
     }
 
@@ -79,7 +112,12 @@
     for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
         CGFloat y = maxY / maxYAxisCount * i;
 
-        NSString *title = [NSString stringWithFormat:self.axisFormat, y];
+        NSString *title;
+        if (isMainAxis) {
+            title = [NSString stringWithFormat:self.axisFormatter.mainAxisFormat, y * self.axisFormatter.mainAxisScale];
+        } else {
+            title = [NSString stringWithFormat:self.axisFormatter.secondAxisFormat, y * self.axisFormatter.secondAxisScale];
+        }
         [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
     }
 
@@ -87,9 +125,9 @@
 }
 
 
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(NSString *)axisFormat {
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTChartControllerAxisFormatter *)axisFormatter {
     self.chartId = chartId;
-    self.axisFormat = axisFormat;
+    self.axisFormatter = axisFormatter;
 }
 
 - (void)drawChart {

@@ -13,6 +13,7 @@
 #import "DTChartController.h"
 #import "DTLineChartController.h"
 #import "PresentationViewController.h"
+#import "TableGridCell.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -26,6 +27,7 @@
 
 static NSString *const GridCellId = @"GridCell";
 static NSString *const LineGridCellId = @"LineGridCell";
+static NSString *const TableGridCellId = @"TableGridCell";
 
 
 #define GridCellSize CGSizeMake(25*15, 15*15)
@@ -34,6 +36,7 @@ static NSString *const LineGridCellId = @"LineGridCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    DTLog(@"%.2f%%", 0.36);
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
     [self simulateData];
@@ -117,7 +120,7 @@ static NSString *const LineGridCellId = @"LineGridCell";
 
         [_collectionView registerClass:[GridCell class] forCellWithReuseIdentifier:GridCellId];
         [_collectionView registerClass:[LineGridCell class] forCellWithReuseIdentifier:LineGridCellId];
-
+        [_collectionView registerClass:[TableGridCell class] forCellWithReuseIdentifier:TableGridCellId];
     }
 
     return _collectionView;
@@ -133,6 +136,12 @@ static NSString *const LineGridCellId = @"LineGridCell";
         cell.indexPath = indexPath;
         cell.delegate = self;
         [cell setLineChartData:@"10086" listData:self.listLineData0];
+        return cell;
+
+    } else if (indexPath.item == 2) {
+        TableGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:TableGridCellId forIndexPath:indexPath];
+        cell.indexPath = indexPath;
+        cell.delegate = self;
         return cell;
     } else if (indexPath.item == 7) {
 
@@ -209,6 +218,9 @@ static NSString *const LineGridCellId = @"LineGridCell";
                 }
             }
         }
+
+
+        DTLog(@"main axis data count = %@ \nsecond axis count = %@", @(lineCell.lineChartController.mainAxisDataCount), @(lineCell.lineChartController.secondAxisDataCount));
 
     }
 }

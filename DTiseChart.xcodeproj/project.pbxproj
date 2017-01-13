@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		653520321E28B6E100BFA2C9 /* DTBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 653520311E28B6E100BFA2C9 /* DTBarChartController.m */; };
+		653520361E28B6FF00BFA2C9 /* DTChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 653520351E28B6FF00BFA2C9 /* DTChartController.m */; };
+		653520391E28B7F300BFA2C9 /* BarGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 653520381E28B7F300BFA2C9 /* BarGridCell.m */; };
+		6535203C1E28BCE300BFA2C9 /* DTTableChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6535203B1E28BCE300BFA2C9 /* DTTableChartController.m */; };
+		6535203F1E28BEC300BFA2C9 /* TableGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6535203E1E28BEC300BFA2C9 /* TableGridCell.m */; };
 		654284E11E24B29C00267603 /* DTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E01E24B29C00267603 /* DTDataManager.m */; };
 		654284E51E24B71E00267603 /* DTLineChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E41E24B71E00267603 /* DTLineChartController.m */; };
-		654284E81E24B74B00267603 /* DTChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E71E24B74B00267603 /* DTChartController.m */; };
 		654284EB1E24EBBB00267603 /* LineCtrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284EA1E24EBBB00267603 /* LineCtrlViewController.m */; };
 		654284EE1E24F24E00267603 /* DTCommonData.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284ED1E24F24E00267603 /* DTCommonData.m */; };
 		654D1E631E0123A7004F2F1F /* DTLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E621E0123A7004F2F1F /* DTLine.m */; };
@@ -52,12 +56,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		653520301E28B6E100BFA2C9 /* DTBarChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTBarChartController.h; sourceTree = "<group>"; };
+		653520311E28B6E100BFA2C9 /* DTBarChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTBarChartController.m; sourceTree = "<group>"; };
+		653520341E28B6FF00BFA2C9 /* DTChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartController.h; sourceTree = "<group>"; };
+		653520351E28B6FF00BFA2C9 /* DTChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartController.m; sourceTree = "<group>"; };
+		653520371E28B7F300BFA2C9 /* BarGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarGridCell.h; sourceTree = "<group>"; };
+		653520381E28B7F300BFA2C9 /* BarGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarGridCell.m; sourceTree = "<group>"; };
+		6535203A1E28BCE300BFA2C9 /* DTTableChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChartController.h; sourceTree = "<group>"; };
+		6535203B1E28BCE300BFA2C9 /* DTTableChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChartController.m; sourceTree = "<group>"; };
+		6535203D1E28BEC300BFA2C9 /* TableGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableGridCell.h; sourceTree = "<group>"; };
+		6535203E1E28BEC300BFA2C9 /* TableGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableGridCell.m; sourceTree = "<group>"; };
 		654284DF1E24B29C00267603 /* DTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDataManager.h; sourceTree = "<group>"; };
 		654284E01E24B29C00267603 /* DTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDataManager.m; sourceTree = "<group>"; };
 		654284E31E24B71E00267603 /* DTLineChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLineChartController.h; sourceTree = "<group>"; };
 		654284E41E24B71E00267603 /* DTLineChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLineChartController.m; sourceTree = "<group>"; };
-		654284E61E24B74B00267603 /* DTChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartController.h; sourceTree = "<group>"; };
-		654284E71E24B74B00267603 /* DTChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartController.m; sourceTree = "<group>"; };
 		654284E91E24EBBB00267603 /* LineCtrlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineCtrlViewController.h; sourceTree = "<group>"; };
 		654284EA1E24EBBB00267603 /* LineCtrlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineCtrlViewController.m; sourceTree = "<group>"; };
 		654284EC1E24F24E00267603 /* DTCommonData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTCommonData.h; sourceTree = "<group>"; };
@@ -147,6 +159,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		653520331E28B6FF00BFA2C9 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				653520341E28B6FF00BFA2C9 /* DTChartController.h */,
+				653520351E28B6FF00BFA2C9 /* DTChartController.m */,
+				6535203A1E28BCE300BFA2C9 /* DTTableChartController.h */,
+				6535203B1E28BCE300BFA2C9 /* DTTableChartController.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		654284DE1E24B28900267603 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,10 +182,11 @@
 		654284E21E24B4DC00267603 /* ChartController */ = {
 			isa = PBXGroup;
 			children = (
+				653520331E28B6FF00BFA2C9 /* Base */,
 				654284E31E24B71E00267603 /* DTLineChartController.h */,
 				654284E41E24B71E00267603 /* DTLineChartController.m */,
-				654284E61E24B74B00267603 /* DTChartController.h */,
-				654284E71E24B74B00267603 /* DTChartController.m */,
+				653520301E28B6E100BFA2C9 /* DTBarChartController.h */,
+				653520311E28B6E100BFA2C9 /* DTBarChartController.m */,
 			);
 			path = ChartController;
 			sourceTree = "<group>";
@@ -238,6 +262,10 @@
 				65B7BE4C1E25D96E00DC152B /* GridCell.m */,
 				65B7BE4E1E25FB6C00DC152B /* LineGridCell.h */,
 				65B7BE4F1E25FB6C00DC152B /* LineGridCell.m */,
+				653520371E28B7F300BFA2C9 /* BarGridCell.h */,
+				653520381E28B7F300BFA2C9 /* BarGridCell.m */,
+				6535203D1E28BEC300BFA2C9 /* TableGridCell.h */,
+				6535203E1E28BEC300BFA2C9 /* TableGridCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -445,6 +473,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6535203F1E28BEC300BFA2C9 /* TableGridCell.m in Sources */,
+				653520361E28B6FF00BFA2C9 /* DTChartController.m in Sources */,
+				6535203C1E28BCE300BFA2C9 /* DTTableChartController.m in Sources */,
 				65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */,
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */,
@@ -463,12 +494,14 @@
 				658F7FBE1E10F81F0024AB62 /* BarViewController.m in Sources */,
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				654284EB1E24EBBB00267603 /* LineCtrlViewController.m in Sources */,
+				653520321E28B6E100BFA2C9 /* DTBarChartController.m in Sources */,
 				65B7BE4D1E25D96E00DC152B /* GridCell.m in Sources */,
 				657C87D71E287ED700BBD558 /* PresentationViewController.m in Sources */,
 				65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */,
 				65CD0F371DFEA42A007AFD8D /* DTVerticalBarChart.m in Sources */,
 				65CD0F3B1DFEA42A007AFD8D /* DTChartData.m in Sources */,
 				65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */,
+				653520391E28B7F300BFA2C9 /* BarGridCell.m in Sources */,
 				65B7BE501E25FB6C00DC152B /* LineGridCell.m in Sources */,
 				65C53E1A1DF8FA7300732385 /* main.m in Sources */,
 				654284E51E24B71E00267603 /* DTLineChartController.m in Sources */,
@@ -480,7 +513,6 @@
 				65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */,
 				654D1E631E0123A7004F2F1F /* DTLine.m in Sources */,
 				658F7FC11E110E5A0024AB62 /* DTPiePart.m in Sources */,
-				654284E81E24B74B00267603 /* DTChartController.m in Sources */,
 				65920D121E1CE947006EA012 /* TableChartViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

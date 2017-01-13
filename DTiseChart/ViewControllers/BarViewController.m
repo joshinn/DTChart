@@ -72,9 +72,7 @@
 //    barChart.showCoordinateAxisLine  = NO;
 //    barChart.showCoordinateAxis = NO;
     barChart.showCoordinateAxisGrid = YES;
-    barChart.colorsCompletionBlock = ^(NSArray<UIColor *> *colors){
-        DTLog(@"colors = %@", colors);
-    };
+
 
     [barChart drawChart];
 
