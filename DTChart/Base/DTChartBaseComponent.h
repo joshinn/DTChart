@@ -201,7 +201,8 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
 - (void)drawAxisLine;
 
 /**
- * 绘制坐标轴里的值
+ * 绘制坐标轴里的所有的值
+ * @attention 包含绘制副轴
  * @attention 子类实现
  */
 - (void)drawValues;
@@ -224,12 +225,13 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  * @param indexes    项的序号
  * @param animation 是否有动画
  */
-- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
+- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation ;
 
 /**
  * 插入新的主轴项
  * @param indexes 项的序号
  * @param animation 是否有动画
+ * @attention 父类实现了插入项的颜色生成
  */
 - (void)insertChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 
@@ -238,6 +240,7 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  * 删除主轴项
  * @param indexes 项的序号
  * @param animation 是否有动画
+ * @attention 父类实现了删除项从multiData里移除
  */
 - (void)deleteChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 
@@ -261,6 +264,20 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
 @property(nonatomic, copy) NSArray<DTChartSingleData *> *secondMultiData;
 
 /**
+ * 清除坐标系里的副轴轴标签和值线条
+ */
+- (void)clearSecondChartContent;
+/**
+ * 绘制y轴副轴
+ * @return 绘制结果
+ * @attention 父类判断了y轴标签是否过少(0)
+ * @attention 子类需要实现方法
+ */
+- (BOOL)drawYSecondAxisLabels;
+
+- (void)drawSecondValues;
+
+/**
  * 刷新副轴有关的所有(y轴、折线)
  */
 - (void)drawSecondChart;
@@ -276,13 +293,15 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  * 插入副轴折线
  * @param indexes 要插入的副轴折线序号
  * @param animation 是否有动画
+ * @attention 父类实现了插入项的颜色生成
  */
-- (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
+- (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 
 /**
  * 删除副轴指定折线
  * @param indexes 要删除的副轴折线序号
  * @param animation 是否有动画
+ * @attention 父类实现了删除项从multiData里移除
  */
 - (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation __attribute__((objc_requires_super));
 @end

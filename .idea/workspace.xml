@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="" />
+    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h" afterPath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m" afterPath="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Line/DTLineChart.m" afterPath="$PROJECT_DIR$/DTChart/Line/DTLineChart.m" />
+    </list>
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DTLineChartController.m" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DTLineChartController.m" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="412" column="0" lean-forward="true" selection-start-line="412" selection-start-column="0" selection-end-line="412" selection-end-column="0" />
+            <state relative-caret-position="311">
+              <caret line="421" column="0" lean-forward="true" selection-start-line="421" selection-start-column="0" selection-end-line="421" selection-end-column="0" />
               <folding>
                 <element signature="e#148#181#0" expanded="true" />
               </folding>
@@ -32,13 +37,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DTLineChart.m" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DTLineChart.m" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="656">
-              <caret line="799" column="0" lean-forward="true" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
+            <state relative-caret-position="260">
+              <caret line="525" column="0" lean-forward="true" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
               <folding>
-                <element signature="e#138#161#0" expanded="true" />
+                <element signature="e#0#2#0" expanded="false" />
+                <element signature="e#242#449#0" expanded="false" />
+                <element signature="e#481#502#0" expanded="false" />
+                <element signature="e#555#775#0" expanded="false" />
+                <element signature="e#804#965#0" expanded="false" />
+                <element signature="e#967#1152#0" expanded="false" />
+                <element signature="e#1154#1325#0" expanded="false" />
+                <element signature="e#1360#1474#0" expanded="false" />
+                <element signature="e#1476#1591#0" expanded="false" />
+                <element signature="e#1593#4454#0" expanded="false" />
+                <element signature="e#4457#4631#0" expanded="false" />
+                <element signature="e#4457#5907#0" expanded="false" />
+                <element signature="e#5969#5994#0" expanded="false" />
+                <element signature="e#5969#6378#0" expanded="false" />
+                <element signature="e#6072#6160#0" expanded="false" />
+                <element signature="e#6210#6374#0" expanded="false" />
+                <element signature="e#6380#8220#0" expanded="false" />
+                <element signature="e#8222#10188#0" expanded="false" />
+                <element signature="e#9712#9747#1" expanded="false" />
+                <element signature="e#10191#11322#0" expanded="false" />
+                <element signature="e#10946#10981#1" expanded="false" />
+                <element signature="e#11325#12528#0" expanded="false" />
+                <element signature="e#12530#12604#0" expanded="false" />
+                <element signature="e#12607#13871#0" expanded="false" />
+                <element signature="e#13873#15459#0" expanded="false" />
+                <element signature="e#15461#16007#0" expanded="false" />
+                <element signature="e#15643#15948#0" expanded="false" />
+                <element signature="e#16030#17922#0" expanded="false" />
+                <element signature="e#17924#17951#0" expanded="false" />
+                <element signature="e#17924#18444#0" expanded="false" />
+                <element signature="e#18041#18129#0" expanded="false" />
+                <element signature="e#18179#18440#0" expanded="false" />
+                <element signature="e#18447#19627#0" expanded="false" />
+                <element signature="e#19266#19301#1" expanded="false" />
+                <element signature="e#19629#19646#0" expanded="false" />
+                <element signature="e#19629#21031#0" expanded="false" />
+                <element signature="e#21091#22472#0" expanded="false" />
+                <element signature="e#24373#24951#0" expanded="false" />
+                <element signature="e#24575#24886#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -47,7 +90,7 @@
       <file leaf-file-name="DTLineChart.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
+            <state relative-caret-position="193">
               <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
@@ -57,7 +100,7 @@
       <file leaf-file-name="DTChartBaseComponent.m" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
+            <state relative-caret-position="212">
               <caret line="271" column="8" lean-forward="false" selection-start-line="271" selection-start-column="8" selection-end-line="271" selection-end-column="8" />
               <folding />
             </state>
@@ -67,8 +110,8 @@
       <file leaf-file-name="DTChartBaseComponent.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="109" column="3" lean-forward="true" selection-start-line="109" selection-start-column="3" selection-end-line="109" selection-end-column="3" />
+            <state relative-caret-position="397">
+              <caret line="296" column="3" lean-forward="true" selection-start-line="296" selection-start-column="3" selection-end-line="296" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -240,12 +283,12 @@
         <option value="$PROJECT_DIR$/DTiseChart/Views/Cells/LineGridCell.m" />
         <option value="$PROJECT_DIR$/DTChart/Model/DTChartData.m" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
-        <option value="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m" />
         <option value="$PROJECT_DIR$/DTChart/Line/DTLine.m" />
         <option value="$PROJECT_DIR$/DTChart/Line/DTLine.h" />
-        <option value="$PROJECT_DIR$/DTChart/Line/DTLineChart.m" />
-        <option value="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h" />
         <option value="$PROJECT_DIR$/DTChart/Line/DTLineChart.h" />
+        <option value="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m" />
+        <option value="$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h" />
+        <option value="$PROJECT_DIR$/DTChart/Line/DTLineChart.m" />
       </list>
     </option>
   </component>
@@ -377,12 +420,12 @@
       <workItem from="1484097315698" duration="27898000" />
       <workItem from="1484183981379" duration="28578000" />
       <workItem from="1484270503599" duration="9304000" />
-      <workItem from="1484291475424" duration="9283000" />
+      <workItem from="1484291475424" duration="16271000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="430302000" />
+    <option name="totallyTimeSpent" value="437290000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -523,16 +566,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m</url>
-          <line>798</line>
+          <line>511</line>
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m</url>
-          <line>794</line>
+          <line>507</line>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m</url>
+          <line>336</line>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="95" />
+      <option name="time" value="96" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="AppleRunConfiguration">
@@ -877,14 +925,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="271" column="8" lean-forward="false" selection-start-line="271" selection-start-column="8" selection-end-line="271" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DTiseChart/main.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -917,38 +957,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h">
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="109" column="3" lean-forward="true" selection-start-line="109" selection-start-column="3" selection-end-line="109" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="656">
-          <caret line="799" column="0" lean-forward="true" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
+        <state relative-caret-position="311">
+          <caret line="421" column="0" lean-forward="true" selection-start-line="421" selection-start-column="0" selection-end-line="421" selection-end-column="0" />
           <folding>
-            <element signature="e#138#161#0" expanded="true" />
+            <element signature="e#148#181#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
+        <state relative-caret-position="193">
           <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
+    <entry file="file://$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="412" column="0" lean-forward="true" selection-start-line="412" selection-start-column="0" selection-end-line="412" selection-end-column="0" />
+        <state relative-caret-position="212">
+          <caret line="271" column="8" lean-forward="false" selection-start-line="271" selection-start-column="8" selection-end-line="271" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Base/DTChartBaseComponent.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="296" column="3" lean-forward="true" selection-start-line="296" selection-start-column="3" selection-end-line="296" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="525" column="0" lean-forward="true" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
           <folding>
-            <element signature="e#148#181#0" expanded="true" />
+            <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#242#449#0" expanded="false" />
+            <element signature="e#481#502#0" expanded="false" />
+            <element signature="e#555#775#0" expanded="false" />
+            <element signature="e#804#965#0" expanded="false" />
+            <element signature="e#967#1152#0" expanded="false" />
+            <element signature="e#1154#1325#0" expanded="false" />
+            <element signature="e#1360#1474#0" expanded="false" />
+            <element signature="e#1476#1591#0" expanded="false" />
+            <element signature="e#1593#4454#0" expanded="false" />
+            <element signature="e#4457#4631#0" expanded="false" />
+            <element signature="e#4457#5907#0" expanded="false" />
+            <element signature="e#5969#5994#0" expanded="false" />
+            <element signature="e#5969#6378#0" expanded="false" />
+            <element signature="e#6072#6160#0" expanded="false" />
+            <element signature="e#6210#6374#0" expanded="false" />
+            <element signature="e#6380#8220#0" expanded="false" />
+            <element signature="e#8222#10188#0" expanded="false" />
+            <element signature="e#9712#9747#1" expanded="false" />
+            <element signature="e#10191#11322#0" expanded="false" />
+            <element signature="e#10946#10981#1" expanded="false" />
+            <element signature="e#11325#12528#0" expanded="false" />
+            <element signature="e#12530#12604#0" expanded="false" />
+            <element signature="e#12607#13871#0" expanded="false" />
+            <element signature="e#13873#15459#0" expanded="false" />
+            <element signature="e#15461#16007#0" expanded="false" />
+            <element signature="e#15643#15948#0" expanded="false" />
+            <element signature="e#16030#17922#0" expanded="false" />
+            <element signature="e#17924#17951#0" expanded="false" />
+            <element signature="e#17924#18444#0" expanded="false" />
+            <element signature="e#18041#18129#0" expanded="false" />
+            <element signature="e#18179#18440#0" expanded="false" />
+            <element signature="e#18447#19627#0" expanded="false" />
+            <element signature="e#19266#19301#1" expanded="false" />
+            <element signature="e#19629#19646#0" expanded="false" />
+            <element signature="e#19629#21031#0" expanded="false" />
+            <element signature="e#21091#22472#0" expanded="false" />
+            <element signature="e#24373#24951#0" expanded="false" />
+            <element signature="e#24575#24886#0" expanded="false" />
           </folding>
         </state>
       </provider>

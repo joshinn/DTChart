@@ -176,7 +176,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 #pragma mark - private method
 
 
-#pragma mark - public method
+#pragma mark - ###########主轴相关#############
 
 
 - (void)generateMultiDataColors:(BOOL)needInitial {
@@ -275,7 +275,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     self.multiData = datas;
 }
 
-#pragma mark - #pragma mark - 副轴相关
+#pragma mark - ###########副轴相关#############
 
 - (void)setSecondSingleData:(DTChartSingleData *)secondSingleData {
     _secondSingleData = secondSingleData;
@@ -289,16 +289,69 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     _secondSingleData = nil;
 }
 
-- (void)drawSecondChart {
+- (void)clearSecondChartContent {
+}
 
+- (void)generateSecondMultiDataColors:(BOOL)needInitial {
+
+    if (needInitial) {
+        self.colorManager = [DTColorManager randomManager];
+    }
+
+    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.multiData.count];
+
+    for (DTChartSingleData *sData in self.secondMultiData) {
+        if (!sData.color) {
+            sData.color = [self.colorManager getColor];
+        }
+        if (!sData.secondColor) {
+            sData.secondColor = [self.colorManager getLightColor:sData.color];
+        }
+
+        [seriesIds addObject:sData.singleId];
+        [colors addObject:sData.color];
+    }
+    if (colors.count > 0 && self.secondAxisColorsCompletionBlock) {
+        self.secondAxisColorsCompletionBlock(colors, seriesIds);
+    }
+}
+
+- (BOOL)drawYSecondAxisLabels {
+    if (self.ySecondAxisLabelDatas.count == 0) {
+        DTLog(@"Error: y轴副轴标签数量是0");
+        return NO;
+    }
+
+    return YES;
+}
+
+/**
+ * 绘制副轴
+ */
+- (void)drawSecondValues {
+}
+
+- (void)drawSecondChart {
+    [self clearSecondChartContent];
+
+    if ([self drawYSecondAxisLabels]) {
+
+        if (!self.secondMultiData && self.secondSingleData) {
+            self.secondMultiData = @[self.secondSingleData];
+        }
+
+        [self generateSecondMultiDataColors:NO];
+
+        [self drawSecondValues];
+    }
 }
 
 - (void)reloadChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
-
 }
 
 - (void)insertChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
-
+    [self generateSecondMultiDataColors:NO];
 }
 
 - (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {
