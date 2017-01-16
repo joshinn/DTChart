@@ -11,6 +11,7 @@
 #import "DTCommonData.h"
 #import "DTLineChartSingleData.h"
 #import "DTDataManager.h"
+#import "DTAxisFormatter.h"
 
 @interface DTLineChartController ()
 
@@ -38,6 +39,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _lineChart = [[DTLineChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
+        _chartView = _lineChart;
 
         _lineChart.contentView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
@@ -61,13 +63,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     return self;
 }
 
-
-- (UIView *)chartView {
-    if (!_chartView) {
-        _chartView = self.lineChart;
-    }
-    return _chartView;
-}
 
 - (NSUInteger)secondAxisDataCount {
     _secondAxisDataCount = 0;
@@ -166,7 +161,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
             }
 
             if (n == 0) {   // x轴label data，只需要取第一条折线数据计算就可以
-                DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:data.ptName value:i];
+                DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getXAxisLabelTitle:data.ptName orValue:0] value:i];
                 if (values.count > maxXAxisCount) {
 
                     xLabelData.hidden = i % divide != 0;
@@ -177,7 +172,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
                 [xAxisLabelDatas addObject:xLabelData];
             }
-
 
             // 单条折线里的点
             DTChartItemData *itemData = [DTChartItemData chartData];
@@ -319,7 +313,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 #pragma mark - override
 
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTChartControllerAxisFormatter *)axisFormat {
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
 
     [self processMainAxisLabelDataAndLines:listData];

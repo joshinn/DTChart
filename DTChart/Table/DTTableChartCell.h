@@ -33,15 +33,19 @@ typedef void(^DTTableChartCellOrderClickBlock)(NSInteger index);
 
 /**
  *  设置table的标题，即第一行
- * @param titleDatas 标题数据
+ * @param titleDatas 主表标题数据
+ * @param secondTitleDatas 副表标题数据
  */
-- (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas;
+- (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas;
+
+
 
 /**
  * 设置table的表格内容数据
- * @param data 每行的数据
+ * @param items 主表每行的数据
+ * @param secondItems 副表每行数据
  * @param indexPath 该行的indexPath
  */
-- (void)setCellData:(NSArray<DTChartItemData *> *)data indexPath:(NSIndexPath *)indexPath;
+- (void)setCellData:(NSArray<DTChartItemData *> *)items second:(NSArray<DTChartItemData *> *)secondItems indexPath:(NSIndexPath *)indexPath;
 
 @end

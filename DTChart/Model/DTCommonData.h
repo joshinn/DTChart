@@ -12,17 +12,10 @@
 
 @interface DTCommonData : NSObject
 
-/**
- * 坐标轴显示用
- */
 @property(nonatomic) NSString *ptName;
-/**
- * 全名
- */
-@property(nonatomic) NSString *ptFullName;
 @property(nonatomic) CGFloat ptValue;
 
-+ (instancetype)commonData:(NSString *)name fullName:(NSString *)fullName value:(CGFloat)value;
++ (instancetype)commonData:(NSString *)name value:(CGFloat)value;
 @end
 
 

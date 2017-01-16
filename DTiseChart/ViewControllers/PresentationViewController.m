@@ -9,6 +9,7 @@
 #import "PresentationViewController.h"
 #import "DTCommonData.h"
 #import "DTLineChartController.h"
+#import "DTAxisFormatter.h"
 
 @interface PresentationViewController ()
 
@@ -39,8 +40,11 @@
     }];
     [self.view addSubview:self.lineChartController.chartView];
 
-    DTChartControllerAxisFormatter *formatter = [DTChartControllerAxisFormatter axisFormatter];
-
+    DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
+    formatter.mainYAxisType = DTAxisFormatterTypeNumber;
+    formatter.secondYAxisType = DTAxisFormatterTypeNumber;
+    formatter.xAxisType = DTAxisFormatterTypeDate;
+    formatter.xAxisDateSubType = DTAxisFormatterDateSubTypeMonth | DTAxisFormatterDateSubTypeDay;
     [self.lineChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];
 
 }

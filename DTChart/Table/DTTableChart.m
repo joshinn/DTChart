@@ -16,7 +16,14 @@
 
 @property(nonatomic) NSArray *presetCellWidths;
 
+/**
+ * 主表数据
+ */
 @property(nonatomic) NSMutableArray<NSArray<DTChartItemData *> *> *listRowData;
+/**
+ * 副表数据
+ */
+@property(nonatomic) NSMutableArray<NSArray<DTChartItemData *> *> *listSecondRowData;
 
 @end
 
@@ -196,6 +203,13 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     return _listRowData;
 }
 
+- (NSMutableArray<NSArray<DTChartItemData *> *> *)listSecondRowData {
+    if (!_listSecondRowData) {
+        _listSecondRowData = [NSMutableArray array];
+    }
+    return _listSecondRowData;
+}
+
 - (void)setHeadViewHeight:(CGFloat)headViewHeight {
     _headViewHeight = headViewHeight;
 
@@ -219,9 +233,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.xAxisLabelDatas.count > 0 ? 1 : 0;
+        return self.yAxisLabelDatas.count > 0 ? 1 : 0;
     } else {
-        return self.self.listRowData.count;
+        return MAX(self.self.listRowData.count, self.listSecondRowData.count);
     }
 }
 
@@ -233,50 +247,44 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     if (indexPath.section == 0) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
-        [cell setCellTitle:self.xAxisLabelDatas];
+        [cell setCellTitle:self.yAxisLabelDatas secondTitles:self.ySecondAxisLabelDatas];
 #pragma clang diagnostic pop
     } else {
-        [cell setCellData:self.listRowData[(NSUInteger) indexPath.row] indexPath:indexPath];
+        NSArray<DTChartItemData *> *mainTableRowData = nil;
+        NSArray<DTChartItemData *> *secondTableRowData = nil;
+        if (self.listRowData.count > indexPath.row) {
+            mainTableRowData = self.listRowData[(NSUInteger) indexPath.row];
+        }
+        if (self.listSecondRowData.count > indexPath.row) {
+            secondTableRowData = self.listSecondRowData[(NSUInteger) indexPath.row];
+        }
+        [cell setCellData:mainTableRowData second:secondTableRowData indexPath:indexPath];
     }
 
     return cell;
 }
 
-#pragma mark - override
+#pragma mark - private method
 
 /**
- * 清除坐标系里的值
+ * 加工 tableView 行数据
+ * @param originData 原始数据
+ * @param containerList 行数据list
  */
-- (void)clearChartContent {
-
-}
-
-- (BOOL)drawXAxisLabels {
-    if (![super drawXAxisLabels]) {
-        return NO;
-    }
-
-    return YES;
-}
-
-- (BOOL)drawYAxisLabels {
-    return YES;
-}
-
-- (void)drawValues {
+- (void)processRowData:(NSArray<DTChartSingleData *> *)originData containerArray:(NSMutableArray<NSArray<DTChartItemData *> *> *)containerList {
 
     NSUInteger count = 0;
-    for (DTChartSingleData *sData in self.multiData) {
+    for (DTChartSingleData *sData in originData) {
         if (sData.itemValues.count > count) {
             count = sData.itemValues.count;
         }
     }
 
-    [self.listRowData removeAllObjects];
+    [containerList removeAllObjects];
 
     for (NSUInteger i = 0; i < count; ++i) {
         NSMutableArray<DTChartItemData *> *rowData = [NSMutableArray array];
-        for (DTChartSingleData *sData in self.multiData) {
+        for (DTChartSingleData *sData in originData) {
             if (sData.itemValues.count > i) {
                 DTChartItemData *itemData = sData.itemValues[i];
                 [rowData addObject:itemData];
@@ -285,17 +293,58 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
                 itemData.title = @"";
                 [rowData addObject:itemData];
             }
-
         }
 
-        [self.listRowData addObject:rowData];
+        [containerList addObject:rowData];
     }
+}
 
-    [self.tableView reloadData];
+#pragma mark - override
+
+#pragma mark - ############主表############
+
+/**
+ * 清除坐标系里的值
+ */
+- (void)clearChartContent {
+}
+
+- (BOOL)drawXAxisLabels {
+    return YES;
+}
+
+- (BOOL)drawYAxisLabels {
+    return YES;
+}
+
+- (void)drawValues {
+    [self processRowData:self.multiData containerArray:self.listRowData];
 }
 
 - (void)drawChart {
     [super drawChart];
+
+    [self drawSecondChart];
+}
+
+#pragma mark - ############副表############
+
+
+- (BOOL)drawYSecondAxisLabels {
+    return YES;
+}
+
+- (void)drawSecondValues {
+    [self processRowData:self.secondMultiData containerArray:self.listSecondRowData];
+}
+
+/**
+ * xxx
+ */
+- (void)drawSecondChart {
+    [super drawSecondChart];
+
+    [self.tableView reloadData];
 }
 
 @end

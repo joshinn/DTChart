@@ -14,6 +14,7 @@
 #import "DTLineChartController.h"
 #import "PresentationViewController.h"
 #import "TableGridCell.h"
+#import "TableChartPresentationViewController.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -32,32 +33,56 @@ static NSString *const TableGridCellId = @"TableGridCell";
 
 #define GridCellSize CGSizeMake(25*15, 15*15)
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-DD HH:mm:ss";
+
+
+    NSString *dateString = @"2017-01-16 13:08:23";
+    NSDate *date = [formatter dateFromString:dateString];
+    formatter.dateFormat = @"MM-DD";
+    DTLog(@"date = %@", [formatter stringFromDate:date]);
 
     DTLog(@"%.2f%%", 0.36);
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
     [self simulateData];
 
-    UIButton *addBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 6 * 15, 60, 48)];
-    [addBtn setTitle:@"大图" forState:UIControlStateNormal];
-    [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [addBtn addTarget:self action:@selector(presentation) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:addBtn];
+
+    [self.view addSubview:[self buttonFactory:@"大图" frame:CGRectMake(0, 6 * 15, 80, 48) action:@selector(linePresentation)]];
+    [self.view addSubview:[self buttonFactory:@"table大图" frame:CGRectMake(0, 6 * 15 + 50, 80, 48) action:@selector(tableChartPresentation)]];
 
     self.collectionView.frame = CGRectMake(8 * 15, 6 * 15, GridCellSize.width * 3, GridCellSize.height * 3);
     [self.view addSubview:self.collectionView];
 }
 
+- (UIButton *)buttonFactory:(NSString *)title frame:(CGRect)frame action:(SEL)action {
+    UIButton *button = [[UIButton alloc] initWithFrame:frame];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    return button;
+}
 
-- (void)presentation {
+
+- (void)linePresentation {
     PresentationViewController *pVC = [[PresentationViewController alloc] init];
     pVC.chartId = @"10088";
     pVC.listLineData = self.listLineData7;
     [self.navigationController pushViewController:pVC animated:YES];
+}
+
+- (void)tableChartPresentation {
+    TableChartPresentationViewController *tcpVC = [TableChartPresentationViewController new];
+    tcpVC.chartId = @"10188";
+    tcpVC.listLineData = self.listLineData7;
+    [self.navigationController pushViewController:tcpVC animated:YES];
 }
 
 
@@ -69,7 +94,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     self.listLineData7 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:7 mainAxis:YES]];
     DTListCommonData *listCommonData1 = self.listLineData7[self.listLineData7.count - 1];
     DTListCommonData *listCommonData2 = self.listLineData7[self.listLineData7.count - 2];
-    listCommonData2.seriesName = listCommonData1.seriesName;
+//    listCommonData2.seriesName = listCommonData1.seriesName;
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
@@ -79,8 +104,8 @@ static NSString *const TableGridCellId = @"TableGridCell";
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count baseValue:(CGFloat)baseValue {
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
-        NSString *title = [NSString stringWithFormat:@"12-%@", @(i + 1)];
-        DTCommonData *data = [DTCommonData commonData:title fullName:title value:baseValue + arc4random_uniform(160) * 10];
+        NSString *title = [NSString stringWithFormat:@"2016-12-0%@~2016-12-0%@", @(i + 1), @(i + 2)];
+        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
         [list addObject:data];
     }
 
@@ -93,7 +118,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     for (NSUInteger i = 0; i < lineCount; ++i) {
 
         NSString *seriesId = [NSString stringWithFormat:@"%@", @(i)];
-        NSString *seriesName = [NSString stringWithFormat:@"20%@", @(i)];
+        NSString *seriesName = [NSString stringWithFormat:@"No.20%@", @(i)];
         DTListCommonData *listCommonData = [DTListCommonData listCommonData:seriesId seriesName:seriesName arrayData:[self simulateCommonData:pCount] mainAxis:isMain];
 
         [list addObject:listCommonData];

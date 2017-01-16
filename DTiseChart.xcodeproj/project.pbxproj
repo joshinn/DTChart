@@ -12,6 +12,7 @@
 		653520391E28B7F300BFA2C9 /* BarGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 653520381E28B7F300BFA2C9 /* BarGridCell.m */; };
 		6535203C1E28BCE300BFA2C9 /* DTTableChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6535203B1E28BCE300BFA2C9 /* DTTableChartController.m */; };
 		6535203F1E28BEC300BFA2C9 /* TableGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6535203E1E28BEC300BFA2C9 /* TableGridCell.m */; };
+		653520421E2A1AC300BFA2C9 /* TableChartPresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 653520411E2A1AC300BFA2C9 /* TableChartPresentationViewController.m */; };
 		654284E11E24B29C00267603 /* DTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E01E24B29C00267603 /* DTDataManager.m */; };
 		654284E51E24B71E00267603 /* DTLineChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284E41E24B71E00267603 /* DTLineChartController.m */; };
 		654284EB1E24EBBB00267603 /* LineCtrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654284EA1E24EBBB00267603 /* LineCtrlViewController.m */; };
@@ -30,6 +31,7 @@
 		65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE471E25D1EA00DC152B /* CollectionViewController.m */; };
 		65B7BE4D1E25D96E00DC152B /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE4C1E25D96E00DC152B /* GridCell.m */; };
 		65B7BE501E25FB6C00DC152B /* LineGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE4F1E25FB6C00DC152B /* LineGridCell.m */; };
+		65BDBB951E2C59C300EB85F4 /* DTAxisFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BDBB941E2C59C300EB85F4 /* DTAxisFormatter.m */; };
 		65C027EA1E139E7A001EB1C7 /* DTChart.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 65C027E91E139E7A001EB1C7 /* DTChart.podspec */; };
 		65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */; };
 		65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */; };
@@ -66,6 +68,8 @@
 		6535203B1E28BCE300BFA2C9 /* DTTableChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChartController.m; sourceTree = "<group>"; };
 		6535203D1E28BEC300BFA2C9 /* TableGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableGridCell.h; sourceTree = "<group>"; };
 		6535203E1E28BEC300BFA2C9 /* TableGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableGridCell.m; sourceTree = "<group>"; };
+		653520401E2A1AC200BFA2C9 /* TableChartPresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableChartPresentationViewController.h; sourceTree = "<group>"; };
+		653520411E2A1AC300BFA2C9 /* TableChartPresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableChartPresentationViewController.m; sourceTree = "<group>"; };
 		654284DF1E24B29C00267603 /* DTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDataManager.h; sourceTree = "<group>"; };
 		654284E01E24B29C00267603 /* DTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDataManager.m; sourceTree = "<group>"; };
 		654284E31E24B71E00267603 /* DTLineChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLineChartController.h; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 		65B7BE4C1E25D96E00DC152B /* GridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCell.m; sourceTree = "<group>"; };
 		65B7BE4E1E25FB6C00DC152B /* LineGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineGridCell.h; sourceTree = "<group>"; };
 		65B7BE4F1E25FB6C00DC152B /* LineGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineGridCell.m; sourceTree = "<group>"; };
+		65BDBB931E2C59C300EB85F4 /* DTAxisFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTAxisFormatter.h; sourceTree = "<group>"; };
+		65BDBB941E2C59C300EB85F4 /* DTAxisFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTAxisFormatter.m; sourceTree = "<group>"; };
 		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
 		65C027EC1E15EFCE001EB1C7 /* DTDistributionChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDistributionChart.h; sourceTree = "<group>"; };
 		65C027ED1E15EFCE001EB1C7 /* DTDistributionChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDistributionChart.m; sourceTree = "<group>"; };
@@ -166,6 +172,8 @@
 				653520351E28B6FF00BFA2C9 /* DTChartController.m */,
 				6535203A1E28BCE300BFA2C9 /* DTTableChartController.h */,
 				6535203B1E28BCE300BFA2C9 /* DTTableChartController.m */,
+				65BDBB931E2C59C300EB85F4 /* DTAxisFormatter.h */,
+				65BDBB941E2C59C300EB85F4 /* DTAxisFormatter.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -232,6 +240,8 @@
 				65B7BE471E25D1EA00DC152B /* CollectionViewController.m */,
 				657C87D51E287ED700BBD558 /* PresentationViewController.h */,
 				657C87D61E287ED700BBD558 /* PresentationViewController.m */,
+				653520401E2A1AC200BFA2C9 /* TableChartPresentationViewController.h */,
+				653520411E2A1AC300BFA2C9 /* TableChartPresentationViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -473,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653520421E2A1AC300BFA2C9 /* TableChartPresentationViewController.m in Sources */,
 				6535203F1E28BEC300BFA2C9 /* TableGridCell.m in Sources */,
 				653520361E28B6FF00BFA2C9 /* DTChartController.m in Sources */,
 				6535203C1E28BCE300BFA2C9 /* DTTableChartController.m in Sources */,
@@ -500,6 +511,7 @@
 				65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */,
 				65CD0F371DFEA42A007AFD8D /* DTVerticalBarChart.m in Sources */,
 				65CD0F3B1DFEA42A007AFD8D /* DTChartData.m in Sources */,
+				65BDBB951E2C59C300EB85F4 /* DTAxisFormatter.m in Sources */,
 				65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */,
 				653520391E28B7F300BFA2C9 /* BarGridCell.m in Sources */,
 				65B7BE501E25FB6C00DC152B /* LineGridCell.m in Sources */,

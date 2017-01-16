@@ -10,10 +10,9 @@
 
 @implementation DTCommonData
 
-+ (instancetype)commonData:(NSString *)name fullName:(NSString *)fullName value:(CGFloat)value {
++ (instancetype)commonData:(NSString *)name value:(CGFloat)value {
     DTCommonData *data = [[DTCommonData alloc] init];
     data.ptName = name;
-    data.ptFullName = fullName;
     data.ptValue = value;
     return data;
 }

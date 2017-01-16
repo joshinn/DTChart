@@ -11,38 +11,7 @@
 #import "DTDataManager.h"
 #import "DTChartBaseComponent.h"
 #import "DTChartData.h"
-
-
-@implementation DTChartControllerAxisFormatter
-
-+ (instancetype)axisFormatter {
-    DTChartControllerAxisFormatter *formatter = [[DTChartControllerAxisFormatter alloc] init];
-    return formatter;
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        _mainAxisScale = 1;
-        _secondAxisScale = 1;
-    }
-    return self;
-}
-
-- (NSString *)mainAxisFormat {
-    if (!_mainAxisFormat) {
-        _mainAxisFormat = @"%.0f";
-    }
-    return _mainAxisFormat;
-}
-
-- (NSString *)secondAxisFormat {
-    if (!_secondAxisFormat) {
-        _secondAxisFormat = @"%.0f";
-    }
-    return _secondAxisFormat;
-}
-
-@end
+#import "DTAxisFormatter.h"
 
 
 @interface DTChartController ()
@@ -68,9 +37,9 @@
     _chartView = chartView;
 }
 
-- (DTChartControllerAxisFormatter *)axisFormatter {
+- (DTAxisFormatter *)axisFormatter {
     if (!_axisFormatter) {
-        _axisFormatter = [DTChartControllerAxisFormatter axisFormatter];
+        _axisFormatter = [DTAxisFormatter axisFormatter];
     }
     return _axisFormatter;
 }
@@ -113,11 +82,20 @@
         CGFloat y = maxY / maxYAxisCount * i;
 
         NSString *title;
-        if (isMainAxis) {
-            title = [NSString stringWithFormat:self.axisFormatter.mainAxisFormat, y * self.axisFormatter.mainAxisScale];
-        } else {
-            title = [NSString stringWithFormat:self.axisFormatter.secondAxisFormat, y * self.axisFormatter.secondAxisScale];
+        if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeText || self.axisFormatter.mainYAxisType == DTAxisFormatterTypeDate) {
+            if (isMainAxis) {
+                title = [self.axisFormatter getMainYAxisLabelTitle:[NSString stringWithFormat:@"%@", @(y)] orValue:0];
+            } else {
+                title = [self.axisFormatter getSecondYAxisLabelTitle:[NSString stringWithFormat:@"%@", @(y)] orValue:0];
+            }
+        } else if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeNumber) {
+            if (isMainAxis) {
+                title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];
+            } else {
+                title = [self.axisFormatter getSecondYAxisLabelTitle:nil orValue:y];
+            }
         }
+
         [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
     }
 
@@ -125,7 +103,7 @@
 }
 
 
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTChartControllerAxisFormatter *)axisFormatter {
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormatter {
     self.chartId = chartId;
     self.axisFormatter = axisFormatter;
 }

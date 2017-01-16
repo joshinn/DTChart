@@ -42,7 +42,6 @@ static NSInteger const IconViewTag = 10101;
 }
 
 
-
 - (UIImage *)ascendImg {
     if (!_ascendImg) {
         NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
@@ -138,7 +137,9 @@ static NSInteger const IconViewTag = 10101;
 
 }
 
-- (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas {
+- (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas {
+    BOOL hasSecond = secondTitleDatas.count > 0;
+
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
         UIView *container = self.containerViews[i];
@@ -169,7 +170,7 @@ static NSInteger const IconViewTag = 10101;
     }
 }
 
-- (void)setCellData:(NSArray<DTChartItemData *> *)items indexPath:(NSIndexPath *)indexPath {
+- (void)setCellData:(NSArray<DTChartItemData *> *)items second:(NSArray<DTChartItemData *> *)secondItems indexPath:(NSIndexPath *)indexPath {
     BOOL isOddRow = indexPath.row % 2 == 0;
 
     for (NSUInteger i = 0; i < self.containerViews.count && items.count; ++i) {
@@ -184,7 +185,7 @@ static NSInteger const IconViewTag = 10101;
         label.userInteractionEnabled = NO;
 
         if (i < items.count) {
-            label.text = items[i].title;
+            label.text = [NSString stringWithFormat:@"%@", @(items[i].itemValue.y)];
         } else {
             label.text = @"";
         }

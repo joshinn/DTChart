@@ -11,6 +11,7 @@
 @class DTCommonData;
 @class DTListCommonData;
 @class DTAxisLabelData;
+@class DTAxisFormatter;
 
 
 typedef NS_ENUM(NSInteger, DTChartMode) {
@@ -24,27 +25,6 @@ typedef void(^MainAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray
 
 typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
 
-
-@interface DTChartControllerAxisFormatter : NSObject
-/**
- * y主轴的文字格式，默认 "%.0f"
- */
-@property(nonatomic) NSString *mainAxisFormat;
-/**
- * 主轴数据缩放比，默认1
- */
-@property(nonatomic) CGFloat mainAxisScale;
-/**
- * y副轴的文字格式，默认 "%.0f"
- */
-@property(nonatomic) NSString *secondAxisFormat;
-/**
- * 副轴数据缩放比，默认1
- */
-@property(nonatomic) CGFloat secondAxisScale;
-
-+ (instancetype)axisFormatter;
-@end
 
 
 @interface DTChartController : NSObject
@@ -63,7 +43,7 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
 /**
  * 主副坐标轴格式
  */
-@property(nonatomic) DTChartControllerAxisFormatter *axisFormatter;
+@property(nonatomic) DTAxisFormatter *axisFormatter;
 /**
  * 绘制DTChart，是否有动画
  */
@@ -109,7 +89,7 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  * @param listData 数据内容
  * @param axisFormat y轴格式
  */
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTChartControllerAxisFormatter *)axisFormat __attribute__((objc_requires_super));
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((objc_requires_super));
 
 /**
  * 绘制DTChart

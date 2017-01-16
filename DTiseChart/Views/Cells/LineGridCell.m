@@ -10,6 +10,7 @@
 #import "DTLineChartController.h"
 #import "DTCommonData.h"
 #import "DTChartBaseComponent.h"
+#import "DTAxisFormatter.h"
 
 @interface LineGridCell ()
 
@@ -36,8 +37,11 @@
     }];
     [self.contentView addSubview:self.lineChartController.chartView];
 
-    DTChartControllerAxisFormatter *formatter = [DTChartControllerAxisFormatter axisFormatter];
-
+    DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
+    formatter.mainYAxisType = DTAxisFormatterTypeNumber;
+    formatter.secondYAxisType = DTAxisFormatterTypeNumber;
+    formatter.xAxisType = DTAxisFormatterTypeDate;
+    formatter.xAxisDateSubType = DTAxisFormatterDateSubTypeMonth | DTAxisFormatterDateSubTypeDay;
     [self.lineChartController setItems:chartId listData:listData axisFormat:formatter];
     [self.lineChartController drawChart];
 }
