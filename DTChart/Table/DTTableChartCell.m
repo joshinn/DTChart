@@ -138,7 +138,7 @@ static NSInteger const IconViewTag = 10101;
 }
 
 - (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas {
-    BOOL hasSecond = secondTitleDatas.count > 0;
+//    BOOL hasSecond = secondTitleDatas.count > 0;
 
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
