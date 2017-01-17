@@ -17,10 +17,5 @@
 @property(nonatomic) NSString *seriesId;
 
 @property(nonatomic) UIColor *color;
-/**
- * 类型
- * @note DTLineChart type:0 圆形 1:方形 2:三角形
- */
-@property(nonatomic) NSUInteger type;
 
 @end

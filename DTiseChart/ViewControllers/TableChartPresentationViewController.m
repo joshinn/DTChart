@@ -9,7 +9,6 @@
 #import "TableChartPresentationViewController.h"
 #import "DTCommonData.h"
 #import "DTTableChartController.h"
-#import "DTAxisFormatter.h"
 
 @interface TableChartPresentationViewController ()
 

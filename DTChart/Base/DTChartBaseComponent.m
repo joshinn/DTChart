@@ -204,7 +204,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
         DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
         blockModel.seriesId = sData.singleId;
-        blockModel.type = 0;
         blockModel.color = sData.color;
         [infos addObject:blockModel];
 
@@ -326,7 +325,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
         DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
         blockModel.seriesId = sData.singleId;
-        blockModel.type = 0;
         blockModel.color = sData.color;
         [infos addObject:blockModel];
     }

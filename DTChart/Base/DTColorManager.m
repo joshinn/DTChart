@@ -62,7 +62,7 @@
 
             for (NSUInteger i = 0; i < _colors.count; ++i) {
                 UIColor *c = _colors[i];
-                if ([color compare:c]) {
+                if ([color compareRGB:c]) {
                     [_colors removeObject:c];
                     [_colors addObject:c];
                     break;
@@ -86,7 +86,7 @@
     UIColor *lightColor = nil;
     for (NSUInteger i = 0; i < DTColorArray.count; ++i) {
         UIColor *c = DTColorArray[i];
-        if ([c compare:color]) {
+        if ([c compareRGB:color]) {
             lightColor = DTLightColorArray[i];
             break;
         }
@@ -99,7 +99,7 @@
     UIColor *lightColor = nil;
     for (NSUInteger i = 0; i < DTColorArray.count; ++i) {
         UIColor *c = DTColorArray[i];
-        if ([c compare:color]) {
+        if ([c compareRGB:color]) {
             lightColor = DTLightColorArray[i];
             break;
         }

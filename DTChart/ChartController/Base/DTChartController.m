@@ -7,11 +7,8 @@
 //
 
 #import "DTChartController.h"
-#import "DTCommonData.h"
-#import "DTDataManager.h"
 #import "DTChartBaseComponent.h"
-#import "DTAxisFormatter.h"
-#import "DTChartBlockModel.h"
+#import "DTDataManager.h"
 
 
 @interface DTChartController ()

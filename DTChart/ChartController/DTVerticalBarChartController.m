@@ -7,9 +7,7 @@
 //
 
 #import "DTVerticalBarChartController.h"
-#import "DTCommonData.h"
 #import "DTVerticalBarChart.h"
-#import "DTAxisFormatter.h"
 #import "DTDataManager.h"
 
 @interface DTVerticalBarChartController ()

@@ -14,6 +14,10 @@
     return [self compare:color withTolerance:1.0f / 255];
 }
 
+- (BOOL)compareRGB:(UIColor *)color {
+    return [self compareRGB:color withTolerance:1.0f / 255];
+}
+
 - (BOOL)compare:(UIColor *)color withTolerance:(CGFloat)tolerance {
     CGFloat r1, g1, b1, a1, r2, g2, b2, a2;
     [self getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
@@ -23,6 +27,16 @@
             && fabs(g1 - g2) <= tolerance
             && fabs(b1 - b2) <= tolerance
             && fabs(a1 - a2) <= tolerance;
+}
+
+- (BOOL)compareRGB:(UIColor *)color withTolerance:(CGFloat)tolerance {
+    CGFloat r1, g1, b1, a1, r2, g2, b2, a2;
+    [self getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    [color getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+
+    return fabs(r1 - r2) <= tolerance
+            && fabs(g1 - g2) <= tolerance
+            && fabs(b1 - b2) <= tolerance;
 }
 
 @end

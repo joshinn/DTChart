@@ -8,10 +8,8 @@
 
 #import "DTLineChartController.h"
 #import "DTLineChart.h"
-#import "DTCommonData.h"
 #import "DTLineChartSingleData.h"
 #import "DTDataManager.h"
-#import "DTAxisFormatter.h"
 
 @interface DTLineChartController ()
 

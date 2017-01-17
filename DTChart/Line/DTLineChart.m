@@ -24,6 +24,10 @@
 
 @implementation DTLineChart
 
+/**
+ * 相同seriesName的折线，第二条起，颜色alpha减小系数
+ */
+static CGFloat const SameSeriesNameColorAlpha = 0.7;
 
 /**
  * 触摸点最大的偏移距离
@@ -244,11 +248,10 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
 
-        if (cachedData) { // 已经有相同的singleName，取相同颜色
+        if (cachedData) { // 已经有相同的singleName，取相同颜色alpha减小
 
-            sData.color = cachedData.color;
+            sData.color = [cachedData.color colorWithAlphaComponent:SameSeriesNameColorAlpha];
             sData.secondColor = cachedData.secondColor;
-            sData.pointType = cachedData.pointType + 1;
 
         } else {
             cachedSingleDataDic[sData.singleName] = sData;
@@ -263,7 +266,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
         blockModel.seriesId = sData.singleId;
-        blockModel.type = sData.pointType;
         blockModel.color = sData.color;
         [infos addObject:blockModel];
 
@@ -552,11 +554,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
 
-        if (cachedData) { // 已经有相同的singleName，取相同颜色
+        if (cachedData) { // 已经有相同的singleName，取相同颜色alpha减小
 
-            sData.color = cachedData.color;
+            sData.color = [cachedData.color colorWithAlphaComponent:SameSeriesNameColorAlpha];
             sData.secondColor = cachedData.secondColor;
-            sData.pointType = cachedData.pointType + 1;
+
 
         } else {
             cachedSingleDataDic[sData.singleName] = sData;
@@ -571,7 +573,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
         DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
         blockModel.seriesId = sData.singleId;
-        blockModel.type = sData.pointType;
         blockModel.color = sData.color;
         [infos addObject:blockModel];
 

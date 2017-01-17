@@ -8,7 +8,6 @@
 
 #import "DTTableChartController.h"
 #import "DTTableChart.h"
-#import "DTCommonData.h"
 #import "DTTableAxisLabelData.h"
 
 @interface DTTableChartController ()

@@ -15,7 +15,7 @@
 #define DTColorGreen DTRGBColor(0xABC900, 1)
 // 浅绿
 #define DTColorGreenLight DTRGBColor(0x94AC09, 1)
-
+#define DTColorGreen60 DTRGBColor(0xABC900, 1)
 
 // 蓝
 #define DTColorBlue DTRGBColor(0x0095D9, 1)

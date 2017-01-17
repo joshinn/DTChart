@@ -10,7 +10,6 @@
 #import "DTLineChartController.h"
 #import "DTCommonData.h"
 #import "DTChartBaseComponent.h"
-#import "DTAxisFormatter.h"
 
 @interface LineGridCell ()
 

@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DTAxisFormatter.h"
+#import "DTCommonData.h"
+#import "DTChartBlockModel.h"
 
-@class DTCommonData;
-@class DTListCommonData;
 @class DTAxisLabelData;
-@class DTAxisFormatter;
-@class DTChartBlockModel;
 
 
 typedef NS_ENUM(NSInteger, DTChartMode) {

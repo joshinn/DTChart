@@ -7,9 +7,7 @@
 //
 
 #import "VBarPresentationVC.h"
-#import "DTCommonData.h"
 #import "DTVerticalBarChartController.h"
-#import "DTAxisFormatter.h"
 
 @interface VBarPresentationVC ()
 
