@@ -15,6 +15,7 @@
 #import "PresentationViewController.h"
 #import "TableGridCell.h"
 #import "TableChartPresentationViewController.h"
+#import "VBarPresentationVC.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -55,6 +56,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
 
     [self.view addSubview:[self buttonFactory:@"大图" frame:CGRectMake(0, 6 * 15, 80, 48) action:@selector(linePresentation)]];
     [self.view addSubview:[self buttonFactory:@"table大图" frame:CGRectMake(0, 6 * 15 + 50, 80, 48) action:@selector(tableChartPresentation)]];
+    [self.view addSubview:[self buttonFactory:@"VBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 2, 80, 48) action:@selector(vBarChartPresentation)]];
 
     self.collectionView.frame = CGRectMake(8 * 15, 6 * 15, GridCellSize.width * 3, GridCellSize.height * 3);
     [self.view addSubview:self.collectionView];
@@ -83,6 +85,13 @@ static NSString *const TableGridCellId = @"TableGridCell";
     tcpVC.chartId = @"10188";
     tcpVC.listLineData = self.listLineData7;
     [self.navigationController pushViewController:tcpVC animated:YES];
+}
+
+-(void)vBarChartPresentation{
+    VBarPresentationVC *vBarPresentationVC = [[VBarPresentationVC alloc] init];
+    vBarPresentationVC.chartId = @"10188";
+    vBarPresentationVC.listBarData = self.listLineData7;
+    [self.navigationController pushViewController:vBarPresentationVC animated:YES];
 }
 
 
@@ -214,7 +223,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
         LineGridCell *lineCell = (LineGridCell *) cell;
 
 
-        NSUInteger count = lineCell.lineChartController.mainAxisDataCount;
+        NSUInteger count = lineCell.lineChartController.mainYAxisDataCount;
         if (count > 0) {
             NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
             [indexSet addIndex:count - 1];
@@ -229,7 +238,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
             }
         }
 
-        count = lineCell.lineChartController.secondAxisDataCount;
+        count = lineCell.lineChartController.secondYAxisDataCount;
         if (count > 0) {
             NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
             [indexSet addIndex:count - 1];
@@ -245,7 +254,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
         }
 
 
-        DTLog(@"main axis data count = %@ \nsecond axis count = %@", @(lineCell.lineChartController.mainAxisDataCount), @(lineCell.lineChartController.secondAxisDataCount));
+        DTLog(@"main axis data count = %@ \nsecond axis count = %@", @(lineCell.lineChartController.mainYAxisDataCount), @(lineCell.lineChartController.secondYAxisDataCount));
 
     }
 }

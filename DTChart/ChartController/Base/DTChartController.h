@@ -53,9 +53,13 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  */
 @property(nonatomic, getter=isValueSelectable) BOOL valueSelectable;
 /**
- * 主轴数据量
+ * y主轴数据量
  */
-@property(nonatomic, readonly) NSUInteger mainAxisDataCount;
+@property(nonatomic, readonly) NSUInteger mainYAxisDataCount;
+/**
+ * y副轴数据量
+ */
+@property(nonatomic, readonly) NSUInteger secondYAxisDataCount;
 /**
  * 主轴颜色回调
  */

@@ -20,7 +20,7 @@
 @property(nonatomic) NSUInteger mMaxXAxisCount;
 @property(nonatomic) NSUInteger mMaxYAxisCount;
 
-@property(nonatomic, readwrite) NSUInteger secondAxisDataCount;
+
 
 @end
 
@@ -61,16 +61,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         }];
     }
     return self;
-}
-
-
-- (NSUInteger)secondAxisDataCount {
-    _secondAxisDataCount = 0;
-    if ([self.chartView isKindOfClass:[DTLineChart class]]) {
-        _secondAxisDataCount = ((DTLineChart *) self.chartView).secondMultiData.count;
-    }
-
-    return _secondAxisDataCount;
 }
 
 

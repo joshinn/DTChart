@@ -1,5 +1,5 @@
 //
-//  DTBarChartController.h
+//  DTVerticalBarChartController.h
 //  DTiseChart
 //
 //  Created by Jo Shin on 2017/1/13.
@@ -8,6 +8,6 @@
 
 #import "DTChartController.h"
 
-@interface DTBarChartController : DTChartController
+@interface DTVerticalBarChartController : DTChartController
 
 @end

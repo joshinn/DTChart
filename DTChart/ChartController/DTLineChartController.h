@@ -19,10 +19,6 @@ typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex
 
 @interface DTLineChartController : DTChartController
 
-/**
- * 副轴数据量
- */
-@property(nonatomic, readonly) NSUInteger secondAxisDataCount;
 
 /**
  * 手势选择回调

@@ -16,13 +16,15 @@
 
 @interface DTChartController ()
 
-@property(nonatomic, readwrite) NSUInteger mainAxisDataCount;
+@property(nonatomic, readwrite) NSUInteger mainYAxisDataCount;
+
+@property(nonatomic, readwrite) NSUInteger secondYAxisDataCount;
 
 @end
 
 @implementation DTChartController
 
-//@synthesize mainAxisDataCount = _mainAxisDataCount;
+//@synthesize mainYAxisDataCount = _mainYAxisDataCount;
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super init]) {
@@ -44,13 +46,22 @@
     return _axisFormatter;
 }
 
-- (NSUInteger)mainAxisDataCount {
-    _mainAxisDataCount = 0;
+- (NSUInteger)mainYAxisDataCount {
+    _mainYAxisDataCount = 0;
     if ([self.chartView isKindOfClass:[DTChartBaseComponent class]]) {
-        _mainAxisDataCount = ((DTChartBaseComponent *) self.chartView).multiData.count;
+        _mainYAxisDataCount = ((DTChartBaseComponent *) self.chartView).multiData.count;
     }
 
-    return _mainAxisDataCount;
+    return _mainYAxisDataCount;
+}
+
+- (NSUInteger)secondYAxisDataCount {
+    _secondYAxisDataCount = 0;
+    if ([self.chartView isKindOfClass:[DTChartBaseComponent class]]) {
+        _secondYAxisDataCount = ((DTChartBaseComponent *) self.chartView).secondMultiData.count;
+    }
+
+    return _secondYAxisDataCount;
 }
 
 - (void)setShowAnimation:(BOOL)showAnimation {
