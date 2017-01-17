@@ -10,6 +10,7 @@
 #import "DTChartLabel.h"
 #import "DTLineChartSingleData.h"
 #import "DTLine.h"
+#import "DTChartBlockModel.h"
 
 
 @interface DTLineChart ()
@@ -196,10 +197,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 }
 
 
-
-
 #pragma mark - public method
-
 
 
 #pragma mark - override
@@ -233,8 +231,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }
 
     NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
-    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
-    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.multiData.count];
+
+    NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
     for (NSUInteger i = 0; i < self.multiData.count; ++i) {
         DTChartSingleData *item = self.multiData[i];
@@ -263,11 +261,15 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             }
         }
 
-        [seriesIds addObject:sData.singleId];
-        [colors addObject:sData.color];
+        DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
+        blockModel.seriesId = sData.singleId;
+        blockModel.type = sData.pointType;
+        blockModel.color = sData.color;
+        [infos addObject:blockModel];
+
     }
-    if (colors.count > 0 && self.colorsCompletionBlock) {
-        self.colorsCompletionBlock(colors, seriesIds);
+    if (infos.count > 0 && self.colorsCompletionBlock) {
+        self.colorsCompletionBlock(infos);
     }
 
 }
@@ -538,9 +540,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
 
-    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
-    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.secondMultiData.count];
-
+    NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
     for (NSUInteger i = 0; i < self.secondMultiData.count; ++i) {
         DTChartSingleData *item = self.secondMultiData[i];
@@ -569,11 +569,15 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             }
         }
 
-        [seriesIds addObject:sData.singleId];
-        [colors addObject:sData.color];
+        DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
+        blockModel.seriesId = sData.singleId;
+        blockModel.type = sData.pointType;
+        blockModel.color = sData.color;
+        [infos addObject:blockModel];
+
     }
-    if (colors.count > 0 && self.secondAxisColorsCompletionBlock) {
-        self.secondAxisColorsCompletionBlock(colors, seriesIds);
+    if (infos.count > 0 && self.secondAxisColorsCompletionBlock) {
+        self.secondAxisColorsCompletionBlock(infos);
     }
 
 }

@@ -9,9 +9,9 @@
 #import "DTChartData.h"
 
 typedef NS_ENUM(NSInteger, DTLinePointType) {
-    DTLinePointTypeCircle,      // 圆圈
-    DTLinePointTypeSquare,      // 正方形
-    DTLinePointTypeTriangle,    // 三角形
+    DTLinePointTypeCircle = 0,      // 圆圈
+    DTLinePointTypeSquare = 1,      // 正方形
+    DTLinePointTypeTriangle = 2,    // 三角形
 };
 
 

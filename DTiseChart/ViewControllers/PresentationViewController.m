@@ -10,6 +10,7 @@
 #import "DTCommonData.h"
 #import "DTLineChartController.h"
 #import "DTAxisFormatter.h"
+#import "DTChartBlockModel.h"
 
 @interface PresentationViewController ()
 
@@ -32,11 +33,15 @@
         DTLog(@"touch line index = %@ point = %@", @(lineIndex), @(pointIndex));
     }];
 
-    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
-        DTLog(@"main axis colors = %@ \nseriesIds = %@", colors, seriesIds);
+    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
+        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
+            DTLog(@"main axis color = %@ \nseriesId = %@", obj.color, obj.seriesId);
+        }];
     }];
-    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
-        DTLog(@"second axis colors = %@ \nseriesIds = %@", colors, seriesIds);
+    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
+        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
+            DTLog(@"main axis color = %@ \nseriesId = %@", obj.color, obj.seriesId);
+        }];
     }];
     [self.view addSubview:self.lineChartController.chartView];
 
@@ -54,6 +59,12 @@
     [super viewDidAppear:animated];
 
     [self.lineChartController drawChart];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+
+    [self.lineChartController destroyChart];
 }
 
 @end

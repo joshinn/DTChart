@@ -7,6 +7,7 @@
 //
 
 #import "DTChartBaseComponent.h"
+#import "DTChartBlockModel.h"
 
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
@@ -180,13 +181,18 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 
 - (void)generateMultiDataColors:(BOOL)needInitial {
-
     if (needInitial) {
-        self.colorManager = [DTColorManager randomManager];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        self.colorManager = [DTColorManager randomManagerExistColors:existColors];
     }
 
-    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
-    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.multiData.count];
+
+    NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
     for (DTChartSingleData *sData in self.multiData) {
         if (!sData.color) {
@@ -196,11 +202,15 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
             sData.secondColor = [self.colorManager getLightColor:sData.color];
         }
 
-        [seriesIds addObject:sData.singleId];
-        [colors addObject:sData.color];
+        DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
+        blockModel.seriesId = sData.singleId;
+        blockModel.type = 0;
+        blockModel.color = sData.color;
+        [infos addObject:blockModel];
+
     }
-    if (colors.count > 0 && self.colorsCompletionBlock) {
-        self.colorsCompletionBlock(colors, seriesIds);
+    if (infos.count > 0 && self.colorsCompletionBlock) {
+        self.colorsCompletionBlock(infos);
     }
 
 }
@@ -295,11 +305,16 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 - (void)generateSecondMultiDataColors:(BOOL)needInitial {
 
     if (needInitial) {
-        self.colorManager = [DTColorManager randomManager];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        self.colorManager = [DTColorManager randomManagerExistColors:existColors];
     }
 
-    NSMutableArray<UIColor *> *colors = [NSMutableArray arrayWithCapacity:self.multiData.count];
-    NSMutableArray<NSString *> *seriesIds = [NSMutableArray arrayWithCapacity:self.multiData.count];
+    NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
     for (DTChartSingleData *sData in self.secondMultiData) {
         if (!sData.color) {
@@ -309,11 +324,14 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
             sData.secondColor = [self.colorManager getLightColor:sData.color];
         }
 
-        [seriesIds addObject:sData.singleId];
-        [colors addObject:sData.color];
+        DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
+        blockModel.seriesId = sData.singleId;
+        blockModel.type = 0;
+        blockModel.color = sData.color;
+        [infos addObject:blockModel];
     }
-    if (colors.count > 0 && self.secondAxisColorsCompletionBlock) {
-        self.secondAxisColorsCompletionBlock(colors, seriesIds);
+    if (infos.count > 0 && self.secondAxisColorsCompletionBlock) {
+        self.secondAxisColorsCompletionBlock(infos);
     }
 }
 

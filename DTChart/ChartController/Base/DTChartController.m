@@ -10,8 +10,8 @@
 #import "DTCommonData.h"
 #import "DTDataManager.h"
 #import "DTChartBaseComponent.h"
-#import "DTChartData.h"
 #import "DTAxisFormatter.h"
+#import "DTChartBlockModel.h"
 
 
 @interface DTChartController ()
@@ -24,7 +24,6 @@
 
 @implementation DTChartController
 
-//@synthesize mainYAxisDataCount = _mainYAxisDataCount;
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super init]) {

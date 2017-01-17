@@ -21,7 +21,6 @@
 @property(nonatomic) NSUInteger mMaxYAxisCount;
 
 
-
 @end
 
 
@@ -35,6 +34,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 
 @synthesize chartView = _chartView;
+@synthesize chartId = _chartId;
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
@@ -49,14 +49,15 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
                 weakSelf.lineChartTouchBlock(lineIndex, pointIndex, isMainAxis);
             }
         }];
-        [_lineChart setColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
+        [_lineChart setColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
             if (weakSelf.mainAxisColorsCompletionBlock) {
-                weakSelf.mainAxisColorsCompletionBlock(colors, seriesIds);
+                weakSelf.mainAxisColorsCompletionBlock(infos);
             }
         }];
-        [_lineChart setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
+
+        [_lineChart setSecondAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
             if (weakSelf.secondAxisColorsCompletionBlock) {
-                weakSelf.secondAxisColorsCompletionBlock(colors, seriesIds);
+                weakSelf.secondAxisColorsCompletionBlock(infos);
             }
         }];
     }
@@ -96,10 +97,10 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 /**
  * 给chartId加上前缀
- * @return 加工过的chartId
+ * @param chartId 赋值的chartId
  */
-- (NSString *)lineChartId {
-    return [@"line-" stringByAppendingString:self.chartId];
+- (void)setChartId:(NSString *)chartId {
+    _chartId = [@"line-" stringByAppendingString:chartId];
 }
 
 /**
@@ -254,7 +255,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         dataDic[@"secondMultiData"] = self.lineChart.secondMultiData;
     }
 
-    [DTManager addChart:[self lineChartId] object:@{@"data": dataDic}];
+    [DTManager addChart:self.chartId object:@{@"data": dataDic}];
 }
 
 /**
@@ -313,7 +314,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (void)drawChart {
     [super drawChart];
 
-    if (![DTManager checkExistByChartId:[self lineChartId]]) {
+    if (![DTManager checkExistByChartId:self.chartId]) {
 
         [self.lineChart drawChart];
 
@@ -323,7 +324,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     } else {
 
         // 加载保存的数据信息（颜色等）
-        NSDictionary *chartDic = [DTManager queryByChartId:[self lineChartId]];
+        NSDictionary *chartDic = [DTManager queryByChartId:self.chartId];
         NSDictionary *dataDic = chartDic[@"data"];
         NSArray *multiData = dataDic[@"multiData"];
         NSArray *secondMultiData = dataDic[@"secondMultiData"];

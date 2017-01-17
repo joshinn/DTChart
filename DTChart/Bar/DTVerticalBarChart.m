@@ -24,7 +24,7 @@
 - (void)initial {
     [super initial];
 
-    _barBorderStyle = DTBarBorderStyleTopBorder;
+    _barBorderStyle = DTBarBorderStyleSidesBorder;
 }
 
 
@@ -66,10 +66,8 @@
 
                 CGFloat width = self.coordinateAxisCellWidth * self.barWidth;
                 CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition;
-                CGFloat x = (xData.axisPosition + xOffset - index) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
+                CGFloat x = (xData.axisPosition - xOffset + index * self.barWidth) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
                 CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
-
-                DTLog(@"x = %f", xData.axisPosition);
 
                 bar.frame = CGRectMake(x, y, width, height);
                 [self.contentView addSubview:bar];
@@ -132,8 +130,6 @@
                 CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
                 CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
 
-                DTLog(@"x = %f", xData.axisPosition);
-
                 bar.frame = CGRectMake(x, y, width, height);
 
                 [bar appendData:itemData barLength:height barColor:bar.barColor needLayout:isLast];
@@ -182,8 +178,6 @@
                     CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
                     CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
 
-                    DTLog(@"x = %f", xData.axisPosition);
-
                     bar.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:bar];
 
@@ -229,14 +223,6 @@
 
     NSUInteger sectionCellCount = self.xAxisCellCount / self.xAxisLabelDatas.count;
 
-    if (self.barChartStyle == DTBarChartStyleLump) {
-        self.barBorderStyle = DTBarBorderStyleNone;
-    } else if (sectionCellCount > 1) {
-        self.barBorderStyle = DTBarBorderStyleTopBorder;
-    } else {
-        self.barBorderStyle = DTBarBorderStyleSidesBorder;
-    }
-
 
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
@@ -247,7 +233,7 @@
         data.axisPosition = sectionCellCount * i + (sectionCellCount - 1) / 2
                 + (self.xAxisCellCount - self.xAxisLabelDatas.count * sectionCellCount) / 2;
 
-        if(data.hidden){
+        if (data.hidden) {
             continue;
         }
 
@@ -290,7 +276,7 @@
         DTAxisLabelData *data = self.yAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
 
-        if(data.hidden){
+        if (data.hidden) {
             continue;
         }
 

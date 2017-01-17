@@ -10,4 +10,9 @@
 
 @interface DTVerticalBarChartController : DTChartController
 
+/**
+ * 柱状体宽度，以单元格为单位，默认1个单元格
+ */
+@property (nonatomic) CGFloat barWidth;
+
 @end

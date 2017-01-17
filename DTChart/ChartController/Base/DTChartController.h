@@ -12,6 +12,7 @@
 @class DTListCommonData;
 @class DTAxisLabelData;
 @class DTAxisFormatter;
+@class DTChartBlockModel;
 
 
 typedef NS_ENUM(NSInteger, DTChartMode) {
@@ -21,11 +22,16 @@ typedef NS_ENUM(NSInteger, DTChartMode) {
 
 #define DTManager DTDataManager.shareManager
 
-typedef void(^MainAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
-
-typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
-
-
+/**
+ * 主轴颜色，type，id回调
+ * @note DTLineChart type:0 圆形 1:方形 2:三角形
+ */
+typedef void(^MainAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
+/**
+ * 副轴颜色，type，id回调
+ * @note DTLineChart type:0 圆形 1:方形 2:三角形
+ */
+typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
 
 @interface DTChartController : NSObject
 

@@ -10,6 +10,8 @@
 #import "DTColorManager.h"
 #import "DTChartData.h"
 
+@class DTChartBlockModel;
+
 
 CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
     CGFloat fx = (point2.x - point1.x);
@@ -41,13 +43,11 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 }
 
 
-typedef void(^ColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
+typedef void(^ColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
 
-typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds);
+typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
 
-@interface DTChartBaseComponent : UIView {
-
-}
+@interface DTChartBaseComponent : UIView
 
 #pragma mark - ####### public property #######
 
@@ -225,7 +225,7 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  * @param indexes    项的序号
  * @param animation 是否有动画
  */
-- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation ;
+- (void)reloadChartItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation;
 
 /**
  * 插入新的主轴项
@@ -267,6 +267,7 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<UIColor *> *colors, NSArr
  * 清除坐标系里的副轴轴标签和值线条
  */
 - (void)clearSecondChartContent;
+
 /**
  * 绘制y轴副轴
  * @return 绘制结果

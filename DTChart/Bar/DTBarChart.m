@@ -30,7 +30,7 @@ static NSUInteger const DefaultBarWidth = 1;
 #pragma mark - delay init
 
 
-#pragma mark - method
+#pragma mark - override
 
 - (BOOL)drawXAxisLabels {
     return [super drawXAxisLabels];

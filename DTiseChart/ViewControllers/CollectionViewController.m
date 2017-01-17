@@ -87,9 +87,9 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.navigationController pushViewController:tcpVC animated:YES];
 }
 
--(void)vBarChartPresentation{
+- (void)vBarChartPresentation {
     VBarPresentationVC *vBarPresentationVC = [[VBarPresentationVC alloc] init];
-    vBarPresentationVC.chartId = @"10188";
+    vBarPresentationVC.chartId = @"10288";
     vBarPresentationVC.listBarData = self.listLineData7;
     [self.navigationController pushViewController:vBarPresentationVC animated:YES];
 }
@@ -100,7 +100,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     self.listLineData0 = [NSMutableArray arrayWithArray:[self simulateListCommonData:3 pointCount:8 mainAxis:YES]];
     [self.listLineData0 addObjectsFromArray:[self simulateListCommonData:2 pointCount:8 mainAxis:NO]];
 
-    self.listLineData7 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:7 mainAxis:YES]];
+    self.listLineData7 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:10 mainAxis:YES]];
     DTListCommonData *listCommonData1 = self.listLineData7[self.listLineData7.count - 1];
     DTListCommonData *listCommonData2 = self.listLineData7[self.listLineData7.count - 2];
 //    listCommonData2.seriesName = listCommonData1.seriesName;
@@ -113,12 +113,21 @@ static NSString *const TableGridCellId = @"TableGridCell";
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count baseValue:(CGFloat)baseValue {
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
-        NSString *title = [NSString stringWithFormat:@"2016-12-0%@~2016-12-0%@", @(i + 1), @(i + 2)];
+        NSString *title = [NSString stringWithFormat:@"2016-12-%@~2016-12-%@", [self dayString:i + 1], [self dayString:i + 2]];
         DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
         [list addObject:data];
     }
 
     return list;
+}
+
+- (NSString *)dayString:(NSUInteger)value {
+    if (value >= 10) {
+        return [NSString stringWithFormat:@"%@", @(value)];
+    } else {
+        return [NSString stringWithFormat:@"0%@", @(value)];
+    }
+
 }
 
 

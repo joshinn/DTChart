@@ -1,4 +1,4 @@
-//
+#import "DTChartBlockModel.h"//
 //  LineGridCell.m
 //  DTiseChart
 //
@@ -29,11 +29,15 @@
     }];
 
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(15, 3 * 15) xAxis:23 yAxis:11];
-    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
-        DTLog(@"main axis colors = %@ \nseriesIds = %@", colors, seriesIds);
+    [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
+//        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
+//            DTLog(@"main axis color = %@ \nseriesId = %@ type = %@", obj.color, obj.seriesId, @(obj.type));
+//        }];
     }];
-    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<UIColor *> *colors, NSArray<NSString *> *seriesIds) {
-        DTLog(@"second axis colors = %@ \nseriesIds = %@", colors, seriesIds);
+    [self.lineChartController setSecondAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
+//        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
+//            DTLog(@"main axis color = %@ \nseriesId = %@ type = %@", obj.color, obj.seriesId, @(obj.type));
+//        }];
     }];
     [self.contentView addSubview:self.lineChartController.chartView];
 
