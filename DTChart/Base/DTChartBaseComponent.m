@@ -179,7 +179,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 #pragma mark - ###########主轴相关#############
 
-
 - (void)generateMultiDataColors:(BOOL)needInitial {
     if (needInitial) {
         NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
@@ -190,7 +189,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
         }
         self.colorManager = [DTColorManager randomManagerExistColors:existColors];
     }
-
 
     NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
@@ -211,7 +209,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     if (infos.count > 0 && self.colorsCompletionBlock) {
         self.colorsCompletionBlock(infos);
     }
-
 }
 
 
@@ -328,6 +325,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
         blockModel.color = sData.color;
         [infos addObject:blockModel];
     }
+
     if (infos.count > 0 && self.secondAxisColorsCompletionBlock) {
         self.secondAxisColorsCompletionBlock(infos);
     }

@@ -24,10 +24,10 @@
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
 
-//    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
-//    self.barChartController.chartMode = DTChartModePresentation;
-    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
-    self.barChartController.chartMode = DTChartModeThumb;
+    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
+    self.barChartController.chartMode = DTChartModePresentation;
+//    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
+//    self.barChartController.chartMode = DTChartModeThumb;
     self.barChartController.valueSelectable = YES;
 
     [self.barChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
@@ -73,21 +73,22 @@
 
 - (void)add {
     NSArray<DTListCommonData *> *list = [self simulateListCommonData:1 pointCount:11 mainAxis:YES];
+    list.lastObject.seriesName = self.listBarData.lastObject.seriesName;
     [self.barChartController addItemsListData:list withAnimation:NO];
     [self.listBarData addObjectsFromArray:list];
 }
 
 - (void)minus {
-    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-    NSUInteger count = self.listBarData.count;
-    if(count > 0){
-        --count;
-        [indexSet addIndex:count];
+
+    if (self.listBarData.count == 0) {
+        return;
     }
 
+    NSMutableArray<NSString *> *sIds = [NSMutableArray array];
+    [sIds addObject:self.listBarData.lastObject.seriesId];
+    [self.barChartController deleteItems:sIds withAnimation:NO];
 
-    [self.barChartController deleteItems:indexSet isMainAxis:YES withAnimation:NO];
-    [self.listBarData removeObjectsAtIndexes:indexSet];
+    [self.listBarData removeObjectAtIndex:self.listBarData.count - 1];
 }
 
 

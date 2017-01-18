@@ -39,7 +39,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         _barChart.barChartStyle = DTBarChartStyleLump;
         _chartView = _barChart;
 
-        _barChart.contentView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
         __weak typeof(self) weakSelf = self;
         [_barChart setColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
@@ -316,8 +315,21 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 }
 
 
-- (void)deleteItems:(NSIndexSet *)indexSet isMainAxis:(BOOL)isMainAxis withAnimation:(BOOL)animation {
-    if (isMainAxis) {
+- (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation {
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+
+    for (NSString *seriesId in seriesIds) {
+        for (NSUInteger i = 0; i < self.barChart.multiData.count; ++i) {
+            DTChartSingleData *sData = self.barChart.multiData[i];
+            if ([sData.singleId isEqualToString:seriesId]) {
+                [indexSet addIndex:i];
+
+                break;
+            }
+        }
+    }
+    if (indexSet.count > 0) {
+
         [self.barChart deleteChartItems:indexSet withAnimation:animation];
 
         BOOL ani = self.barChart.isShowAnimation;
@@ -326,6 +338,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         self.barChart.showAnimation = ani;
     }
 }
+
 
 
 @end

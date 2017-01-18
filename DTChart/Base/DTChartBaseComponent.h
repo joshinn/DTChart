@@ -25,6 +25,7 @@ CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
  */
 UIKIT_EXTERN CGFloat const DefaultCoordinateAxisCellWidth;
 
+
 struct ChartEdgeInsets {
     NSUInteger left;
     NSUInteger top;
@@ -267,6 +268,11 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
  * 清除坐标系里的副轴轴标签和值线条
  */
 - (void)clearSecondChartContent;
+/**
+ * 给secondMultiData生成颜色
+ * @param needInitial 颜色是否需要重置
+ */
+- (void)generateSecondMultiDataColors:(BOOL)needInitial;
 
 /**
  * 绘制y轴副轴

@@ -27,7 +27,7 @@
 /**
  * 相同seriesName的折线，第二条起，颜色alpha减小系数
  */
-static CGFloat const SameSeriesNameColorAlpha = 0.7;
+static CGFloat const DTSameSeriesNameColorAlpha = 0.7;
 
 /**
  * 触摸点最大的偏移距离
@@ -223,7 +223,6 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 }
 
 - (void)generateMultiDataColors:(BOOL)needInitial {
-
     if (needInitial) {
         NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
         for (DTChartSingleData *sData in self.multiData) {
@@ -235,22 +234,14 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }
 
     NSMutableDictionary *cachedSingleDataDic = [NSMutableDictionary dictionary];
-
     NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
-    for (NSUInteger i = 0; i < self.multiData.count; ++i) {
-        DTChartSingleData *item = self.multiData[i];
-        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
-            continue;
-        }
-
-        DTLineChartSingleData *sData = (DTLineChartSingleData *) item;
-
-        DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
+    for (DTChartSingleData *sData in self.multiData) {
+        DTChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
 
         if (cachedData) { // 已经有相同的singleName，取相同颜色alpha减小
 
-            sData.color = [cachedData.color colorWithAlphaComponent:SameSeriesNameColorAlpha];
+            sData.color = [cachedData.color colorWithAlphaComponent:DTSameSeriesNameColorAlpha];
             sData.secondColor = cachedData.secondColor;
 
         } else {
@@ -545,20 +536,14 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
     for (NSUInteger i = 0; i < self.secondMultiData.count; ++i) {
-        DTChartSingleData *item = self.secondMultiData[i];
-        if (![item isKindOfClass:[DTLineChartSingleData class]]) {
-            continue;
-        }
+        DTChartSingleData *sData = self.secondMultiData[i];
 
-        DTLineChartSingleData *sData = (DTLineChartSingleData *) item;
-
-        DTLineChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
+        DTChartSingleData *cachedData = cachedSingleDataDic[sData.singleName];
 
         if (cachedData) { // 已经有相同的singleName，取相同颜色alpha减小
 
-            sData.color = [cachedData.color colorWithAlphaComponent:SameSeriesNameColorAlpha];
+            sData.color = [cachedData.color colorWithAlphaComponent:DTSameSeriesNameColorAlpha];
             sData.secondColor = cachedData.secondColor;
-
 
         } else {
             cachedSingleDataDic[sData.singleName] = sData;
@@ -580,9 +565,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     if (infos.count > 0 && self.secondAxisColorsCompletionBlock) {
         self.secondAxisColorsCompletionBlock(infos);
     }
-
 }
-
 /**
  * 清除坐标系里的副轴轴标签和值线条
  */
@@ -779,9 +762,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             }
             [line drawEdgePoint:0];
         }
-
     }
-
 }
 
 - (void)deleteChartSecondAxisItems:(NSIndexSet *)indexes withAnimation:(BOOL)animation {

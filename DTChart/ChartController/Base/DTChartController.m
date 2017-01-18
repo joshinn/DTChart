@@ -121,7 +121,7 @@
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation {
 }
 
-- (void)deleteItems:(NSIndexSet *)indexSet isMainAxis:(BOOL)isMainAxis withAnimation:(BOOL)animation {
+- (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation {
 }
 
 - (void)destroyChart {

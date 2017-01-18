@@ -232,15 +232,14 @@ static NSString *const TableGridCellId = @"TableGridCell";
         LineGridCell *lineCell = (LineGridCell *) cell;
 
 
+        NSMutableArray<NSString *> *sIds = [NSMutableArray array];
         NSUInteger count = lineCell.lineChartController.mainYAxisDataCount;
         if (count > 0) {
-            NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-            [indexSet addIndex:count - 1];
-            [lineCell.lineChartController deleteItems:indexSet isMainAxis:YES withAnimation:YES];
 
             for (NSInteger i = self.listLineData7.count - 1; i >= 0; --i) {
                 DTListCommonData *listCommonData = self.listLineData7[i];
                 if (listCommonData.isMainAxis) {
+                    [sIds addObject:listCommonData.seriesId];
                     [self.listLineData7 removeObject:listCommonData];
                     break;
                 }
@@ -249,18 +248,18 @@ static NSString *const TableGridCellId = @"TableGridCell";
 
         count = lineCell.lineChartController.secondYAxisDataCount;
         if (count > 0) {
-            NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-            [indexSet addIndex:count - 1];
-            [lineCell.lineChartController deleteItems:indexSet isMainAxis:NO withAnimation:YES];
 
             for (NSInteger i = self.listLineData7.count - 1; i >= 0; --i) {
                 DTListCommonData *listCommonData = self.listLineData7[i];
                 if (!listCommonData.isMainAxis) {
+                    [sIds addObject:listCommonData.seriesId];
                     [self.listLineData7 removeObject:listCommonData];
                     break;
                 }
             }
         }
+
+        [lineCell.lineChartController deleteItems:sIds withAnimation:YES];
 
 
         DTLog(@"main axis data count = %@ \nsecond axis count = %@", @(lineCell.lineChartController.mainYAxisDataCount), @(lineCell.lineChartController.secondYAxisDataCount));

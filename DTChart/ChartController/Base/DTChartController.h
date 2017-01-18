@@ -113,12 +113,11 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation;
 
 /**
- * 删除指定主副轴某些数据
- * @param indexSet 要删除的序号
- * @param isMainAxis 主副轴
+ * 删除指定seriesId的数据
+ * @param seriesIds 要删除的series id
  * @param animation 动画
  */
-- (void)deleteItems:(NSIndexSet *)indexSet isMainAxis:(BOOL)isMainAxis withAnimation:(BOOL)animation;
+- (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation;
 
 /**
  * 彻底销毁DTChart和缓存的数据

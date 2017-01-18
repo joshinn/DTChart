@@ -425,17 +425,45 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     [self cacheMultiData];
 }
 
+- (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation {
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
 
-- (void)deleteItems:(NSIndexSet *)indexSet isMainAxis:(BOOL)isMainAxis withAnimation:(BOOL)animation {
-    if (isMainAxis) {
-        [self.lineChart deleteChartItems:indexSet withAnimation:animation];
-    } else {
-        [self.lineChart deleteChartSecondAxisItems:indexSet withAnimation:animation];
+    NSMutableArray<NSString *> *sIds = seriesIds.mutableCopy;
+    for (NSString *seriesId in seriesIds) {
+        for (NSUInteger i = 0; i < self.lineChart.multiData.count; ++i) {
+            DTChartSingleData *sData = self.lineChart.multiData[i];
+            if ([sData.singleId isEqualToString:seriesId]) {
+                [indexSet addIndex:i];
+
+                [sIds removeObject:seriesId];
+                break;
+            }
+        }
     }
+    if (indexSet.count > 0) {
+        [self.lineChart deleteChartItems:indexSet withAnimation:animation];
+    }
+
+    if (sIds.count > 0) {
+        [indexSet removeAllIndexes];
+        for (NSString *seriesId in sIds) {
+            for (NSUInteger i = 0; i < self.lineChart.secondMultiData.count; ++i) {
+                DTChartSingleData *sData = self.lineChart.secondMultiData[i];
+                if ([sData.singleId isEqualToString:seriesId]) {
+                    [indexSet addIndex:i];
+                    break;
+                }
+            }
+        }
+        if (indexSet.count > 0) {
+            [self.lineChart deleteChartSecondAxisItems:indexSet withAnimation:animation];
+        }
+    }
+
+
 
     // 保存数据
     [self cacheMultiData];
 }
-
 
 @end
