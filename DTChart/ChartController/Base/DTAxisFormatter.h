@@ -84,6 +84,13 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
 
 + (instancetype)axisFormatter;
 
+/**
+ * 从已有的formatter复制一个实例，交换主轴xy的值
+ * @param origin 要复制的对象
+ * @return instance
+ */
++ (instancetype)axisFormatterExClone:(DTAxisFormatter *)origin;
+
 - (NSString *)getMainYAxisLabelTitle:(NSString *)string orValue:(CGFloat)value;
 
 - (NSString *)getSecondYAxisLabelTitle:(NSString *)string orValue:(CGFloat)value;

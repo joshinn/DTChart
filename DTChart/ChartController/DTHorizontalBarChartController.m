@@ -1,18 +1,18 @@
 //
-//  DTVerticalBarChartController.m
+//  DTHorizontalBarChartController.m
 //  DTiseChart
 //
-//  Created by Jo Shin on 2017/1/13.
+//  Created by Jo Shin on 2017/1/18.
 //  Copyright © 2017年 studio.joshin. All rights reserved.
 //
 
-#import "DTVerticalBarChartController.h"
-#import "DTVerticalBarChart.h"
+#import "DTHorizontalBarChartController.h"
+#import "DTHorizontalBarChart.h"
 #import "DTDataManager.h"
 
-@interface DTVerticalBarChartController ()
+@interface DTHorizontalBarChartController ()
 
-@property(nonatomic) DTVerticalBarChart *barChart;
+@property(nonatomic) DTHorizontalBarChart *barChart;
 
 @property(nonatomic) NSUInteger mMaxXAxisCount;
 @property(nonatomic) NSUInteger mMaxYAxisCount;
@@ -20,24 +20,25 @@
 
 @end
 
-@implementation DTVerticalBarChartController
+@implementation DTHorizontalBarChartController
 
-static NSUInteger const ChartModeThumbYAxisCount = 3;
-static NSUInteger const ChartModePresentationYAxisCount = 7;
+static NSUInteger const ChartModeThumbXAxisCount = 5;
+static NSUInteger const ChartModePresentationXAxisCount = 10;
 
-static NSUInteger const ChartModeThumbXAxisMaxCount = 5;
-static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
+static NSUInteger const ChartModeThumbYAxisCount = 5;
+static NSUInteger const ChartModePresentationYAxisCount = 10;
 
 
 @synthesize chartView = _chartView;
 @synthesize chartId = _chartId;
 @synthesize chartMode = _chartMode;
 
+
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
-        _barChart = [[DTVerticalBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
-        _barChart.barChartStyle = DTBarChartStyleLump;
-        _barChart.valueSelectable = NO;
+        _barChart = [[DTHorizontalBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
+        _barChart.barChartStyle = DTBarChartStyleStartingLine;
+        _barChart.showCoordinateAxisGrid = YES;
         _chartView = _barChart;
 
 
@@ -56,63 +57,48 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     return self;
 }
 
-- (void)setChartMode:(DTChartMode)chartMode {
-    _chartMode = chartMode;
-
-    switch (_chartMode) {
-
-        case DTChartModeThumb: {
-            self.barChart.barChartStyle = DTBarChartStyleLump;
-        }
-            break;
-        case DTChartModePresentation: {
-            self.barChart.barChartStyle = DTBarChartStyleStartingLine;
-        }
-            break;
-    }
-}
-
-- (void)setBarWidth:(CGFloat)barWidth {
-    _barWidth = barWidth;
-
-    _barChart.barWidth = barWidth;
-}
-
-- (NSUInteger)mMaxXAxisCount:(NSUInteger)valuesCount {
-    _mMaxXAxisCount = ChartModeThumbYAxisCount;
+- (NSUInteger)mMaxXAxisCount {
+    _mMaxXAxisCount = ChartModeThumbXAxisCount;
     switch (self.chartMode) {
-        case DTChartModeThumb: {
-            if (valuesCount <= self.barChart.xAxisCellCount / 2) {
-                _mMaxXAxisCount = valuesCount;
-            } else {
-                _mMaxXAxisCount = ChartModeThumbXAxisMaxCount;
-            }
-        }
+        case DTChartModeThumb:
+            _mMaxXAxisCount = ChartModeThumbXAxisCount;
             break;
         case DTChartModePresentation:
-            if (valuesCount <= self.barChart.xAxisCellCount / 2) {
-                _mMaxXAxisCount = valuesCount;
-            } else {
-                _mMaxXAxisCount = ChartModePresentationXAxisMaxCount;
-            }
+            _mMaxXAxisCount = ChartModePresentationXAxisCount;
             break;
     }
 
     return _mMaxXAxisCount;
 }
 
-- (NSUInteger)mMaxYAxisCount {
+- (NSUInteger)mMaxYAxisCount:(NSUInteger)valuesCount {
     _mMaxYAxisCount = ChartModeThumbYAxisCount;
     switch (self.chartMode) {
-        case DTChartModeThumb:
-            _mMaxYAxisCount = ChartModeThumbYAxisCount;
+        case DTChartModeThumb: {
+            if (valuesCount <= self.barChart.yAxisCellCount / 2) {
+                _mMaxYAxisCount = valuesCount;
+            } else {
+                _mMaxYAxisCount = ChartModeThumbYAxisCount;
+            }
+        }
             break;
         case DTChartModePresentation:
-            _mMaxYAxisCount = ChartModePresentationYAxisCount;
+            if (valuesCount <= self.barChart.yAxisCellCount / 2) {
+                _mMaxYAxisCount = valuesCount;
+            } else {
+                _mMaxYAxisCount = ChartModePresentationYAxisCount;
+            }
             break;
     }
 
     return _mMaxYAxisCount;
+}
+
+
+- (void)setBarWidth:(CGFloat)barWidth {
+    _barWidth = barWidth;
+
+    _barChart.barWidth = barWidth;
 }
 
 /**
@@ -122,6 +108,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (void)setChartId:(NSString *)chartId {
     _chartId = [@"vBar-" stringByAppendingString:chartId];
 }
+
 
 #pragma mark - private method
 
@@ -133,28 +120,28 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (void)processMainAxisLabelDataAndBars:(NSArray<DTListCommonData *> *)listData remainData:(BOOL)remain {
     NSArray<DTCommonData *> *values = listData.firstObject.commonDatas;
 
-    NSUInteger maxXAxisCount = [self mMaxXAxisCount:values.count];
-    NSUInteger maxYAxisCount = self.mMaxYAxisCount;
+    NSUInteger maxXAxisCount = self.mMaxXAxisCount;
+    NSUInteger maxYAxisCount = [self mMaxYAxisCount:values.count];
 
-    CGFloat maxY = 0;
+    CGFloat maxX = 0;
 
     if (remain) {
-        // 和已有的y轴对比
-        DTAxisLabelData *yMaxLabelData = self.barChart.yAxisLabelDatas.lastObject;
-        if (yMaxLabelData) {
-            maxY = yMaxLabelData.value;
+        // 和已有的x轴对比
+        DTAxisLabelData *xMaxLabelData = self.barChart.xAxisLabelDatas.lastObject;
+        if (xMaxLabelData) {
+            maxX = xMaxLabelData.value;
         }
     }
 
 
-    NSUInteger divide = values.count / maxXAxisCount;   // x轴平均划分有关
-    CGFloat decimal = values.count * 1.0f / maxXAxisCount - values.count / maxXAxisCount;
+    NSUInteger divide = values.count / maxYAxisCount;   // y轴平均划分有关
+    CGFloat decimal = values.count * 1.0f / maxYAxisCount - values.count / maxXAxisCount;
     if (decimal > 0) {
         divide += 1;
     }
 
 
-    NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas = [NSMutableArray array];
+    NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
     NSMutableArray<DTChartSingleData *> *bars = [NSMutableArray arrayWithCapacity:listData.count];
 
     NSMutableArray<DTListCommonData *> *listSecondAxisData = [NSMutableArray array];
@@ -177,32 +164,32 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
             DTCommonData *data = values[i];
 
             // 找出y轴最大值
-            if (data.ptValue > maxY) {
-                maxY = data.ptValue;
+            if (data.ptValue > maxX) {
+                maxX = data.ptValue;
             }
 
-            if (n == 0) {   // x轴label data，只需要取第一个柱状体数据计算就可以
-                DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getXAxisLabelTitle:data.ptName orValue:0] value:i];
+            if (n == 0) {   // y轴label data，只需要取第一个柱状体数据计算就可以
+                DTAxisLabelData *yLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getXAxisLabelTitle:data.ptName orValue:0] value:i];
                 if (values.count > maxXAxisCount) {
 
-                    xLabelData.hidden = i % divide != 0;
+                    yLabelData.hidden = i % divide != 0;
 
                 } else {    // 全部显示
-                    xLabelData.hidden = NO;
+                    yLabelData.hidden = NO;
                 }
 
-                [xAxisLabelDatas addObject:xLabelData];
+                [yAxisLabelDatas addObject:yLabelData];
             }
 
             // 单个柱状体
             DTChartItemData *itemData = [DTChartItemData chartData];
-            itemData.itemValue = ChartItemValueMake(i, data.ptValue);
+            itemData.itemValue = ChartItemValueMake(data.ptValue, i);
             [bar addObject:itemData];
         }
 
         if (n == 0) {
-            // 赋值x轴数据，只需要取第一个柱状体数据计算就可以
-            self.barChart.xAxisLabelDatas = xAxisLabelDatas;
+            // 赋值y轴数据，只需要取第一个柱状体数据计算就可以
+            self.barChart.yAxisLabelDatas = yAxisLabelDatas;
         }
 
         // 单个柱状体
@@ -224,8 +211,8 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         self.barChart.multiData = bars;
     }
 
-    // y轴label data
-    self.barChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:YES];
+    // x轴label data
+    self.barChart.xAxisLabelDatas = [self generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxX isMainAxis:YES];
 }
 
 /**
@@ -273,8 +260,11 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 #pragma mark - override
 
+
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
+
+    self.axisFormatter = [DTAxisFormatter axisFormatterExClone:axisFormat];
 
     [self processMainAxisLabelDataAndBars:listData remainData:NO];
 }
@@ -306,39 +296,11 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 }
 
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation {
-
-    BOOL ani = self.barChart.isShowAnimation;
-    self.showAnimation = animation;
-    [self processMainAxisLabelDataAndBars:listData remainData:YES];
-    [self drawChart];
-    self.barChart.showAnimation = ani;
 }
 
 
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation {
-    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-
-    for (NSString *seriesId in seriesIds) {
-        for (NSUInteger i = 0; i < self.barChart.multiData.count; ++i) {
-            DTChartSingleData *sData = self.barChart.multiData[i];
-            if ([sData.singleId isEqualToString:seriesId]) {
-                [indexSet addIndex:i];
-
-                break;
-            }
-        }
-    }
-    if (indexSet.count > 0) {
-
-        [self.barChart deleteChartItems:indexSet withAnimation:animation];
-
-        BOOL ani = self.barChart.isShowAnimation;
-        self.showAnimation = animation;
-        [self drawChart];
-        self.barChart.showAnimation = ani;
-    }
 }
-
 
 
 @end

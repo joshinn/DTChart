@@ -14,11 +14,11 @@
 
 @end
 
-static NSString *const DateFormatterFull = @"YYYY-MM-DD HH:mm";
-static NSString *const DateFormatterFullWithoutTime = @"YYYY-MM-DD";
-static NSString *const DateFormatterYear = @"YYYY";
+static NSString *const DateFormatterFull = @"yyyy-MM-dd HH:mm";
+static NSString *const DateFormatterFullWithoutTime = @"yyyy-MM-dd";
+static NSString *const DateFormatterYear = @"yyyy";
 static NSString *const DateFormatterMonth = @"MM";
-static NSString *const DateFormatterDay = @"DD";
+static NSString *const DateFormatterDay = @"dd";
 static NSString *const DateFormatterTime = @"HH:mm";
 
 @implementation DTAxisFormatter
@@ -26,6 +26,22 @@ static NSString *const DateFormatterTime = @"HH:mm";
 + (instancetype)axisFormatter {
     DTAxisFormatter *formatter = [[DTAxisFormatter alloc] init];
     return formatter;
+}
+
++ (instancetype)axisFormatterExClone:(DTAxisFormatter *)origin {
+    DTAxisFormatter *axisFormatter = [[DTAxisFormatter alloc] init];
+
+    axisFormatter.mainYAxisType = origin.xAxisType;
+    axisFormatter.mainYAxisDateSubType = origin.xAxisDateSubType;
+    axisFormatter.mainYAxisFormat = origin.xAxisFormat;
+    axisFormatter.mainYAxisScale = origin.xAxisScale;
+
+    axisFormatter.xAxisType = origin.mainYAxisType;
+    axisFormatter.xAxisDateSubType = origin.mainYAxisDateSubType;
+    axisFormatter.xAxisFormat = origin.mainYAxisFormat;
+    axisFormatter.xAxisScale = origin.mainYAxisScale;
+
+    return axisFormatter;
 }
 
 - (NSDateFormatter *)dateFormatter {
@@ -40,6 +56,7 @@ static NSString *const DateFormatterTime = @"HH:mm";
     if (self = [super init]) {
         _mainYAxisScale = 1;
         _secondYAxisScale = 1;
+        _xAxisScale = 1;
     }
     return self;
 }
@@ -65,6 +82,8 @@ static NSString *const DateFormatterTime = @"HH:mm";
 
     if ([dateString containsString:@"~"]) {
         [mutableString appendString:[dateString componentsSeparatedByString:@"~"].firstObject];
+    } else {
+        [mutableString appendString:dateString];
     }
 
     if (mutableString.length == 10) {
@@ -72,7 +91,6 @@ static NSString *const DateFormatterTime = @"HH:mm";
     } else if (mutableString.length == 16) {
         self.dateFormatter.dateFormat = DateFormatterFull;
     }
-
 
     NSDate *date = [self.dateFormatter dateFromString:mutableString];
 

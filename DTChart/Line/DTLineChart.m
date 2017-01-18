@@ -781,6 +781,17 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }];
 
     [self.secondValueLines removeObjectsAtIndexes:indexes];
+
+    if(self.secondMultiData.count == 0){ // 移除y副轴label
+        [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isKindOfClass:[DTChartLabel class]]) {
+                DTChartLabel *label = obj;
+                if (label.isSecondAxis) {
+                    [label removeFromSuperview];
+                }
+            }
+        }];
+    }
 }
 
 @end

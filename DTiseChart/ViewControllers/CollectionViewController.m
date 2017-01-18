@@ -16,6 +16,7 @@
 #import "TableGridCell.h"
 #import "TableChartPresentationViewController.h"
 #import "VBarPresentationVC.h"
+#import "HBarPresentationVC.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -57,6 +58,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.view addSubview:[self buttonFactory:@"大图" frame:CGRectMake(0, 6 * 15, 80, 48) action:@selector(linePresentation)]];
     [self.view addSubview:[self buttonFactory:@"table大图" frame:CGRectMake(0, 6 * 15 + 50, 80, 48) action:@selector(tableChartPresentation)]];
     [self.view addSubview:[self buttonFactory:@"VBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 2, 80, 48) action:@selector(vBarChartPresentation)]];
+    [self.view addSubview:[self buttonFactory:@"HBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 3, 80, 48) action:@selector(hBarChartPresentation)]];
 
     self.collectionView.frame = CGRectMake(8 * 15, 6 * 15, GridCellSize.width * 3, GridCellSize.height * 3);
     [self.view addSubview:self.collectionView];
@@ -93,6 +95,13 @@ static NSString *const TableGridCellId = @"TableGridCell";
     vBarPresentationVC.listBarData = self.listLineData7;
     [self.navigationController pushViewController:vBarPresentationVC animated:YES];
 }
+
+- (void)hBarChartPresentation {
+    HBarPresentationVC *hBarPresentationVC = [[HBarPresentationVC alloc] init];
+    hBarPresentationVC.chartId = @"10388";
+    [self.navigationController pushViewController:hBarPresentationVC animated:YES];
+}
+
 
 
 - (void)simulateData {

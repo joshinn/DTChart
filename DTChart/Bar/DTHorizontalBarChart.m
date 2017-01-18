@@ -62,7 +62,7 @@
                 CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
                 CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
                 CGFloat x = 0;
-                CGFloat y = (yData.axisPosition - 1 + yOffset - index) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
+                CGFloat y = (yData.axisPosition - 1 + yOffset - index * self.barWidth) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
 
                 bar.frame = CGRectMake(x, y, width, height);
                 [self.contentView addSubview:bar];
@@ -81,7 +81,7 @@
 
 
 - (void)generateHeapBars:(DTChartSingleData *)singleData
-                   last:(BOOL)isLast
+                    last:(BOOL)isLast
            xAxisMaxVaule:(DTAxisLabelData *)xMaxData
            xAxisMinValue:(DTAxisLabelData *)xMinData {
 
@@ -96,9 +96,9 @@
 
                 __block DTHeapBar *bar = nil;
                 [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *v, NSUInteger idx, BOOL *stop) {
-                    if([v isKindOfClass:[DTHeapBar class]]){
+                    if ([v isKindOfClass:[DTHeapBar class]]) {
                         DTHeapBar *b = v;
-                        if(b.barTag == itemData.itemValue.y){
+                        if (b.barTag == itemData.itemValue.y) {
                             bar = b;
                             *stop = YES;
                         }
@@ -106,7 +106,7 @@
                 }];
 
 
-                if(!bar){
+                if (!bar) {
                     bar = [DTHeapBar bar:DTBarOrientationRight];
                     [self.contentView addSubview:bar];
                     bar.barTag = itemData.itemValue.y;
@@ -190,7 +190,7 @@
                     lump.barSelectable = self.isValueSelectable;
                     if (singleData.color) {
                         lump.barColor = singleData.color;
-                    } else{
+                    } else {
                         lump.barColor = [UIColor yellowColor];
                     }
 
@@ -243,15 +243,13 @@
 
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
 
-        CGFloat x = (self.coordinateAxisInsets.left + data.axisPosition) * self.coordinateAxisCellWidth - size.height / 2;
+        CGFloat x = (self.coordinateAxisInsets.left + data.axisPosition) * self.coordinateAxisCellWidth - size.width / 2;
         CGFloat y = CGRectGetMaxY(self.contentView.frame);
         if (size.height < self.coordinateAxisCellWidth) {
             y += (self.coordinateAxisCellWidth - size.height) / 2;
         }
 
-
         xLabel.frame = (CGRect) {CGPointMake(x, y), size};
-
 
         [self addSubview:xLabel];
     }
@@ -296,10 +294,11 @@
 
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: yLabel.font}];
 
-        CGFloat x = CGRectGetMinX(self.contentView.frame) - size.width;
+        CGFloat x = CGRectGetMinX(self.contentView.frame);
 
         CGFloat y = (self.coordinateAxisInsets.top + data.axisPosition - 0.5f) * self.coordinateAxisCellWidth;
         y -= size.height / 2;
+        y -= (self.barWidth / 2 + 0.5) * self.coordinateAxisCellWidth; // 移到柱状体上面
 
         yLabel.frame = (CGRect) {CGPointMake(x, y), size};
 

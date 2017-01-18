@@ -122,7 +122,7 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
         case DTBarOrientationRight: {
             if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
-                self.barFrontView.frame = CGRectMake(0, CGRectGetWidth(self.frame) - DTBarTopBorderWidth, DTBarTopBorderWidth, CGRectGetHeight(self.frame));
+                self.barFrontView.frame = CGRectMake(CGRectGetWidth(self.frame) - DTBarTopBorderWidth, 0, DTBarTopBorderWidth, CGRectGetHeight(self.frame));
             } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
                 self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
             }

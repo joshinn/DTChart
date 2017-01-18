@@ -57,6 +57,8 @@
 		65CD0F391DFEA42A007AFD8D /* DTChartLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F2D1DFEA42A007AFD8D /* DTChartLabel.m */; };
 		65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F301DFEA42A007AFD8D /* DTLineChart.m */; };
 		65CD0F3B1DFEA42A007AFD8D /* DTChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CD0F331DFEA42A007AFD8D /* DTChartData.m */; };
+		65E347071E2F189800BE9A1F /* DTHorizontalBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E347061E2F189800BE9A1F /* DTHorizontalBarChartController.m */; };
+		65E3470A1E2F496F00BE9A1F /* HBarPresentationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E347091E2F496F00BE9A1F /* HBarPresentationVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +160,10 @@
 		65CD0F301DFEA42A007AFD8D /* DTLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLineChart.m; sourceTree = "<group>"; };
 		65CD0F321DFEA42A007AFD8D /* DTChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartData.h; sourceTree = "<group>"; };
 		65CD0F331DFEA42A007AFD8D /* DTChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartData.m; sourceTree = "<group>"; };
+		65E347051E2F189800BE9A1F /* DTHorizontalBarChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTHorizontalBarChartController.h; sourceTree = "<group>"; };
+		65E347061E2F189800BE9A1F /* DTHorizontalBarChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHorizontalBarChartController.m; sourceTree = "<group>"; };
+		65E347081E2F496F00BE9A1F /* HBarPresentationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBarPresentationVC.h; sourceTree = "<group>"; };
+		65E347091E2F496F00BE9A1F /* HBarPresentationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBarPresentationVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +207,8 @@
 				654284E41E24B71E00267603 /* DTLineChartController.m */,
 				653520301E28B6E100BFA2C9 /* DTVerticalBarChartController.h */,
 				653520311E28B6E100BFA2C9 /* DTVerticalBarChartController.m */,
+				65E347051E2F189800BE9A1F /* DTHorizontalBarChartController.h */,
+				65E347061E2F189800BE9A1F /* DTHorizontalBarChartController.m */,
 				65BDBB961E2CD38C00EB85F4 /* DTTableChartController.m */,
 				65BDBB971E2CD38C00EB85F4 /* DTTableChartController.h */,
 			);
@@ -252,6 +260,8 @@
 				653520411E2A1AC300BFA2C9 /* TableChartPresentationViewController.m */,
 				65BDBB991E2CDDD000EB85F4 /* VBarPresentationVC.h */,
 				65BDBB9A1E2CDDD000EB85F4 /* VBarPresentationVC.m */,
+				65E347081E2F496F00BE9A1F /* HBarPresentationVC.h */,
+				65E347091E2F496F00BE9A1F /* HBarPresentationVC.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -494,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				653520421E2A1AC300BFA2C9 /* TableChartPresentationViewController.m in Sources */,
+				65E3470A1E2F496F00BE9A1F /* HBarPresentationVC.m in Sources */,
 				6535203F1E28BEC300BFA2C9 /* TableGridCell.m in Sources */,
 				653520361E28B6FF00BFA2C9 /* DTChartController.m in Sources */,
 				65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */,
@@ -511,6 +522,7 @@
 				65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */,
 				654284EE1E24F24E00267603 /* DTCommonData.m in Sources */,
 				65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */,
+				65E347071E2F189800BE9A1F /* DTHorizontalBarChartController.m in Sources */,
 				658F7FBE1E10F81F0024AB62 /* BarViewController.m in Sources */,
 				65CD0F351DFEA42A007AFD8D /* DTBarChart.m in Sources */,
 				654284EB1E24EBBB00267603 /* LineCtrlViewController.m in Sources */,
