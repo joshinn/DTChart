@@ -12,9 +12,11 @@
 
 @property(nonatomic) UIColor *partColor;
 @property(nonatomic) UIColor *selectColor;
-@property (nonatomic) CGFloat selectBorderWidth;
+@property(nonatomic) CGFloat selectBorderWidth;
+@property (nonatomic) CGPoint center;
+@property (nonatomic) NSUInteger index;
 
-
+@property(nonatomic, getter=isSelected) BOOL selected;
 
 + (instancetype)piePartCenter:(CGPoint)center radius:(CGFloat)radius startPercentage:(CGFloat)startPercentage endPercentage:(CGFloat)endPercentage;
 

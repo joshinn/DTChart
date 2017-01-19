@@ -10,11 +10,10 @@
 
 /**
  * 触摸手势回调
- * @param lineIndex 折线的序号(哪一组数据)
+ * @param seriesId 折线的seriesId
  * @param pointIndex 折线中的点的序号
- * @param isMainAxis 是否是主轴
  */
-typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis);
+typedef void(^DTLineChartTouchBlock)(NSString * seriesId, NSUInteger pointIndex);
 
 
 @interface DTLineChartController : DTChartController

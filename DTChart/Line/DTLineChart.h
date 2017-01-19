@@ -17,7 +17,7 @@
  * @param pointIndex 折线中的点的序号
  * @param isMainAxis 是否是主轴
  */
-typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis);
+typedef void(^DTLineChartTouch)(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis);
 
 
 
@@ -31,7 +31,7 @@ typedef void(^DTLineChartTouchBlock)(NSUInteger lineIndex, NSUInteger pointIndex
 /**
  * 手势选择回调
  */
-@property(nonatomic, copy) DTLineChartTouchBlock lineChartTouchBlock;
+@property(nonatomic, copy) DTLineChartTouch lineChartTouchBlock;
 /**
  * x轴标签是否与格子对齐，默认是NO
  */

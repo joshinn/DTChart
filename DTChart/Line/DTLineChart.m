@@ -150,6 +150,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         } else {
             self.prevTouchIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
             BOOL isMainAxis = n1 < self.multiData.count;
+
             if (!isMainAxis) {
                 n1 -= self.multiData.count;
             }

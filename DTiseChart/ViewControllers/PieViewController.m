@@ -27,7 +27,7 @@
 
 - (void)loadSubviews {
 
-    self.pieChart = [[DTPieChart alloc] initWithOrigin:CGPointMake(15, 150) xAxis:21 yAxis:20];
+    self.pieChart = [[DTPieChart alloc] initWithOrigin:CGPointMake(30, 150) xAxis:21 yAxis:20];
     self.pieChart.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
     self.pieChart.showAnimation = YES;
     self.pieChart.multiData = @[[self simulateData:3], [self simulateData:4], [self simulateData:2], [self simulateData:1]];
@@ -37,7 +37,6 @@
     }];
 
 
-    self.pieChart.pieMargin = 3;
     [self.view addSubview:self.pieChart];
     [self.pieChart drawChart];
 }

@@ -39,14 +39,19 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         _lineChart = [[DTLineChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _lineChart;
 
-        _lineChart.contentView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
-
         __weak typeof(self) weakSelf = self;
         [_lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
             if (weakSelf.lineChartTouchBlock) {
-                weakSelf.lineChartTouchBlock(lineIndex, pointIndex, isMainAxis);
+                NSString *seriesId = nil;
+                if (isMainAxis) {
+                    seriesId = weakSelf.lineChart.multiData[lineIndex].singleId;
+                } else {
+                    seriesId = weakSelf.lineChart.secondMultiData[lineIndex].singleId;
+                }
+                weakSelf.lineChartTouchBlock(seriesId, pointIndex);
             }
         }];
+
         [_lineChart setColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
             if (weakSelf.mainAxisColorsCompletionBlock) {
                 weakSelf.mainAxisColorsCompletionBlock(infos);

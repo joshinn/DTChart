@@ -38,7 +38,6 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _barChart = [[DTHorizontalBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _barChart.barChartStyle = DTBarChartStyleStartingLine;
-        _barChart.showCoordinateAxisGrid = YES;
         _chartView = _barChart;
 
 
@@ -48,11 +47,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
                 weakSelf.mainAxisColorsCompletionBlock(infos);
             }
         }];
-        [_barChart setSecondAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
-            if (weakSelf.secondAxisColorsCompletionBlock) {
-                weakSelf.secondAxisColorsCompletionBlock(infos);
-            }
-        }];
+
     }
     return self;
 }

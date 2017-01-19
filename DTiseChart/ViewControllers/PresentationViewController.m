@@ -28,8 +28,8 @@
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     self.lineChartController.chartMode = DTChartModePresentation;
     self.lineChartController.valueSelectable = YES;
-    [self.lineChartController setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
-        DTLog(@"touch line index = %@ point = %@", @(lineIndex), @(pointIndex));
+    [self.lineChartController setLineChartTouchBlock:^(NSString *seriesId, NSUInteger pointIndex) {
+
     }];
 
     [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {

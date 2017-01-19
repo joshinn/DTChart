@@ -47,11 +47,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
                 weakSelf.mainAxisColorsCompletionBlock(infos);
             }
         }];
-        [_barChart setSecondAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
-            if (weakSelf.secondAxisColorsCompletionBlock) {
-                weakSelf.secondAxisColorsCompletionBlock(infos);
-            }
-        }];
+
     }
     return self;
 }

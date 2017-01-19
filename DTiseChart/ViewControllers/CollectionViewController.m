@@ -17,6 +17,7 @@
 #import "TableChartPresentationViewController.h"
 #import "VBarPresentationVC.h"
 #import "HBarPresentationVC.h"
+#import "PiePresentationVC.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -40,16 +41,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-DD HH:mm:ss";
 
-
-    NSString *dateString = @"2017-01-16 13:08:23";
-    NSDate *date = [formatter dateFromString:dateString];
-    formatter.dateFormat = @"MM-DD";
-    DTLog(@"date = %@", [formatter stringFromDate:date]);
-
-    DTLog(@"%.2f%%", 0.36);
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
     [self simulateData];
@@ -59,6 +51,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.view addSubview:[self buttonFactory:@"table大图" frame:CGRectMake(0, 6 * 15 + 50, 80, 48) action:@selector(tableChartPresentation)]];
     [self.view addSubview:[self buttonFactory:@"VBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 2, 80, 48) action:@selector(vBarChartPresentation)]];
     [self.view addSubview:[self buttonFactory:@"HBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 3, 80, 48) action:@selector(hBarChartPresentation)]];
+    [self.view addSubview:[self buttonFactory:@"Pie大图" frame:CGRectMake(0, 6 * 15 + 50 * 4, 80, 48) action:@selector(pieChartPresentation)]];
 
     self.collectionView.frame = CGRectMake(8 * 15, 6 * 15, GridCellSize.width * 3, GridCellSize.height * 3);
     [self.view addSubview:self.collectionView];
@@ -102,6 +95,12 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.navigationController pushViewController:hBarPresentationVC animated:YES];
 }
 
+- (void)pieChartPresentation {
+    PiePresentationVC *pieVC = [[PiePresentationVC alloc] init];
+    pieVC.chartId = @"10488";
+    pieVC.listBarData = self.listLineData7;
+    [self.navigationController pushViewController:pieVC animated:YES];
+}
 
 
 - (void)simulateData {

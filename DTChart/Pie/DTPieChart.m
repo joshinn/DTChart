@@ -7,7 +7,6 @@
 //
 
 #import "DTPieChart.h"
-#import "DTChartData.h"
 #import "DTPiePart.h"
 
 @interface DTPieChart ()
@@ -17,7 +16,8 @@
 /**
  * 存储pie图每个组成部分的百分比
  */
-@property(nonatomic) NSMutableArray<NSNumber *> *percentages;
+@property(nonatomic, readwrite) NSMutableArray<NSNumber *> *percentages;
+@property(nonatomic, readwrite) NSMutableArray<NSNumber *> *singleTotal;
 
 @property(nonatomic) CGFloat radius;
 /**
@@ -34,14 +34,16 @@
 - (void)initial {
     [super initial];
 
+    self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
+    _originPoint = CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+
+
+    _selectBorderWidth = 1;
     _prevSelectedIndex = -1;
     _drawSingleDataIndex = -1;
-    _pieMargin = 2;
+    self.pieRadius = MIN(self.xAxisCellCount, self.yAxisCellCount) / 2;
 }
 
-- (void)setOriginPoint:(CGPoint)originPoint {
-    _originPoint = originPoint;
-}
 
 - (CAShapeLayer *)containerLayer {
     if (!_containerLayer) {
@@ -58,6 +60,17 @@
     return _percentages;
 }
 
+- (void)setPieRadius:(CGFloat)pieRadius {
+    _pieRadius = pieRadius;
+
+    _radius = pieRadius * self.coordinateAxisCellWidth;
+}
+
+- (void)updateOrigin:(CGFloat)xOffset yOffset:(CGFloat)yOffset {
+    _originPoint = CGPointMake(CGRectGetMidX(self.contentView.bounds) + xOffset * self.coordinateAxisCellWidth,
+            CGRectGetMidY(self.contentView.bounds) + yOffset * self.coordinateAxisCellWidth);;
+}
+
 #pragma mark - private method
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -70,7 +83,7 @@
 
 
 - (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
-    if(!self.valueSelectable){
+    if (!self.valueSelectable) {
         return;
     }
 
@@ -99,27 +112,58 @@
         sum += number.floatValue;
     }];
 
+    if (index == -1) {
+        return;
+    }
+
     if (moving) {
         if (self.prevSelectedIndex >= 0 && self.prevSelectedIndex != index) {
             self.prevSelectedIndex = index;
             if (self.pieChartTouchBlock) {
-                DTLog(@"pie chart selected index = %@", @(index));
+                DTLog(@"pie chart move selected index = %@", @(index));
+                [self drawSelectedLayer:(NSUInteger) index selected:YES];
                 self.pieChartTouchBlock((NSUInteger) index);
             }
         }
     } else {
         if (self.prevSelectedIndex != index) {
-
             self.prevSelectedIndex = index;
             if (self.pieChartTouchBlock) {
                 DTLog(@"pie chart selected index = %@", @(index));
+                [self drawSelectedLayer:(NSUInteger) index selected:YES];
                 self.pieChartTouchBlock((NSUInteger) index);
+            }
+        } else {
+            if (self.pieChartTouchCancelBlock) {
+                self.prevSelectedIndex = -1;
+                [self drawSelectedLayer:(NSUInteger) index selected:NO];
+                self.pieChartTouchCancelBlock((NSUInteger) index);
             }
         }
     }
 
 
 }
+
+
+- (void)drawSelectedLayer:(NSUInteger)index selected:(BOOL)select {
+
+    [self.containerLayer.sublayers enumerateObjectsUsingBlock:^(CALayer *layer, NSUInteger idx, BOOL *stop) {
+        if ([layer isKindOfClass:[DTPiePart class]]) {
+            DTPiePart *part = (DTPiePart *) layer;
+
+            if (part.index == index) {
+                part.selected = select;
+
+            } else {
+                part.selected = NO;
+            }
+
+        }
+    }];
+
+}
+
 
 - (DTPiePart *)generatePiePartWithPartColor:(UIColor *)partColor
                                 borderColor:(UIColor *)borderColor
@@ -131,7 +175,7 @@
     DTPiePart *partLayer = [DTPiePart piePartCenter:center radius:radius startPercentage:startPercentage endPercentage:endPercentage];
     partLayer.partColor = partColor;
     partLayer.selectColor = borderColor;
-    partLayer.selectBorderWidth = 1 * self.coordinateAxisCellWidth;
+    partLayer.selectBorderWidth = self.selectBorderWidth * self.coordinateAxisCellWidth;
 
     return partLayer;
 }
@@ -144,8 +188,32 @@
 //    animation.delegate  = self;
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animation.removedOnCompletion = YES;
+
     [self.containerLayer.mask addAnimation:animation forKey:@"circleAnimation"];
+
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.containerLayer.mask = nil;
+//    });
 }
+
+- (void)startDisappearAnimation {
+
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    animation.fromValue = @1;
+    animation.toValue = @0;
+    animation.duration = 1;
+    animation.autoreverses = NO;
+    animation.fillMode = kCAFillModeForwards;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.removedOnCompletion = NO;
+
+    [self.containerLayer.mask addAnimation:animation forKey:@"eraseCircleAnimation"];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self clearChartContent];
+    });
+}
+
 
 /**
  * 绘制整体pie chart
@@ -153,7 +221,7 @@
  */
 - (void)drawMultiDataChart {
     CGFloat sum = 0;    // 所有数据总和
-    NSMutableArray<NSNumber *> *singleTotalArray = [NSMutableArray arrayWithCapacity:self.multiData.count];
+    self.singleTotal = [NSMutableArray arrayWithCapacity:self.multiData.count];
 
     for (DTChartSingleData *sData in self.multiData) {
 
@@ -163,7 +231,7 @@
             sum += obj.itemValue.y;
 
         }
-        [singleTotalArray addObject:@(singleTotal)];
+        [self.singleTotal addObject:@(singleTotal)];
     }
 
 
@@ -172,12 +240,11 @@
     for (NSUInteger i = 0; i < self.multiData.count; ++i) {
         DTChartSingleData *singleData = self.multiData[i];
 
-        CGFloat singleTotal = singleTotalArray[i].floatValue;
+        CGFloat singleTotal = self.singleTotal[i].floatValue;
 
         CGFloat valuePercentage = singleTotal / sum;
 
         [self.percentages addObject:@(valuePercentage)];
-        DTLog(@"percent = %.3f", valuePercentage);
 
         DTPiePart *part = [self generatePiePartWithPartColor:singleData.color
                                                  borderColor:singleData.secondColor
@@ -185,6 +252,8 @@
                                                       center:self.originPoint
                                              startPercentage:accumulate
                                                endPercentage:accumulate + valuePercentage];
+
+        part.index = i;
 
         [self.containerLayer addSublayer:part];
 
@@ -217,7 +286,7 @@
         sum += itemData.itemValue.y;
 
         // 颜色
-        if(!itemData.color){
+        if (!itemData.color) {
             itemData.color = [self.colorManager getColor];
 
         }
@@ -228,12 +297,12 @@
 
     CGFloat accumulate = 0; // 累积百分比
 
-    for (DTChartItemData *itemData in sData.itemValues) {
-
+    for (NSUInteger i = 0; i < sData.itemValues.count; ++i) {
+        DTChartItemData *itemData = sData.itemValues[i];
         CGFloat valuePercentage = itemData.itemValue.y / sum;
 
         [self.percentages addObject:@(valuePercentage)];
-        DTLog(@"percent = %.3f", valuePercentage);
+//        DTLog(@"percent = %.3f", valuePercentage);
 
         DTPiePart *part = [self generatePiePartWithPartColor:itemData.color
                                                  borderColor:itemData.secondColor
@@ -242,6 +311,7 @@
                                              startPercentage:accumulate
                                                endPercentage:accumulate + valuePercentage];
 
+        part.index = i;
         [self.containerLayer addSublayer:part];
 
         accumulate += valuePercentage;
@@ -257,7 +327,7 @@
  */
 - (void)clearChartContent {
 
-    NSArray<CALayer *> *layers = [self.contentView.layer.sublayers copy];
+    NSArray<CALayer *> *layers = [self.containerLayer.sublayers copy];
     [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[DTPiePart class]]) {
             DTPiePart *part = (DTPiePart *) obj;
@@ -283,8 +353,6 @@
 
     [self.percentages removeAllObjects];
 
-    self.radius = MIN(CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame)) / 2 - self.pieMargin * self.coordinateAxisCellWidth;
-    self.originPoint = CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
 
     self.containerLayer.frame = self.contentView.bounds;
 
@@ -296,17 +364,28 @@
 
 
     if (self.isShowAnimation) {
+        CGFloat lineWidth = self.radius + 2 * self.selectBorderWidth * self.coordinateAxisCellWidth;
         CAShapeLayer *mask = [CAShapeLayer layer];
-        mask.path = [DTPiePart arcPathCenter:self.originPoint radius:self.radius].CGPath;
-        mask.lineWidth = self.radius;
+        mask.path = [DTPiePart arcPathCenter:self.originPoint radius:lineWidth].CGPath;
+        mask.lineWidth = lineWidth;
         mask.fillColor = [UIColor clearColor].CGColor;
         mask.strokeColor = [UIColor whiteColor].CGColor;
-
         self.containerLayer.mask = mask;
 
         [self startAppearAnimation];
     }
 }
 
+- (void)dismissChart:(BOOL)animation {
+    self.multiData = nil;
+    self.secondMultiData = nil;
+
+    if (animation) {
+        [self startDisappearAnimation];
+    } else {
+        [self clearChartContent];
+    }
+
+}
 
 @end

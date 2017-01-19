@@ -44,9 +44,9 @@ CG_INLINE ChartEdgeInsets ChartEdgeInsetsMake(NSUInteger left, NSUInteger top, N
 }
 
 
-typedef void(^ColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
+typedef void(^MainAxisColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 
-typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
+typedef void(^SecondAxisColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 
 @interface DTChartBaseComponent : UIView
 
@@ -111,11 +111,11 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 /**
  * 主轴颜色回调
  */
-@property(nonatomic, copy) ColorsCompletionBlock colorsCompletionBlock;
+@property(nonatomic, copy) MainAxisColorsCompletion colorsCompletionBlock;
 /**
  * 副轴颜色回调
  */
-@property(nonatomic, copy) SecondAxisColorsCompletionBlock secondAxisColorsCompletionBlock;
+@property(nonatomic, copy) SecondAxisColorsCompletion secondAxisColorsCompletionBlock;
 
 #pragma mark - ####### protect property #######
 

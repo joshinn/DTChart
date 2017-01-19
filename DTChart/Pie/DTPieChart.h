@@ -8,11 +8,21 @@
 
 #import "DTChartBaseComponent.h"
 
-typedef void(^DTPieChartTouchBlock)(NSUInteger index);
+/**
+ * 点击回调
+ * @param index 点击的pie图成份序号
+ */
+typedef void(^DTPieChartTouch)(NSUInteger index);
+/**
+ * 取消点击
+ * @param index 点击的pie图成份序号
+ */
+typedef void(^DTPieChartCancelTouch)(NSUInteger index);
 
 @interface DTPieChart : DTChartBaseComponent
 
-@property(nonatomic, copy) DTPieChartTouchBlock pieChartTouchBlock;
+@property(nonatomic, copy) DTPieChartTouch pieChartTouchBlock;
+@property(nonatomic, copy) DTPieChartCancelTouch pieChartTouchCancelBlock;
 
 /**
  * 指定绘制multiData里的单独某个数据
@@ -22,8 +32,33 @@ typedef void(^DTPieChartTouchBlock)(NSUInteger index);
 @property(nonatomic) NSInteger drawSingleDataIndex;
 
 /**
- * pie图距离边界的距离，默认是2
+ * pie圆形图的半径
  */
-@property (nonatomic) CGFloat pieMargin;
+@property (nonatomic) CGFloat pieRadius;
+/**
+ * 选择后弧线的宽度，以单元格为单位，默认1
+ */
+@property (nonatomic) CGFloat selectBorderWidth;
 
+/**
+ * 存储pie图每个组成部分的百分比
+ */
+@property(nonatomic, readonly) NSMutableArray<NSNumber *> *percentages;
+/**
+ * 存储pie图每个组成部分的数值
+ */
+@property(nonatomic, readonly) NSMutableArray<NSNumber *> *singleTotal;
+
+/**
+ * 更新原点位置
+ * @param xOffset 距离contendView中心的x偏移，以单元格为单元，负为左偏，正为右偏
+ * @param yOffset 距离contendView中心的y偏移，以单元格为单元，负为左偏，正为右偏
+ */
+- (void)updateOrigin:(CGFloat)xOffset yOffset:(CGFloat)yOffset;
+
+/**
+ * pie图里的数据和图形消失
+ * @param animation 动画
+ */
+- (void)dismissChart:(BOOL)animation;
 @end
