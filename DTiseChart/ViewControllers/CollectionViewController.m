@@ -108,7 +108,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     self.listLineData0 = [NSMutableArray arrayWithArray:[self simulateListCommonData:3 pointCount:8 mainAxis:YES]];
     [self.listLineData0 addObjectsFromArray:[self simulateListCommonData:2 pointCount:8 mainAxis:NO]];
 
-    self.listLineData7 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:10 mainAxis:YES]];
+    self.listLineData7 = [NSMutableArray arrayWithArray:[self simulateListCommonData:2 pointCount:6 mainAxis:YES]];
 //    DTListCommonData *listCommonData1 = self.listLineData7[self.listLineData7.count - 1];
 //    DTListCommonData *listCommonData2 = self.listLineData7[self.listLineData7.count - 2];
 //    listCommonData2.seriesName = listCommonData1.seriesName;
