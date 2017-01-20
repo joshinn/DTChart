@@ -19,6 +19,7 @@
 #import "HBarPresentationVC.h"
 #import "PiePresentationVC.h"
 #import "DistributionPresentationVC.h"
+#import "NSNumber+DTExternal.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -42,11 +43,9 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
     [self simulateData];
-
 
     [self.view addSubview:[self buttonFactory:@"大图" frame:CGRectMake(0, 6 * 15, 80, 48) action:@selector(linePresentation)]];
     [self.view addSubview:[self buttonFactory:@"table大图" frame:CGRectMake(0, 6 * 15 + 50, 80, 48) action:@selector(tableChartPresentation)]];

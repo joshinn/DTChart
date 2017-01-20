@@ -109,14 +109,15 @@
 #pragma mark - private method
 
 - (void)loadSecondPieChart {
-    NSUInteger xAxisCellCount = 22;
+    NSUInteger xAxisCellCount = 26;
     NSUInteger yAxisCellCount = 16;
     CGPoint origin = CGPointMake(CGRectGetWidth(self.mainPieChart.bounds) - xAxisCellCount * self.mainPieChart.coordinateAxisCellWidth,
             CGRectGetHeight(self.mainPieChart.bounds) / 2 + (self.mainPieChart.pieRadius - yAxisCellCount) * self.mainPieChart.coordinateAxisCellWidth);
     self.secondPieChart = [[DTPieChart alloc] initWithOrigin:origin xAxis:xAxisCellCount yAxis:yAxisCellCount];
     self.secondPieChart.pieRadius = 6;
     self.secondPieChart.showAnimation = self.isShowAnimation;
-    [self.secondPieChart updateOrigin:self.secondPieChart.pieRadius - xAxisCellCount / 2 + 1 yOffset:0];
+    [self.secondPieChart updateOrigin:self.secondPieChart.pieRadius - xAxisCellCount / 2 yOffset:0];
+    self.secondPieChart.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
     [self.mainPieChart addSubview:self.secondPieChart];
 
@@ -173,7 +174,9 @@
         }
     }
     self.secondHintLabel.attributedText = mutableAttributedString;
-    rect = [self.secondHintLabel.attributedText boundingRectWithSize:CGSizeMake(9 * self.secondPieChart.coordinateAxisCellWidth, 0)
+    rect = [self.secondHintLabel.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.secondPieChart.bounds)
+                    - self.secondPieChart.originPoint.x
+                    - (self.secondPieChart.pieRadius + 2) * self.secondPieChart.coordinateAxisCellWidth, 0)
                                                              options:NSStringDrawingUsesLineFragmentOrigin
                                                              context:nil];
     size = CGSizeMake(rect.size.width + 5, rect.size.height + 5);

@@ -36,6 +36,10 @@
             ++loc;
         }
     }
+    if([string hasPrefix:@","]){
+        [string deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+
     if (strings.count > 1) {
         [string appendString:@"."];
         [string appendString:strings[1]];
