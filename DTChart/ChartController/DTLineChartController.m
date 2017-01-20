@@ -193,6 +193,10 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     if (listSecondAxisData.count > 0) {
         [self processSecondAxisLabelDataAndLines:listSecondAxisData];
+    } else {
+        // 没有副轴，清除之前的副轴数据
+        self.lineChart.secondMultiData = nil;
+        self.lineChart.ySecondAxisLabelDatas = nil;
     }
 }
 

@@ -29,4 +29,25 @@ typedef NS_ENUM(NSInteger, DTDistributionChartYAxisStyle) {
  */
 @property(nonatomic) DTDistributionChartYAxisStyle chartYAxisStyle;
 
+/**
+ * y轴起始时间整点数，默认是7
+ */
+@property (nonatomic) NSInteger startHour;
+/**
+ * 最弱颜色，默认 01081a
+ */
+@property (nonatomic) UIColor *lowLevelColor;
+/**
+ * 中等颜色，默认 014898
+ */
+@property (nonatomic) UIColor *middleLevelColor;
+/**
+ * 强颜色，默认 0095d9
+ */
+@property (nonatomic) UIColor *highLevelColor;
+/**
+ * 最强颜色，默认 5ac3d9
+ */
+@property (nonatomic) UIColor *supremeLevelColor;
+
 @end

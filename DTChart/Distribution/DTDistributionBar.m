@@ -52,24 +52,25 @@ static NSUInteger const DefaultSubItemCount = 24;
     CGFloat gap = DTDistributionBarItemGap;
     CGFloat sectionGap = CGRectGetHeight(self.frame) / DTDistributionBarSectionGapRatio;
     CGFloat itemHeight = (CGRectGetHeight(self.frame) - gap * self.items.count - sectionGap * 3) / self.items.count;
-    CGFloat itemY = CGRectGetHeight(self.frame) - itemHeight;
+    CGFloat itemY = 0;
 
 
     for (NSUInteger i = 0; i < self.items.count; ++i) {
 
-
         UIView *view = self.items[i];
 
-        if (self.singleData.itemValues.count > i) {
-            DTChartItemData *itemData = self.singleData.itemValues[i];
-            view.backgroundColor = itemData.color;
-        }
+        [self.singleData.itemValues enumerateObjectsUsingBlock:^(DTChartItemData *obj, NSUInteger idx, BOOL *stop) {
+            if (obj.itemValue.y == self.startHour + i) {
+                view.backgroundColor = obj.color;
+                *stop = YES;
+            }
+        }];
 
         view.frame = CGRectMake(0, itemY, CGRectGetWidth(self.frame) * 0.9f, itemHeight);
 
-        itemY -= itemHeight + gap;
+        itemY += itemHeight + gap;
         if ((i + 1) % 6 == 0) {
-            itemY -= sectionGap;
+            itemY += sectionGap;
         }
     }
 }

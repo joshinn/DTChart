@@ -26,7 +26,13 @@
 - (void)initial {
     [super initial];
 
+    _startHour = 7;
     self.chartYAxisStyle = DTDistributionChartYAxisStyleNone;
+
+    _lowLevelColor = DTDistributionLowLevelColor;
+    _middleLevelColor = DTDistributionMiddleLevelColor;
+    _highLevelColor = DTDistributionHighLevelColor;
+    _supremeLevelColor = DTDistributionSupremeLevelColor;
 }
 
 - (NSMutableArray<DTDistributionBar *> *)chartBars {
@@ -41,8 +47,33 @@
 
     switch (chartYAxisStyle) {
         case DTDistributionChartYAxisStyleNone: {
+        }
+            break;
+        case DTDistributionChartYAxisStyleSmall: {
+            self.coordinateAxisInsets = ChartEdgeInsetsMake(3, 0, 0, 1);
+        }
+            break;
+        case DTDistributionChartYAxisStyleLarge: {
+            self.coordinateAxisInsets = ChartEdgeInsetsMake(7, 0, 0, 2);
+        }
+            break;
+        case DTDistributionChartYAxisStyleCustom: {
+        }
+            break;
+
+    }
+}
+
+#pragma mark - private method
+
+/**
+ * 根据chartYAxisStyle生成y轴数据
+ */
+- (void)processYAxisStyle {
+
+    switch (self.chartYAxisStyle) {
+        case DTDistributionChartYAxisStyleNone: {
             self.yAxisLabelDatas = nil;
-            self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 1);
         }
             break;
         case DTDistributionChartYAxisStyleSmall: {
@@ -61,8 +92,6 @@
     }
 }
 
-#pragma mark - private method
-
 /**
  * 生成small style的y轴数据
  */
@@ -70,14 +99,37 @@
     self.coordinateAxisInsets = ChartEdgeInsetsMake(3, 0, 0, 1);
 
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
-    NSArray<NSString *> *yTitles = @[@"01:00\n|\n6:59", @"19:00\n|\n00:59", @"13:00\n|\n18:59", @"07:00\n|\n12:59"];
 
-    {
-        [yTitles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
-            [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:idx + 1]];
-        }];
+    for (NSUInteger i = 0; i < 4; ++i) {
+        [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:[self formatSmallStyleYLabelTitle:self.startHour + 6 * i] value:i + 1]];
     }
     self.yAxisLabelDatas = yAxisLabelDatas.copy;
+}
+
+- (NSString *)formatSmallStyleYLabelTitle:(NSInteger)hour {
+    NSMutableString *string = [NSMutableString string];
+
+    NSInteger endHour = hour + 5;
+
+    if (hour >= 24) {
+        hour -= 24;
+    }
+    if (endHour >= 24) {
+        endHour -= 24;
+    }
+    if (hour < 10) {
+        [string appendString:[NSString stringWithFormat:@"0%@:00", @(hour)]];
+    } else {
+        [string appendString:[NSString stringWithFormat:@"%@:00", @(hour)]];
+    }
+    [string appendString:@"\n|\n"];
+    if (endHour < 10) {
+        [string appendString:[NSString stringWithFormat:@"0%@:59", @(endHour)]];
+    } else {
+        [string appendString:[NSString stringWithFormat:@"%@:59", @(endHour)]];
+    }
+
+    return string;
 }
 
 /**
@@ -87,20 +139,69 @@
     self.coordinateAxisInsets = ChartEdgeInsetsMake(7, 0, 0, 2);
 
     NSMutableArray<NSDictionary *> *largeYLabelTitles = [NSMutableArray array];
-    [largeYLabelTitles addObject:@{@"startTime": @"07:00", @"endTime": @"08:59", @"chinese": @"辰"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"09:00", @"endTime": @"10:59", @"chinese": @"已"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"11:00", @"endTime": @"12:59", @"chinese": @"午"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"13:00", @"endTime": @"14:59", @"chinese": @"未"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"15:00", @"endTime": @"16:59", @"chinese": @"申"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"17:00", @"endTime": @"18:59", @"chinese": @"酉"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"19:00", @"endTime": @"20:59", @"chinese": @"戌"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"21:00", @"endTime": @"22:59", @"chinese": @"亥"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"23:00", @"endTime": @"00:59", @"chinese": @"子"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"01:00", @"endTime": @"02:59", @"chinese": @"丑"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"03:00", @"endTime": @"04:59", @"chinese": @"寅"}];
-    [largeYLabelTitles addObject:@{@"startTime": @"05:00", @"endTime": @"06:59", @"chinese": @"卯"}];
+
+    for (NSUInteger i = 0; i < 12; ++i) {
+        [largeYLabelTitles addObject:[self formatLargeStyleYLabelTitle:self.startHour + i * 2]];
+    }
 
     self.largeYLabelTitles = largeYLabelTitles;
+}
+
+- (NSDictionary *)formatLargeStyleYLabelTitle:(NSInteger)hour {
+    NSInteger endHour = hour + 1;
+
+    if (hour >= 24) {
+        hour -= 24;
+    }
+    if (endHour >= 24) {
+        endHour -= 24;
+    }
+
+    NSString *startTime;
+    NSString *endTime;
+
+    if (hour < 10) {
+        startTime = [NSString stringWithFormat:@"0%@:00", @(hour)];
+    } else {
+        startTime = [NSString stringWithFormat:@"%@:00", @(hour)];
+    }
+    if (endHour < 10) {
+        endTime = [NSString stringWithFormat:@"0%@:59", @(endHour)];
+    } else {
+        endTime = [NSString stringWithFormat:@"%@:59", @(endHour)];
+    }
+
+    return @{@"startTime": startTime, @"endTime": endTime, @"chinese": [self getChineseTime:hour]};
+}
+
+- (NSString *)getChineseTime:(NSInteger)hour {
+    if (hour >= 1 && hour <= 2) {
+        return @"丑";
+    } else if (hour >= 3 && hour <= 4) {
+        return @"寅";
+    } else if (hour >= 5 && hour <= 6) {
+        return @"卯";
+    } else if (hour >= 7 && hour <= 8) {
+        return @"辰";
+    } else if (hour >= 9 && hour <= 10) {
+        return @"已";
+    } else if (hour >= 11 && hour <= 12) {
+        return @"午";
+    } else if (hour >= 13 && hour <= 14) {
+        return @"未";
+    } else if (hour >= 15 && hour <= 16) {
+        return @"申";
+    } else if (hour >= 17 && hour <= 18) {
+        return @"酉";
+    } else if (hour >= 19 && hour <= 20) {
+        return @"戌";
+    } else if (hour >= 21 && hour <= 22) {
+        return @"亥";
+    } else if (hour >= 23 || hour < 1) {
+        return @"子";
+    }
+
+    return @"";
 }
 
 /**
@@ -181,12 +282,23 @@
         yLabel.textColor = self.yAxisLabelColor;
         chineseLabel.textColor = self.yAxisLabelColor;
     } else {
-        yLabel.textColor = DTRGBColor(0xbfc1c0, 1);
-        chineseLabel.textColor = DTRGBColor(0xbfc1c0, 1);
+        yLabel.textColor = DTRGBColor(0xc0c0c0, 1);
+        chineseLabel.textColor = DTRGBColor(0xc0c0c0, 1);
 
     }
 }
 
+- (UIColor *)getLevelColor:(CGFloat)value {
+    if (value < 100) {
+        return self.lowLevelColor;
+    } else if (value < 500) {
+        return self.middleLevelColor;
+    } else if (value < 1000) {
+        return self.highLevelColor;
+    } else {
+        return self.supremeLevelColor;
+    }
+}
 
 #pragma mark - override
 
@@ -195,15 +307,7 @@
 
     for (DTChartSingleData *singleData in multiData) {
         for (DTChartItemData *itemData in singleData.itemValues) {
-            if (itemData.itemValue.y == 0) {
-                itemData.color = DTDistributionLowLevelColor;
-            } else if (itemData.itemValue.y == 1) {
-                itemData.color = DTDistributionMiddleLevelColor;
-            } else if (itemData.itemValue.y == 2) {
-                itemData.color = DTDistributionHighLevelColor;
-            } else if (itemData.itemValue.y == 3) {
-                itemData.color = DTDistributionSupremeLevelColor;
-            }
+            itemData.color = [self getLevelColor:itemData.itemValue.x];
         }
     }
 }
@@ -242,7 +346,10 @@
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
         if (self.xAxisLabelColor) {
             xLabel.textColor = self.xAxisLabelColor;
+        } else {
+            xLabel.textColor = DTRGBColor(0xc0c0c0, 1);
         }
+
         xLabel.backgroundColor = DTRGBColor(0x000000, 0.4);
         xLabel.layer.cornerRadius = 4;
         xLabel.layer.masksToBounds = YES;
@@ -282,7 +389,7 @@
     CGFloat sectionHeight = (CGRectGetHeight(self.contentView.frame) - sectionGap * 3) / 4;
 
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
-        DTAxisLabelData *data = self.yAxisLabelDatas[i];
+        DTAxisLabelData *data = self.yAxisLabelDatas[self.yAxisLabelDatas.count - i - 1];
 
 
         // 绘制y轴
@@ -315,38 +422,24 @@
 - (void)drawValues {
 
     // 绘制有数据的bar
-    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-    for (DTChartSingleData *sData in self.multiData) {
-        DTChartItemData *itemData = sData.itemValues.firstObject;
-        CGFloat value = itemData.itemValue.x;
-        __block NSUInteger index = 0;
+    for (NSUInteger i = 0; i < self.multiData.count; ++i) {
+        DTChartSingleData *sData = self.multiData[i];
 
-        [self.xAxisLabelDatas enumerateObjectsUsingBlock:^(DTAxisLabelData *obj, NSUInteger idx, BOOL *stop) {
-            if (value == obj.value) {
-                index = idx;
-            }
-        }];
+        if (i < self.chartBars.count) {
+            DTDistributionBar *bar = self.chartBars[i];
 
-        if (index < self.chartBars.count) {
-            [indexSet addIndex:index];
-            DTDistributionBar *bar = self.chartBars[index];
             bar.singleData = sData;
+            bar.startHour = self.startHour;
             [bar drawSubItems];
         }
-
     }
 
-    // 绘制没有数据的bar
-    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
-        if ([indexSet containsIndex:i]) {
-            continue;
-        }
+}
 
-        DTDistributionBar *bar = self.chartBars[i];
-        [bar drawSubItems];
-    }
+- (void)drawChart {
+    [self processYAxisStyle];
 
-
+    [super drawChart];
 }
 
 

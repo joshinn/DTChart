@@ -22,6 +22,8 @@ extern NSUInteger const DTDistributionBarItemGap;
 
 @interface DTDistributionBar : UIView
 
+@property (nonatomic) NSInteger startHour;
+
 @property(nonatomic) DTChartSingleData *singleData;
 
 + (instancetype)distributionBar;

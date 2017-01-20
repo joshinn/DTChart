@@ -18,6 +18,7 @@
 #import "VBarPresentationVC.h"
 #import "HBarPresentationVC.h"
 #import "PiePresentationVC.h"
+#import "DistributionPresentationVC.h"
 
 @interface CollectionViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, GridCellDelegate>
 
@@ -52,6 +53,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.view addSubview:[self buttonFactory:@"VBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 2, 80, 48) action:@selector(vBarChartPresentation)]];
     [self.view addSubview:[self buttonFactory:@"HBar大图" frame:CGRectMake(0, 6 * 15 + 50 * 3, 80, 48) action:@selector(hBarChartPresentation)]];
     [self.view addSubview:[self buttonFactory:@"Pie大图" frame:CGRectMake(0, 6 * 15 + 50 * 4, 80, 48) action:@selector(pieChartPresentation)]];
+    [self.view addSubview:[self buttonFactory:@"分布大图" frame:CGRectMake(0, 6 * 15 + 50 * 5, 80, 48) action:@selector(disChartPresentation)]];
 
     self.collectionView.frame = CGRectMake(8 * 15, 6 * 15, GridCellSize.width * 3, GridCellSize.height * 3);
     [self.view addSubview:self.collectionView];
@@ -102,6 +104,11 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.navigationController pushViewController:pieVC animated:YES];
 }
 
+-(void)disChartPresentation{
+    DistributionPresentationVC *vc = [[DistributionPresentationVC alloc] init];
+    vc.chartId = @"10588";
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)simulateData {
 

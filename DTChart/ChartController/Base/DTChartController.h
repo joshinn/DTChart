@@ -35,6 +35,11 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 @interface DTChartController : NSObject
 
 @property(nonatomic, readonly) UIView *chartView;
+
+@property (nonatomic) CGPoint ctrlOrigin;
+@property (nonatomic) NSUInteger ctrlXCount;
+@property (nonatomic) NSUInteger ctrlYCount;
+
 /**
  * DTChart的id，对应一系列独立的数据
  * 会根据该id缓存数据的信息，比如颜色等

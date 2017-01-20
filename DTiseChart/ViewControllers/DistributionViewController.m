@@ -46,9 +46,9 @@
 
 
     self.distributionChart = [[DTDistributionChart alloc] initWithOrigin:CGPointMake(15, 100) xAxis:17 yAxis:11];
-//    self.distributionChart = [[DTDistributionChart alloc] initWithOrigin:CGPointMake(15, 100) xAxis:31 yAxis:29];
+//    self.mainDistributionChart = [[DTDistributionChart alloc] initWithOrigin:CGPointMake(15, 100) xAxis:31 yAxis:29];
     self.distributionChart.chartYAxisStyle = DTDistributionChartYAxisStyleSmall;
-//    self.distributionChart.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 2);
+//    self.mainDistributionChart.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 2);
     self.distributionChart.showCoordinateAxisGrid = YES;
     self.distributionChart.xAxisLabelDatas = self.xAxisLabelDatas;
 

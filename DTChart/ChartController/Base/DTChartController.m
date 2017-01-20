@@ -24,6 +24,10 @@
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super init]) {
+        _ctrlOrigin = origin;
+        _ctrlXCount = xCount;
+        _ctrlYCount = yCount;
+
         _chartMode = DTChartModeThumb;
         _showAnimation = YES;
     }

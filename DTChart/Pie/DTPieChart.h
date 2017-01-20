@@ -27,7 +27,7 @@ typedef void(^DTPieChartCancelTouch)(NSUInteger index);
 /**
  * 指定绘制multiData里的单独某个数据
  * @attention -1表示绘制全部，默认
- * @attention 范围：[0, multiData.count)
+ * @attention 范围：[-1, multiData.count)
  */
 @property(nonatomic) NSInteger drawSingleDataIndex;
 
