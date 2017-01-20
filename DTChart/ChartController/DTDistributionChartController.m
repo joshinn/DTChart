@@ -43,7 +43,6 @@
 
         self.chartMode = DTChartModeThumb;
 
-        _chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
     }
     return self;
 }

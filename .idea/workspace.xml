@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Category/NSNumber+DTExternal.m" afterPath="$PROJECT_DIR$/DTChart/Category/NSNumber+DTExternal.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
     </list>
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,21 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DTPieChartController.m" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DTPieChartController.m" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="174" column="5" lean-forward="true" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
+            <state relative-caret-position="249">
+              <caret line="40" column="44" lean-forward="true" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DTDistributionChartController.m" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DTDistributionChartController.m" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="329" column="19" lean-forward="true" selection-start-line="329" selection-start-column="19" selection-end-line="329" selection-end-column="19" />
+            <state relative-caret-position="241">
+              <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
               <folding>
                 <element signature="e#156#197#0" expanded="true" />
                 <element signature="e#703#738#0" expanded="true" />
@@ -139,7 +139,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self.radius</find>
       <find>radius =</find>
       <find>1</find>
       <find>sdata</find>
@@ -169,6 +168,7 @@
       <find>formatSmallStyleYLabelTitle</find>
       <find>startHour</find>
       <find>smallYAxisData</find>
+      <find>bac</find>
     </findStrings>
     <replaceStrings>
       <replace>DTChartItemData</replace>
@@ -254,12 +254,12 @@
         <option value="$PROJECT_DIR$/DTChart/Distribution/DTDistributionChart.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/Distribution/DTDistributionChart.m" />
-        <option value="$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m" />
         <option value="$PROJECT_DIR$/DTChart/DTChart-Prefix.pch" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/DistributionPresentationVC.m" />
         <option value="$PROJECT_DIR$/DTChart/Category/NSNumber+DTExternal.m" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m" />
+        <option value="$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m" />
       </list>
     </option>
   </component>
@@ -399,12 +399,12 @@
       <workItem from="1484788434606" duration="47000" />
       <workItem from="1484789041854" duration="96000" />
       <workItem from="1484789363442" duration="31872000" />
-      <workItem from="1484874738978" duration="24797000" />
+      <workItem from="1484874738978" duration="25011000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="567007000" />
+    <option name="totallyTimeSpent" value="567221000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -555,7 +555,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m</url>
-          <line>60</line>
+          <line>59</line>
           <option name="timeStamp" value="159" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -929,17 +929,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="329" column="19" lean-forward="true" selection-start-line="329" selection-start-column="19" selection-end-line="329" selection-end-column="19" />
-          <folding>
-            <element signature="e#156#197#0" expanded="true" />
-            <element signature="e#703#738#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/Distribution/DTDistributionChart.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -990,9 +979,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="174" column="5" lean-forward="true" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
+        <state relative-caret-position="249">
+          <caret line="40" column="44" lean-forward="true" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding>
+            <element signature="e#156#197#0" expanded="true" />
+            <element signature="e#703#738#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

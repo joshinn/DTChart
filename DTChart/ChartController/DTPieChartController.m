@@ -31,7 +31,6 @@
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _mainPieChart = [[DTPieChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
-        _mainPieChart.showCoordinateAxisGrid = YES;
         _chartView = _mainPieChart;
         self.chartMode = DTChartModeThumb;
 
@@ -117,7 +116,6 @@
     self.secondPieChart.pieRadius = 6;
     self.secondPieChart.showAnimation = self.isShowAnimation;
     [self.secondPieChart updateOrigin:self.secondPieChart.pieRadius - xAxisCellCount / 2 yOffset:0];
-    self.secondPieChart.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
     [self.mainPieChart addSubview:self.secondPieChart];
 
