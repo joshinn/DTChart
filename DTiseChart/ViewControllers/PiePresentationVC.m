@@ -37,6 +37,13 @@
         DTLog(@"pie chart series id = %@ index = %@", seriesId, @(partIndex));
     }];
 
+    [self.pieChartController setMainChartItemsColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
+        DTLog(@"pie chart main chart items color = %@", infos);
+    }];
+    [self.pieChartController setSecondChartItemsColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
+        DTLog(@"pie chart second chart items color = %@", infos);
+    }];
+
     [self.view addSubview:self.pieChartController.chartView];
 
     [self.pieChartController setItems:self.chartId listData:self.listBarData axisFormat:nil];

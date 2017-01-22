@@ -8,6 +8,7 @@
 
 #import "DTPieChart.h"
 #import "DTPiePart.h"
+#import "DTChartBlockModel.h"
 
 @interface DTPieChart ()
 
@@ -282,6 +283,7 @@
     self.colorManager = [DTColorManager randomManager];
 
     CGFloat sum = 0;    // 所有数据总和
+    NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
     for (DTChartItemData *itemData in sData.itemValues) {
         sum += itemData.itemValue.y;
 
@@ -293,7 +295,17 @@
         if (!itemData.secondColor) {
             itemData.secondColor = [self.colorManager getLightColor:itemData.color];
         }
+
+        DTChartBlockModel *blockModel = [[DTChartBlockModel alloc] init];
+        blockModel.seriesId = itemData.title;
+        blockModel.color = itemData.color;
+        [infos addObject:blockModel];
     }
+
+    if (self.itemsColorsCompletion) {
+        self.itemsColorsCompletion(infos);
+    }
+
 
     CGFloat accumulate = 0; // 累积百分比
 

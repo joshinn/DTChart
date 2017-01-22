@@ -66,6 +66,11 @@
                 weakSelf.mainAxisColorsCompletionBlock(infos);
             }
         }];
+        [_mainChart setItemsColorsCompletion:^(NSArray<DTChartBlockModel *> *infos) {
+            if (weakSelf.mainChartItemsColorsCompletionBlock) {
+                weakSelf.mainChartItemsColorsCompletionBlock(infos);
+            }
+        }];
 
     }
     return self;
@@ -123,6 +128,13 @@
     self.secondChart.pieRadius = 6;
     self.secondChart.showAnimation = self.isShowAnimation;
     [self.secondChart updateOrigin:self.secondChart.pieRadius - xAxisCellCount / 2 yOffset:0];
+
+    __weak typeof(self) weakSelf = self;
+    [self.secondChart setItemsColorsCompletion:^(NSArray<DTChartBlockModel *> *infos) {
+        if (weakSelf.secondChartItemsColorsCompletionBlock) {
+            weakSelf.secondChartItemsColorsCompletionBlock(infos);
+        }
+    }];
 
     [self.mainChart addSubview:self.secondChart];
 
@@ -244,6 +256,11 @@
     }
 }
 
+/**
+ * 对比已缓存的数据itemValues和当前的新数据itemValues，给新数据修正颜色等信息
+ * @param cachedItemData 已缓存的数据
+ * @param itemData 新数据
+ */
 - (void)checkItemData:(NSArray<DTChartItemData *> *)cachedItemData compare:(NSArray<DTChartItemData *> *)itemData {
     if (cachedItemData.count == 0 || itemData.count == 0) {
         return;

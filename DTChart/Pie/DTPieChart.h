@@ -19,6 +19,12 @@ typedef void(^DTPieChartTouch)(NSUInteger index);
  */
 typedef void(^DTPieChartCancelTouch)(NSUInteger index);
 
+/**
+ * drawSingleDataIndex > - 1时，绘制单独一组数据时，itemValues所对应的颜色信息回调
+ * @note seriesId 对应 ptName;
+ */
+typedef void(^ItemsColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
+
 @interface DTPieChart : DTChartBaseComponent
 
 @property(nonatomic, copy) DTPieChartTouch pieChartTouchBlock;
@@ -48,6 +54,8 @@ typedef void(^DTPieChartCancelTouch)(NSUInteger index);
  * 存储pie图每个组成部分的数值
  */
 @property(nonatomic, readonly) NSMutableArray<NSNumber *> *singleTotal;
+
+@property (nonatomic, copy) ItemsColorsCompletion itemsColorsCompletion;
 
 /**
  * 更新原点位置
