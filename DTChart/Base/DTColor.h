@@ -46,13 +46,6 @@
 // 橘
 #define DTColorOrangeLight DTRGBColor(0xD84C33, 1)
 
-
-// 黑
-#define DTColorBlack DTRGBColor(0x00081A, 1)
-// 黑
-#define DTColorBlackLight DTRGBColor(0x090F1E, 1)
-
-
 // 蓝
 #define DTColorDarkBlue DTRGBColor(0x004898, 1)
 // 蓝
@@ -89,8 +82,8 @@
 #define DTColorPinkLight DTRGBColor(0xC4578E, 1)
 
 
-#define DTColorArray  @[DTColorGreen, DTColorBlue, DTColorPurple, DTColorMagenta, DTColorYellow, DTColorOrange, DTColorBlack, DTColorDarkBlue, DTColorDarkGreen, DTColorRed, DTColorCyan, DTColorGray, DTColorPink]
-#define DTLightColorArray  @[DTColorGreenLight, DTColorBlueLight, DTColorPurpleLight, DTColorMagentaLight, DTColorYellowLight, DTColorOrangeLight, DTColorBlackLight, DTColorDarkBlueLight, DTColorDarkGreenLight, DTColorRedLight, DTColorCyanLight, DTColorGrayLight, DTColorPinkLight]
+#define DTColorArray  @[DTColorGreen, DTColorBlue, DTColorPurple, DTColorMagenta, DTColorYellow, DTColorOrange, DTColorDarkBlue, DTColorDarkGreen, DTColorRed, DTColorCyan, DTColorGray, DTColorPink]
+#define DTLightColorArray  @[DTColorGreenLight, DTColorBlueLight, DTColorPurpleLight, DTColorMagentaLight, DTColorYellowLight, DTColorOrangeLight, DTColorDarkBlueLight, DTColorDarkGreenLight, DTColorRedLight, DTColorCyanLight, DTColorGrayLight, DTColorPinkLight]
 
 
 #pragma mark - DTDistributionChart的颜色

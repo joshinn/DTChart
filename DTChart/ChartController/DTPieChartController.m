@@ -230,11 +230,35 @@
         for (DTChartSingleData *s2Data in cachedArray) {
 
             if ([sData.singleId isEqualToString:s2Data.singleId]) {
+
+                [self checkItemData:s2Data.itemValues compare:sData.itemValues];
+
                 sData.color = s2Data.color;
                 sData.secondColor = s2Data.secondColor;
                 sData.lineWidth = s2Data.lineWidth;
 
                 [cachedArray removeObject:s2Data];
+                break;
+            }
+        }
+    }
+}
+
+- (void)checkItemData:(NSArray<DTChartItemData *> *)cachedItemData compare:(NSArray<DTChartItemData *> *)itemData {
+    if (cachedItemData.count == 0 || itemData.count == 0) {
+        return;
+    }
+
+    NSMutableArray *cachedArray = [cachedItemData mutableCopy];
+
+    for (DTChartItemData *itemData1 in itemData) {
+        for (DTChartItemData *itemData2 in cachedArray) {
+
+            if ([itemData1.title isEqualToString:itemData2.title]) {
+                itemData1.color = itemData2.color;
+                itemData1.secondColor = itemData2.secondColor;
+
+                [cachedArray removeObject:itemData2];
                 break;
             }
         }
