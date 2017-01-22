@@ -23,6 +23,14 @@ typedef void(^DTPieChartTouchBlock)(NSString *seriesId, NSInteger partIndex);
  */
 @property(nonatomic) CGFloat chartRadius;
 
+/**
+ * 指定绘制主pie图里multiData里的单独某个数据
+ * @attention -1表示绘制全部，默认
+ * @attention 范围：[-1, multiData.count)
+ * @attention Presentation下，默认是-1
+ */
+@property (nonatomic) NSInteger drawMainChartSingleIndex;
+
 @property (nonatomic) DTPieChartTouchBlock pieChartTouchBlock;
 
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation __attribute__((unavailable("DTPieChartController can not add items")));

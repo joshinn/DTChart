@@ -27,7 +27,7 @@
 
 
     self.pieChartController = [[DTPieChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
-
+    self.pieChartController.drawMainChartSingleIndex = 0;
     [self.pieChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
         [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
             DTLog(@"main axis color = %@ \nseriesId = %@", obj.color, obj.seriesId);

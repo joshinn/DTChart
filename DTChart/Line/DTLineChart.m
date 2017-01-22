@@ -27,7 +27,7 @@
 /**
  * 相同seriesName的折线，第二条起，颜色alpha减小系数
  */
-static CGFloat const DTSameSeriesNameColorAlpha = 0.7;
+static CGFloat const DTSameSeriesNameColorAlpha = 0.5;
 
 /**
  * 触摸点最大的偏移距离
