@@ -38,37 +38,54 @@
     [self.view addSubview:changeBtn];
 
 
-    NSMutableArray<DTTableAxisLabelData *> *xAxisLabelDatas = [NSMutableArray array];
+    NSMutableArray<DTTableAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
     {
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"版本" value:1]];
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"新增设备" value:2]];
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"会话次数" value:3]];
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"总使用时长" value:4]];
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"Crash次数" value:5]];
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"单次使用" value:6]];
-        [xAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"多人协作" value:7]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"来源" value:1]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"来源明细" value:2]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"会话次数" value:3]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"总使用时长" value:4]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"Crash次数" value:5]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"单次使用" value:6]];
+        [yAxisLabelDatas addObject:[[DTTableAxisLabelData alloc] initWithTitle:@"多人协作" value:7]];
     }
-    xAxisLabelDatas.firstObject.showOrder = NO;
-    xAxisLabelDatas[3].ascending = NO;
+    yAxisLabelDatas.firstObject.showOrder = NO;
+    yAxisLabelDatas[3].ascending = NO;
+
+    NSMutableArray<DTChartSingleData *> *rowData = [NSMutableArray array];
+    {
+        [rowData addObject:[self simulateData:7 index:0 sId:@"xx1"]];
+        [rowData addObject:[self simulateData:7 index:1 sId:@"xx2"]];
+        [rowData addObject:[self simulateData:7 index:3 sId:@"xx3"]];
+        [rowData addObject:[self simulateData:7 index:4 sId:@"xx3"]];
+        [rowData addObject:[self simulateData:7 index:5 sId:@"xx4"]];
+        [rowData addObject:[self simulateData:7 index:6 sId:@"xx5"]];
+        [rowData addObject:[self simulateData:7 index:7 sId:@"xx6"]];
+        [rowData addObject:[self simulateData:7 index:8 sId:@"xx6"]];
+        [rowData addObject:[self simulateData:7 index:9 sId:@"xx6"]];
+        [rowData addObject:[self simulateData:7 index:10 sId:@"xx7"]];
+    }
 
     self.tableChart = [DTTableChart tableChart:DTTableChartStyleC1C6 origin:CGPointMake(200, 100) widthCellCount:75 heightCellCount:45];
     self.tableChart.headViewHeight = 500;
     self.tableChart.headView.backgroundColor = [UIColor lightGrayColor];
-    self.tableChart.xAxisLabelDatas = xAxisLabelDatas;
-    self.tableChart.multiData = @[[self simulateData:7], [self simulateData:700], [self simulateData:600], [self simulateData:466], [self simulateData:550], [self simulateData:256], [self simulateData:368]];
+//    self.tableChart.collapseColumn = -1;
+    self.tableChart.yAxisLabelDatas = yAxisLabelDatas;
+    self.tableChart.multiData = rowData;
     [self.view addSubview:self.tableChart];
     [self.tableChart drawChart];
 }
 
-- (DTChartSingleData *)simulateData:(NSUInteger)count {
+- (DTChartSingleData *)simulateData:(NSUInteger)count index:(NSUInteger)index sId:(NSString *)sId {
     NSMutableArray<DTChartItemData *> *values = [NSMutableArray array];
     for (NSUInteger i = 1; i <= count; ++i) {
         DTChartItemData *data = [DTChartItemData chartData];
         data.itemValue = ChartItemValueMake(i, 30 + arc4random_uniform(90));
-        data.title = [NSString stringWithFormat:@"{%@,%@}", @(data.itemValue.x), @(data.itemValue.y)];
+        data.title = [NSString stringWithFormat:@"%@~%@~%@", sId, @(index), @(data.itemValue.y)];
         [values addObject:data];
     }
     DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    singleData.singleId = sId;
+    singleData.singleName = [sId stringByAppendingString:@"~name"];
     return singleData;
 }
 

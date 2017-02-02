@@ -14,8 +14,16 @@
 
 @property(nonatomic) NSString *ptName;
 @property(nonatomic) CGFloat ptValue;
+/**
+ * ptValue的文本形式
+ * @note DTTableChart用
+ */
+@property(nonatomic) NSString *ptStringValue;
 
 + (instancetype)commonData:(NSString *)name value:(CGFloat)value;
+
++ (instancetype)commonData:(NSString *)name stringValue:(NSString *)value;
+
 @end
 
 

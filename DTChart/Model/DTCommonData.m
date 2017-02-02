@@ -17,6 +17,13 @@
     return data;
 }
 
++ (instancetype)commonData:(NSString *)name stringValue:(NSString *)value {
+    DTCommonData *data = [[DTCommonData alloc] init];
+    data.ptName = name;
+    data.ptStringValue = value;
+    return data;
+}
+
 
 @end
 

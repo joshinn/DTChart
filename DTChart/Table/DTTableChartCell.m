@@ -139,6 +139,9 @@ static NSInteger const IconViewTag = 10101;
 
 - (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas {
 
+    BOOL hasSecondAxis = secondTitleDatas.count > 0;
+
+
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
         UIView *container = self.containerViews[i];
@@ -150,8 +153,15 @@ static NSInteger const IconViewTag = 10101;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.userInteractionEnabled = YES;
 
-        if (i < titleDatas.count) {
-            DTTableAxisLabelData *axisLabelData = titleDatas[i];
+        DTTableAxisLabelData *axisLabelData = nil;
+        NSInteger halfViewsCount = i - self.containerViews.count / 2;
+        if ((halfViewsCount >= 0) && hasSecondAxis && halfViewsCount < secondTitleDatas.count) {
+            axisLabelData = secondTitleDatas[(NSUInteger) halfViewsCount];
+        } else if (i < titleDatas.count) {
+            axisLabelData = titleDatas[i];
+        }
+
+        if (axisLabelData) {
             label.text = axisLabelData.title;
             icon.hidden = !axisLabelData.isShowOrder;
             if (axisLabelData.ascending) {
@@ -169,10 +179,11 @@ static NSInteger const IconViewTag = 10101;
     }
 }
 
-- (void)setCellData:(NSArray<DTChartItemData *> *)items second:(NSArray<DTChartItemData *> *)secondItems indexPath:(NSIndexPath *)indexPath {
+- (void)setCellData:(DTChartSingleData *)singleData second:(DTChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath {
     BOOL isOddRow = indexPath.row % 2 == 0;
+    BOOL hasSecondAxis = secondSingleData != nil;
 
-    for (NSUInteger i = 0; i < self.containerViews.count && items.count; ++i) {
+    for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
         UIView *container = self.containerViews[i];
 
@@ -183,8 +194,18 @@ static NSInteger const IconViewTag = 10101;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.userInteractionEnabled = NO;
 
-        if (i < items.count) {
-            label.text = [NSString stringWithFormat:@"%@", @(items[i].itemValue.y)];
+
+        DTChartItemData *itemData = nil;
+        NSInteger halfViewsCount = i - self.containerViews.count / 2;
+        if ((halfViewsCount >= 0) && hasSecondAxis && halfViewsCount < secondSingleData.itemValues.count) {
+            itemData = secondSingleData.itemValues[(NSUInteger) halfViewsCount];
+        } else if (i < singleData.itemValues.count) {
+            itemData = singleData.itemValues[i];
+        }
+
+
+        if (itemData) {
+            label.text = itemData.title;
         } else {
             label.text = @"";
         }

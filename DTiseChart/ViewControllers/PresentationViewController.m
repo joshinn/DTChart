@@ -28,8 +28,9 @@
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     self.lineChartController.chartMode = DTChartModePresentation;
     self.lineChartController.valueSelectable = YES;
+    self.lineChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
     [self.lineChartController setLineChartTouchBlock:^(NSString *seriesId, NSUInteger pointIndex) {
-
+    
     }];
 
     [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
@@ -60,10 +61,10 @@
     [self.lineChartController drawChart];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-
-    [self.lineChartController destroyChart];
-}
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
+//
+//    [self.lineChartController destroyChart];
+//}
 
 @end

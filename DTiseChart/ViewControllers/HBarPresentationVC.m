@@ -28,7 +28,8 @@
 
         self.tBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
         self.tBarChartController.chartMode = DTChartModeThumb;
-//    self.barChartController.barWidth = 2;
+    
+    //    self.barChartController.barWidth = 2;
 
     [self.tBarChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
         //        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
@@ -49,6 +50,7 @@
 
     self.pBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:75 yAxis:41];
     self.pBarChartController.chartMode = DTChartModePresentation;
+    
     [self.view addSubview:self.pBarChartController.chartView];
     [self.pBarChartController setItems:self.chartId listData:[self simulateListCommonData:1 pointCount:10 mainAxis:YES] axisFormat:formatter];
 

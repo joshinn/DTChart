@@ -222,7 +222,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     if (cell.indexPath.item == 7) {
         LineGridCell *lineCell = (LineGridCell *) cell;
 
-        NSMutableArray<DTListCommonData *> *array = [self simulateListCommonData:2 pointCount:7 mainAxis:YES];
+        NSMutableArray<DTListCommonData *> *array = [self simulateListCommonData:2 pointCount:6 mainAxis:YES];
         DTListCommonData *obj1 = array[0];
         obj1.seriesId = @"601";
         obj1.seriesName = @"jiu";

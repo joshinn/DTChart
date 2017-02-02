@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
  */
 @property(nonatomic) DTTableChartStyle tableChartStyle;
 
+@property (nonatomic) NSInteger collapseColumn;
 
 /**
  * 实例化，使用预设风格

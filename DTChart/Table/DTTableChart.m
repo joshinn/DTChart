@@ -8,6 +8,7 @@
 
 #import "DTTableChart.h"
 #import "DTTableChartCell.h"
+#import "DTTableChartSingleData.h"
 
 
 @interface DTTableChart () <UITableViewDataSource, UITableViewDelegate>
@@ -19,11 +20,11 @@
 /**
  * 主表数据
  */
-@property(nonatomic) NSMutableArray<NSArray<DTChartItemData *> *> *listRowData;
+//@property(nonatomic) NSMutableArray<DTChartSingleData *> *listRowData;
 /**
  * 副表数据
  */
-@property(nonatomic) NSMutableArray<NSArray<DTChartItemData *> *> *listSecondRowData;
+//@property(nonatomic) NSMutableArray<DTChartSingleData *> *listSecondRowData;
 
 @end
 
@@ -172,6 +173,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 - (void)initial {
     [super initial];
 
+    _collapseColumn = -1;
     self.userInteractionEnabled = YES;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
     self.tableView.frame = self.contentView.bounds;
@@ -196,19 +198,19 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     return _tableView;
 }
 
-- (NSMutableArray<NSArray<DTChartItemData *> *> *)listRowData {
-    if (!_listRowData) {
-        _listRowData = [NSMutableArray array];
-    }
-    return _listRowData;
-}
-
-- (NSMutableArray<NSArray<DTChartItemData *> *> *)listSecondRowData {
-    if (!_listSecondRowData) {
-        _listSecondRowData = [NSMutableArray array];
-    }
-    return _listSecondRowData;
-}
+//- (NSMutableArray<NSArray<DTChartItemData *> *> *)listRowData {
+//    if (!_listRowData) {
+//        _listRowData = [NSMutableArray array];
+//    }
+//    return _listRowData;
+//}
+//
+//- (NSMutableArray<NSArray<DTChartItemData *> *> *)listSecondRowData {
+//    if (!_listSecondRowData) {
+//        _listSecondRowData = [NSMutableArray array];
+//    }
+//    return _listSecondRowData;
+//}
 
 - (void)setHeadViewHeight:(CGFloat)headViewHeight {
     _headViewHeight = headViewHeight;
@@ -235,7 +237,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     if (section == 0) {
         return self.yAxisLabelDatas.count > 0 ? 1 : 0;
     } else {
-        return MAX(self.self.listRowData.count, self.listSecondRowData.count);
+        return MAX(self.multiData.count, self.secondMultiData.count);
     }
 }
 
@@ -250,13 +252,13 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
         [cell setCellTitle:self.yAxisLabelDatas secondTitles:self.ySecondAxisLabelDatas];
 #pragma clang diagnostic pop
     } else {
-        NSArray<DTChartItemData *> *mainTableRowData = nil;
-        NSArray<DTChartItemData *> *secondTableRowData = nil;
-        if (self.listRowData.count > indexPath.row) {
-            mainTableRowData = self.listRowData[(NSUInteger) indexPath.row];
+        DTChartSingleData *mainTableRowData = nil;
+        DTChartSingleData *secondTableRowData = nil;
+        if (self.multiData.count > indexPath.row) {
+            mainTableRowData = self.multiData[(NSUInteger) indexPath.row];
         }
-        if (self.listSecondRowData.count > indexPath.row) {
-            secondTableRowData = self.listSecondRowData[(NSUInteger) indexPath.row];
+        if (self.secondMultiData.count > indexPath.row) {
+            secondTableRowData = self.secondMultiData[(NSUInteger) indexPath.row];
         }
         [cell setCellData:mainTableRowData second:secondTableRowData indexPath:indexPath];
     }
@@ -269,33 +271,29 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 /**
  * 加工 tableView 行数据
  * @param originData 原始数据
- * @param containerList 行数据list
  */
-- (void)processRowData:(NSArray<DTChartSingleData *> *)originData containerArray:(NSMutableArray<NSArray<DTChartItemData *> *> *)containerList {
+- (void)processRowData:(NSArray<DTChartSingleData *> *)originData {
 
-    NSUInteger count = 0;
+    NSMutableArray<NSString *> *seriesIds = [NSMutableArray array];
+
     for (DTChartSingleData *sData in originData) {
-        if (sData.itemValues.count > count) {
-            count = sData.itemValues.count;
-        }
-    }
+        DTTableChartSingleData *tableChartSingleData = (DTTableChartSingleData *) sData;
 
-    [containerList removeAllObjects];
-
-    for (NSUInteger i = 0; i < count; ++i) {
-        NSMutableArray<DTChartItemData *> *rowData = [NSMutableArray array];
-        for (DTChartSingleData *sData in originData) {
-            if (sData.itemValues.count > i) {
-                DTChartItemData *itemData = sData.itemValues[i];
-                [rowData addObject:itemData];
-            } else {
-                DTChartItemData *itemData = [DTChartItemData chartData];
-                itemData.title = @"";
-                [rowData addObject:itemData];
+        BOOL exist = NO;
+        for (NSUInteger i = seriesIds.count; i > 0; --i) {
+            NSString *sId = seriesIds[i - 1];
+            if ([sId isEqualToString:sData.singleId]) {
+                tableChartSingleData.header = NO;
+                exist = YES;
+                break;
             }
         }
 
-        [containerList addObject:rowData];
+        if (!exist) {
+            tableChartSingleData.header = NO;
+            [seriesIds addObject:tableChartSingleData.singleId];
+        }
+
     }
 }
 
@@ -318,7 +316,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 }
 
 - (void)drawValues {
-    [self processRowData:self.multiData containerArray:self.listRowData];
+    if (self.collapseColumn >= 0) {
+        [self processRowData:self.multiData];
+    }
 }
 
 - (void)drawChart {
@@ -335,7 +335,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 }
 
 - (void)drawSecondValues {
-    [self processRowData:self.secondMultiData containerArray:self.listSecondRowData];
+    if (self.collapseColumn >= 0) {
+        [self processRowData:self.secondMultiData];
+    }
 }
 
 /**

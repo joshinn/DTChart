@@ -10,6 +10,7 @@
 
 @interface DTTableChartController : DTChartController
 
+@property (nonatomic) NSInteger collapseColumn;
 
 @end
 

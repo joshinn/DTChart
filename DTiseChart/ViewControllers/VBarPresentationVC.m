@@ -29,6 +29,7 @@
 //    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
 //    self.barChartController.chartMode = DTChartModeThumb;
     self.barChartController.valueSelectable = YES;
+    self.barChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
     [self.barChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
 //        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
