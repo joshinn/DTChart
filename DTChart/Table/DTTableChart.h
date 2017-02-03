@@ -8,6 +8,8 @@
 
 #import "DTChartBaseComponent.h"
 
+@class DTTableChartSingleData;
+
 typedef NS_ENUM(NSInteger, DTTableChartStyle) {
     DTTableChartStyleNone = 0,  // 无格式
     DTTableChartStyleCustom = 1,
@@ -29,6 +31,17 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
 };
 
 
+/**
+ * 展开/收起block
+ * @seriesId 展开row的id
+ */
+typedef void(^DTTableChartExpandTouch)(NSString *seriesId);
+/**
+ * 排序block
+ * @column 排序列的序号
+ */
+typedef void(^DTTableChartOrderTouch)(NSUInteger column);
+
 @interface DTTableChart : DTChartBaseComponent
 /**
  * 头view
@@ -44,7 +57,16 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
  */
 @property(nonatomic) DTTableChartStyle tableChartStyle;
 
-@property (nonatomic) NSInteger collapseColumn;
+@property(nonatomic) NSInteger collapseColumn;
+
+/**
+ * 行展开回调
+ */
+@property(nonatomic, copy) DTTableChartExpandTouch expandTouchBlock;
+/**
+ * 排序回调
+ */
+@property (nonatomic, copy) DTTableChartOrderTouch orderTouchBlock;
 
 /**
  * 实例化，使用预设风格
@@ -55,6 +77,7 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
  * @return instance
  */
 + (instancetype)tableChart:(DTTableChartStyle)chartStyle origin:(CGPoint)origin widthCellCount:(NSUInteger)width heightCellCount:(NSUInteger)height;
+
 /**
  * 实例化，DTTableChartStyleCustom
  * @param widths 所有label和gap的宽度
@@ -65,4 +88,14 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
  * @attention widths格式是@[ @{@"label" : @170}, @{@"gap" : @10} ]
  */
 + (instancetype)tableChartCustom:(NSArray *)widths origin:(CGPoint)origin widthCellCount:(NSUInteger)width heightCellCount:(NSUInteger)height;
+
+- (void)deleteItems:(NSArray<NSString *> *)seriesIds;
+
+/**
+ * 增加展开项的详细内容
+ * @param mainData 详细内容
+ * @attention 暂时只支持主表
+ */
+- (void)addExpandItems:(NSArray<DTTableChartSingleData *> *)mainData;
+
 @end

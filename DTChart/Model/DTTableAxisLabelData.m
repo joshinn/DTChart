@@ -12,7 +12,7 @@
 
 - (instancetype)initWithTitle:(NSString *)title value:(CGFloat)value {
     if (self = [super initWithTitle:title value:value]) {
-        _showOrder = YES;
+        _showOrder = NO;
         _ascending = YES;
     }
     return self;

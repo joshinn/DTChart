@@ -9,6 +9,7 @@
 #import "DTTableChartCell.h"
 #import "DTChartLabel.h"
 #import "DTTableAxisLabelData.h"
+#import "DTTableChartSingleData.h"
 
 
 CGFloat const DTTableChartCellHeight = 35;
@@ -19,6 +20,11 @@ CGFloat const DTTableChartCellHeight = 35;
 @property(nonatomic) DTTableChartStyle style;
 @property(nonatomic) UIImage *ascendImg;
 @property(nonatomic) UIImage *descendImg;
+
+@property(nonatomic) NSIndexPath *indexPath;
+
+@property(nonatomic) DTTableChartSingleData *cellData;
+
 @end
 
 @implementation DTTableChartCell
@@ -28,6 +34,9 @@ static NSInteger const IconViewTag = 10101;
 
 #define EvenRowBackgroundColor DTRGBColor(0x3b3b3b, 1)
 #define OddRowBackgroundColor [UIColor clearColor]
+
+#define NormalLabelTextColor DTRGBColor(0xc0c0c0, 1)
+#define ExpandLabelTextColor DTRGBColor(0xe861a4, 1)
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -64,10 +73,14 @@ static NSInteger const IconViewTag = 10101;
 #pragma mark - private method
 
 - (void)orderButton:(UIButton *)sender {
+    [self.delegate chartCellOrderTouched:(NSUInteger) sender.superview.tag];
+}
 
-    if (self.orderClickBlock) {
-        DTLog(@"click label tag = %@", @(sender.superview.tag));
-        self.orderClickBlock(sender.superview.tag);
+- (void)touchEvent:(DTChartLabel *)sender {
+    if (self.cellData.expandType == DTTableChartCellWillExpand) {
+        [self.delegate chartCellToExpandTouched:self.cellData.singleId];
+    } else if(self.cellData.expandType == DTTableChartCellDidExpand){
+        [self.delegate chartCellToCollapseTouched:self.cellData.singleId];
     }
 }
 
@@ -77,6 +90,8 @@ static NSInteger const IconViewTag = 10101;
  * @return 子view数组
  */
 - (NSMutableArray<UIView *> *)layoutSubviewsWithWidths:(NSArray *)widths {
+
+
     CGFloat x = 0;
     NSMutableArray<UIView *> *list = [NSMutableArray array];
     for (NSDictionary *dictionary in widths) {
@@ -88,10 +103,14 @@ static NSInteger const IconViewTag = 10101;
             container.frame = CGRectMake(x, 0, width, DTTableChartCellHeight);
 
             DTChartLabel *label = [DTChartLabel chartLabel];
+            label.textColor = NormalLabelTextColor;
             label.tag = LabelViewTag;
             label.font = [UIFont systemFontOfSize:15];
             label.frame = container.bounds;
             label.textAlignment = NSTextAlignmentCenter;
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchEvent:)];
+            [label addGestureRecognizer:tap];
+
             [container addSubview:label];
 
             UIButton *iconView = [[UIButton alloc] init];
@@ -148,10 +167,11 @@ static NSInteger const IconViewTag = 10101;
         container.tag = i;
 
         DTChartLabel *label = [container viewWithTag:LabelViewTag];
-        UIButton *icon = [container viewWithTag:IconViewTag];
-
+        label.userInteractionEnabled = NO;
+        label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
-        label.userInteractionEnabled = YES;
+
+        UIButton *icon = [container viewWithTag:IconViewTag];
 
         DTTableAxisLabelData *axisLabelData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
@@ -179,7 +199,10 @@ static NSInteger const IconViewTag = 10101;
     }
 }
 
-- (void)setCellData:(DTChartSingleData *)singleData second:(DTChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath {
+- (void)setCellData:(DTTableChartSingleData *)singleData second:(DTTableChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath {
+    self.indexPath = indexPath;
+    self.cellData = singleData;
+
     BOOL isOddRow = indexPath.row % 2 == 0;
     BOOL hasSecondAxis = secondSingleData != nil;
 
@@ -191,9 +214,9 @@ static NSInteger const IconViewTag = 10101;
         icon.hidden = YES;
 
         DTChartLabel *label = [container viewWithTag:LabelViewTag];
+        label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
         label.userInteractionEnabled = NO;
-
 
         DTChartItemData *itemData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
@@ -203,11 +226,39 @@ static NSInteger const IconViewTag = 10101;
             itemData = singleData.itemValues[i];
         }
 
-
         if (itemData) {
             label.text = itemData.title;
         } else {
             label.text = @"";
+        }
+
+        // 展开/收起处理
+        if (self.collapseColumn == i) {
+            if ((halfViewsCount >= 0) && hasSecondAxis && !secondSingleData.isHeaderRow) {
+                label.text = @"";
+            } else if (!singleData.isHeaderRow) {
+                label.text = @"";
+            }
+        }
+
+        if (self.collapseColumn >= 0 && self.collapseColumn == i - 1) {
+            if ((halfViewsCount >= 0) && hasSecondAxis && secondSingleData.isHeaderRow) {
+                if (secondSingleData.expandType == DTTableChartCellDidExpand) {
+                    label.text = @"收起…";
+                } else {
+                    label.text = @"展开…";
+                }
+                label.userInteractionEnabled = YES;
+                label.textColor = ExpandLabelTextColor;
+            } else if (singleData.isHeaderRow) {
+                if (singleData.expandType == DTTableChartCellDidExpand) {
+                    label.text = @"收起…";
+                } else {
+                    label.text = @"展开…";
+                }
+                label.userInteractionEnabled = YES;
+                label.textColor = ExpandLabelTextColor;
+            }
         }
 
         if (isOddRow) {

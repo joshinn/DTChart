@@ -9,6 +9,7 @@
 #import "TableChartViewController.h"
 #import "DTTableChart.h"
 #import "DTTableAxisLabelData.h"
+#import "DTTableChartSingleData.h"
 
 @interface TableChartViewController ()
 
@@ -83,7 +84,7 @@
         data.title = [NSString stringWithFormat:@"%@~%@~%@", sId, @(index), @(data.itemValue.y)];
         [values addObject:data];
     }
-    DTChartSingleData *singleData = [DTChartSingleData singleData:values];
+    DTTableChartSingleData *singleData = [DTTableChartSingleData singleData:values];
     singleData.singleId = sId;
     singleData.singleName = [sId stringByAppendingString:@"~name"];
     return singleData;

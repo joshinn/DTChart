@@ -10,9 +10,18 @@
 
 @implementation DTTableChartSingleData
 
++ (instancetype)singleData:(NSArray<DTChartItemData *> *)values {
+    DTTableChartSingleData *data = [[DTTableChartSingleData alloc] init];
+    data.itemValues = values;
+    data.lineWidth = 5;
+    return data;
+}
+
+
 - (instancetype)init {
     if(self = [super init]){
-        _header = YES;
+        _headerRow = YES;
+        _expandType = DTTableChartCellWillExpand;
     }
     return self;
 }

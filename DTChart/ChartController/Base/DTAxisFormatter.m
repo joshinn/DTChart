@@ -129,6 +129,9 @@ static NSString *const DateFormatterTime = @"HH:mm";
     return mutableString;
 }
 
+#pragma mark - public method
+
+
 - (NSString *)getAxisLabelTitle:(NSString *)string orValue:(CGFloat)value format:(NSString *)format scale:(CGFloat)scale type:(DTAxisFormatterType)type dateSubType:(DTAxisFormatterDateSubType)dateSubType {
     if (type == DTAxisFormatterTypeText) {
         return string;
@@ -139,8 +142,6 @@ static NSString *const DateFormatterTime = @"HH:mm";
     }
     return string;
 }
-
-#pragma mark - public method
 
 - (NSString *)getMainYAxisLabelTitle:(NSString *)string orValue:(CGFloat)value {
     return [self getAxisLabelTitle:string orValue:value format:self.mainYAxisFormat scale:self.mainYAxisScale type:self.mainYAxisType dateSubType:self.mainYAxisDateSubType];

@@ -1,16 +1,16 @@
 //
-//  DTTableAxisLabelData.h
+//  DTTableChartTitleOrderModel.h
 //  DTiseChart
 //
-//  Created by Jo Shin on 2017/1/6.
+//  Created by Jo Shin on 2017/2/3.
 //  Copyright © 2017年 studio.joshin. All rights reserved.
 //
 
-#import "DTChartData.h"
+#import <Foundation/Foundation.h>
 
-@interface DTTableAxisLabelData : DTAxisLabelData
+@interface DTTableChartTitleOrderModel : NSObject
 /**
- * 是否显示升降序按钮，默认NO
+ * 是否显示升降序按钮，默认YES
  */
 @property(nonatomic, getter=isShowOrder) BOOL showOrder;
 /**

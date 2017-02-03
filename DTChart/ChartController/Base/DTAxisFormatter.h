@@ -91,6 +91,8 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 + (instancetype)axisFormatterExClone:(DTAxisFormatter *)origin;
 
+- (NSString *)getAxisLabelTitle:(NSString *)string orValue:(CGFloat)value format:(NSString *)format scale:(CGFloat)scale type:(DTAxisFormatterType)type dateSubType:(DTAxisFormatterDateSubType)dateSubType;
+
 - (NSString *)getMainYAxisLabelTitle:(NSString *)string orValue:(CGFloat)value;
 
 - (NSString *)getSecondYAxisLabelTitle:(NSString *)string orValue:(CGFloat)value;

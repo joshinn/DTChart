@@ -12,17 +12,32 @@
 @class DTChartLabel;
 @class DTChartItemData;
 @class DTTableAxisLabelData;
+@class DTTableChartSingleData;
 
 extern CGFloat const DTTableChartCellHeight;
 
 
-typedef void(^DTTableChartCellOrderClickBlock)(NSInteger index);
 
-@interface DTTableChartCell : UITableViewCell
+@protocol DTTableChartCellDelegate <NSObject>
+
+- (void)chartCellToExpandTouched:(NSString *)seriesId;
+- (void)chartCellToCollapseTouched:(NSString *)seriesId;
 /**
  * 升降序排列回调
  */
-@property(nonatomic, copy) DTTableChartCellOrderClickBlock orderClickBlock;
+-(void)chartCellOrderTouched:(NSUInteger)column;
+
+@end
+
+@interface DTTableChartCell : UITableViewCell
+
+@property(nonatomic, weak) id <DTTableChartCellDelegate> delegate;
+
+/**
+ * 展开收起column，小于0表示无展开收起功能
+ * @note 该column后一列会显示“展开…/收起…”
+ */
+@property(nonatomic) NSInteger collapseColumn;
 
 /**
  * 设置cell风格
@@ -39,13 +54,12 @@ typedef void(^DTTableChartCellOrderClickBlock)(NSInteger index);
 - (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas;
 
 
-
 /**
  * 设置table的表格内容数据
  * @param singleData 主表每行的数据
  * @param secondSingleData 副表每行数据
  * @param indexPath 该行的indexPath
  */
-- (void)setCellData:(DTChartSingleData *)singleData second:(DTChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath;
+- (void)setCellData:(DTTableChartSingleData *)singleData second:(DTTableChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath;
 
 @end

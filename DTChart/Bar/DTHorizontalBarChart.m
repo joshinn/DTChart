@@ -264,14 +264,6 @@
 
     NSUInteger sectionCellCount = self.yAxisCellCount / self.yAxisLabelDatas.count;
 
-    if (self.barChartStyle == DTBarChartStyleLump) {
-        self.barBorderStyle = DTBarBorderStyleNone;
-    } else if (sectionCellCount > 1) {
-        self.barBorderStyle = DTBarBorderStyleTopBorder;
-    } else {
-        self.barBorderStyle = DTBarBorderStyleSidesBorder;
-    }
-
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.yAxisLabelDatas[i];
 
