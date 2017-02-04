@@ -21,6 +21,10 @@
 		654D1E631E0123A7004F2F1F /* DTLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E621E0123A7004F2F1F /* DTLine.m */; };
 		654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D1E661E0267BA004F2F1F /* UIBezierPath+DTExternal.m */; };
 		65751E071E448D240029C1B3 /* DTTableChartTitleOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65751E061E448D240029C1B3 /* DTTableChartTitleOrderModel.m */; };
+		65751E0A1E4583A70029C1B3 /* FillPresentationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 65751E091E4583A70029C1B3 /* FillPresentationVC.m */; };
+		65751E0E1E45847F0029C1B3 /* DTFillChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65751E0D1E45847F0029C1B3 /* DTFillChart.m */; };
+		65751E111E4584930029C1B3 /* DTFillChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65751E101E4584930029C1B3 /* DTFillChartController.m */; };
+		65751E171E45A5750029C1B3 /* DTFillLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 65751E161E45A5750029C1B3 /* DTFillLayer.m */; };
 		6578CF7C1E431F5D002AD542 /* DTTableChartSingleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6578CF7B1E431F5D002AD542 /* DTTableChartSingleData.m */; };
 		657C87D71E287ED700BBD558 /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657C87D61E287ED700BBD558 /* PresentationViewController.m */; };
 		658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 658F7FB01E10F7290024AB62 /* DTPieChart.m */; };
@@ -99,6 +103,14 @@
 		654D1E6D1E02ABD9004F2F1F /* DTColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTColor.h; sourceTree = "<group>"; };
 		65751E051E448D240029C1B3 /* DTTableChartTitleOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChartTitleOrderModel.h; sourceTree = "<group>"; };
 		65751E061E448D240029C1B3 /* DTTableChartTitleOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChartTitleOrderModel.m; sourceTree = "<group>"; };
+		65751E081E4583A70029C1B3 /* FillPresentationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillPresentationVC.h; sourceTree = "<group>"; };
+		65751E091E4583A70029C1B3 /* FillPresentationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillPresentationVC.m; sourceTree = "<group>"; };
+		65751E0C1E45847F0029C1B3 /* DTFillChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTFillChart.h; sourceTree = "<group>"; };
+		65751E0D1E45847F0029C1B3 /* DTFillChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTFillChart.m; sourceTree = "<group>"; };
+		65751E0F1E4584930029C1B3 /* DTFillChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTFillChartController.h; sourceTree = "<group>"; };
+		65751E101E4584930029C1B3 /* DTFillChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTFillChartController.m; sourceTree = "<group>"; };
+		65751E151E45A5750029C1B3 /* DTFillLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTFillLayer.h; sourceTree = "<group>"; };
+		65751E161E45A5750029C1B3 /* DTFillLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTFillLayer.m; sourceTree = "<group>"; };
 		6578CF7A1E431F5D002AD542 /* DTTableChartSingleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChartSingleData.h; sourceTree = "<group>"; };
 		6578CF7B1E431F5D002AD542 /* DTTableChartSingleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableChartSingleData.m; sourceTree = "<group>"; };
 		657C87D51E287ED700BBD558 /* PresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationViewController.h; sourceTree = "<group>"; };
@@ -236,6 +248,8 @@
 				65E3470C1E2F761D00BE9A1F /* DTPieChartController.m */,
 				65F598701E31A11500B1DA79 /* DTDistributionChartController.h */,
 				65F598711E31A11500B1DA79 /* DTDistributionChartController.m */,
+				65751E0F1E4584930029C1B3 /* DTFillChartController.h */,
+				65751E101E4584930029C1B3 /* DTFillChartController.m */,
 			);
 			path = ChartController;
 			sourceTree = "<group>";
@@ -251,6 +265,17 @@
 				653345411E30D09500F6CE48 /* NSNumber+DTExternal.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		65751E0B1E4584690029C1B3 /* Fill */ = {
+			isa = PBXGroup;
+			children = (
+				65751E0C1E45847F0029C1B3 /* DTFillChart.h */,
+				65751E0D1E45847F0029C1B3 /* DTFillChart.m */,
+				65751E151E45A5750029C1B3 /* DTFillLayer.h */,
+				65751E161E45A5750029C1B3 /* DTFillLayer.m */,
+			);
+			path = Fill;
 			sourceTree = "<group>";
 		};
 		658F7FAE1E10F7060024AB62 /* Pie */ = {
@@ -293,6 +318,8 @@
 				6533453E1E30574700F6CE48 /* PiePresentationVC.m */,
 				65F598731E31BE5400B1DA79 /* DistributionPresentationVC.h */,
 				65F598741E31BE5400B1DA79 /* DistributionPresentationVC.m */,
+				65751E081E4583A70029C1B3 /* FillPresentationVC.h */,
+				65751E091E4583A70029C1B3 /* FillPresentationVC.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -397,6 +424,7 @@
 				658F7FAE1E10F7060024AB62 /* Pie */,
 				65C027EB1E15EFA0001EB1C7 /* Distribution */,
 				65920D0C1E1CD1F0006EA012 /* Table */,
+				65751E0B1E4584690029C1B3 /* Fill */,
 				65CD0F311DFEA42A007AFD8D /* Model */,
 				654284DE1E24B28900267603 /* Util */,
 			);
@@ -545,6 +573,7 @@
 				65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */,
 				65CD0F361DFEA42A007AFD8D /* DTHorizontalBarChart.m in Sources */,
 				653345421E30D09500F6CE48 /* NSNumber+DTExternal.m in Sources */,
+				65751E0A1E4583A70029C1B3 /* FillPresentationVC.m in Sources */,
 				658F7FB11E10F7290024AB62 /* DTPieChart.m in Sources */,
 				65920D0F1E1CD20A006EA012 /* DTTableChart.m in Sources */,
 				65F598721E31A11500B1DA79 /* DTDistributionChartController.m in Sources */,
@@ -559,6 +588,7 @@
 				65CC6DF21E0A640E00E2C36B /* DTHeapBar.m in Sources */,
 				65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */,
 				654284EE1E24F24E00267603 /* DTCommonData.m in Sources */,
+				65751E171E45A5750029C1B3 /* DTFillLayer.m in Sources */,
 				65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */,
 				65E347071E2F189800BE9A1F /* DTHorizontalBarChartController.m in Sources */,
 				658F7FBE1E10F81F0024AB62 /* BarViewController.m in Sources */,
@@ -570,6 +600,7 @@
 				65CD0F3A1DFEA42A007AFD8D /* DTLineChart.m in Sources */,
 				65CD0F371DFEA42A007AFD8D /* DTVerticalBarChart.m in Sources */,
 				65CD0F3B1DFEA42A007AFD8D /* DTChartData.m in Sources */,
+				65751E0E1E45847F0029C1B3 /* DTFillChart.m in Sources */,
 				65E3470D1E2F761D00BE9A1F /* DTPieChartController.m in Sources */,
 				65BDBB951E2C59C300EB85F4 /* DTAxisFormatter.m in Sources */,
 				65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */,
@@ -585,6 +616,7 @@
 				65C8E2C61E1F96C600F20B87 /* DTTableAxisLabelData.m in Sources */,
 				65CC6DF81E0CFAE700E2C36B /* DTColorManager.m in Sources */,
 				65CD0F341DFEA42A007AFD8D /* DTBar.m in Sources */,
+				65751E111E4584930029C1B3 /* DTFillChartController.m in Sources */,
 				65C8E2C11E1E49AE00F20B87 /* DTTableChartCell.m in Sources */,
 				65B4CB831E2E003500EFDA28 /* DTChartBlockModel.m in Sources */,
 				65C027EE1E15EFCE001EB1C7 /* DTDistributionChart.m in Sources */,

@@ -109,6 +109,8 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+
 - (void)simulateData {
 
     self.listLineData0 = [NSMutableArray arrayWithArray:[self simulateListCommonData:3 pointCount:8 mainAxis:YES]];

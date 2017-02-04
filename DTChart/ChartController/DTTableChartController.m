@@ -26,7 +26,6 @@
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _tableChart = [DTTableChart tableChart:DTTableChartStyleC1C2 origin:origin widthCellCount:xCount heightCellCount:yCount];
         _tableChart.headViewHeight = 500;
-        _tableChart.headView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
         __weak typeof(self) weakSelf = self;
         [_tableChart setExpandTouchBlock:^(NSString *seriesId) {
@@ -48,7 +47,7 @@
 - (void)setCollapseColumn:(NSInteger)collapseColumn {
     _collapseColumn = collapseColumn;
 
-    _tableChart.collapseColumn = collapseColumn;
+    _tableChart.collapseColumn = _collapseColumn;
 }
 
 

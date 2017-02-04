@@ -16,6 +16,9 @@
 @property(nonatomic) NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas;
 @property(nonatomic) DTLineChart *lineChart;
 
+
+
+
 @end
 
 @implementation LineViewController
@@ -237,5 +240,6 @@
     self.lineChart.secondMultiData = data;
     [self.lineChart insertChartSecondAxisItems:indexSet withAnimation:arc4random_uniform(2) % 2 != 1];
 }
+
 
 @end
