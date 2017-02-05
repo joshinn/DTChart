@@ -29,7 +29,6 @@ static NSUInteger const ChartModePresentationYAxisCount = 7;
 static NSUInteger const ChartModeThumbXAxisMaxCount = 5;
 static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
-
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _chart = [[DTFillChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
@@ -37,6 +36,15 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
         _beginRangeIndex = 0;
         _endRangeIndex = NSUIntegerMax;
+
+        WEAK_SELF;
+        [_chart setFillChartTouchBlock:^NSString *(NSUInteger lineIndex, NSUInteger pointIndex) {
+            if (weakSelf.fillChartTouchBlock) {
+                return weakSelf.fillChartTouchBlock(weakSelf.chart.multiData.count - lineIndex - 1, pointIndex);
+            } else {
+                return nil;
+            }
+        }];
     }
     return self;
 }
@@ -109,14 +117,11 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         divide += 1;
     }
 
-
     NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas = [NSMutableArray array];
     NSMutableArray<DTChartSingleData *> *lines = [NSMutableArray arrayWithCapacity:listData.count];
 
     NSMutableArray<DTListCommonData *> *listSecondAxisData = [NSMutableArray array];
 
-    // x轴只需计算一次
-    BOOL xAxisNeedValue = YES;
 
     for (NSUInteger n = 0; n < listData.count; ++n) {
 
@@ -142,7 +147,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
                 }
             }
 
-            if (xAxisNeedValue) {   // x轴label data，只需要取第一条折线数据计算就可以
+            if (n == 0) {   // x轴label data，只需要取第一条折线数据计算就可以
                 DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getXAxisLabelTitle:data.ptName orValue:0] value:i];
                 if (values.count > maxXAxisCount) {
 
@@ -162,10 +167,9 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
             [points addObject:itemData];
         }
 
-        if (xAxisNeedValue) {
+        if (n == 0) {
             // 赋值x轴数据，只需要取第一条折线数据计算就可以
             self.chart.xAxisLabelDatas = xAxisLabelDatas;
-            xAxisNeedValue = NO;
         }
 
         // 单条折线
@@ -180,75 +184,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     // y轴label data
     self.chart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:YES];
-
-    if (listSecondAxisData.count > 0) {
-        [self processSecondAxisLabelDataAndLines:listSecondAxisData];
-    } else {
-        // 没有副轴，清除之前的副轴数据
-        self.chart.secondMultiData = nil;
-        self.chart.ySecondAxisLabelDatas = nil;
-    }
-}
-
-- (void)processSecondAxisLabelDataAndLines:(NSArray<DTListCommonData *> *)listData {
-
-    NSUInteger maxYAxisCount = self.mMaxYAxisCount;
-
-    CGFloat maxY = 0;
-
-    NSMutableArray<DTChartSingleData *> *lines = [NSMutableArray arrayWithCapacity:listData.count];
-
-    [self generatePoints:listData yMaxValue:&maxY lines:lines constainIndexs:nil];
-
-    // 赋值副轴折线数据
-    self.chart.secondMultiData = lines;
-
-    // y副轴label data
-    self.chart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:NO];
-}
-
-/**
- * 生成折线里点数据
- * @param listData 所有点数据
- * @param maxY 顺带计算y轴最大值
- * @param lines 存储折线数据的数组
- * @param indexSet 生成的折线所在的位置（添加折线使用）
- */
-
-- (void)generatePoints:(nonnull NSArray<DTListCommonData *> *)listData yMaxValue:(nullable CGFloat *)maxY lines:(nonnull NSMutableArray<DTChartSingleData *> *)lines constainIndexs:(nullable NSMutableIndexSet *)indexSet {
-    for (NSUInteger n = 0; n < listData.count; ++n) {
-
-        DTListCommonData *listCommonData = listData[n];
-        NSArray<DTCommonData *> *values = listCommonData.commonDatas;
-
-        NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
-
-        for (NSUInteger i = 0; i < values.count; ++i) {
-
-            DTCommonData *data = values[i];
-
-            // 找出y轴最大值
-            if (maxY && data.ptValue > *maxY) {
-                *maxY = data.ptValue;
-            }
-
-
-            // 单条折线里的点
-            DTChartItemData *itemData = [DTChartItemData chartData];
-            itemData.itemValue = ChartItemValueMake(i, data.ptValue);
-            [points addObject:itemData];
-        }
-
-
-        // 单条折线
-        DTChartSingleData *singleData = [DTChartSingleData singleData:points];
-        singleData.singleId = listCommonData.seriesId;
-        singleData.singleName = listCommonData.seriesName;
-        if (indexSet) {
-            [indexSet addIndex:lines.count];
-        }
-        [lines addObject:singleData];
-    }
 }
 
 #pragma mark - override
@@ -256,7 +191,8 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
 
-    [self processMainAxisLabelDataAndLines:listData];
+    // FillChart 第一组数据是最小值，所以逆序
+    [self processMainAxisLabelDataAndLines:listData.reverseObjectEnumerator.allObjects];
 }
 
 

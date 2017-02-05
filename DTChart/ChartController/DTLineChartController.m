@@ -39,7 +39,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         _lineChart = [[DTLineChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _lineChart;
 
-        __weak typeof(self) weakSelf = self;
+        WEAK_SELF;
         [_lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
             if (weakSelf.lineChartTouchBlock) {
                 NSString *seriesId = nil;

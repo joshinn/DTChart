@@ -31,7 +31,7 @@
     self.pieChart.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
     self.pieChart.showAnimation = YES;
     self.pieChart.multiData = @[[self simulateData:3], [self simulateData:4], [self simulateData:2], [self simulateData:1]];
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF;
     [self.pieChart setPieChartTouchBlock:^(NSUInteger index) {
         [weakSelf itemClicked:index];
     }];

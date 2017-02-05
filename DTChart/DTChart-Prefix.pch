@@ -13,8 +13,10 @@
 #define DTLog(...) NSLog(__VA_ARGS__)
 #endif
 
-//颜色换转
+// 颜色换转
 #define DTRGBColor(rgbValue, alphaValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:alphaValue]
 
+// 弱引用
+#define WEAK_SELF __weak typeof(self) weakSelf = self
 
 #endif /* DTChart_prefix_pch */

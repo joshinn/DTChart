@@ -27,7 +27,7 @@
         _tableChart = [DTTableChart tableChart:DTTableChartStyleC1C2 origin:origin widthCellCount:xCount heightCellCount:yCount];
         _tableChart.headViewHeight = 500;
 
-        __weak typeof(self) weakSelf = self;
+        WEAK_SELF;
         [_tableChart setExpandTouchBlock:^(NSString *seriesId) {
             if (weakSelf.tableChartExpandTouchBlock) {
                 weakSelf.tableChartExpandTouchBlock(seriesId);

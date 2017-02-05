@@ -8,6 +8,15 @@
 
 #import "DTChartBaseComponent.h"
 
+/**
+ * 触摸手势回调
+ * @param lineIndex 折线的序号(哪一组数据)
+ * @param pointIndex 折线中的点的序号
+ * @return 返回文本
+ */
+typedef NSString *(^DTFillChartTouch)(NSUInteger lineIndex, NSUInteger pointIndex);
+
+
 @interface DTFillChart : DTChartBaseComponent
 
 /**
@@ -23,5 +32,7 @@
  * 指定绘制数据的结束位置，默认NSUIntegerMax
  */
 @property(nonatomic) NSUInteger endRangeIndex;
+
+@property(nonatomic, copy) DTFillChartTouch fillChartTouchBlock;
 
 @end

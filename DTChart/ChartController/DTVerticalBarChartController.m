@@ -41,7 +41,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         _chartView = _barChart;
 
 
-        __weak typeof(self) weakSelf = self;
+        WEAK_SELF;
         [_barChart setColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
             if (weakSelf.mainAxisColorsCompletionBlock) {
                 weakSelf.mainAxisColorsCompletionBlock(infos);

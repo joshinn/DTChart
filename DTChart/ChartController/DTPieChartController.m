@@ -38,7 +38,7 @@
         _mainHintLabel.hidden = YES;
         [_mainChart addSubview:_mainHintLabel];
 
-        __weak typeof(self) weakSelf = self;
+        WEAK_SELF;
         [_mainChart setPieChartTouchBlock:^(NSUInteger index) {
             if (weakSelf.mainChart.drawSingleDataIndex == -1) {    // 绘制的是所有的数据
                 if (weakSelf.pieChartTouchBlock) {

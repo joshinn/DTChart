@@ -127,11 +127,15 @@
 - (void)loadChartController {
     DTFillChartController *fillChartController = [[DTFillChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     fillChartController.chartMode = DTChartModePresentation;
+    fillChartController.valueSelectable = YES;
+
     [self.view addSubview:fillChartController.chartView];
     self.fillChartController = fillChartController;
+    [self.fillChartController setFillChartTouchBlock:^NSString *(NSUInteger lineIndex, NSUInteger pointIndex) {
+        return [NSString stringWithFormat:@"一周最佳是第%@天  那天最佳第%@名", @(lineIndex), @(pointIndex)];
+    }];
 
-
-    self.listLineData = [self simulateListCommonData:30 pointCount:30 mainAxis:YES];
+    self.listLineData = [self simulateListCommonData:30 pointCount:28 mainAxis:YES].reverseObjectEnumerator.allObjects.mutableCopy;
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;

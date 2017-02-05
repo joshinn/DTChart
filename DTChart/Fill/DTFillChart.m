@@ -15,9 +15,17 @@
 
 @property(nonatomic) NSMutableArray<DTFillLayer *> *fillLayers;
 
+@property(nonatomic) NSInteger prevTouchedPathIndex;
+@property(nonatomic) NSInteger prevTouchedPointIndex;
+
 @end
 
 @implementation DTFillChart
+
+/**
+ * 触摸点最大的偏移距离
+ */
+static CGFloat const TouchOffsetMaxDistance = 10;
 
 - (void)initial {
     [super initial];
@@ -25,6 +33,9 @@
     _beginRangeIndex = 0;
     _endRangeIndex = NSUIntegerMax;
     _xAxisAlignGrid = NO;
+
+    _prevTouchedPathIndex = -1;
+    _prevTouchedPointIndex = -1;
 }
 
 - (NSMutableArray<DTFillLayer *> *)fillLayers {
@@ -35,6 +46,86 @@
 }
 
 #pragma mark - private method
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchKeyPoint:touches isMoving:NO];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchKeyPoint:touches isMoving:YES];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.prevTouchedPathIndex >= 0) {
+        DTFillLayer *prevFillLayer = self.fillLayers[(NSUInteger) self.prevTouchedPathIndex];
+        prevFillLayer.highLighted = NO;
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.prevTouchedPathIndex >= 0) {
+        DTFillLayer *prevFillLayer = self.fillLayers[(NSUInteger) self.prevTouchedPathIndex];
+        prevFillLayer.highLighted = NO;
+    }
+}
+
+- (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
+    if (!self.valueSelectable) {
+        return;
+    }
+
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    CGFloat minDistance = -100;
+    NSInteger n1 = -1;
+    NSInteger n2 = -1;
+
+    for (NSUInteger i = 0; i < self.fillLayers.count; ++i) {
+        DTFillLayer *fillLayer = self.fillLayers[i];
+
+        if ([fillLayer.fillPath containsPoint:touchPoint]) {
+
+            fillLayer.highLighted = YES;
+
+            if (self.prevTouchedPathIndex >= 0 && self.prevTouchedPathIndex != i) {
+                DTFillLayer *prevFillLayer = self.fillLayers[(NSUInteger) self.prevTouchedPathIndex];
+                prevFillLayer.highLighted = NO;
+            }
+
+            DTChartSingleData *sData = fillLayer.singleData;
+
+            for (NSUInteger j = 0; j < sData.itemValues.count; ++j) {
+                DTChartItemData *itemData = sData.itemValues[j];
+
+                CGFloat distance = ABS(touchPoint.x - itemData.position.x);
+                if (distance < TouchOffsetMaxDistance) {
+                    if (minDistance == -100) {
+                        minDistance = distance;
+                        n1 = i;
+                        n2 = j;
+                    } else if (distance < minDistance) {
+                        minDistance = distance;
+                        n1 = i;
+                        n2 = j;
+                    }
+
+                }
+
+            }
+
+            self.prevTouchedPathIndex = i;
+
+            break;
+        }
+    }
+
+    if (self.fillChartTouchBlock && n1 >= 0 && n2 >= 0) {
+        NSString *text = self.fillChartTouchBlock((NSUInteger) n1, (NSUInteger) n2);
+        DTLog(@"touch return = %@", text);
+    }
+}
+
 
 /**
  * 创建单个数据对象的折线路径
@@ -268,7 +359,6 @@
             DTFillLayer *fillLayer = [DTFillLayer fillLayer];
             DTFillLayer *prevFillLayer = self.fillLayers.lastObject;
 
-
             fillLayer.startPoint = singleData.itemValues.firstObject.position;
             fillLayer.endPoint = singleData.itemValues.lastObject.position;
             fillLayer.borderPath = path;
@@ -287,9 +377,11 @@
             }
 
             fillLayer.strokeColor = [UIColor colorWithRed:(49 + n * 2.1f) / 255.0f green:(101 + n * 4) / 255.0f blue:(184 + 1.3f * n) / 255.0f alpha:1].CGColor;
-            fillLayer.fillColor = [UIColor colorWithRed:(89 + n * 1.67f) / 255.0f green:(129 + n * 3.2f) / 255.0f blue:(198 + n) / 255.0f alpha:1].CGColor;
+            fillLayer.normalFillColor = [UIColor colorWithRed:(89 + n * 1.67f) / 255.0f green:(129 + n * 3.2f) / 255.0f blue:(198 + n) / 255.0f alpha:1];
+            fillLayer.highlightedFillColor = [UIColor colorWithRed:(89 + 10 + n * 1.67f) / 255.0f green:(129 + 10 + n * 3.2f) / 255.0f blue:(198 + 10 + n) / 255.0f alpha:1];
 
             fillLayer.fillPath = fillPath;
+            fillLayer.singleData = singleData;
             [fillLayer draw];
 
             [self.fillLayers addObject:fillLayer];

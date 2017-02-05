@@ -7,6 +7,7 @@
 //
 
 #import "DTFillLayer.h"
+#import "DTChartData.h"
 
 @interface DTFillLayer ()
 
@@ -24,7 +25,9 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.fillColor = DTRGBColor(0x5981c6, 1).CGColor;
+        _highLighted = NO;
+        _normalFillColor = DTRGBColor(0x5981c6, 1);
+
 
         _borderLine = [CAShapeLayer layer];
         _borderLine.lineWidth = 1;
@@ -36,15 +39,40 @@
 }
 
 - (void)setStrokeColor:(CGColorRef)strokeColor {
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
     _borderLine.strokeColor = strokeColor;
+    [CATransaction commit];
 }
 
+- (void)setFillColor:(CGColorRef)fillColor {
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [super setFillColor:fillColor];
+    [CATransaction commit];
+}
+
+- (void)setHighLighted:(BOOL)highLighted {
+    _highLighted = highLighted;
+
+    if (highLighted) {
+        self.fillColor = self.normalFillColor.CGColor;
+    } else {
+        self.fillColor = self.highlightedFillColor.CGColor;
+    }
+}
 
 #pragma mark - public method
 
 - (void)draw {
     self.borderLine.path = self.borderPath.CGPath;
     self.path = self.fillPath.CGPath;
+
+    if (self.isHighLighted) {
+        self.fillColor = self.normalFillColor.CGColor;
+    } else {
+        self.fillColor = self.highlightedFillColor.CGColor;
+    }
 }
 
 @end

@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class DTChartSingleData;
+
 @interface DTFillLayer : CAShapeLayer
 
 @property(nonatomic) CGPoint startPoint;
 @property(nonatomic) CGPoint endPoint;
 @property(nonatomic) UIBezierPath *borderPath;
 @property(nonatomic) UIBezierPath *fillPath;
+@property(nonatomic) DTChartSingleData *singleData;
+
+@property(nonatomic, getter=isHighLighted) BOOL highLighted;
+@property(nonatomic) UIColor *normalFillColor;
+@property(nonatomic) UIColor *highlightedFillColor;
 
 + (instancetype)fillLayer;
 

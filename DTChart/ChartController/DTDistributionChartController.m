@@ -139,7 +139,6 @@
         frame.origin.x = x;
         self.mainDistributionChart.frame = frame;
 
-        frame = self.mainDistributionChart.contentView.frame;
         self.mainLevelColorIndicator = [self levelColorIndicateView:
                         CGRectMake(CGRectGetMinX(self.mainDistributionChart.frame),
                                 CGRectGetMinY(self.mainDistributionChart.frame) - 2 * self.mainDistributionChart.coordinateAxisCellWidth,
