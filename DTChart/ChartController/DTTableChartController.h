@@ -24,6 +24,15 @@ typedef void(^DTTableChartOrderTouchBlock)(NSUInteger column);
 
 @interface DTTableChartController : DTChartController
 /**
+ * 头view
+ */
+@property(nonatomic) UIView *headView;
+/**
+ * 头view的高度，默认0
+ * @note 单位dp
+ */
+@property(nonatomic) CGFloat headViewHeight;
+/**
  * 展开收起column，小于0表示无展开收起功能
  * @note 该column后一列会显示“展开…/收起…”
  */

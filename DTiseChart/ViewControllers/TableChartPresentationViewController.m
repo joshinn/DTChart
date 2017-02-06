@@ -37,8 +37,18 @@
     [self.chartTitles addObject:@"平均访问深度"];
     [self.chartTitles addObject:@"平均访问时长"];
 
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 30, 100, 60)];
+    label.text = @"这是内容";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:20];
+
     self.tableChartController = [[DTTableChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
+    self.tableChartController.headViewHeight = 300;
     [self.view addSubview:self.tableChartController.chartView];
+
+    [self.tableChartController.headView addSubview:label];
 
     self.listLineData = [self simulateListCommonData:20 pointCount:self.chartTitles.count mainAxis:YES];
 //    self.listLineData[3].seriesId = self.listLineData[2].seriesId;

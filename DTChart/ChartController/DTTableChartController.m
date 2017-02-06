@@ -25,7 +25,7 @@
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _tableChart = [DTTableChart tableChart:DTTableChartStyleC1C2 origin:origin widthCellCount:xCount heightCellCount:yCount];
-        _tableChart.headViewHeight = 500;
+        _headView = _tableChart.headView;
 
         WEAK_SELF;
         [_tableChart setExpandTouchBlock:^(NSString *seriesId) {
@@ -48,6 +48,12 @@
     _collapseColumn = collapseColumn;
 
     _tableChart.collapseColumn = _collapseColumn;
+}
+
+- (void)setHeadViewHeight:(CGFloat)headViewHeight {
+    _headViewHeight = headViewHeight;
+
+    _tableChart.headViewHeight = _headViewHeight;
 }
 
 
