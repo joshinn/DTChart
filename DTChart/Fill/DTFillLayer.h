@@ -12,12 +12,16 @@
 
 @interface DTFillLayer : CAShapeLayer
 
-@property(nonatomic) CGPoint startPoint;
-@property(nonatomic) CGPoint endPoint;
-@property(nonatomic) UIBezierPath *borderPath;
-@property(nonatomic) UIBezierPath *fillPath;
 @property(nonatomic) DTChartSingleData *singleData;
 
+@property(nonatomic) CGPoint startPoint;
+@property(nonatomic) CGPoint endPoint;
+
+@property(nonatomic) UIColor *borderLineColor;
+@property(nonatomic) UIBezierPath *borderLinePath;
+
+
+@property(nonatomic) UIBezierPath *fillPath;
 @property(nonatomic, getter=isHighLighted) BOOL highLighted;
 @property(nonatomic) UIColor *normalFillColor;
 @property(nonatomic) UIColor *highlightedFillColor;

@@ -28,7 +28,6 @@
         _highLighted = NO;
         _normalFillColor = DTRGBColor(0x5981c6, 1);
 
-
         _borderLine = [CAShapeLayer layer];
         _borderLine.lineWidth = 1;
         _borderLine.fillColor = [UIColor clearColor].CGColor;
@@ -38,10 +37,12 @@
     return self;
 }
 
-- (void)setStrokeColor:(CGColorRef)strokeColor {
+- (void)setBorderLineColor:(UIColor *)borderLineColor {
+    _borderLineColor = borderLineColor;
+
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    _borderLine.strokeColor = strokeColor;
+    _borderLine.strokeColor = _borderLineColor.CGColor;
     [CATransaction commit];
 }
 
@@ -56,23 +57,24 @@
     _highLighted = highLighted;
 
     if (highLighted) {
-        self.fillColor = self.normalFillColor.CGColor;
-    } else {
         self.fillColor = self.highlightedFillColor.CGColor;
+    } else {
+        self.fillColor = self.normalFillColor.CGColor;
     }
 }
 
 #pragma mark - public method
 
 - (void)draw {
-    self.borderLine.path = self.borderPath.CGPath;
+    self.borderLine.path = self.borderLinePath.CGPath;
     self.path = self.fillPath.CGPath;
 
     if (self.isHighLighted) {
-        self.fillColor = self.normalFillColor.CGColor;
-    } else {
         self.fillColor = self.highlightedFillColor.CGColor;
+    } else {
+        self.fillColor = self.normalFillColor.CGColor;
     }
+    self.borderLine.strokeColor = self.borderLineColor.CGColor;
 }
 
 @end

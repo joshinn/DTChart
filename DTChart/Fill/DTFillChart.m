@@ -361,12 +361,12 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             fillLayer.startPoint = singleData.itemValues.firstObject.position;
             fillLayer.endPoint = singleData.itemValues.lastObject.position;
-            fillLayer.borderPath = path;
+            fillLayer.borderLinePath = path;
 
             UIBezierPath *fillPath = path.copy;
             if (prevFillLayer) {
                 [fillPath addLineToPoint:prevFillLayer.endPoint];
-                [fillPath appendPath:[prevFillLayer.borderPath bezierPathByReversingPath]];
+                [fillPath appendPath:[prevFillLayer.borderLinePath bezierPathByReversingPath]];
                 [fillPath addLineToPoint:fillLayer.startPoint];
                 [fillPath closePath];
 
@@ -376,9 +376,9 @@ static CGFloat const TouchOffsetMaxDistance = 10;
                 [fillPath closePath];
             }
 
-            fillLayer.strokeColor = [UIColor colorWithRed:(49 + n * 2.1f) / 255.0f green:(101 + n * 4) / 255.0f blue:(184 + 1.3f * n) / 255.0f alpha:1].CGColor;
-            fillLayer.normalFillColor = [UIColor colorWithRed:(89 + n * 1.67f) / 255.0f green:(129 + n * 3.2f) / 255.0f blue:(198 + n) / 255.0f alpha:1];
-            fillLayer.highlightedFillColor = [UIColor colorWithRed:(89 + 10 + n * 1.67f) / 255.0f green:(129 + 10 + n * 3.2f) / 255.0f blue:(198 + 10 + n) / 255.0f alpha:1];
+            fillLayer.borderLineColor = [UIColor colorWithRed:(192 - (n + 2) * 6.4f) / 255.0f green:(192 - (n + 2) * 4) / 255.0f blue:(192 - (n + 2) * 0.67f) / 255.0f alpha:1];
+            fillLayer.normalFillColor = [UIColor colorWithRed:(192 - n * 6.4f) / 255.0f green:(192 - n * 4) / 255.0f blue:(192 - n * 0.67f) / 255.0f alpha:1];
+            fillLayer.highlightedFillColor = [UIColor colorWithRed:(192 - n * 6.4f + 20) / 255.0f green:(192 - n * 4 + 20) / 255.0f blue:(192 - n * 0.67f + 20) / 255.0f alpha:1];
 
             fillLayer.fillPath = fillPath;
             fillLayer.singleData = singleData;
