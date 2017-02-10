@@ -35,6 +35,11 @@
         _chartView = containerView;
         _startHour = 7;
 
+        _secondLowLevel = _lowLevel = 100;
+        _secondMiddleLevel = _middleLevel = 500;
+        _secondHighLevel = _highLevel = 1000;
+
+
         _mainTitleLabel = [self labelFactory];
         _secondTitleLabel = [self labelFactory];
 
@@ -89,6 +94,42 @@
         }
             break;
     }
+}
+
+- (void)setLowLevel:(CGFloat)lowLevel {
+    _lowLevel = lowLevel;
+
+    _mainDistributionChart.lowLevel = lowLevel;
+}
+
+- (void)setMiddleLevel:(CGFloat)middleLevel {
+    _middleLevel = middleLevel;
+
+    _mainDistributionChart.middleLevel = middleLevel;
+}
+
+- (void)setHighLevel:(CGFloat)highLevel {
+    _highLevel = highLevel;
+
+    _mainDistributionChart.highLevel = highLevel;
+}
+
+- (void)setSecondLowLevel:(CGFloat)secondLowLevel {
+    _secondLowLevel = secondLowLevel;
+
+    _secondDistributionChart.lowLevel = secondLowLevel;
+}
+
+- (void)setSecondMiddleLevel:(CGFloat)secondMiddleLevel {
+    _secondMiddleLevel = secondMiddleLevel;
+
+    _secondDistributionChart.middleLevel = secondMiddleLevel;
+}
+
+- (void)setSecondHighLevel:(CGFloat)secondHighLevel {
+    _secondHighLevel = secondHighLevel;
+
+    _secondDistributionChart.highLevel = secondHighLevel;
 }
 
 

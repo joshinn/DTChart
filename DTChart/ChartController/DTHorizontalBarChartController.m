@@ -207,7 +207,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     }
 
     // x轴label data
-    self.barChart.xAxisLabelDatas = [self generateYAxisLabelData:maxXAxisCount yAxisMaxValue:maxX isMainAxis:YES];
+    self.barChart.xAxisLabelDatas = [super generateYAxisLabelData:maxXAxisCount yAxisMaxValue:maxX isMainAxis:YES];
 }
 
 /**

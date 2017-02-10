@@ -29,6 +29,9 @@
     [self.listBarData addObjectsFromArray:[self simulateListCommonData:7 pointCount:24 mainAxis:NO]];
 
     self.thumbChart = [[DTDistributionChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
+    self.thumbChart.lowLevel = 10000;
+    self.thumbChart.middleLevel = 20000;
+    self.thumbChart.highLevel = 30000;
 
     [self.view addSubview:self.thumbChart.chartView];
 

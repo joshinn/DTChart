@@ -33,6 +33,10 @@
     _middleLevelColor = DTDistributionMiddleLevelColor;
     _highLevelColor = DTDistributionHighLevelColor;
     _supremeLevelColor = DTDistributionSupremeLevelColor;
+
+    _lowLevel = 100;
+    _middleLevel = 500;
+    _highLevel = 1000;
 }
 
 - (NSMutableArray<DTDistributionBar *> *)chartBars {
@@ -289,11 +293,11 @@
 }
 
 - (UIColor *)getLevelColor:(CGFloat)value {
-    if (value < 100) {
+    if (value < self.lowLevel) {
         return self.lowLevelColor;
-    } else if (value < 500) {
+    } else if (value < self.middleLevel) {
         return self.middleLevelColor;
-    } else if (value < 1000) {
+    } else if (value < self.highLevel) {
         return self.highLevelColor;
     } else {
         return self.supremeLevelColor;

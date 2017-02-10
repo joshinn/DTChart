@@ -78,14 +78,51 @@
     }
 }
 
-#pragma mark - public method
 
+#pragma mark - private method
+
+//- (NSUInteger)maxY {
+//
+//}
+
+#pragma mark - public method
 
 - (NSMutableArray<DTAxisLabelData *> *)generateYAxisLabelData:(NSUInteger)maxYAxisCount yAxisMaxValue:(CGFloat)maxY isMainAxis:(BOOL)isMainAxis {
 
     if (maxY == 0) {
         maxY = 10;
     }
+
+    if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
+            || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
+        if (maxY < 10) {   // 1位整数
+            NSUInteger y = 10;
+            while (y % maxYAxisCount != 0) {
+                ++y;
+            }
+            maxY = y;
+        } else if (maxY < 100) {    // 2位数
+            NSUInteger y = maxYAxisCount * 5;
+            while (y < maxY) {
+                y += maxYAxisCount * 5;
+            }
+            maxY = y;
+        } else {    // 大于2位数
+            NSUInteger limit = 100;
+            while (maxY >= limit) {
+                limit *= 10;
+            }
+            limit /= 1000;
+
+            NSUInteger y = maxYAxisCount * 10 * limit;
+            while (y < maxY) {
+                y += maxYAxisCount * 10 * limit;
+            }
+
+            maxY = y;
+        }
+    }
+
 
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
 

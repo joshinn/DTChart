@@ -10,12 +10,37 @@
 
 @interface DTDistributionChartController : DTChartController
 
-@property (nonatomic) NSString *mainTitle;
-@property (nonatomic) NSString *secondTitle;
+@property(nonatomic) NSString *mainTitle;
+@property(nonatomic) NSString *secondTitle;
 
 /**
  * y轴起始时间整点数，默认是7
  */
-@property (nonatomic) NSUInteger startHour;
+@property(nonatomic) NSUInteger startHour;
 
+/**
+ * 最弱的上限值，默认100
+ */
+@property(nonatomic) CGFloat lowLevel;
+/**
+ * 中等的上限值，默认500
+ */
+@property(nonatomic) CGFloat middleLevel;
+/**
+ * 强的上限值，默认1000
+ */
+@property(nonatomic) CGFloat highLevel;
+
+/**
+ * 副表 最弱的上限值，默认100
+ */
+@property(nonatomic) CGFloat secondLowLevel;
+/**
+ * 副表 中等的上限值，默认500
+ */
+@property(nonatomic) CGFloat secondMiddleLevel;
+/**
+ * 副表 强的上限值，默认1000
+ */
+@property(nonatomic) CGFloat secondHighLevel;
 @end

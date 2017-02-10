@@ -103,12 +103,11 @@ static NSString *const TableGridCellId = @"TableGridCell";
     [self.navigationController pushViewController:pieVC animated:YES];
 }
 
--(void)disChartPresentation{
+- (void)disChartPresentation {
     DistributionPresentationVC *vc = [[DistributionPresentationVC alloc] init];
     vc.chartId = @"10588";
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 
 - (void)simulateData {
@@ -123,14 +122,14 @@ static NSString *const TableGridCellId = @"TableGridCell";
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
-    return [self simulateCommonData:count baseValue:300];
+    return [self simulateCommonData:count baseValue:200];
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count baseValue:(CGFloat)baseValue {
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"2016-12-%@~2016-12-%@", [self dayString:i + 1], [self dayString:i + 2]];
-        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
+        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform((uint32_t) (baseValue / 2))];
         [list addObject:data];
     }
 
