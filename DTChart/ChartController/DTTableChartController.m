@@ -33,9 +33,9 @@
                 weakSelf.tableChartExpandTouchBlock(seriesId);
             }
         }];
-        [_tableChart setOrderTouchBlock:^(NSUInteger column) {
+        [_tableChart setOrderTouchBlock:^(BOOL isMainAxis, NSUInteger column) {
             if (weakSelf.tableChartOrderTouchBlock) {
-                weakSelf.tableChartOrderTouchBlock(column);
+                weakSelf.tableChartOrderTouchBlock(isMainAxis, column);
             }
         }];
 

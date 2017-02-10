@@ -20,7 +20,7 @@ typedef void(^DTTableChartExpandTouchBlock)(NSString *seriesId);
  * 排序block
  * @column 排序列的序号
  */
-typedef void(^DTTableChartOrderTouchBlock)(NSUInteger column);
+typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 
 @interface DTTableChartController : DTChartController
 /**

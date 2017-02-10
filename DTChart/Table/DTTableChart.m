@@ -484,10 +484,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     [self.tableView reloadData];
 }
 
-- (void)chartCellOrderTouched:(NSUInteger)column {
-    DTLog(@"order touched column = %@", @(column));
+- (void)chartCellOrderTouched:(BOOL)isMainAxis column:(NSUInteger)column {
     if (self.orderTouchBlock) {
-        self.orderTouchBlock(column);
+        self.orderTouchBlock(isMainAxis, column);
     }
 }
 

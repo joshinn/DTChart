@@ -36,11 +36,12 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
  * @seriesId 展开row的id
  */
 typedef void(^DTTableChartExpandTouch)(NSString *seriesId);
+
 /**
  * 排序block
  * @column 排序列的序号
  */
-typedef void(^DTTableChartOrderTouch)(NSUInteger column);
+typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
 
 @interface DTTableChart : DTChartBaseComponent
 /**
@@ -56,7 +57,10 @@ typedef void(^DTTableChartOrderTouch)(NSUInteger column);
  * table cell布局风格
  */
 @property(nonatomic) DTTableChartStyle tableChartStyle;
-
+/**
+ * 展开收起column，小于0表示无展开收起功能
+ * @note 该column后一列会显示“展开…/收起…”
+ */
 @property(nonatomic) NSInteger collapseColumn;
 
 /**
@@ -66,7 +70,7 @@ typedef void(^DTTableChartOrderTouch)(NSUInteger column);
 /**
  * 排序回调
  */
-@property (nonatomic, copy) DTTableChartOrderTouch orderTouchBlock;
+@property(nonatomic, copy) DTTableChartOrderTouch orderTouchBlock;
 
 /**
  * 实例化，使用预设风格

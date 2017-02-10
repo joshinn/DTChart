@@ -17,15 +17,16 @@
 extern CGFloat const DTTableChartCellHeight;
 
 
-
 @protocol DTTableChartCellDelegate <NSObject>
 
 - (void)chartCellToExpandTouched:(NSString *)seriesId;
+
 - (void)chartCellToCollapseTouched:(NSString *)seriesId;
+
 /**
  * 升降序排列回调
  */
--(void)chartCellOrderTouched:(NSUInteger)column;
+- (void)chartCellOrderTouched:(BOOL)isMainAxis column:(NSUInteger)column;
 
 @end
 

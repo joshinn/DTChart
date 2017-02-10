@@ -32,6 +32,10 @@ CGFloat const DTTableChartCellHeight = 35;
 static NSInteger const LabelViewTag = 10100;
 static NSInteger const IconViewTag = 10101;
 
+static NSInteger const MainAxisOrderButtonTagPrefix = 1000;
+static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
+
+
 #define EvenRowBackgroundColor DTRGBColor(0x3b3b3b, 1)
 #define OddRowBackgroundColor [UIColor clearColor]
 
@@ -56,6 +60,7 @@ static NSInteger const IconViewTag = 10101;
         NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
         NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
         _ascendImg = [UIImage imageWithContentsOfFile:[bundle.resourcePath stringByAppendingPathComponent:@"ascend.png"]];
+        _ascendImg = [UIImage imageWithCGImage:_ascendImg.CGImage scale:2 orientation:_ascendImg.imageOrientation];
     }
     return _ascendImg;
 }
@@ -65,6 +70,7 @@ static NSInteger const IconViewTag = 10101;
         NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
         NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
         _descendImg = [UIImage imageWithContentsOfFile:[bundle.resourcePath stringByAppendingPathComponent:@"descend.png"]];
+        _descendImg = [UIImage imageWithCGImage:_descendImg.CGImage scale:2 orientation:_descendImg.imageOrientation];
     }
     return _descendImg;
 }
@@ -73,13 +79,22 @@ static NSInteger const IconViewTag = 10101;
 #pragma mark - private method
 
 - (void)orderButton:(UIButton *)sender {
-    [self.delegate chartCellOrderTouched:(NSUInteger) sender.superview.tag];
+    NSUInteger tag = (NSUInteger) sender.superview.tag;
+    BOOL isMainAxis;
+    if (tag >= SecondAxisOrderButtonTagPrefix) {
+        tag -= SecondAxisOrderButtonTagPrefix;
+        isMainAxis = NO;
+    } else {
+        tag -= MainAxisOrderButtonTagPrefix;
+        isMainAxis = YES;
+    }
+    [self.delegate chartCellOrderTouched:isMainAxis column:tag];
 }
 
 - (void)touchEvent:(DTChartLabel *)sender {
     if (self.cellData.expandType == DTTableChartCellWillExpand) {
         [self.delegate chartCellToExpandTouched:self.cellData.singleId];
-    } else if(self.cellData.expandType == DTTableChartCellDidExpand){
+    } else if (self.cellData.expandType == DTTableChartCellDidExpand) {
         [self.delegate chartCellToCollapseTouched:self.cellData.singleId];
     }
 }
@@ -164,7 +179,6 @@ static NSInteger const IconViewTag = 10101;
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
         UIView *container = self.containerViews[i];
-        container.tag = i;
 
         DTChartLabel *label = [container viewWithTag:LabelViewTag];
         label.userInteractionEnabled = NO;
@@ -176,9 +190,14 @@ static NSInteger const IconViewTag = 10101;
         DTTableAxisLabelData *axisLabelData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
         if ((halfViewsCount >= 0) && hasSecondAxis && halfViewsCount < secondTitleDatas.count) {
+
             axisLabelData = secondTitleDatas[(NSUInteger) halfViewsCount];
+            container.tag = SecondAxisOrderButtonTagPrefix + halfViewsCount;
+
         } else if (i < titleDatas.count) {
+
             axisLabelData = titleDatas[i];
+            container.tag = MainAxisOrderButtonTagPrefix + i;
         }
 
         if (axisLabelData) {
