@@ -93,8 +93,14 @@
         maxY = 10;
     }
 
+    BOOL yScaled = NO;  // 需要缩放时，记录缩放行为
+    
     if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
             || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
+        
+        maxY *= isMainAxis? self.axisFormatter.mainYAxisType : self.axisFormatter.secondYAxisScale;
+        yScaled = YES;
+        
         if (maxY < 10) {   // 1位整数
             NSUInteger y = 10;
             while (y % maxYAxisCount != 0) {
@@ -129,6 +135,10 @@
     for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
         CGFloat y = maxY / maxYAxisCount * i;
 
+        if(yScaled){
+            y /= isMainAxis? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
+        }
+        
         NSString *title;
         if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeText || self.axisFormatter.mainYAxisType == DTAxisFormatterTypeDate) {
             if (isMainAxis) {
