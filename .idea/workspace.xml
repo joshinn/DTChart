@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Table/DTTableChart.h" afterPath="$PROJECT_DIR$/DTChart/Table/DTTableChart.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Table/DTTableChart.m" afterPath="$PROJECT_DIR$/DTChart/Table/DTTableChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Table/DTTableChartCell.h" afterPath="$PROJECT_DIR$/DTChart/Table/DTTableChartCell.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Table/DTTableChartCell.m" afterPath="$PROJECT_DIR$/DTChart/Table/DTTableChartCell.m" />
-    </list>
+    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="" />
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -331,12 +323,12 @@
       <workItem from="1486450530498" duration="1612000" />
       <workItem from="1486688910983" duration="9539000" />
       <workItem from="1486720287678" duration="1572000" />
-      <workItem from="1487056276809" duration="284000" />
+      <workItem from="1487056276809" duration="333000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="673490000" />
+    <option name="totallyTimeSpent" value="673539000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

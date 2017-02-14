@@ -81,9 +81,6 @@
 
 #pragma mark - private method
 
-//- (NSUInteger)maxY {
-//
-//}
 
 #pragma mark - public method
 
@@ -98,7 +95,7 @@
     if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
             || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
         
-        maxY *= isMainAxis? self.axisFormatter.mainYAxisType : self.axisFormatter.secondYAxisScale;
+        maxY *= isMainAxis? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
         yScaled = YES;
         
         if (maxY < 10) {   // 1位整数
