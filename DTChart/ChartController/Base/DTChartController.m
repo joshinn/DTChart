@@ -86,18 +86,32 @@
 
 - (NSMutableArray<DTAxisLabelData *> *)generateYAxisLabelData:(NSUInteger)maxYAxisCount yAxisMaxValue:(CGFloat)maxY isMainAxis:(BOOL)isMainAxis {
 
-    if (maxY == 0) {
-        maxY = 10;
+    if (maxY == 0) {    // 最大值是0，只显示0标签
+        maxY = 1;
+
+        NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
+
+        for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
+            CGFloat y = maxY * 1.0f / maxYAxisCount * i;
+
+            NSString *title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];
+            [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
+
+            yAxisLabelDatas.lastObject.hidden = i != 0;
+
+        }
+
+        return yAxisLabelDatas;
     }
 
     BOOL yScaled = NO;  // 需要缩放时，记录缩放行为
-    
+
     if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
             || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
-        
-        maxY *= isMainAxis? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
+
+        maxY *= isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
         yScaled = YES;
-        
+
         if (maxY < 10) {   // 1位整数
             NSUInteger y = 10;
             while (y % maxYAxisCount != 0) {
@@ -132,10 +146,10 @@
     for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
         CGFloat y = maxY / maxYAxisCount * i;
 
-        if(yScaled){
-            y /= isMainAxis? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
+        if (yScaled) {
+            y /= isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
         }
-        
+
         NSString *title;
         if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeText || self.axisFormatter.mainYAxisType == DTAxisFormatterTypeDate) {
             if (isMainAxis) {

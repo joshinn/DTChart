@@ -130,6 +130,7 @@ static NSString *const TableGridCellId = @"TableGridCell";
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"2016-12-%@~2016-12-%@", [self dayString:i + 1], [self dayString:i + 2]];
         DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform((uint32_t) (baseValue / 2))];
+//        data.ptValue = 0;
         [list addObject:data];
     }
 

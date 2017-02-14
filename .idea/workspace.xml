@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="" />
+    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/Info.plist" afterPath="$PROJECT_DIR$/DTiseChart/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m" />
+    </list>
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,11 +25,72 @@
     <favorites_list name="DTiseChart" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="DTChartController.m" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="376">
+              <caret line="106" column="39" lean-forward="true" selection-start-line="106" selection-start-column="39" selection-end-line="106" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DTLineChartController.m" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="191" column="34" lean-forward="false" selection-start-line="191" selection-start-column="19" selection-end-line="191" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DTLineChart.m" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="345" column="9" lean-forward="true" selection-start-line="345" selection-start-column="9" selection-end-line="345" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#2#0" expanded="false" />
+                <element signature="e#510#553#0" expanded="false" />
+                <element signature="e#933#1094#0" expanded="false" />
+                <element signature="e#1096#1281#0" expanded="false" />
+                <element signature="e#1283#1454#0" expanded="false" />
+                <element signature="e#1605#1720#0" expanded="false" />
+                <element signature="e#6096#6121#0" expanded="false" />
+                <element signature="e#6337#6501#0" expanded="false" />
+                <element signature="e#9616#9651#1" expanded="false" />
+                <element signature="e#10850#10885#1" expanded="false" />
+                <element signature="e#12434#12508#0" expanded="false" />
+                <element signature="e#12511#13775#0" expanded="false" />
+                <element signature="e#13777#15363#0" expanded="false" />
+                <element signature="e#15365#15911#0" expanded="false" />
+                <element signature="e#15547#15852#0" expanded="false" />
+                <element signature="e#15934#17650#0" expanded="false" />
+                <element signature="e#17651#17678#0" expanded="false" />
+                <element signature="e#17651#18171#0" expanded="false" />
+                <element signature="e#17768#17856#0" expanded="false" />
+                <element signature="e#17906#18167#0" expanded="false" />
+                <element signature="e#18174#19354#0" expanded="false" />
+                <element signature="e#18993#19028#1" expanded="false" />
+                <element signature="e#19356#19373#0" expanded="false" />
+                <element signature="e#19356#20758#0" expanded="false" />
+                <element signature="e#20760#20816#0" expanded="false" />
+                <element signature="e#20818#22199#0" expanded="false" />
+                <element signature="e#22201#24096#0" expanded="false" />
+                <element signature="e#24098#25080#0" expanded="false" />
+                <element signature="e#24300#24611#0" expanded="false" />
+                <element signature="e#24781#25070#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>generateItemPath</find>
       <find>lineChart</find>
       <find>DTLineChartSingleData</find>
       <find>fillLayers</find>
@@ -53,6 +120,7 @@
       <find>presetTableChartCellWidth</find>
       <find>presetCellWidths</find>
       <find>x</find>
+      <find>maxYAxisCount</find>
     </findStrings>
     <replaceStrings>
       <replace>xAxisLabelDatas</replace>
@@ -93,7 +161,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/DTChart/Line/DTLineChart.h" />
         <option value="$PROJECT_DIR$/DTChart/Pie/DTPiePart.h" />
         <option value="$PROJECT_DIR$/DTChart/Pie/DTPiePart.m" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/DistributionViewController.m" />
@@ -130,8 +197,6 @@
         <option value="$PROJECT_DIR$/DTChart/Fill/DTFillChart.m" />
         <option value="$PROJECT_DIR$/DTChart/Fill/DTFillLayer.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTHorizontalBarChartController.m" />
-        <option value="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m" />
-        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
         <option value="$PROJECT_DIR$/DTChart/Distribution/DTDistributionChart.h" />
         <option value="$PROJECT_DIR$/DTChart/Distribution/DTDistributionChart.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTDistributionChartController.h" />
@@ -144,6 +209,9 @@
         <option value="$PROJECT_DIR$/DTChart/Table/DTTableChart.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m" />
+        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m" />
+        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m" />
+        <option value="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m" />
       </list>
     </option>
   </component>
@@ -324,11 +392,12 @@
       <workItem from="1486688910983" duration="9539000" />
       <workItem from="1486720287678" duration="1572000" />
       <workItem from="1487056276809" duration="333000" />
+      <workItem from="1487061157568" duration="2913000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="673539000" />
+    <option name="totallyTimeSpent" value="676452000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -340,28 +409,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-462" width="1920" height="1080" extended-state="0" />
-    <editor active="false" />
+    <frame x="-1920" y="-462" width="1920" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2459189" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32317072" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3096591" sideWeight="0.5059571" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32778355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41869918" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15165877" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3932927" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32317072" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41869918" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32520324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3932927" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -492,8 +561,13 @@
           <line>137</line>
           <option name="timeStamp" value="206" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m</url>
+          <line>170</line>
+          <option name="timeStamp" value="222" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="219" />
+      <option name="time" value="224" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -591,13 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="41" column="18" lean-forward="false" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
@@ -609,46 +676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="136" column="8" lean-forward="false" selection-start-line="136" selection-start-column="8" selection-end-line="136" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#2#0" expanded="false" />
-            <element signature="e#510#553#0" expanded="false" />
-            <element signature="e#933#1094#0" expanded="false" />
-            <element signature="e#1096#1281#0" expanded="false" />
-            <element signature="e#1283#1454#0" expanded="false" />
-            <element signature="e#1605#1720#0" expanded="false" />
-            <element signature="e#6096#6121#0" expanded="false" />
-            <element signature="e#6337#6501#0" expanded="false" />
-            <element signature="e#9616#9651#1" expanded="false" />
-            <element signature="e#10095#11226#0" expanded="false" />
-            <element signature="e#10850#10885#1" expanded="false" />
-            <element signature="e#12434#12508#0" expanded="false" />
-            <element signature="e#12511#13775#0" expanded="false" />
-            <element signature="e#13777#15363#0" expanded="false" />
-            <element signature="e#15365#15911#0" expanded="false" />
-            <element signature="e#15547#15852#0" expanded="false" />
-            <element signature="e#15934#17650#0" expanded="false" />
-            <element signature="e#17651#17678#0" expanded="false" />
-            <element signature="e#17651#18171#0" expanded="false" />
-            <element signature="e#17768#17856#0" expanded="false" />
-            <element signature="e#17906#18167#0" expanded="false" />
-            <element signature="e#18174#19354#0" expanded="false" />
-            <element signature="e#18993#19028#1" expanded="false" />
-            <element signature="e#19356#19373#0" expanded="false" />
-            <element signature="e#19356#20758#0" expanded="false" />
-            <element signature="e#20760#20816#0" expanded="false" />
-            <element signature="e#20818#22199#0" expanded="false" />
-            <element signature="e#22201#24096#0" expanded="false" />
-            <element signature="e#24098#25080#0" expanded="false" />
-            <element signature="e#24300#24611#0" expanded="false" />
-            <element signature="e#24781#25070#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -702,13 +729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-281">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTVerticalBarChartController.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
@@ -757,14 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="49">
           <caret line="33" column="3" lean-forward="true" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="127" column="95" lean-forward="true" selection-start-line="127" selection-start-column="95" selection-end-line="127" selection-end-column="95" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -821,34 +833,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Fill/DTFillChart.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="367" column="0" lean-forward="false" selection-start-line="367" selection-start-column="0" selection-end-line="367" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/DTChart-Prefix.pch">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/TableChartPresentationViewController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="926">
-          <caret line="93" column="0" lean-forward="true" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -880,7 +868,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
           <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="68" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -888,7 +875,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="566">
           <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -896,6 +882,93 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1395">
           <caret line="200" column="1" lean-forward="true" selection-start-line="200" selection-start-column="1" selection-end-line="200" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/TableChartPresentationViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="91" column="42" lean-forward="true" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="191" column="34" lean-forward="false" selection-start-line="191" selection-start-column="19" selection-end-line="191" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Fill/DTFillChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="85" column="0" lean-forward="true" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/CollectionViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="132" column="27" lean-forward="true" selection-start-line="132" selection-start-column="27" selection-end-line="132" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/PresentationViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="48" column="40" lean-forward="true" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="345" column="9" lean-forward="true" selection-start-line="345" selection-start-column="9" selection-end-line="345" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#510#553#0" expanded="false" />
+            <element signature="e#933#1094#0" expanded="false" />
+            <element signature="e#1096#1281#0" expanded="false" />
+            <element signature="e#1283#1454#0" expanded="false" />
+            <element signature="e#1605#1720#0" expanded="false" />
+            <element signature="e#6096#6121#0" expanded="false" />
+            <element signature="e#6337#6501#0" expanded="false" />
+            <element signature="e#9616#9651#1" expanded="false" />
+            <element signature="e#10850#10885#1" expanded="false" />
+            <element signature="e#12434#12508#0" expanded="false" />
+            <element signature="e#12511#13775#0" expanded="false" />
+            <element signature="e#13777#15363#0" expanded="false" />
+            <element signature="e#15365#15911#0" expanded="false" />
+            <element signature="e#15547#15852#0" expanded="false" />
+            <element signature="e#15934#17650#0" expanded="false" />
+            <element signature="e#17651#17678#0" expanded="false" />
+            <element signature="e#17651#18171#0" expanded="false" />
+            <element signature="e#17768#17856#0" expanded="false" />
+            <element signature="e#17906#18167#0" expanded="false" />
+            <element signature="e#18174#19354#0" expanded="false" />
+            <element signature="e#18993#19028#1" expanded="false" />
+            <element signature="e#19356#19373#0" expanded="false" />
+            <element signature="e#19356#20758#0" expanded="false" />
+            <element signature="e#20760#20816#0" expanded="false" />
+            <element signature="e#20818#22199#0" expanded="false" />
+            <element signature="e#22201#24096#0" expanded="false" />
+            <element signature="e#24098#25080#0" expanded="false" />
+            <element signature="e#24300#24611#0" expanded="false" />
+            <element signature="e#24781#25070#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="106" column="39" lean-forward="true" selection-start-line="106" selection-start-column="39" selection-end-line="106" selection-end-column="39" />
           <folding />
         </state>
       </provider>
