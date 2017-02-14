@@ -62,7 +62,11 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  * @note 该column后一列会显示“展开…/收起…”
  */
 @property(nonatomic) NSInteger collapseColumn;
-
+/**
+ * 表格的左偏移，默认0
+ * 为了能让表格与某些东西对齐
+ */
+@property(nonatomic) CGFloat tableLeftOffset;
 /**
  * 行展开回调
  */

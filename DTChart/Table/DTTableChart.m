@@ -174,6 +174,8 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     [super initial];
 
     _collapseColumn = -1;
+    _tableLeftOffset = 0;
+
     self.userInteractionEnabled = YES;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
     self.tableView.frame = self.contentView.bounds;
@@ -229,6 +231,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DTTableChartCell *cell = [tableView dequeueReusableCellWithIdentifier:DTTableChartCellReuseIdentifier];
+    cell.labelLeftOffset = self.tableLeftOffset;
     cell.delegate = self;
 
     [cell setStyle:self.tableChartStyle widths:self.presetCellWidths];

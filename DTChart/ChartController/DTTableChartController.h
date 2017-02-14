@@ -51,6 +51,11 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
  * 排序回调
  */
 @property(nonatomic, copy) DTTableChartOrderTouchBlock tableChartOrderTouchBlock;
+/**
+ * 表格的左偏移，默认0
+ * 为了能让表格与某些东西对齐
+ */
+@property(nonatomic) CGFloat tableLeftOffset;
 
 /**
  * 增加展开行的详细项

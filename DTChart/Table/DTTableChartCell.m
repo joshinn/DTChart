@@ -107,7 +107,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 - (NSMutableArray<UIView *> *)layoutSubviewsWithWidths:(NSArray *)widths {
 
 
-    CGFloat x = 0;
+    CGFloat x = self.labelLeftOffset;
     NSMutableArray<UIView *> *list = [NSMutableArray array];
     for (NSDictionary *dictionary in widths) {
         if (dictionary[@"label"]) {

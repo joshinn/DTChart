@@ -40,6 +40,7 @@
         }];
 
         _chartView = _tableChart;
+        _tableLeftOffset = 0;
     }
     return self;
 }
@@ -54,6 +55,12 @@
     _headViewHeight = headViewHeight;
 
     _tableChart.headViewHeight = _headViewHeight;
+}
+
+- (void)setTableLeftOffset:(CGFloat)tableLeftOffset {
+    _tableLeftOffset = tableLeftOffset;
+
+    _tableChart.tableLeftOffset = _tableLeftOffset;
 }
 
 
