@@ -135,10 +135,11 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     CGFloat maxY = 0;
 
     if (remain) {
-        // 和已有的y轴对比
-        DTAxisLabelData *yMaxLabelData = self.barChart.yAxisLabelDatas.lastObject;
-        if (yMaxLabelData) {
-            maxY = yMaxLabelData.value;
+        // 找出已有的最大值做对比
+        for(DTChartSingleData *sData in self.barChart.multiData){
+            for(DTChartItemData *itemData in sData.itemValues){
+                maxY = MAX(maxY, itemData.itemValue.y);
+            }
         }
     }
 
