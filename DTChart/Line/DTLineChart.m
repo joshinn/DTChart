@@ -224,9 +224,15 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 }
 
 - (void)generateMultiDataColors:(BOOL)needInitial {
+
     if (needInitial) {
-        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count + self.secondMultiData.count];
         for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        for (DTChartSingleData *sData in self.secondMultiData) {
             if (sData.color) {
                 [existColors addObject:sData.color];
             }
@@ -523,8 +529,13 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 - (void)generateSecondMultiDataColors:(BOOL)needInitial {
 
     if (needInitial) {
-        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count + self.secondMultiData.count];
         for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        for (DTChartSingleData *sData in self.secondMultiData) {
             if (sData.color) {
                 [existColors addObject:sData.color];
             }
@@ -567,6 +578,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
         self.secondAxisColorsCompletionBlock(infos);
     }
 }
+
 /**
  * 清除坐标系里的副轴轴标签和值线条
  */
@@ -783,7 +795,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     [self.secondValueLines removeObjectsAtIndexes:indexes];
 
-    if(self.secondMultiData.count == 0){ // 移除y副轴label
+    if (self.secondMultiData.count == 0) { // 移除y副轴label
         [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[DTChartLabel class]]) {
                 DTChartLabel *label = obj;

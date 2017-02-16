@@ -181,8 +181,13 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
 - (void)generateMultiDataColors:(BOOL)needInitial {
     if (needInitial) {
-        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count + self.secondMultiData.count];
         for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        for (DTChartSingleData *sData in self.secondMultiData) {
             if (sData.color) {
                 [existColors addObject:sData.color];
             }
@@ -301,8 +306,13 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 - (void)generateSecondMultiDataColors:(BOOL)needInitial {
 
     if (needInitial) {
-        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count];
+        NSMutableArray<UIColor *> *existColors = [NSMutableArray arrayWithCapacity:self.multiData.count + self.secondMultiData.count];
         for (DTChartSingleData *sData in self.multiData) {
+            if (sData.color) {
+                [existColors addObject:sData.color];
+            }
+        }
+        for (DTChartSingleData *sData in self.secondMultiData) {
             if (sData.color) {
                 [existColors addObject:sData.color];
             }
