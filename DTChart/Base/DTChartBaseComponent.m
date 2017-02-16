@@ -365,7 +365,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
             self.secondMultiData = @[self.secondSingleData];
         }
 
-        [self generateSecondMultiDataColors:NO];
+        [self generateSecondMultiDataColors:YES];
 
         [self drawSecondValues];
     }
