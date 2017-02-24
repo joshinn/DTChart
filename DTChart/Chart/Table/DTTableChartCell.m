@@ -21,8 +21,6 @@ CGFloat const DTTableChartCellHeight = 35;
 @property(nonatomic) UIImage *ascendImg;
 @property(nonatomic) UIImage *descendImg;
 
-@property(nonatomic) NSIndexPath *indexPath;
-
 @property(nonatomic) DTTableChartSingleData *cellData;
 
 @end
@@ -106,7 +104,6 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
  */
 - (NSMutableArray<UIView *> *)layoutSubviewsWithWidths:(NSArray *)widths {
 
-
     CGFloat x = self.labelLeftOffset;
     NSMutableArray<UIView *> *list = [NSMutableArray array];
     for (NSDictionary *dictionary in widths) {
@@ -118,6 +115,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             container.frame = CGRectMake(x, 0, width, DTTableChartCellHeight);
 
             DTChartLabel *label = [DTChartLabel chartLabel];
+            label.numberOfLines = 1;
             label.textColor = NormalLabelTextColor;
             label.tag = LabelViewTag;
             label.font = [UIFont systemFontOfSize:15];
@@ -219,7 +217,6 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 }
 
 - (void)setCellData:(DTTableChartSingleData *)singleData second:(DTTableChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath {
-    self.indexPath = indexPath;
     self.cellData = singleData;
 
     BOOL isOddRow = indexPath.row % 2 == 0;

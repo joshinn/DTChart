@@ -78,6 +78,14 @@
     }
 }
 
+- (void)setAxisBackgroundColor:(UIColor *)axisBackgroundColor {
+    _axisBackgroundColor = axisBackgroundColor;
+
+    if ([self.chartView isKindOfClass:[DTChartBaseComponent class]]) {
+        ((DTChartBaseComponent *) self.chartView).contentView.backgroundColor = axisBackgroundColor;
+    }
+}
+
 
 #pragma mark - private method
 

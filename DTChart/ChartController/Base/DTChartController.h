@@ -35,6 +35,10 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 @interface DTChartController : NSObject
 
 @property(nonatomic, readonly) UIView *chartView;
+/**
+ * 坐标系contentView的背景色
+ */
+@property (nonatomic) UIColor *axisBackgroundColor;
 
 @property (nonatomic) CGPoint ctrlOrigin;
 @property (nonatomic) NSUInteger ctrlXCount;

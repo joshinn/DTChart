@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/license-MIT-orange.svg)
 
 #DTChart
-A simple chart for DTise.
+A simple chart for DTise Company.
 
 ##Install
 
@@ -12,9 +12,19 @@ A simple chart for DTise.
 
 ##Guide
 
+###Chart
+
 * The demo project demonstrate how it works; 
 
 * `DTAxisLabelData`: Coordinate axis label data model, property `title` and `value`;
 
 * `DTChartItemData`: Coordinate axis value data model, property `itemValue` is kind of struct `ChartItemValue`;
+
+###Chart Controller
+
+* The Chart Controller is developed to make draw chart easier,
+
+* The Presentation View Controller demonstrate how it works;
+
+* `DTCommonData`,`DTListCommonData`: simple data model for Chart Controller;
 
