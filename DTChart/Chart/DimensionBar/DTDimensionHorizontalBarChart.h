@@ -1,8 +1,8 @@
 //
-//  DTDimensionVerticalBarChart.h
+//  DTDimensionHorizontalBarChart.h
 //  DTiseChart
 //
-//  Created by Jo Shin on 2017/2/24.
+//  Created by Jo Shin on 2017/2/28.
 //  Copyright © 2017年 studio.joshin. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 @class DTDimensionReturnModel;
 @class DTDimensionBarModel;
 
-@interface DTDimensionVerticalBarChart : DTBarChart
+@interface DTDimensionHorizontalBarChart : DTBarChart
 
 /**
  * 柱状图的数据model
@@ -26,11 +26,11 @@
 /**
  * y最大值
  */
-@property(nonatomic) CGFloat maxY;
+@property(nonatomic) CGFloat maxX;
 /**
- * x轴第一个柱状体偏移量，默认0，让所有柱状体居中时使用
+ * y轴第一个柱状体偏移量，默认0，让所有柱状体居中时使用
  */
-@property(nonatomic) CGFloat xOffset;
+@property(nonatomic) CGFloat yOffset;
 
 /**
  * 不绘制柱状体等view，计算该柱状图大小，层级等信息
@@ -38,4 +38,5 @@
  * @return 返回值包括x轴层级和宽度
  */
 - (DTDimensionReturnModel *)calculate:(DTDimensionModel *)data;
+
 @end

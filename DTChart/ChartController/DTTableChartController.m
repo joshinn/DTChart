@@ -22,9 +22,9 @@
 
 @synthesize chartView = _chartView;
 
-- (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
+- (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount custom:(NSArray *)widths {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
-        _tableChart = [DTTableChart tableChart:DTTableChartStyleC1C2 origin:origin widthCellCount:xCount heightCellCount:yCount];
+        _tableChart = [DTTableChart tableChartCustom:widths origin:origin widthCellCount:xCount heightCellCount:yCount];
         _headView = _tableChart.headView;
 
         WEAK_SELF;
@@ -43,6 +43,11 @@
         _tableLeftOffset = 0;
     }
     return self;
+}
+
+- (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
+    NSArray *widths = [DTTableChart presetTableChartCellWidth:DTTableChartStyleC1C2];
+    return [self initWithOrigin:origin xAxis:xCount yAxis:yCount custom:widths];
 }
 
 - (void)setCollapseColumn:(NSInteger)collapseColumn {

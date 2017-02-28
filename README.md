@@ -22,7 +22,7 @@ A simple chart for DTise Company.
 
 ###Chart Controller
 
-* The Chart Controller is developed to make draw chart easier,
+* The Chart Controller is developed to make draw chart more easily,
 
 * The Presentation View Controller demonstrate how it works;
 

@@ -8,7 +8,6 @@
 
 #import "DTVerticalBarChart.h"
 #import "DTChartLabel.h"
-#import "DTChartData.h"
 #import "DTHeapBar.h"
 
 @interface DTVerticalBarChart ()
@@ -40,7 +39,7 @@
  */
 - (void)generateStartingLineBars:(DTChartSingleData *)singleData
                            index:(NSUInteger)index
-                   yAxisMaxVaule:(DTAxisLabelData *)yMaxData
+                   yAxisMaxValue:(DTAxisLabelData *)yMaxData
                    yAxisMinValue:(DTAxisLabelData *)yMinData {
 
     CGFloat xOffset = self.barWidth / 2 * (self.multiData.count - 1);
@@ -315,7 +314,7 @@
         switch (self.barChartStyle) {
 
             case DTBarChartStyleStartingLine: {
-                [self generateStartingLineBars:singleData index:n yAxisMaxVaule:yMaxData yAxisMinValue:yMinData];
+                [self generateStartingLineBars:singleData index:n yAxisMaxValue:yMaxData yAxisMinValue:yMinData];
             }
                 break;
             case DTBarChartStyleHeap: {

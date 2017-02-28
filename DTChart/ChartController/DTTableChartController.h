@@ -58,6 +58,17 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 @property(nonatomic) CGFloat tableLeftOffset;
 
 /**
+ * 实例化
+ * @param origin 等同于frame.origin
+ * @param xCount frame.size.width 换算成单元格数
+ * @param yCount frame.size.height 换算成单元格数
+ * @param widths 自定义各个列的宽度
+ * @return instance
+ * @note widths规则详见 DTTableChart.presetTableChartCellWidth
+*/
+- (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount custom:(NSArray *)widths;
+
+/**
  * 增加展开行的详细项
  * @param listData 详细项
  */

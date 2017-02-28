@@ -77,6 +77,15 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
 @property(nonatomic, copy) DTTableChartOrderTouch orderTouchBlock;
 
 /**
+ * 获取表格一行所有label和间隙的宽度
+ * @param chartStyle 预设表格风格
+ * @return 宽度
+ *
+ * @attention 宽度是px，需除以2
+ */
++ (NSArray *)presetTableChartCellWidth:(DTTableChartStyle)chartStyle;
+
+/**
  * 实例化，使用预设风格
  * @param chartStyle chartStyle 除DTTableChartStyleCustom外的其他项
  * @param origin 等同frame.origin

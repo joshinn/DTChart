@@ -32,13 +32,7 @@
 
 static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 
-/**
- * 获取表格一行所有label和间隙的宽度
- * @param chartStyle 预设表格风格
- * @return 宽度
- *
- * @attention 宽度是px，需除以2
- */
+
 + (NSArray *)presetTableChartCellWidth:(DTTableChartStyle)chartStyle {
     DTLog(@"presetTableChartCellWidth");
     NSArray *widths;
