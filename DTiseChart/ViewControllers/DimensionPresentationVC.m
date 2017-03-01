@@ -16,8 +16,12 @@
 
 @interface DimensionPresentationVC ()
 
+@property(nonatomic) DTDimensionVerticalBarChartController *vChartController;
+@property(nonatomic) DTDimensionHorizontalBarChartController *hChartController;
 
-@property(nonatomic) DTDimensionModel *model;
+@property(nonatomic) DTDimensionModel *model1;
+@property(nonatomic) DTDimensionModel *model2;
+
 @end
 
 @implementation DimensionPresentationVC
@@ -27,15 +31,21 @@
     self.view.backgroundColor = DTRGBColor(0x2f2f2f, 1);
     self.automaticallyAdjustsScrollViewInsets = NO;
 
+    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 48)];
+    [changeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
+    [changeBtn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:changeBtn];
+
     // Do any additional setup after loading the view.
 
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+    NSString *path = [bundle pathForResource:@"data3" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model = [self dataFromJson:json];
+    self.model1 = [self dataFromJson:json];
 
 
 //    [self horizontalChart];
@@ -56,13 +66,15 @@
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model = [self dataFromJson:json];
+    self.model1 = [self dataFromJson:json];
 
     DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(100, 80) xAxis:55 yAxis:31];
     chartController.chartId = @"chart9527";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;
-    [chartController setItem:self.model];
+    [chartController setItem:self.model1];
+
+    self.vChartController = chartController;
 
     [self.view addSubview:chartController.chartView];
 
@@ -72,17 +84,19 @@
 - (void)horizontalChartController {
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+    NSString *path = [bundle pathForResource:@"data" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model = [self dataFromJson:json];
+    self.model2 = [self dataFromJson:json];
 
     DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7 + 190) xAxis:55 yAxis:31];
     chartController.chartId = @"chart9528";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;
-    [chartController setItem:self.model];
+    [chartController setItem:self.model2];
+
+    self.hChartController = chartController;
 
     [self.view addSubview:chartController.chartView];
 
@@ -110,7 +124,7 @@
 //    DTDimensionVerticalBarChart *barChart = [[DTDimensionVerticalBarChart alloc] initWithOrigin:CGPointMake(15 * 5, 262 + 15 * 7) xAxis:85 yAxis:31];
     barChart.barWidth = 2;
 
-    DTDimensionReturnModel *returnModel = [barChart calculate:self.model];
+    DTDimensionReturnModel *returnModel = [barChart calculate:self.model1];
     DTLog(@"********************************************************sectionWidth cell count = %@", @(returnModel.sectionWidth / 15));
     barChart.coordinateAxisInsets = ChartEdgeInsetsMake(barChart.coordinateAxisInsets.left, barChart.coordinateAxisInsets.top, barChart.coordinateAxisInsets.right, (NSUInteger) returnModel.level);
 
@@ -123,7 +137,7 @@
     barChart.yAxisLabelDatas = yAxisLabelDatas;
 
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor whiteColor];
-    barChart.dimensionModel = self.model;
+    barChart.dimensionModel = self.model1;
     [self.view addSubview:barChart];
 //    barChart.showCoordinateAxisLine  = NO;
     barChart.showCoordinateAxisLine = YES;
@@ -153,7 +167,7 @@
 //    DTDimensionVerticalBarChart *barChart = [[DTDimensionVerticalBarChart alloc] initWithOrigin:CGPointMake(15 * 5, 262 + 15 * 7) xAxis:85 yAxis:31];
     barChart.barWidth = 2;
 
-    DTDimensionReturnModel *returnModel = [barChart calculate:self.model];
+    DTDimensionReturnModel *returnModel = [barChart calculate:self.model1];
     DTLog(@"********************************************************sectionWidth cell count = %@", @(returnModel.sectionWidth / 15));
     barChart.coordinateAxisInsets = ChartEdgeInsetsMake((NSUInteger) returnModel.level, barChart.coordinateAxisInsets.top, barChart.coordinateAxisInsets.right, barChart.coordinateAxisInsets.bottom);
 
@@ -166,7 +180,7 @@
     barChart.xAxisLabelDatas = yAxisLabelDatas;
 
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor whiteColor];
-    barChart.dimensionModel = self.model;
+    barChart.dimensionModel = self.model1;
     [self.view addSubview:barChart];
 //    barChart.showCoordinateAxisLine  = NO;
     barChart.showCoordinateAxisLine = YES;
@@ -221,5 +235,13 @@
     return model;
 }
 
+
+- (void)change:(UIButton *)sender {
+    [self.hChartController setItem:self.model1];
+    [self.hChartController drawChart];
+
+    [self.vChartController setItem:self.model2];
+    [self.vChartController drawChart];
+}
 
 @end

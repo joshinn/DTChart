@@ -52,7 +52,7 @@
 - (void)cacheBarData {
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
     if (self.chart.levelLowestBarModels.count > 0) {
-        dataDic[@"barData"] = self.chart.levelLowestBarModels;
+        dataDic[@"barData"] = self.chart.levelLowestBarModels.copy;
     }
 
     [DTManager addChart:self.chartId object:@{@"data": dataDic}];
@@ -105,7 +105,7 @@
         NSDictionary *chartDic = [DTManager queryByChartId:self.chartId];
         NSDictionary *dataDic = chartDic[@"data"];
         NSArray *barData = dataDic[@"barData"];
-
+    
         [self checkBarData:barData compare:self.chart.levelLowestBarModels];
         [self cacheBarData];
 

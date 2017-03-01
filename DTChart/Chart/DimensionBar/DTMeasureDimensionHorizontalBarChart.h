@@ -1,8 +1,8 @@
 //
-//  DTDimensionHorizontalBarChart.h
+//  DTMeasureDimensionHorizontalBarChart.h
 //  DTiseChart
 //
-//  Created by Jo Shin on 2017/2/28.
+//  Created by Jo Shin on 2017/3/1.
 //  Copyright © 2017年 studio.joshin. All rights reserved.
 //
 
@@ -12,12 +12,16 @@
 @class DTDimensionReturnModel;
 @class DTDimensionBarModel;
 
-@interface DTDimensionHorizontalBarChart : DTBarChart
+@interface DTMeasureDimensionHorizontalBarChart : DTBarChart
 
 /**
- * 柱状图的数据model
+ * 第一个度量柱状图的数据model
  */
-@property(nonatomic) DTDimensionModel *dimensionModel;
+@property(nonatomic) DTDimensionModel *mainDimensionModel;
+/**
+ * 第二个度量柱状图的数据model
+ */
+@property(nonatomic) DTDimensionModel *secondDimensionModel;
 
 /**
  * 记录ptName不一样的层级最低的柱状体，同时生成对应的颜色
@@ -27,7 +31,10 @@
  * y最大值
  */
 @property(nonatomic) CGFloat maxX;
-
+/**
+ * y轴第一个柱状体偏移量，默认0，让所有柱状体居中时使用
+ */
+@property(nonatomic) CGFloat yOffset;
 
 /**
  * 不绘制柱状体等view，计算该柱状图大小，层级等信息
@@ -36,5 +43,5 @@
  */
 - (DTDimensionReturnModel *)calculate:(DTDimensionModel *)data;
 
-- (void)drawChart:(DTDimensionReturnModel *)returnModel;
+
 @end

@@ -11,6 +11,7 @@
 #import "DTDimensionReturnModel.h"
 #import "DTDimensionModel.h"
 #import "DTDimensionBarModel.h"
+#import "DTColor.h"
 
 @interface DTDimensionVerticalBarChart ()
 
@@ -76,11 +77,13 @@
                     }
 
                     DTChartLabel *titleLabel = [DTChartLabel chartLabel];
+                    titleLabel.font = [UIFont systemFontOfSize:12];
                     titleLabel.textAlignment = NSTextAlignmentCenter;
                     titleLabel.frame = CGRectMake(labelX, labelY, width, self.coordinateAxisCellWidth);
                     titleLabel.text = model.ptName;
-
-//                    titleLabel.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:returnModel2.level * 0.2f + 0.2f];
+                    if (returnModel2.level == 0) {
+                        titleLabel.textColor = DTColorGray;
+                    }
 
                     [self addSubview:titleLabel];
                 }
@@ -237,6 +240,17 @@
 
 
 #pragma mark - override
+
+- (void)clearChartContent {
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTChartLabel class]]) {
+            [obj removeFromSuperview];
+        }
+    }];
+    [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromSuperview];
+    }];
+}
 
 - (BOOL)drawXAxisLabels {
     return YES;

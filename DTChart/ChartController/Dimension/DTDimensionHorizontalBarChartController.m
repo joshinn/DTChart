@@ -17,6 +17,8 @@
 
 @property(nonatomic) DTDimensionHorizontalBarChart *chart;
 
+@property(nonatomic) DTDimensionReturnModel *returnModel;
+
 @end
 
 @implementation DTDimensionHorizontalBarChartController
@@ -51,7 +53,7 @@
 - (void)cacheBarData {
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
     if (self.chart.levelLowestBarModels.count > 0) {
-        dataDic[@"barData"] = self.chart.levelLowestBarModels;
+        dataDic[@"barData"] = self.chart.levelLowestBarModels.copy;
     }
 
     [DTManager addChart:self.chartId object:@{@"data": dataDic}];
@@ -93,7 +95,7 @@
 
     if (![DTManager checkExistByChartId:self.chartId]) {
 
-        [self.chart drawChart];
+        [self.chart drawChart:self.returnModel];
 
         // 保存数据
         [self cacheBarData];
@@ -108,7 +110,7 @@
         [self checkBarData:barData compare:self.chart.levelLowestBarModels];
         [self cacheBarData];
 
-        [self.chart drawChart];
+        [self.chart drawChart:self.returnModel];
     }
 }
 
@@ -118,11 +120,9 @@
     self.chart.dimensionModel = dimensionModel;
 
     DTDimensionReturnModel *returnModel = [self.chart calculate:dimensionModel];
+    self.returnModel = returnModel;
     ChartEdgeInsets insets = self.chart.coordinateAxisInsets;
     self.chart.coordinateAxisInsets = ChartEdgeInsetsMake((NSUInteger) returnModel.level, insets.top, insets.right, insets.bottom);
-
-//    self.chart.yOffset = (CGRectGetWidth(self.chart.contentView.bounds) - returnModel.sectionWidth) / 2;
-//    self.chart.yOffset = (NSInteger) (self.chart.yOffset / 15) * 15;
 
     // y轴label data
     self.chart.xAxisLabelDatas = [super generateYAxisLabelData:4 yAxisMaxValue:self.chart.maxX isMainAxis:YES];
