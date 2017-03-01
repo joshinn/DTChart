@@ -12,7 +12,7 @@
 
 @interface DTDimensionVerticalBarChartController : DTChartController
 
-- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((unavailable("DTDimensionVerticalBarChartController use -setItems replace")));
+- (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((unavailable("DTDimensionVerticalBarChartController use -setItem replace")));
 
 /**
  * 赋值，柱状图的所有值

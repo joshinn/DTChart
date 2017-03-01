@@ -2,54 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionBarModel.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionBarModel.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionReturnModel.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionReturnModel.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTChartData.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTChartData.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTCommonData.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTCommonData.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTLineChartSingleData.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTLineChartSingleData.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTTableAxisLabelData.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTTableAxisLabelData.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTTableChartSingleData.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTTableChartSingleData.m" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTTableChartTitleOrderModel.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Model/Normal/DTTableChartTitleOrderModel.m" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTChartData.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTChartData.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTCommonData.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTCommonData.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTDimensionModel.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTDimensionModel.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTLineChartSingleData.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTLineChartSingleData.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTTableAxisLabelData.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTTableAxisLabelData.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTTableChartSingleData.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTTableChartSingleData.m" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTTableChartTitleOrderModel.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/Model/DTTableChartTitleOrderModel.m" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.m" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.m" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/Bar/DTVerticalBarChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/Bar/DTVerticalBarChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.h" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.h" afterPath="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/DTChart-Prefix.pch" afterPath="$PROJECT_DIR$/DTChart/DTChart-Prefix.pch" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/resources.bundle/data.json" afterPath="$PROJECT_DIR$/DTChart/resources.bundle/data.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/DTiseChart.xcodeproj/project.pbxproj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,7 +26,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="iphoneos_6c8c95bd736708286bd8c8aa5e5617ac326a7a6d" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulatoriPad_Pro__12_9_inch__10.2_x86_64_2" />
   <component name="FavoritesManager">
     <favorites_list name="DTiseChart" />
   </component>
@@ -72,8 +35,8 @@
       <file leaf-file-name="DTDimensionVerticalBarChart.m" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="104" column="0" lean-forward="false" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
               <folding>
                 <element signature="e#154#193#0" expanded="true" />
               </folding>
@@ -81,49 +44,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DTDimensionVerticalBarChartController.m" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m">
+      <file leaf-file-name="DimensionPresentationVC.m" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-450">
-              <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+            <state relative-caret-position="149">
+              <caret line="171" column="9" lean-forward="true" selection-start-line="171" selection-start-column="9" selection-end-line="171" selection-end-column="9" />
               <folding>
-                <element signature="e#164#213#0" expanded="true" />
+                <element signature="e#150#185#0" expanded="true" />
+                <element signature="e#2450#4521#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DTDimensionHorizontalBarChart.m" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="370" column="1" lean-forward="true" selection-start-line="370" selection-start-column="1" selection-end-line="370" selection-end-column="1" />
+              <folding>
+                <element signature="e#156#197#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DTDimensionVerticalBarChartController.m" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="366">
+              <caret line="127" column="19" lean-forward="true" selection-start-line="127" selection-start-column="19" selection-end-line="127" selection-end-column="19" />
+              <folding>
                 <element signature="e#549#584#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DimensionPresentationVC.m" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m">
+      <file leaf-file-name="DTDimensionHorizontalBarChartController.m" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="39" column="27" lean-forward="false" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+            <state relative-caret-position="321">
+              <caret line="124" column="29" lean-forward="false" selection-start-line="124" selection-start-column="29" selection-end-line="124" selection-end-column="29" />
               <folding>
-                <element signature="e#150#185#0" expanded="true" />
-                <element signature="e#1863#3934#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DTDimensionHorizontalBarChart.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="37" column="23" lean-forward="true" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DTDimensionHorizontalBarChart.m" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="328" column="5" lean-forward="true" selection-start-line="328" selection-start-column="5" selection-end-line="328" selection-end-column="5" />
-              <folding>
-                <element signature="e#156#197#0" expanded="true" />
+                <element signature="e#165#216#0" expanded="true" />
+                <element signature="e#560#595#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -132,24 +97,15 @@
       <file leaf-file-name="data.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+            <state relative-caret-position="165">
+              <caret line="20" column="15" lean-forward="true" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
               <folding>
-                <element signature="e#769#853#0" expanded="false" />
-                <element signature="e#967#1048#0" expanded="false" />
-                <element signature="e#1066#1150#0" expanded="false" />
-                <element signature="e#1222#1947#0" expanded="false" />
-                <element signature="e#1258#1941#0" expanded="false" />
-                <element signature="e#1268#1931#0" expanded="false" />
-                <element signature="e#1312#1921#0" expanded="false" />
-                <element signature="e#1326#1612#0" expanded="false" />
-                <element signature="e#1378#1598#0" expanded="false" />
-                <element signature="e#1396#1480#0" expanded="false" />
-                <element signature="e#1498#1582#0" expanded="false" />
-                <element signature="e#1626#1909#0" expanded="false" />
-                <element signature="e#1678#1895#0" expanded="false" />
-                <element signature="e#1696#1777#0" expanded="false" />
-                <element signature="e#1795#1879#0" expanded="false" />
+                <element signature="e#62#119#0" expanded="false" />
+                <element signature="e#129#189#0" expanded="false" />
+                <element signature="e#199#259#0" expanded="false" />
+                <element signature="e#319#376#0" expanded="false" />
+                <element signature="e#386#446#0" expanded="false" />
+                <element signature="e#456#516#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -229,9 +185,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/DTChart/Model/DTTableAxisLabelData.m" />
-        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/LineViewController.m" />
-        <option value="$PROJECT_DIR$/DTChart/Model/DTFillPathModel.h" />
         <option value="$PROJECT_DIR$/DTChart/Fill/DTFillChart.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTFillChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m" />
@@ -276,10 +229,13 @@
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.h" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.h" />
-        <option value="$PROJECT_DIR$/DTChart/resources.bundle/data.json" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.m" />
-        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" />
+        <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.h" />
+        <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.h" />
+        <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.m" />
+        <option value="$PROJECT_DIR$/DTChart/resources.bundle/data.json" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m" />
+        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" />
       </list>
     </option>
   </component>
@@ -297,7 +253,7 @@
     <option name="height" value="1080" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -310,37 +266,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DTiseChart" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DTiseChart" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DTChart" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Cidr.FilesView" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
@@ -468,11 +394,12 @@
       <workItem from="1488106449560" duration="2673000" />
       <workItem from="1488161235218" duration="17866000" />
       <workItem from="1488244348993" duration="17344000" />
+      <workItem from="1488330811776" duration="5915000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="731902000" />
+    <option name="totallyTimeSpent" value="737817000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -487,24 +414,24 @@
     <frame x="-1920" y="-462" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2459189" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32317072" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3096591" sideWeight="0.5059571" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32723576" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41869918" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2459189" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32418698" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40853658" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15165877" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3932927" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39229968" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32418698" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -643,23 +570,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m</url>
-          <line>83</line>
+          <line>95</line>
           <option name="timeStamp" value="226" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m</url>
-          <line>85</line>
+          <line>97</line>
           <option name="timeStamp" value="231" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m</url>
-          <line>118</line>
-          <option name="timeStamp" value="234" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m</url>
-          <line>91</line>
-          <option name="timeStamp" value="235" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.m</url>
@@ -667,15 +584,30 @@
           <option name="timeStamp" value="236" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m</url>
-          <line>52</line>
-          <option name="timeStamp" value="237" />
+          <url>file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m</url>
+          <line>343</line>
+          <option name="timeStamp" value="238" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m</url>
+          <line>236</line>
+          <option name="timeStamp" value="239" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m</url>
+          <line>77</line>
+          <option name="timeStamp" value="240" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m</url>
+          <line>191</line>
+          <option name="timeStamp" value="242" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="238" />
+      <option name="time" value="243" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="AppleRunConfiguration">
@@ -684,30 +616,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4260">
-          <caret line="284" column="81" lean-forward="false" selection-start-line="284" selection-start-column="81" selection-end-line="284" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTHorizontalBarChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="180" column="68" lean-forward="true" selection-start-line="180" selection-start-column="68" selection-end-line="180" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTLineChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Line/DTLineChart.h" />
     <entry file="file://$PROJECT_DIR$/DTChart/Bar/DTBarChart.m" />
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/Pie/DTPieChart.m">
       <provider selected="true" editor-type-id="text-editor">
@@ -716,20 +624,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTDimensionModel.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTCommonData.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTDimensionModel.m" />
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTCommonData.h" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -737,13 +633,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTChartData.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="87" column="38" lean-forward="true" selection-start-line="87" selection-start-column="38" selection-end-line="87" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTChartData.h" />
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/Bar/DTBarChart.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -771,7 +661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="68" column="103" lean-forward="false" selection-start-line="68" selection-start-column="97" selection-end-line="68" selection-end-column="103" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -787,7 +676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="64" column="3" lean-forward="true" selection-start-line="64" selection-start-column="3" selection-end-line="64" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -795,7 +683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="59" column="122" lean-forward="true" selection-start-line="57" selection-start-column="8" selection-end-line="59" selection-end-column="122" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,43 +718,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTDimensionReturnModel.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="11" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTDimensionReturnModel.h" />
     <entry file="file://$PROJECT_DIR$/DTChart/DTChart-Prefix.pch">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTDimensionModel.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/DTDimensionModel.h" />
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTVerticalBarChartController.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -875,7 +738,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -883,7 +745,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="165" lean-forward="false" selection-start-line="17" selection-start-column="95" selection-end-line="17" selection-end-column="165" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -909,9 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="15" lean-forward="true" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
-          <folding>
-            <element signature="e#94#127#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -943,7 +801,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -989,8 +846,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTDimensionVerticalBarChartController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450">
-          <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+        <state relative-caret-position="225">
+          <caret line="15" column="31" lean-forward="false" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
           <folding>
             <element signature="e#164#213#0" expanded="true" />
             <element signature="e#549#584#0" expanded="true" />
@@ -1010,7 +867,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1026,7 +882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="37" column="58" lean-forward="false" selection-start-line="37" selection-start-column="58" selection-end-line="37" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1038,34 +893,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="23" lean-forward="false" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="11" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="124" column="29" lean-forward="false" selection-start-line="124" selection-start-column="29" selection-end-line="124" selection-end-column="29" />
+          <folding>
+            <element signature="e#165#216#0" expanded="true" />
+            <element signature="e#560#595#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="127" column="19" lean-forward="true" selection-start-line="127" selection-start-column="19" selection-end-line="127" selection-end-column="19" />
+          <folding>
+            <element signature="e#549#584#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="370" column="1" lean-forward="true" selection-start-line="370" selection-start-column="1" selection-end-line="370" selection-end-column="1" />
+          <folding>
+            <element signature="e#156#197#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        <state relative-caret-position="165">
+          <caret line="20" column="15" lean-forward="true" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
           <folding>
-            <element signature="e#769#853#0" expanded="false" />
-            <element signature="e#967#1048#0" expanded="false" />
-            <element signature="e#1066#1150#0" expanded="false" />
-            <element signature="e#1222#1947#0" expanded="false" />
-            <element signature="e#1258#1941#0" expanded="false" />
-            <element signature="e#1268#1931#0" expanded="false" />
-            <element signature="e#1312#1921#0" expanded="false" />
-            <element signature="e#1326#1612#0" expanded="false" />
-            <element signature="e#1378#1598#0" expanded="false" />
-            <element signature="e#1396#1480#0" expanded="false" />
-            <element signature="e#1498#1582#0" expanded="false" />
-            <element signature="e#1626#1909#0" expanded="false" />
-            <element signature="e#1678#1895#0" expanded="false" />
-            <element signature="e#1696#1777#0" expanded="false" />
-            <element signature="e#1795#1879#0" expanded="false" />
+            <element signature="e#62#119#0" expanded="false" />
+            <element signature="e#129#189#0" expanded="false" />
+            <element signature="e#199#259#0" expanded="false" />
+            <element signature="e#319#376#0" expanded="false" />
+            <element signature="e#386#446#0" expanded="false" />
+            <element signature="e#456#516#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBarChart.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="104" column="0" lean-forward="false" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
           <folding>
             <element signature="e#154#193#0" expanded="true" />
           </folding>
@@ -1074,29 +983,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="39" column="27" lean-forward="false" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+        <state relative-caret-position="149">
+          <caret line="171" column="9" lean-forward="true" selection-start-line="171" selection-start-column="9" selection-end-line="171" selection-end-column="9" />
           <folding>
             <element signature="e#150#185#0" expanded="true" />
-            <element signature="e#1863#3934#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="37" column="23" lean-forward="true" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHorizontalBarChart.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="328" column="5" lean-forward="true" selection-start-line="328" selection-start-column="5" selection-end-line="328" selection-end-column="5" />
-          <folding>
-            <element signature="e#156#197#0" expanded="true" />
+            <element signature="e#2450#4521#0" expanded="false" />
           </folding>
         </state>
       </provider>

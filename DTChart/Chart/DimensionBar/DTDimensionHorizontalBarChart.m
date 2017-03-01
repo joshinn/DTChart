@@ -30,6 +30,7 @@
 - (void)initial {
     [super initial];
 
+    self.showCoordinateAxisGrid = YES;
     self.userInteractionEnabled = YES;
 
     _barBorderStyle = DTBarBorderStyleSidesBorder;
@@ -50,9 +51,6 @@
     [_contentScrollView addSubview:self.contentView];
 
     [self addSubview:_contentScrollView];
-
-    // todo
-    _contentScrollView.contentSize = CGSizeMake(CGRectGetWidth(_contentScrollView.bounds), 1000);
 
     self.colorManager = [DTColorManager randomManager];
 }
@@ -345,7 +343,18 @@
 
     DTDimensionReturnModel *returnModel = [self calculate:self.dimensionModel];
     CGRect frame = self.contentView.frame;
-    frame.size.height = self.yOffset + returnModel.sectionWidth;
+    CGFloat realHeight = self.yOffset + returnModel.sectionWidth;
+    if (returnModel.level == 0) {
+        realHeight += self.coordinateAxisCellWidth;
+    }
+    frame.size.height = realHeight;
+    frame.size.height = MAX(frame.size.height, (self.yAxisCellCount - self.coordinateAxisInsets.top - self.coordinateAxisInsets.bottom) * self.coordinateAxisCellWidth);
+
+    if (realHeight < frame.size.height) {
+        self.yOffset = (CGRectGetHeight(frame) - realHeight) / 2;
+        self.yOffset = (NSInteger) (self.yOffset / self.coordinateAxisCellWidth) * self.coordinateAxisCellWidth;
+    }
+
     self.contentView.frame = frame;
 
     self.contentScrollView.contentSize = frame.size;

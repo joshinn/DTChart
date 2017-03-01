@@ -12,6 +12,7 @@
 #import "DTDimensionReturnModel.h"
 #import "DTDimensionVerticalBarChartController.h"
 #import "DTDimensionHorizontalBarChart.h"
+#import "DTDimensionHorizontalBarChartController.h"
 
 @interface DimensionPresentationVC ()
 
@@ -39,19 +40,30 @@
 
 //    [self chartController];
 
-    [self horizontalChart];
+//    [self horizontalChart];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-
+    [self horizontalChartController];
 }
 
 
 - (void)chartController {
     DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
     chartController.chartId = @"chart9527";
+    chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [chartController setItem:self.model];
+
+    [self.view addSubview:chartController.chartView];
+
+    [chartController drawChart];
+}
+
+- (void)horizontalChartController {
+    DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
+    chartController.chartId = @"chart9528";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     [chartController setItem:self.model];
 
