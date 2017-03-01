@@ -14,7 +14,9 @@
 
 @interface DTDimensionHorizontalBarChart ()
 
-@property(nonatomic) UIScrollView *contentScrollView;
+@property(nonatomic) UIScrollView *scrollView;
+
+@property(nonatomic) UIView *scrollContentView;
 
 /**
  * 计算DTBar的x坐标
@@ -38,18 +40,18 @@
 
 
     // scroll view
-    _contentScrollView = [[UIScrollView alloc] init];
-    _contentScrollView.frame = CGRectMake(0,
+    _scrollView = [[UIScrollView alloc] init];
+    _scrollView.frame = CGRectMake(0,
             self.coordinateAxisInsets.top * self.coordinateAxisCellWidth,
             CGRectGetWidth(self.bounds),
             CGRectGetHeight(self.bounds) - (self.coordinateAxisInsets.bottom + self.coordinateAxisInsets.top) * self.coordinateAxisCellWidth);
 
-    _contentScrollView.clipsToBounds = YES;
+    _scrollView.clipsToBounds = YES;
 
-    [self.contentView removeFromSuperview];
-    [_contentScrollView addSubview:self.contentView];
+    _scrollContentView = [UIView new];
+    [_scrollView addSubview:_scrollContentView];
 
-    [self addSubview:_contentScrollView];
+    [self addSubview:_scrollView];
 
     self.colorManager = [DTColorManager randomManager];
 }
@@ -109,7 +111,7 @@
                         titleLabel.frame = CGRectMake(labelX, labelY, self.coordinateAxisCellWidth, height);
                     }
 
-                    [self.contentScrollView addSubview:titleLabel];
+                    [self.scrollView addSubview:titleLabel];
                 }
 
                 if (sectionStart) {
@@ -128,7 +130,7 @@
                             UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, 2)];
                             line.backgroundColor = DTRGBColor(0x7b7b7b, 1);
 
-                            [self.contentView addSubview:line];
+                            [self.scrollContentView addSubview:line];
                         }
                     }
                 }
@@ -178,7 +180,7 @@
                     bar.barColor = barModel.color;
                     bar.barBorderColor = barModel.secondColor;
 
-                    [self.contentView addSubview:bar];
+                    [self.scrollContentView addSubview:bar];
 
                     if (self.showAnimation) {
                         [bar startAppearAnimation];
@@ -225,7 +227,7 @@
             bar.barColor = barModel.color;
             bar.barBorderColor = barModel.secondColor;
 
-            [self.contentView addSubview:bar];
+            [self.scrollContentView addSubview:bar];
 
             if (self.showAnimation) {
                 [bar startAppearAnimation];
@@ -268,7 +270,10 @@
 - (void)setCoordinateAxisInsets:(ChartEdgeInsets)coordinateAxisInsets {
     [super setCoordinateAxisInsets:coordinateAxisInsets];
 
-//    self.contentScrollView.frame = self.contentView.bounds;
+    self.scrollView.frame = CGRectMake(0,
+            CGRectGetMinY(self.contentView.frame),
+            CGRectGetWidth(self.contentView.frame) + self.coordinateAxisInsets.left * self.coordinateAxisCellWidth,
+            CGRectGetHeight(self.contentView.frame));
 }
 
 - (void)clearChartContent {
@@ -281,7 +286,7 @@
             [obj removeFromSuperview];
         }
     }];
-    [self.contentScrollView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+    [self.scrollView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[DTChartLabel class]]) {
             [obj removeFromSuperview];
         }
@@ -315,7 +320,7 @@
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
 
         CGFloat x = (self.coordinateAxisInsets.left + data.axisPosition) * self.coordinateAxisCellWidth - size.width / 2;
-        CGFloat y = CGRectGetMaxY(self.contentScrollView.frame);
+        CGFloat y = CGRectGetMaxY(self.scrollView.frame);
         if (size.height < self.coordinateAxisCellWidth) {
             y += (self.coordinateAxisCellWidth - size.height) / 2;
         }
@@ -341,22 +346,22 @@
 - (void)drawChart {
 
     DTDimensionReturnModel *returnModel = [self calculate:self.dimensionModel];
-    CGRect frame = self.contentView.frame;
+    CGRect frame = CGRectMake(CGRectGetMinX(self.contentView.frame), 0, CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame));
     CGFloat realHeight = self.yOffset + returnModel.sectionWidth;
     if (returnModel.level == 0) {
         realHeight += self.coordinateAxisCellWidth;
     }
     frame.size.height = realHeight;
-    frame.size.height = MAX(frame.size.height, (self.yAxisCellCount - self.coordinateAxisInsets.top - self.coordinateAxisInsets.bottom) * self.coordinateAxisCellWidth);
+    frame.size.height = MAX(frame.size.height, CGRectGetHeight(self.contentView.frame));
 
     if (realHeight < frame.size.height) {
         self.yOffset = (CGRectGetHeight(frame) - realHeight) / 2;
         self.yOffset = (NSInteger) (self.yOffset / self.coordinateAxisCellWidth) * self.coordinateAxisCellWidth;
     }
 
-    self.contentView.frame = frame;
+    self.scrollContentView.frame = frame;
 
-    self.contentScrollView.contentSize = frame.size;
+    self.scrollView.contentSize = frame.size;
 
     [super drawChart];
 

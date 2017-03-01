@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, DTBarOrientation) {
     DTBarOrientationUp,         // 方向朝上，默认方向
-    DTBarOrientationRight       // 方向朝右
+    DTBarOrientationRight,       // 方向朝右
+    DTBarOrientationLeft,       // 方向朝左
 };
 
 

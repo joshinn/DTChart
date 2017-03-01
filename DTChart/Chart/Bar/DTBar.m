@@ -102,8 +102,6 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     [self relayoutSubviews];
 }
 
-#pragma mark - public method
-
 - (void)relayoutSubviews {
     if (self.barBorderStyle == DTBarBorderStyleNone) {
         return;
@@ -128,9 +126,18 @@ static CGFloat const DTBarSidesBorderWidth = 2;
             }
         }
             break;
+        case DTBarOrientationLeft:{
+            if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
+                self.barFrontView.frame = CGRectMake(0, 0, DTBarTopBorderWidth, CGRectGetHeight(self.frame));
+            } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
+                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
+            }
+        }
+            break;
     }
 }
 
+#pragma mark - public method
 
 - (void)barDidSelected {
 
@@ -163,6 +170,14 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
         case DTBarOrientationRight: {
             fromFrame = CGRectMake(CGRectGetMinX(self.prevBarFrame), CGRectGetMinY(self.prevBarFrame), 0, CGRectGetHeight(self.prevBarFrame));
+            [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+                [subviewFrame addObject:NSStringFromCGRect(obj.frame)];
+                obj.frame = CGRectMake(0, 0, 0, CGRectGetHeight(self.bounds));
+            }];
+        }
+            break;
+        case DTBarOrientationLeft:{
+            fromFrame = CGRectMake(CGRectGetMaxX(self.prevBarFrame), CGRectGetMinY(self.prevBarFrame), 0, CGRectGetHeight(self.prevBarFrame));
             [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
                 [subviewFrame addObject:NSStringFromCGRect(obj.frame)];
                 obj.frame = CGRectMake(0, 0, 0, CGRectGetHeight(self.bounds));

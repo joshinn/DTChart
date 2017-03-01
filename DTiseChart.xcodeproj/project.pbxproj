@@ -45,6 +45,7 @@
 		65920D121E1CE947006EA012 /* TableChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65920D111E1CE947006EA012 /* TableChartViewController.m */; };
 		65AF01461E665BBC0037863E /* DTDimensionVerticalBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65AF01451E665BBC0037863E /* DTDimensionVerticalBarChartController.m */; };
 		65AF01491E665BEA0037863E /* DTDimensionHorizontalBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65AF01481E665BEA0037863E /* DTDimensionHorizontalBarChartController.m */; };
+		65AF01511E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65AF01501E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m */; };
 		65B4CB831E2E003500EFDA28 /* DTChartBlockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B4CB821E2E003500EFDA28 /* DTChartBlockModel.m */; };
 		65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE471E25D1EA00DC152B /* CollectionViewController.m */; };
 		65B7BE4D1E25D96E00DC152B /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE4C1E25D96E00DC152B /* GridCell.m */; };
@@ -159,6 +160,8 @@
 		65AF01451E665BBC0037863E /* DTDimensionVerticalBarChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimensionVerticalBarChartController.m; sourceTree = "<group>"; };
 		65AF01471E665BEA0037863E /* DTDimensionHorizontalBarChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimensionHorizontalBarChartController.h; sourceTree = "<group>"; };
 		65AF01481E665BEA0037863E /* DTDimensionHorizontalBarChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimensionHorizontalBarChartController.m; sourceTree = "<group>"; };
+		65AF014F1E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiMeasureDimensionPresentationViewController.h; sourceTree = "<group>"; };
+		65AF01501E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiMeasureDimensionPresentationViewController.m; sourceTree = "<group>"; };
 		65B4CB811E2E003500EFDA28 /* DTChartBlockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartBlockModel.h; sourceTree = "<group>"; };
 		65B4CB821E2E003500EFDA28 /* DTChartBlockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartBlockModel.m; sourceTree = "<group>"; };
 		65B7BE461E25D1EA00DC152B /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
@@ -426,6 +429,8 @@
 				65751E091E4583A70029C1B3 /* FillPresentationVC.m */,
 				65EEFC641E60059700ED5F84 /* DimensionPresentationVC.h */,
 				65EEFC651E60059700ED5F84 /* DimensionPresentationVC.m */,
+				65AF014F1E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.h */,
+				65AF01501E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -657,6 +662,7 @@
 				653345421E30D09500F6CE48 /* NSNumber+DTExternal.m in Sources */,
 				65751E0A1E4583A70029C1B3 /* FillPresentationVC.m in Sources */,
 				65F598721E31A11500B1DA79 /* DTDistributionChartController.m in Sources */,
+				65AF01511E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m in Sources */,
 				65683FCC1E5ED255003D841B /* DTTableChart.m in Sources */,
 				65683FBD1E5ED255003D841B /* DTBarChart.m in Sources */,
 				65683FCB1E5ED255003D841B /* DTPiePart.m in Sources */,

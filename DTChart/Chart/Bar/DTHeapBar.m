@@ -55,37 +55,49 @@
 /**
  * 计算frame和布局子bar
  */
--(void)relayoutSubBars{
+- (void)relayoutSubBars {
     CGRect frame = self.frame;
     __block CGFloat totalLength = 0;
     for (NSNumber *num in self.subBarLength) {
         totalLength += num.floatValue;
     }
-    
+
     switch (self.barOrientation) {
         case DTBarOrientationUp: {
             frame.origin.y += CGRectGetHeight(frame) - totalLength;
             frame.size.height = totalLength;
             self.frame = frame;
-            
+
             totalLength = 0;
             [self.subviews enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
                 obj.frame = CGRectMake(0, totalLength, CGRectGetWidth(self.bounds), self.subBarLength[idx].floatValue);
                 totalLength += self.subBarLength[idx].floatValue;
             }];
-            
+
         }
             break;
         case DTBarOrientationRight: {
             frame.size.width = totalLength;
             self.frame = frame;
-            
+
             totalLength = 0;
             [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
                 obj.frame = CGRectMake(totalLength, 0, self.subBarLength[idx].floatValue, CGRectGetHeight(self.bounds));
                 totalLength += self.subBarLength[idx].floatValue;
             }];
-            
+
+        }
+            break;
+        case DTBarOrientationLeft: {
+            frame.size.width = totalLength;
+            self.frame = frame;
+
+            [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+                CGFloat width = self.subBarLength[idx].floatValue;
+                obj.frame = CGRectMake(totalLength - width, 0, width, CGRectGetHeight(self.bounds));
+                totalLength -= width;
+            }];
+
         }
             break;
     }
@@ -94,7 +106,7 @@
 
 #pragma mark -public method
 
-- (void)appendData:(DTChartItemData *)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need{
+- (void)appendData:(DTChartItemData *)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need {
     [self.heapData addObject:data];
     [self.subBarLength addObject:@(length)];
     [self.subBarColors addObject:color];
@@ -106,7 +118,7 @@
     bar.barColor = color;
     [self addSubview:bar];
 
-    if(!need){
+    if (!need) {
         return;
     }
 

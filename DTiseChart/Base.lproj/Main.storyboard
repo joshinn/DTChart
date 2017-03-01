@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -98,6 +99,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ViJ-N2-kvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1321" y="1747"/>
+        </scene>
+        <!--双度量-->
+        <scene sceneID="x5W-jl-blq">
+            <objects>
+                <viewController title="双度量" id="YmZ-2a-AvX" customClass="MultiMeasureDimensionPresentationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hm3-h2-Mky"/>
+                        <viewControllerLayoutGuide type="bottom" id="I1K-QX-AY8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="87P-2E-CzZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jxm-xK-XRg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2086" y="1746"/>
         </scene>
         <!--Distribution Chart-->
         <scene sceneID="1ke-N3-Fn8">
@@ -261,6 +280,16 @@
                                     <segue destination="LJD-Jh-ezr" kind="show" id="Hty-rQ-yfh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qt-uW-bf0">
+                                <rect key="frame" x="16" y="503" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="qhn-qH-tK3"/>
+                                </constraints>
+                                <state key="normal" title="双度量多维度"/>
+                                <connections>
+                                    <segue destination="YmZ-2a-AvX" kind="show" id="d9K-dc-95J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -274,8 +303,11 @@
                             <constraint firstItem="wse-Gw-Ijm" firstAttribute="top" secondItem="mED-I6-oiT" secondAttribute="bottom" constant="15" id="GQO-b7-2xH"/>
                             <constraint firstItem="ciG-3i-K9O" firstAttribute="top" secondItem="zEm-Uf-soA" secondAttribute="bottom" constant="15" id="KUV-8N-YTm"/>
                             <constraint firstAttribute="trailing" secondItem="cc1-3b-5UU" secondAttribute="trailing" id="Kfe-gt-fH4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6qt-uW-bf0" secondAttribute="trailing" id="QYm-o3-TcQ"/>
                             <constraint firstItem="XYY-Tf-o8l" firstAttribute="top" secondItem="y6U-pc-dwU" secondAttribute="bottom" constant="15" id="SSx-0g-ZrC"/>
+                            <constraint firstItem="6qt-uW-bf0" firstAttribute="leading" secondItem="qwz-Y4-Y3w" secondAttribute="leadingMargin" id="U0o-dQ-G5r"/>
                             <constraint firstItem="XYY-Tf-o8l" firstAttribute="leading" secondItem="qwz-Y4-Y3w" secondAttribute="leading" id="UgC-jm-fWX"/>
+                            <constraint firstItem="6qt-uW-bf0" firstAttribute="top" secondItem="ciG-3i-K9O" secondAttribute="bottom" constant="15" id="XSn-SC-BJM"/>
                             <constraint firstAttribute="trailing" secondItem="y5N-98-Dda" secondAttribute="trailing" id="Z8v-eo-ghl"/>
                             <constraint firstItem="y5N-98-Dda" firstAttribute="leading" secondItem="qwz-Y4-Y3w" secondAttribute="leading" id="eA8-KR-mmk"/>
                             <constraint firstAttribute="trailing" secondItem="XYY-Tf-o8l" secondAttribute="trailing" id="fFf-Dx-ogd"/>
