@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, DTChartMode) {
  * @note DTLineChart type:0 圆形 1:方形 2:三角形
  */
 typedef void(^MainAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *infos);
+
 /**
  * 副轴颜色，type，id回调
  * @note DTLineChart type:0 圆形 1:方形 2:三角形
@@ -38,11 +39,15 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 /**
  * 坐标系contentView的背景色
  */
-@property (nonatomic) UIColor *axisBackgroundColor;
+@property(nonatomic) UIColor *axisBackgroundColor;
+/**
+ * 显示坐标系的网格
+ */
+@property(nonatomic, getter=isShowCoordinateAxisGrid) BOOL showCoordinateAxisGrid;
 
-@property (nonatomic) CGPoint ctrlOrigin;
-@property (nonatomic) NSUInteger ctrlXCount;
-@property (nonatomic) NSUInteger ctrlYCount;
+@property(nonatomic) CGPoint ctrlOrigin;
+@property(nonatomic) NSUInteger ctrlXCount;
+@property(nonatomic) NSUInteger ctrlYCount;
 
 /**
  * DTChart的id，对应一系列独立的数据

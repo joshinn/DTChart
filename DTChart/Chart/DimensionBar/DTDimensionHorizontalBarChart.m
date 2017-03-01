@@ -30,7 +30,6 @@
 - (void)initial {
     [super initial];
 
-    self.showCoordinateAxisGrid = YES;
     self.userInteractionEnabled = YES;
 
     _barBorderStyle = DTBarBorderStyleSidesBorder;

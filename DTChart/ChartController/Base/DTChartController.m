@@ -86,6 +86,14 @@
     }
 }
 
+- (void)setShowCoordinateAxisGrid:(BOOL)showCoordinateAxisGrid {
+    _showCoordinateAxisGrid = showCoordinateAxisGrid;
+
+    if ([self.chartView isKindOfClass:[DTChartBaseComponent class]]) {
+        ((DTChartBaseComponent *) self.chartView).showCoordinateAxisGrid = showCoordinateAxisGrid;
+    }
+}
+
 
 #pragma mark - private method
 
