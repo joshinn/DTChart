@@ -10,10 +10,13 @@
 #import "DTDimensionHorizontalBarChart.h"
 #import "DTDimensionReturnModel.h"
 #import "DTDimensionModel.h"
+#import "DTMeasureDimensionHorizontalBarChart.h"
 
 @interface MultiMeasureDimensionPresentationViewController ()
 
 @property(nonatomic) DTDimensionModel *model;
+
+@property(nonatomic) DTMeasureDimensionHorizontalBarChart *barChart;
 
 @end
 
@@ -26,6 +29,11 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     // Do any additional setup after loading the view.
+    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 48)];
+    [changeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
+    [changeBtn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:changeBtn];
 
 
 }
@@ -45,7 +53,7 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model = [self dataFromJson:json];
 
-    DTDimensionHorizontalBarChart *barChart = [[DTDimensionHorizontalBarChart alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
+    DTMeasureDimensionHorizontalBarChart *barChart = [[DTMeasureDimensionHorizontalBarChart alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
 
     barChart.barWidth = 2;
 
@@ -73,14 +81,17 @@
 
     barChart.contentView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     barChart.xAxisLabelDatas = yAxisLabelDatas;
+    barChart.xSecondAxisLabelDatas = yAxisLabelDatas;
 
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor whiteColor];
-    barChart.dimensionModel = self.model;
+    barChart.mainDimensionModel = self.model;
+    barChart.secondDimensionModel = self.model;
     [self.view addSubview:barChart];
 //    barChart.showCoordinateAxisLine  = NO;
     barChart.showCoordinateAxisLine = YES;
     barChart.showCoordinateAxisGrid = YES;
 
+    self.barChart = barChart;
 
     [barChart drawChart];
 
@@ -132,5 +143,17 @@
 }
 
 
+- (void)change:(UIButton *)sender {
+    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+    NSString *path = [bundle pathForResource:@"data3" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    self.model = [self dataFromJson:json];
+
+    self.barChart.secondDimensionModel = self.barChart.mainDimensionModel = self.model;
+    [self.barChart drawChart];
+}
 
 @end

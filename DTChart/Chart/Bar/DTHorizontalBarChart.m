@@ -60,7 +60,7 @@
                 }
 
                 CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
-                CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
                 CGFloat x = 0;
                 CGFloat y = (yData.axisPosition - 1 + yOffset - index * self.barWidth) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
 
@@ -123,7 +123,7 @@
                 }
 
                 CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
-                CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
                 CGFloat x = 0;
                 CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
 
@@ -173,7 +173,7 @@
                     }
 
                     CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
-                    CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                    CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
                     CGFloat x = 0;
                     CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
 
@@ -195,7 +195,7 @@
                     }
 
                     CGFloat height = self.coordinateAxisCellWidth * self.barWidth;
-                    CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                    CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
                     CGFloat x = width - self.coordinateAxisCellWidth / 3;
                     CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
                     width = self.coordinateAxisCellWidth / 3;

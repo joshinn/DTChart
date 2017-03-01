@@ -152,7 +152,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             ratioPosition = (xMaxData.axisPosition - xMinData.axisPosition) * (itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value);
         }
         CGFloat x = self.coordinateAxisCellWidth * (xMinData.axisPosition + ratioPosition);
-        CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition);
+        CGFloat y = self.coordinateAxisCellWidth * (self.yAxisCellCount - ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition));
         itemData.position = CGPointMake(x, y);
 
         if (path) {

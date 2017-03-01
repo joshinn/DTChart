@@ -15,6 +15,10 @@
 @interface DTMeasureDimensionHorizontalBarChart : DTBarChart
 
 /**
+ * 第二个度量x轴标签数组
+ */
+@property(nonatomic, copy) NSArray<DTAxisLabelData *> *xSecondAxisLabelDatas;
+/**
  * 第一个度量柱状图的数据model
  */
 @property(nonatomic) DTDimensionModel *mainDimensionModel;

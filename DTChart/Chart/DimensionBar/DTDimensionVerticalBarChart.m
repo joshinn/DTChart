@@ -148,7 +148,7 @@
                     DTAxisLabelData *yMaxData = self.yAxisLabelDatas.lastObject;
                     DTAxisLabelData *yMinData = self.yAxisLabelDatas.firstObject;
 
-                    CGFloat height = self.coordinateAxisCellWidth * ((model.ptValue - yMinData.value) / (yMaxData.value - yMinData.value)) * yMaxData.axisPosition;
+                    CGFloat height = self.coordinateAxisCellWidth * ((model.ptValue - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);
 
                     DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                     bar.frame = CGRectMake(self.barX, axisY - height, barWidth, height);

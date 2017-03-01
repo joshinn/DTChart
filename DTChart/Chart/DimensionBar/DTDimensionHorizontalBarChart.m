@@ -184,7 +184,7 @@
                     DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
                     DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
-                    CGFloat width = self.coordinateAxisCellWidth * ((model.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+                    CGFloat width = self.coordinateAxisCellWidth * ((model.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
 
                     DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                     bar.frame = CGRectMake(axisX, self.barY, width, barWidth);
@@ -231,7 +231,7 @@
             DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
             DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
-            CGFloat width = self.coordinateAxisCellWidth * ((data.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * xMaxData.axisPosition;
+            CGFloat width = self.coordinateAxisCellWidth * ((data.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
 
             DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
             bar.frame = CGRectMake(axisX, self.barY, width, barWidth);
@@ -278,7 +278,11 @@
 
 - (void)drawChart:(DTDimensionReturnModel *)returnModel {
     self.yOffset = self.coordinateAxisCellWidth;
-    
+
+    if (!returnModel) {
+        returnModel = [self calculate:self.dimensionModel];
+    }
+
     CGRect frame = CGRectMake(CGRectGetMinX(self.contentView.frame), 0, CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame));
     CGFloat realHeight = self.yOffset + returnModel.sectionWidth;
     if (returnModel.level == 0) {
@@ -286,18 +290,18 @@
     }
     frame.size.height = realHeight;
     frame.size.height = MAX(frame.size.height, CGRectGetHeight(self.contentView.frame));
-    
+
     if (realHeight < frame.size.height) {
         self.yOffset = (CGRectGetHeight(frame) - realHeight) / 2;
         self.yOffset = (NSInteger) (self.yOffset / self.coordinateAxisCellWidth) * self.coordinateAxisCellWidth;
     }
-    
+
     self.scrollContentView.frame = frame;
-    
+
     self.scrollView.contentSize = frame.size;
-    
+
     [super drawChart];
-    
+
 }
 
 
@@ -380,31 +384,8 @@
 }
 
 - (void)drawChart {
-    self.yOffset = self.coordinateAxisCellWidth;
-    
-    DTDimensionReturnModel *returnModel = [self calculate:self.dimensionModel];
-    CGRect frame = CGRectMake(CGRectGetMinX(self.contentView.frame), 0, CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame));
-    CGFloat realHeight = self.yOffset + returnModel.sectionWidth;
-    if (returnModel.level == 0) {
-        realHeight += self.coordinateAxisCellWidth;
-    }
-    frame.size.height = realHeight;
-    frame.size.height = MAX(frame.size.height, CGRectGetHeight(self.contentView.frame));
-
-    if (realHeight < frame.size.height) {
-        self.yOffset = (CGRectGetHeight(frame) - realHeight) / 2;
-        self.yOffset = (NSInteger) (self.yOffset / self.coordinateAxisCellWidth) * self.coordinateAxisCellWidth;
-    }
-
-    self.scrollContentView.frame = frame;
-
-    self.scrollView.contentSize = frame.size;
-
-    [super drawChart];
-
+    [self drawChart:nil];
 }
-
-
 
 
 #pragma mark - DTBarDelegate
