@@ -8,6 +8,7 @@
 
 #import "DTChartBaseComponent.h"
 #import "DTChartBlockModel.h"
+#import "DTChartToastView.h"
 
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
@@ -54,7 +55,6 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     _showCoordinateAxisGrid = NO;
     _valueSelectable = NO;
 
-
     _originPoint = CGPointMake(_coordinateAxisInsets.left * _coordinateAxisCellWidth,
             CGRectGetHeight(self.frame) - _coordinateAxisInsets.bottom * _coordinateAxisCellWidth);
 
@@ -63,6 +63,9 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
             (_xCount - _coordinateAxisInsets.left - _coordinateAxisInsets.right) * _coordinateAxisCellWidth,
             (_yCount - _coordinateAxisInsets.top - _coordinateAxisInsets.bottom) * _coordinateAxisCellWidth)];
     [self addSubview:_contentView];
+
+    _toastView = [[DTChartToastView alloc] init];
+    [_contentView addSubview:_toastView];
 }
 
 /**

@@ -132,7 +132,7 @@
     [self.view addSubview:fillChartController.chartView];
     self.fillChartController = fillChartController;
     [self.fillChartController setFillChartTouchBlock:^NSString *(NSUInteger lineIndex, NSUInteger pointIndex) {
-        return [NSString stringWithFormat:@"一周最佳是第%@天  那天最佳第%@名", @(lineIndex), @(pointIndex)];
+        return [NSString stringWithFormat:@"一周最佳是第%@天\n那天最佳第%@名", @(lineIndex), @(pointIndex)];
     }];
 
     self.listLineData = [self simulateListCommonData:30 pointCount:28 mainAxis:YES].reverseObjectEnumerator.allObjects.mutableCopy;

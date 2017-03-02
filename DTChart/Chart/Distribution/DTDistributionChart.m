@@ -10,9 +10,10 @@
 #import "DTDistributionBar.h"
 #import "DTColor.h"
 #import "DTChartLabel.h"
+#import "DTChartToastView.h"
 
 
-@interface DTDistributionChart ()
+@interface DTDistributionChart () <DTDistributionBarDelegate>
 
 @property(nonatomic) NSMutableArray<DTDistributionBar *> *chartBars;
 
@@ -22,6 +23,9 @@
 
 @implementation DTDistributionChart
 
+static NSString *const kStartTimeKey = @"startTime";
+static NSString *const kEndTimeKey = @"endTime";
+static NSString *const kChineseTimeKey = @"chinese";
 
 - (void)initial {
     [super initial];
@@ -175,7 +179,7 @@
         endTime = [NSString stringWithFormat:@"%@:59", @(endHour)];
     }
 
-    return @{@"startTime": startTime, @"endTime": endTime, @"chinese": [self getChineseTime:hour]};
+    return @{kStartTimeKey: startTime, kEndTimeKey: endTime, kChineseTimeKey: [self getChineseTime:hour]};
 }
 
 - (NSString *)getChineseTime:(NSInteger)hour {
@@ -225,7 +229,7 @@
                 self.coordinateAxisCellWidth * (self.coordinateAxisInsets.left - 1),
                 sectionHeight / 3 - 2);
 
-        [self largeYAxisLabelFactory:yLabel startTime:dictionary[@"startTime"] endTime:dictionary[@"endTime"] chinese:dictionary[@"chinese"]];
+        [self largeYAxisLabelFactory:yLabel startTime:dictionary[kStartTimeKey] endTime:dictionary[kEndTimeKey] chinese:dictionary[kChineseTimeKey]];
 
         [self addSubview:yLabel];
 
@@ -302,6 +306,14 @@
     } else {
         return self.supremeLevelColor;
     }
+}
+
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
 }
 
 #pragma mark - override
@@ -395,7 +407,6 @@
     for (NSUInteger i = 0; i < self.yAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.yAxisLabelDatas[self.yAxisLabelDatas.count - i - 1];
 
-
         // 绘制y轴
         DTChartLabel *yLabel = [DTChartLabel chartLabel];
         if (self.yAxisLabelColor) {
@@ -418,7 +429,6 @@
         [self addSubview:yLabel];
     }
 
-
     return YES;
 }
 
@@ -432,8 +442,10 @@
         if (i < self.chartBars.count) {
             DTDistributionBar *bar = self.chartBars[i];
 
+            bar.delegate = self;
             bar.singleData = sData;
             bar.startHour = self.startHour;
+            bar.selectable = self.valueSelectable;
             [bar drawSubItems];
         }
     }
@@ -444,6 +456,33 @@
     [self processYAxisStyle];
 
     [super drawChart];
+}
+
+
+#pragma mark - DTDistributionBarDelegate
+
+- (void)distributionBarItemBeginTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point {
+    NSString *message = nil;
+    if (self.distributionChartTouchBlock) {
+        message = self.distributionChartTouchBlock(singleData, itemData);
+    }
+    if (!message) {
+        NSMutableString *mutableString = [NSMutableString string];
+        [mutableString appendString:singleData.singleName];
+        [mutableString appendString:@" "];
+        NSDictionary *dictionary = [self formatLargeStyleYLabelTitle:(NSInteger) itemData.itemValue.y];
+        [mutableString appendString:[NSString stringWithFormat:@"%@-%@", dictionary[kStartTimeKey], dictionary[kEndTimeKey]]];
+        [mutableString appendString:@"\n"];
+        [mutableString appendString:[NSString stringWithFormat:@"%@", @(itemData.itemValue.x)]];
+
+        message = mutableString;
+    }
+    [self showTouchMessage:message touchPoint:point];
+
+}
+
+- (void)distributionBarItemEndTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point {
+    [self.toastView hide];
 }
 
 

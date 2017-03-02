@@ -41,9 +41,8 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         [_chart setFillChartTouchBlock:^NSString *(NSUInteger lineIndex, NSUInteger pointIndex) {
             if (weakSelf.fillChartTouchBlock) {
                 return weakSelf.fillChartTouchBlock(weakSelf.chart.multiData.count - lineIndex - 1, pointIndex);
-            } else {
-                return nil;
             }
+            return nil;
         }];
     }
     return self;

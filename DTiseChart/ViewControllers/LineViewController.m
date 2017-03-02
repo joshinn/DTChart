@@ -66,8 +66,9 @@
 //    lineChart.barSelectable = NO;
 
 
-    [lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
+    [lineChart setLineChartTouchBlock:^NSString *(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
         DTLog(@"line touch index = %@, %@, %@", @(lineIndex), @(pointIndex), isMainAxis ? @"Main axis" : @"Second axis");
+        return nil;
     }];
 
     [lineChart drawChart];

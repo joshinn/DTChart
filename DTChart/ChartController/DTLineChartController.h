@@ -13,7 +13,7 @@
  * @param seriesId 折线的seriesId
  * @param pointIndex 折线中的点的序号
  */
-typedef void(^DTLineChartTouchBlock)(NSString * seriesId, NSUInteger pointIndex);
+typedef NSString *(^DTLineChartTouchBlock)(NSString *seriesId, NSUInteger pointIndex);
 
 
 @interface DTLineChartController : DTChartController

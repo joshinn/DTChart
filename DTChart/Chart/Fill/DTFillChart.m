@@ -9,6 +9,7 @@
 #import "DTFillChart.h"
 #import "DTChartLabel.h"
 #import "DTFillLayer.h"
+#import "DTChartToastView.h"
 
 
 @interface DTFillChart ()
@@ -18,6 +19,8 @@
 @property(nonatomic) NSInteger prevTouchedPathIndex;
 @property(nonatomic) NSInteger prevTouchedPointIndex;
 
+@property(nonatomic) CALayer *touchSelectedLine;
+
 @end
 
 @implementation DTFillChart
@@ -25,7 +28,7 @@
 /**
  * 触摸点最大的偏移距离
  */
-static CGFloat const TouchOffsetMaxDistance = 10;
+static CGFloat const TouchOffsetMaxDistance = 15;
 
 - (void)initial {
     [super initial];
@@ -36,6 +39,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     _prevTouchedPathIndex = -1;
     _prevTouchedPointIndex = -1;
+
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
 }
 
 - (NSMutableArray<DTFillLayer *> *)fillLayers {
@@ -45,20 +50,31 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return _fillLayers;
 }
 
+- (CALayer *)touchSelectedLine {
+    if (!_touchSelectedLine) {
+        _touchSelectedLine = [CALayer layer];
+        _touchSelectedLine.backgroundColor = [UIColor whiteColor].CGColor;
+    }
+    return _touchSelectedLine;
+}
+
+
 #pragma mark - private method
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchKeyPoint:touches isMoving:NO];
+    [self touchKeyPoint:touches];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchKeyPoint:touches isMoving:YES];
+    [self touchKeyPoint:touches];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if (self.prevTouchedPathIndex >= 0) {
         DTFillLayer *prevFillLayer = self.fillLayers[(NSUInteger) self.prevTouchedPathIndex];
         prevFillLayer.highLighted = NO;
+
+        [self hideTouchMessage];
     }
 }
 
@@ -66,20 +82,25 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     if (self.prevTouchedPathIndex >= 0) {
         DTFillLayer *prevFillLayer = self.fillLayers[(NSUInteger) self.prevTouchedPathIndex];
         prevFillLayer.highLighted = NO;
+
+        [self hideTouchMessage];
     }
 }
 
-- (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
+- (void)touchKeyPoint:(NSSet *)touches {
     if (!self.valueSelectable) {
         return;
     }
 
     UITouch *touch = [touches anyObject];
-    CGPoint touchPoint = [touch locationInView:self.contentView];
+    CGPoint touchPoint = [touch locationInView:self];
+    touchPoint = CGPointMake(touchPoint.x - self.coordinateAxisInsets.left * self.coordinateAxisCellWidth,
+            touchPoint.y - self.coordinateAxisInsets.top * self.coordinateAxisCellWidth);
 
     CGFloat minDistance = -100;
     NSInteger n1 = -1;
     NSInteger n2 = -1;
+    DTChartItemData *selectedItemData = nil;
 
     for (NSUInteger i = 0; i < self.fillLayers.count; ++i) {
         DTFillLayer *fillLayer = self.fillLayers[i];
@@ -94,12 +115,20 @@ static CGFloat const TouchOffsetMaxDistance = 10;
             }
 
             DTChartSingleData *sData = fillLayer.singleData;
+            CGFloat touchOffsetMaxDistance;
+            if (sData.itemValues.count >= 2) {
+                touchOffsetMaxDistance = (sData.itemValues[1].position.x - sData.itemValues[0].position.x) / 2;
+            } else {
+                touchOffsetMaxDistance = TouchOffsetMaxDistance;
+            }
 
             for (NSUInteger j = 0; j < sData.itemValues.count; ++j) {
                 DTChartItemData *itemData = sData.itemValues[j];
 
                 CGFloat distance = ABS(touchPoint.x - itemData.position.x);
-                if (distance < TouchOffsetMaxDistance) {
+                if (distance < touchOffsetMaxDistance) {
+                    selectedItemData = itemData;
+
                     if (minDistance == -100) {
                         minDistance = distance;
                         n1 = i;
@@ -121,11 +150,30 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     }
 
     if (self.fillChartTouchBlock && n1 >= 0 && n2 >= 0) {
-        NSString *text = self.fillChartTouchBlock((NSUInteger) n1, (NSUInteger) n2);
-        DTLog(@"touch return = %@", text);
+        NSString *message = self.fillChartTouchBlock((NSUInteger) n1, (NSUInteger) n2);
+        if (message) {
+            [self showTouchMessage:message touchPoint:selectedItemData.position];
+        }
     }
 }
 
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = CGRectMake(point.x, 0, 1, CGRectGetHeight(self.contentView.bounds));
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+    self.touchSelectedLine.hidden = YES;
+}
 
 /**
  * 创建单个数据对象的折线路径

@@ -40,7 +40,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         _chartView = _lineChart;
 
         WEAK_SELF;
-        [_lineChart setLineChartTouchBlock:^(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
+        [_lineChart setLineChartTouchBlock:^NSString *(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis) {
             if (weakSelf.lineChartTouchBlock) {
                 NSString *seriesId = nil;
                 if (isMainAxis) {
@@ -48,8 +48,10 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
                 } else {
                     seriesId = weakSelf.lineChart.secondMultiData[lineIndex].singleId;
                 }
-                weakSelf.lineChartTouchBlock(seriesId, pointIndex);
+                return weakSelf.lineChartTouchBlock(seriesId, pointIndex);
             }
+
+            return nil;
         }];
 
         [_lineChart setColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {

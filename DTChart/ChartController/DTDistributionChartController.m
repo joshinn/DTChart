@@ -9,6 +9,7 @@
 #import "DTDistributionChartController.h"
 #import "DTDistributionChart.h"
 #import "DTChartLabel.h"
+#import "DTChartData.h"
 
 @interface DTDistributionChartController ()
 
@@ -132,6 +133,12 @@
     _secondDistributionChart.highLevel = secondHighLevel;
 }
 
+- (void)setValueSelectable:(BOOL)valueSelectable {
+    [super setValueSelectable:valueSelectable];
+
+    self.mainDistributionChart.valueSelectable = valueSelectable;
+    self.secondDistributionChart.valueSelectable = valueSelectable;
+}
 
 #pragma mark - private method
 
@@ -158,6 +165,13 @@
     }
 
     self.mainDistributionChart.startHour = self.startHour;
+    WEAK_SELF;
+    [self.mainDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
+        if (weakSelf.mainDistributionControllerTouchBlock) {
+            return weakSelf.mainDistributionControllerTouchBlock(singleData, itemData);
+        }
+        return nil;
+    }];
 
     [self.chartView addSubview:self.mainDistributionChart];
     self.chartView.frame = CGRectMake(self.ctrlOrigin.x,
@@ -210,6 +224,14 @@
     self.secondDistributionChart.middleLevelColor = DTRGBColor(0x014898, 1);
     self.secondDistributionChart.highLevelColor = DTRGBColor(0x018E75, 1);
     self.secondDistributionChart.supremeLevelColor = DTRGBColor(0xAAC901, 1);
+
+    WEAK_SELF;
+    [self.secondDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
+        if (weakSelf.secondDistributionControllerTouchBlock) {
+            return weakSelf.secondDistributionControllerTouchBlock(singleData, itemData);
+        }
+        return nil;
+    }];
 
     [self.chartView addSubview:self.secondDistributionChart];
     self.secondTitleLabel.hidden = NO;

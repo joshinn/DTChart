@@ -28,9 +28,19 @@
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     self.lineChartController.chartMode = DTChartModePresentation;
     self.lineChartController.valueSelectable = YES;
+    self.lineChartController.axisBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
     self.lineChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
-    [self.lineChartController setLineChartTouchBlock:^(NSString *seriesId, NSUInteger pointIndex) {
-    
+
+    WEAK_SELF;
+    [self.lineChartController setLineChartTouchBlock:^NSString *(NSString *seriesId, NSUInteger pointIndex) {
+        DTLog(@"touched id = %@ point = %@", seriesId, @(pointIndex));
+        __block DTCommonData *commonData = nil;
+        [weakSelf.listLineData enumerateObjectsUsingBlock:^(DTListCommonData *obj, NSUInteger idx, BOOL *stop) {
+            if ([obj.seriesId isEqualToString:seriesId]) {
+                commonData = obj.commonDatas[pointIndex];
+            }
+        }];
+        return [NSString stringWithFormat:@"点击了%@\n大小是%@", commonData.ptName, @(commonData.ptValue)];
     }];
 
     [self.lineChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {

@@ -11,6 +11,7 @@
 #import "DTChartData.h"
 
 @class DTChartBlockModel;
+@class DTChartToastView;
 
 CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
     CGFloat fx = (point2.x - point1.x);
@@ -152,7 +153,10 @@ typedef void(^SecondAxisColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
  * 颜色管理
  */
 @property(nonatomic) DTColorManager *colorManager;
-
+/**
+ * 点击提示框
+ */
+@property (nonatomic) DTChartToastView *toastView;
 
 #pragma mark - ####### method #######
 

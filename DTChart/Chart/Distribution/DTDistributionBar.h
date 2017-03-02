@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class DTChartSingleData;
+@class DTDistributionBar;
+@class DTChartItemData;
 
 /**
  * 每6个item之间的间距是CGRectGetHeight(contentView.frame)的比例
@@ -20,11 +22,25 @@ extern NSUInteger const DTDistributionBarSectionGapRatio;
 extern NSUInteger const DTDistributionBarItemGap;
 
 
+@protocol DTDistributionBarDelegate <NSObject>
+
+@optional
+- (void)distributionBarItemBeginTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point;
+
+- (void)distributionBarItemEndTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point;
+
+@end
+
+
 @interface DTDistributionBar : UIView
 
-@property (nonatomic) NSInteger startHour;
+@property(nonatomic, weak) id <DTDistributionBarDelegate> delegate;
+
+@property(nonatomic) NSInteger startHour;
 
 @property(nonatomic) DTChartSingleData *singleData;
+
+@property(nonatomic, getter=isSelectable) BOOL selectable;
 
 + (instancetype)distributionBar;
 

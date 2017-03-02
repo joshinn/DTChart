@@ -43,6 +43,7 @@
     self.presentChart.mainTitle = @"手机";
     self.presentChart.secondTitle = @"平板";
 //    self.presentChart.startHour = 10;
+    self.presentChart.valueSelectable = YES;
 
     [self.view addSubview:self.presentChart.chartView];
 

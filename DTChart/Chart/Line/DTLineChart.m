@@ -11,6 +11,7 @@
 #import "DTLineChartSingleData.h"
 #import "DTLine.h"
 #import "DTChartBlockModel.h"
+#import "DTChartToastView.h"
 
 
 @interface DTLineChart ()
@@ -19,6 +20,7 @@
 @property(nonatomic) NSMutableArray<DTLine *> *secondValueLines;
 @property(nonatomic) NSIndexPath *prevTouchIndex;
 
+@property(nonatomic) CALayer *touchSelectedLine;
 
 @end
 
@@ -32,7 +34,7 @@ static CGFloat const DTSameSeriesNameColorAlpha = 0.5;
 /**
  * 触摸点最大的偏移距离
  */
-static CGFloat const TouchOffsetMaxDistance = 10;
+static CGFloat const TouchOffsetMaxDistance = 15;
 
 
 - (void)initial {
@@ -40,6 +42,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     _xAxisAlignGrid = NO;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(self.coordinateAxisInsets.left, self.coordinateAxisInsets.top, 1, self.coordinateAxisInsets.bottom);
+
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
 }
 
 #pragma mark - delay init
@@ -65,29 +69,53 @@ static CGFloat const TouchOffsetMaxDistance = 10;
     return _prevTouchIndex;
 }
 
+- (CALayer *)touchSelectedLine {
+    if (!_touchSelectedLine) {
+        _touchSelectedLine = [CALayer layer];
+        _touchSelectedLine.backgroundColor = [UIColor whiteColor].CGColor;
+    }
+    return _touchSelectedLine;
+}
+
 
 #pragma mark - private method
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchKeyPoint:touches isMoving:NO];
+    [self touchKeyPoint:touches filterRepeat:NO];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchKeyPoint:touches isMoving:YES];
+    [self touchKeyPoint:touches filterRepeat:NO];
 }
 
-- (void)touchKeyPoint:(NSSet *)touches isMoving:(BOOL)moving {
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self hideTouchMessage];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self hideTouchMessage];
+}
+
+/**
+ * 触摸回调处理
+ * @param touches 触摸事件
+ * @param filter 是否过滤同一个点连续重复触摸
+ */
+- (void)touchKeyPoint:(NSSet *)touches filterRepeat:(BOOL)filter {
     if (!self.valueSelectable) {
         return;
     }
 
     UITouch *touch = [touches anyObject];
-    CGPoint touchPoint = [touch locationInView:self.contentView];
+    CGPoint touchPoint = [touch locationInView:self];
+    touchPoint = CGPointMake(touchPoint.x - self.coordinateAxisInsets.left * self.coordinateAxisCellWidth,
+            touchPoint.y - self.coordinateAxisInsets.top * self.coordinateAxisCellWidth);
 
     CGFloat minDistance = -100;
     NSInteger n1 = -1;
     NSInteger n2 = -1;
+    DTChartItemData *selectedItemData = nil;
 
     for (NSUInteger i = 0; i < (self.multiData.count + self.secondMultiData.count); ++i) {
         DTChartSingleData *item;
@@ -118,6 +146,8 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
             CGFloat distance = CGPointGetDistance(touchPoint, itemData.position);
             if (distance < TouchOffsetMaxDistance) {
+                selectedItemData = itemData;
+
                 if (minDistance == -100) {
 
                     minDistance = distance;
@@ -136,7 +166,7 @@ static CGFloat const TouchOffsetMaxDistance = 10;
 
     if (n1 >= 0 && n2 >= 0 && self.lineChartTouchBlock) {
         // 过滤掉手指移动造成的重复点选择
-        if (moving) {
+        if (filter) {
             if (self.prevTouchIndex.section != n1 || self.prevTouchIndex.item != n2) {
 
                 self.prevTouchIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
@@ -145,7 +175,11 @@ static CGFloat const TouchOffsetMaxDistance = 10;
                     n1 -= self.multiData.count;
                 }
 
-                self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
+                NSString *message = self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
+                if (!message) {
+                    message = [NSString stringWithFormat:@"%@", @(selectedItemData.itemValue.y)];
+                }
+                [self showTouchMessage:message touchPoint:selectedItemData.position];
             }
         } else {
             self.prevTouchIndex = [NSIndexPath indexPathForItem:n2 inSection:n1];
@@ -155,11 +189,32 @@ static CGFloat const TouchOffsetMaxDistance = 10;
                 n1 -= self.multiData.count;
             }
 
-            self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
+            NSString *message = self.lineChartTouchBlock((NSUInteger) n1, (NSUInteger) n2, isMainAxis);
+            if (!message) {
+                message = [NSString stringWithFormat:@"%@", @(selectedItemData.itemValue.y)];
+            }
+            [self showTouchMessage:message touchPoint:selectedItemData.position];
         }
     }
 }
 
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = CGRectMake(point.x, 0, 1, CGRectGetHeight(self.contentView.bounds));
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+    self.touchSelectedLine.hidden = YES;
+}
 
 /**
  * 创建单个数据对象的折线路径

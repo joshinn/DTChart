@@ -62,4 +62,6 @@ typedef NS_ENUM(NSInteger, DTDistributionChartYAxisStyle) {
  */
 @property(nonatomic) UIColor *supremeLevelColor;
 
+@property(nonatomic, copy) NSString *(^distributionChartTouchBlock)(DTChartSingleData *singleData, DTChartItemData *itemData);
+
 @end

@@ -17,8 +17,7 @@
  * @param pointIndex 折线中的点的序号
  * @param isMainAxis 是否是主轴
  */
-typedef void(^DTLineChartTouch)(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis);
-
+typedef NSString *(^DTLineChartTouch)(NSUInteger lineIndex, NSUInteger pointIndex, BOOL isMainAxis);
 
 
 /**

@@ -8,6 +8,9 @@
 
 #import "DTChartController.h"
 
+@class DTChartSingleData;
+@class DTChartItemData;
+
 @interface DTDistributionChartController : DTChartController
 
 @property(nonatomic) NSString *mainTitle;
@@ -31,6 +34,7 @@
  */
 @property(nonatomic) CGFloat highLevel;
 
+@property(nonatomic, copy) NSString *(^mainDistributionControllerTouchBlock)(DTChartSingleData *singleData, DTChartItemData *itemData);
 /**
  * 副表 最弱的上限值，默认100
  */
@@ -43,4 +47,6 @@
  * 副表 强的上限值，默认1000
  */
 @property(nonatomic) CGFloat secondHighLevel;
+
+@property(nonatomic, copy) NSString *(^secondDistributionControllerTouchBlock)(DTChartSingleData *singleData, DTChartItemData *itemData);
 @end
