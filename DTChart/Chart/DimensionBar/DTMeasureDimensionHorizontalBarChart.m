@@ -428,10 +428,12 @@
 - (DTDimensionReturnModel *)calculateMain:(DTDimensionModel *)data {
     [self.levelLowestBarModels removeAllObjects];
     self.barY = 0;
+    self.mainAxisMaxX = 0;
     return [self layoutMainBars:data drawSubviews:NO];
 }
 
 - (DTDimensionReturnModel *)calculateSecond:(DTDimensionModel *)data {
+    self.secondAxisMaxX = 0;
     return [self layoutSecondBars:data drawSubviews:NO];
 }
 

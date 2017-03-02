@@ -118,6 +118,7 @@
 #pragma mark - public method
 
 - (void)setMainItem:(DTDimensionModel *)mainItem secondItem:(DTDimensionModel *)secondItem {
+    
     self.chart.mainDimensionModel = mainItem;
     self.chart.secondDimensionModel = secondItem;
 
