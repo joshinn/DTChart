@@ -11,12 +11,15 @@
 #import "DTDimensionReturnModel.h"
 #import "DTDimensionModel.h"
 #import "DTMeasureDimensionHorizontalBarChart.h"
+#import "DTMeasureDimensionHorizontalBarChartController.h"
 
 @interface MultiMeasureDimensionPresentationViewController ()
 
 @property(nonatomic) DTDimensionModel *model;
 
 @property(nonatomic) DTMeasureDimensionHorizontalBarChart *barChart;
+
+@property(nonatomic) DTMeasureDimensionHorizontalBarChartController *chartController;
 
 @end
 
@@ -41,10 +44,33 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [self chart];
+    [self chartControllerDraw];
+//    [self chartDraw];
 }
 
-- (void)chart {
+- (void)chartControllerDraw {
+    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    self.model = [self dataFromJson:json];
+
+    DTMeasureDimensionHorizontalBarChartController *chartController = [[DTMeasureDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
+    [self.view addSubview:chartController.chartView];
+    chartController.chartId = @"1991";
+    [chartController setMainItem:self.model secondItem:self.model];
+    chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    chartController.showCoordinateAxisGrid = YES;
+
+    self.chartController = chartController;
+
+    [chartController drawChart];
+
+}
+
+- (void)chartDraw {
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
     NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
@@ -57,7 +83,7 @@
 
     barChart.barWidth = 2;
 
-    DTDimensionReturnModel *returnModel = [barChart calculate:self.model];
+    DTDimensionReturnModel *returnModel = [barChart calculateMain:self.model];
     DTLog(@"********************************************************sectionWidth cell count = %@", @(returnModel.sectionWidth / 15));
     barChart.coordinateAxisInsets = ChartEdgeInsetsMake((NSUInteger) returnModel.level, barChart.coordinateAxisInsets.top, barChart.coordinateAxisInsets.right, barChart.coordinateAxisInsets.bottom);
 
@@ -93,7 +119,7 @@
 
     self.barChart = barChart;
 
-    [barChart drawChart];
+    [barChart drawChart:returnModel];
 
 }
 
@@ -152,8 +178,8 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model = [self dataFromJson:json];
 
-    self.barChart.secondDimensionModel = self.barChart.mainDimensionModel = self.model;
-    [self.barChart drawChart];
+    [self.chartController setMainItem:self.model secondItem:self.model];
+    [self.chartController drawChart];
 }
 
 @end

@@ -56,6 +56,7 @@
 		65BDBB9B1E2CDDD000EB85F4 /* VBarPresentationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 65BDBB9A1E2CDDD000EB85F4 /* VBarPresentationVC.m */; };
 		65C027EA1E139E7A001EB1C7 /* DTChart.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 65C027E91E139E7A001EB1C7 /* DTChart.podspec */; };
 		65C027F11E15F1B1001EB1C7 /* DistributionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */; };
+		65C2919C1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C2919B1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.m */; };
 		65C53E1A1DF8FA7300732385 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E191DF8FA7300732385 /* main.m */; };
 		65C53E1D1DF8FA7300732385 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C53E1C1DF8FA7300732385 /* AppDelegate.m */; };
 		65C53E231DF8FA7300732385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C53E211DF8FA7300732385 /* Main.storyboard */; };
@@ -182,6 +183,8 @@
 		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
 		65C027EF1E15F1B1001EB1C7 /* DistributionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistributionViewController.h; sourceTree = "<group>"; };
 		65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistributionViewController.m; sourceTree = "<group>"; };
+		65C2919A1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTMeasureDimensionHorizontalBarChartController.h; sourceTree = "<group>"; };
+		65C2919B1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTMeasureDimensionHorizontalBarChartController.m; sourceTree = "<group>"; };
 		65C53E151DF8FA7300732385 /* DTiseChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTiseChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C53E191DF8FA7300732385 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65C53E1B1DF8FA7300732385 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -445,6 +448,8 @@
 				65AF01451E665BBC0037863E /* DTDimensionVerticalBarChartController.m */,
 				65AF01471E665BEA0037863E /* DTDimensionHorizontalBarChartController.h */,
 				65AF01481E665BEA0037863E /* DTDimensionHorizontalBarChartController.m */,
+				65C2919A1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.h */,
+				65C2919B1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.m */,
 			);
 			path = Dimension;
 			sourceTree = "<group>";
@@ -707,6 +712,7 @@
 				65C53E1A1DF8FA7300732385 /* main.m in Sources */,
 				65683FCD1E5ED255003D841B /* DTTableChartCell.m in Sources */,
 				65683FC01E5ED255003D841B /* DTVerticalBarChart.m in Sources */,
+				65C2919C1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.m in Sources */,
 				65E19ED91E6521D10060059B /* DTDimensionReturnModel.m in Sources */,
 				6533453F1E30574700F6CE48 /* PiePresentationVC.m in Sources */,
 				65BDBB981E2CD38C00EB85F4 /* DTTableChartController.m in Sources */,

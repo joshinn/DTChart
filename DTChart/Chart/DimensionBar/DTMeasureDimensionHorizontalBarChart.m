@@ -182,8 +182,8 @@
                 }
 
 
-                if (model.ptValue > self.maxX) {
-                    self.maxX = model.ptValue;
+                if (model.ptValue > self.mainAxisMaxX) {
+                    self.mainAxisMaxX = model.ptValue;
                 }
 
 
@@ -330,16 +330,14 @@
                     }
                 }
 
-
-                if (model.ptValue > self.maxX) {
-                    self.maxX = model.ptValue;
+                if (model.ptValue > self.secondAxisMaxX) {
+                    self.secondAxisMaxX = model.ptValue;
                 }
-
 
                 if (isDraw) {
 
-                    DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
-                    DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+                    DTAxisLabelData *xMaxData = self.xSecondAxisLabelDatas.lastObject;
+                    DTAxisLabelData *xMinData = self.xSecondAxisLabelDatas.firstObject;
 
                     CGFloat width = self.coordinateAxisCellWidth * ((model.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
 
@@ -427,17 +425,21 @@
 
 #pragma mark - public method
 
-- (DTDimensionReturnModel *)calculate:(DTDimensionModel *)data {
+- (DTDimensionReturnModel *)calculateMain:(DTDimensionModel *)data {
     [self.levelLowestBarModels removeAllObjects];
     self.barY = 0;
     return [self layoutMainBars:data drawSubviews:NO];
+}
+
+- (DTDimensionReturnModel *)calculateSecond:(DTDimensionModel *)data {
+    return [self layoutSecondBars:data drawSubviews:NO];
 }
 
 - (void)drawChart:(DTDimensionReturnModel *)returnModel {
     self.yOffset = 0;
 
     if (!returnModel) {
-        returnModel = [self calculate:self.mainDimensionModel];
+        returnModel = [self calculateMain:self.mainDimensionModel];
     }
 
     CGRect frame = self.scrollMainContentView.frame;
@@ -459,6 +461,7 @@
 
     [super drawChart];
 
+    [self drawSecondChart];
 }
 
 
@@ -624,8 +627,6 @@
 - (void)drawChart {
 
     [self drawChart:nil];
-
-    [self drawSecondChart];
 }
 
 

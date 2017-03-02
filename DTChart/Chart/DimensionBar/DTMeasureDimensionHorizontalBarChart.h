@@ -32,20 +32,32 @@
  */
 @property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelLowestBarModels;
 /**
- * y最大值
+ * 第一度量，x轴最大值
  */
-@property(nonatomic) CGFloat maxX;
+@property(nonatomic) CGFloat mainAxisMaxX;
+/**
+ * 第二度量，x轴最大值
+ */
+@property(nonatomic) CGFloat secondAxisMaxX;
+
 /**
  * y轴第一个柱状体偏移量，默认0，让所有柱状体居中时使用
  */
 @property(nonatomic) CGFloat yOffset;
 
 /**
- * 不绘制柱状体等view，计算该柱状图大小，层级等信息
+ * 不绘制柱状体等view，计算第一度量，该柱状图大小，层级等信息
  * @param data 数据
  * @return 返回值包括x轴层级和宽度
  */
-- (DTDimensionReturnModel *)calculate:(DTDimensionModel *)data;
+- (DTDimensionReturnModel *)calculateMain:(DTDimensionModel *)data;
 
+/**
+ * 不绘制柱状体等view，计算第二度量，该柱状图大小，层级等信息
+ * @param data 数据
+ * @return 返回值包括x轴层级和宽度
+ */
+- (DTDimensionReturnModel *)calculateSecond:(DTDimensionModel *)data;
 
+- (void)drawChart:(DTDimensionReturnModel *)returnModel;
 @end
