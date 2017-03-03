@@ -165,6 +165,7 @@
     }
 
     self.mainDistributionChart.startHour = self.startHour;
+    self.mainDistributionChart.valueSelectable = self.valueSelectable;
     WEAK_SELF;
     [self.mainDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
         if (weakSelf.mainDistributionControllerTouchBlock) {
@@ -224,6 +225,7 @@
     self.secondDistributionChart.middleLevelColor = DTRGBColor(0x014898, 1);
     self.secondDistributionChart.highLevelColor = DTRGBColor(0x018E75, 1);
     self.secondDistributionChart.supremeLevelColor = DTRGBColor(0xAAC901, 1);
+    self.secondDistributionChart.valueSelectable = self.valueSelectable;
 
     WEAK_SELF;
     [self.secondDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {

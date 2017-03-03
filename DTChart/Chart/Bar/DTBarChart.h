@@ -32,5 +32,6 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
  */
 @property(nonatomic) DTBarBorderStyle barBorderStyle;
 
+@property(nonatomic) CALayer *touchSelectedLine;
 
 @end

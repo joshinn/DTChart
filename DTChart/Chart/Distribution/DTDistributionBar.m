@@ -16,12 +16,11 @@ NSUInteger const DTDistributionBarItemGap = 1;
 
 @interface DTDistributionBarItemView : UIView
 
-@property(nonatomic, getter=isSelectable) BOOL selectable;
 @property(nonatomic) DTChartItemData *itemData;
 
-@property(nonatomic, copy) void (^itemViewBeginTouch)(DTDistributionBarItemView *itemView);
-@property(nonatomic, copy) void (^itemViewEndTouch)(DTDistributionBarItemView *itemView);
+- (void)selectAnimation;
 
+- (void)deselectAnimation;
 @end
 
 @implementation DTDistributionBarItemView
@@ -52,42 +51,14 @@ NSUInteger const DTDistributionBarItemGap = 1;
                      completion:nil];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (self.isSelectable) {
-        [self selectAnimation];
-
-        if (self.itemViewBeginTouch) {
-            self.itemViewBeginTouch(self);
-        }
-    }
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (self.isSelectable) {
-        [self deselectAnimation];
-
-        if (self.itemViewEndTouch) {
-            self.itemViewEndTouch(self);
-        }
-    }
-}
-
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (self.isSelectable) {
-        [self deselectAnimation];
-
-        if (self.itemViewEndTouch) {
-            self.itemViewEndTouch(self);
-        }
-    }
-}
-
 @end
 
 
 @interface DTDistributionBar ()
 
 @property(nonatomic) NSArray<DTDistributionBarItemView *> *items;
+
+@property(nonatomic) NSInteger prevSelectedIndex;
 
 @end
 
@@ -102,7 +73,7 @@ static NSUInteger const DefaultSubItemCount = 24;
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.userInteractionEnabled = YES;
+        self.userInteractionEnabled = NO;
 
         NSMutableArray<UIView *> *views = [[NSMutableArray alloc] init];
         for (NSUInteger i = 0; i < DefaultSubItemCount; ++i) {
@@ -110,22 +81,125 @@ static NSUInteger const DefaultSubItemCount = 24;
             v.userInteractionEnabled = YES;
             v.backgroundColor = DTDistributionLowLevelColor;
 
-            WEAK_SELF;
-            [v setItemViewBeginTouch:^(DTDistributionBarItemView *itemView) {
-                [weakSelf itemViewBeginTouch:itemView];
-            }];
-            [v setItemViewEndTouch:^(DTDistributionBarItemView *itemView) {
-                [weakSelf itemViewEndTouch:itemView];
-            }];
             [views addObject:v];
             [self addSubview:v];
 
         }
         _items = views.copy;
+
+        _prevSelectedIndex = -1;
     }
     return self;
 }
 
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self];
+
+    for (NSUInteger i = 0; i < self.subviews.count; ++i) {
+        DTDistributionBarItemView *v = self.subviews[i];
+
+        if (CGRectContainsPoint(v.frame, touchPoint)) {
+            [v selectAnimation];
+            [self itemViewBeginTouch:v];
+
+            self.prevSelectedIndex = i;
+            break;
+        }
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self];
+
+    BOOL containsPoint = NO;
+    for (NSUInteger i = 0; i < self.subviews.count; ++i) {
+        DTDistributionBarItemView *v = self.subviews[i];
+        if (CGRectContainsPoint(v.frame, touchPoint)) {
+            containsPoint = YES;
+
+            if (i == self.prevSelectedIndex) {
+                break;
+            } else {
+                if (self.prevSelectedIndex >= 0 && self.prevSelectedIndex < self.subviews.count) {
+                    DTDistributionBarItemView *prevView = self.subviews[(NSUInteger) self.prevSelectedIndex];
+                    [prevView deselectAnimation];
+                }
+
+                [v selectAnimation];
+                [self itemViewBeginTouch:v];
+
+                self.prevSelectedIndex = i;
+
+                break;
+            }
+        }
+    }
+
+    if (!containsPoint) {
+        if (self.prevSelectedIndex >= 0 && self.prevSelectedIndex < self.subviews.count) {
+            DTDistributionBarItemView *prevView = self.subviews[(NSUInteger) self.prevSelectedIndex];
+            [prevView deselectAnimation];
+        }
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self];
+
+    BOOL containsPoint = NO;
+    for (DTDistributionBarItemView *v in self.subviews) {
+        if (CGRectContainsPoint(v.frame, touchPoint)) {
+            containsPoint = YES;
+
+            [v deselectAnimation];
+            [self itemViewEndTouch];
+            break;
+        }
+    }
+
+    if (self.prevSelectedIndex >= 0 && self.prevSelectedIndex < self.subviews.count) {
+        DTDistributionBarItemView *prevView = self.subviews[(NSUInteger) self.prevSelectedIndex];
+        [prevView deselectAnimation];
+
+        if (!containsPoint) {
+            [self itemViewEndTouch];
+        }
+    }
+    self.prevSelectedIndex = -1;
+
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self];
+
+    BOOL containsPoint = NO;
+    for (DTDistributionBarItemView *v in self.subviews) {
+        if (CGRectContainsPoint(v.frame, touchPoint)) {
+            containsPoint = YES;
+
+            [v deselectAnimation];
+            [self itemViewEndTouch];
+            break;
+        }
+    }
+
+    if (self.prevSelectedIndex >= 0 && self.prevSelectedIndex < self.subviews.count) {
+        DTDistributionBarItemView *prevView = self.subviews[(NSUInteger) self.prevSelectedIndex];
+        [prevView deselectAnimation];
+
+        if (!containsPoint) {
+            [self itemViewEndTouch];
+        }
+    }
+    self.prevSelectedIndex = -1;
+
+}
 
 /**
  * 布局每个小方块
@@ -141,14 +215,6 @@ static NSUInteger const DefaultSubItemCount = 24;
     for (NSUInteger i = 0; i < self.items.count; ++i) {
 
         DTDistributionBarItemView *view = self.items[i];
-        view.selectable = self.selectable;
-
-//        [self.singleData.itemValues enumerateObjectsUsingBlock:^(DTChartItemData *obj, NSUInteger idx, BOOL *stop) {
-//            if (obj.itemValue.y == self.startHour + i) {
-//                view.itemData = obj;
-//                *stop = YES;
-//            }
-//        }];
 
         for (DTChartItemData *obj in self.singleData.itemValues) {
             if (obj.itemValue.y == (self.startHour + i) % 24) {
@@ -177,13 +243,10 @@ static NSUInteger const DefaultSubItemCount = 24;
 }
 
 
-- (void)itemViewEndTouch:(DTDistributionBarItemView *)itemView {
-    CGPoint point = itemView.center;
-    point = CGPointMake(point.x + CGRectGetMinX(self.frame), point.y + CGRectGetMinY(self.frame));
-
+- (void)itemViewEndTouch {
     id <DTDistributionBarDelegate> o = self.delegate;
-    if ([o respondsToSelector:@selector(distributionBarItemEndTouch:data:location:)]) {
-        [o distributionBarItemEndTouch:self.singleData data:itemView.itemData location:point];
+    if ([o respondsToSelector:@selector(distributionBarItemEndTouch)]) {
+        [o distributionBarItemEndTouch];
     }
 }
 

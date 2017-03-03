@@ -8,9 +8,9 @@
 
 #import "DTDistributionChart.h"
 #import "DTDistributionBar.h"
-#import "DTColor.h"
 #import "DTChartLabel.h"
 #import "DTChartToastView.h"
+#import "DTColor.h"
 
 
 @interface DTDistributionChart () <DTDistributionBarDelegate>
@@ -18,6 +18,11 @@
 @property(nonatomic) NSMutableArray<DTDistributionBar *> *chartBars;
 
 @property(nonatomic) NSArray<NSDictionary *> *largeYLabelTitles;
+
+/**
+ * 上一个触摸选择的DTDistributionBar序号
+ */
+@property(nonatomic) NSInteger prevBarSelectedIndex;
 
 @end
 
@@ -41,6 +46,8 @@ static NSString *const kChineseTimeKey = @"chinese";
     _lowLevel = 100;
     _middleLevel = 500;
     _highLevel = 1000;
+
+    _prevBarSelectedIndex = -1;
 }
 
 - (NSMutableArray<DTDistributionBar *> *)chartBars {
@@ -312,9 +319,123 @@ static NSString *const kChineseTimeKey = @"chinese";
     [self.toastView show:message location:point];
 }
 
-- (void)hideTouchMessage {
-    [self.toastView hide];
+
+#pragma mark - touch event
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesBegan:touches withEvent:event];
+
+    } else {
+        UITouch *touch = [touches anyObject];
+        CGPoint touchPoint = [touch locationInView:self.contentView];
+
+        for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+            DTDistributionBar *bar = self.chartBars[i];
+            if (CGRectContainsPoint(bar.frame, touchPoint)) {
+                self.prevBarSelectedIndex = i;
+
+                [bar touchesBegan:touches withEvent:event];
+
+                break;
+            }
+        }
+    }
 }
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesMoved:touches withEvent:event];
+
+    } else {
+        UITouch *touch = [touches anyObject];
+        CGPoint touchPoint = [touch locationInView:self.contentView];
+
+        for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+            DTDistributionBar *bar = self.chartBars[i];
+            if (CGRectContainsPoint(bar.frame, touchPoint)) {
+                if (self.prevBarSelectedIndex != i) {
+                    if (self.prevBarSelectedIndex >= 0 && self.prevBarSelectedIndex < self.subviews.count) {
+                        DTDistributionBar *prevBar = self.chartBars[(NSUInteger) self.prevBarSelectedIndex];
+                        [prevBar touchesMoved:touches withEvent:event];
+                    }
+                }
+
+                [bar touchesMoved:touches withEvent:event];
+
+                self.prevBarSelectedIndex = i;
+
+                break;
+            }
+        }
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesEnded:touches withEvent:event];
+
+    } else {
+        UITouch *touch = [touches anyObject];
+        CGPoint touchPoint = [touch locationInView:self.contentView];
+
+        for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+            DTDistributionBar *bar = self.chartBars[i];
+            if (CGRectContainsPoint(bar.frame, touchPoint)) {
+                if (self.prevBarSelectedIndex != i) {
+                    if (self.prevBarSelectedIndex >= 0 && self.prevBarSelectedIndex < self.subviews.count) {
+                        DTDistributionBar *prevBar = self.chartBars[(NSUInteger) self.prevBarSelectedIndex];
+                        [prevBar touchesEnded:touches withEvent:event];
+                    }
+                }
+
+                [bar touchesEnded:touches withEvent:event];
+
+                break;
+            }
+        }
+
+        if (self.prevBarSelectedIndex >= 0 && self.prevBarSelectedIndex < self.subviews.count) {
+            DTDistributionBar *prevBar = self.chartBars[(NSUInteger) self.prevBarSelectedIndex];
+            [prevBar touchesEnded:touches withEvent:event];
+        }
+        self.prevBarSelectedIndex = -1;
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesCancelled:touches withEvent:event];
+
+    } else {
+        UITouch *touch = [touches anyObject];
+        CGPoint touchPoint = [touch locationInView:self.contentView];
+
+        for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+            DTDistributionBar *bar = self.chartBars[i];
+            if (CGRectContainsPoint(bar.frame, touchPoint)) {
+                if (self.prevBarSelectedIndex != i) {
+                    if (self.prevBarSelectedIndex >= 0 && self.prevBarSelectedIndex < self.subviews.count) {
+                        DTDistributionBar *prevBar = self.chartBars[(NSUInteger) self.prevBarSelectedIndex];
+                        [prevBar touchesCancelled:touches withEvent:event];
+                    }
+                }
+
+                [bar touchesCancelled:touches withEvent:event];
+
+                break;
+            }
+        }
+
+        if (self.prevBarSelectedIndex >= 0 && self.prevBarSelectedIndex < self.subviews.count) {
+            DTDistributionBar *prevBar = self.chartBars[(NSUInteger) self.prevBarSelectedIndex];
+            [prevBar touchesCancelled:touches withEvent:event];
+        }
+        self.prevBarSelectedIndex = -1;
+
+    }
+}
+
 
 #pragma mark - override
 
@@ -343,6 +464,7 @@ static NSString *const kChineseTimeKey = @"chinese";
             [obj removeFromSuperview];
         }
     }];
+    [self.chartBars removeAllObjects];
 }
 
 
@@ -445,7 +567,6 @@ static NSString *const kChineseTimeKey = @"chinese";
             bar.delegate = self;
             bar.singleData = sData;
             bar.startHour = self.startHour;
-            bar.selectable = self.valueSelectable;
             [bar drawSubItems];
         }
     }
@@ -481,7 +602,7 @@ static NSString *const kChineseTimeKey = @"chinese";
 
 }
 
-- (void)distributionBarItemEndTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point {
+- (void)distributionBarItemEndTouch{
     [self.toastView hide];
 }
 

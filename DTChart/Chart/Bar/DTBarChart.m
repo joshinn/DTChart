@@ -29,6 +29,13 @@ static NSUInteger const DefaultBarWidth = 1;
 
 #pragma mark - delay init
 
+- (CALayer *)touchSelectedLine {
+    if (!_touchSelectedLine) {
+        _touchSelectedLine = [CALayer layer];
+        _touchSelectedLine.backgroundColor = [UIColor whiteColor].CGColor;
+    }
+    return _touchSelectedLine;
+}
 
 #pragma mark - override
 

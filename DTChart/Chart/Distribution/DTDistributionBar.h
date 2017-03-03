@@ -27,7 +27,7 @@ extern NSUInteger const DTDistributionBarItemGap;
 @optional
 - (void)distributionBarItemBeginTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point;
 
-- (void)distributionBarItemEndTouch:(DTChartSingleData *)singleData data:(DTChartItemData *)itemData location:(CGPoint)point;
+- (void)distributionBarItemEndTouch;
 
 @end
 
@@ -39,8 +39,6 @@ extern NSUInteger const DTDistributionBarItemGap;
 @property(nonatomic) NSInteger startHour;
 
 @property(nonatomic) DTChartSingleData *singleData;
-
-@property(nonatomic, getter=isSelectable) BOOL selectable;
 
 + (instancetype)distributionBar;
 
