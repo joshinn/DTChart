@@ -34,7 +34,7 @@
  */
 @property(nonatomic) CGFloat highLevel;
 
-@property(nonatomic, copy) NSString *(^mainDistributionControllerTouchBlock)(DTChartSingleData *singleData, DTChartItemData *itemData);
+@property(nonatomic, copy) NSString *(^mainDistributionControllerTouchBlock)(NSString *seriesId, NSInteger time);
 /**
  * 副表 最弱的上限值，默认100
  */
@@ -48,5 +48,5 @@
  */
 @property(nonatomic) CGFloat secondHighLevel;
 
-@property(nonatomic, copy) NSString *(^secondDistributionControllerTouchBlock)(DTChartSingleData *singleData, DTChartItemData *itemData);
+@property(nonatomic, copy) NSString *(^secondDistributionControllerTouchBlock)(NSString *seriesId, NSInteger time);
 @end

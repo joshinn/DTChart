@@ -168,7 +168,7 @@
     WEAK_SELF;
     [self.mainDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
         if (weakSelf.mainDistributionControllerTouchBlock) {
-            return weakSelf.mainDistributionControllerTouchBlock(singleData, itemData);
+            return weakSelf.mainDistributionControllerTouchBlock(singleData.singleId, (NSInteger) itemData.itemValue.y);
         }
         return nil;
     }];
@@ -228,7 +228,7 @@
     WEAK_SELF;
     [self.secondDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
         if (weakSelf.secondDistributionControllerTouchBlock) {
-            return weakSelf.secondDistributionControllerTouchBlock(singleData, itemData);
+            return weakSelf.secondDistributionControllerTouchBlock(singleData.singleId, (NSInteger) itemData.itemValue.y);
         }
         return nil;
     }];

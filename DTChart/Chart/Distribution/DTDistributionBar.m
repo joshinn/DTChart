@@ -143,12 +143,19 @@ static NSUInteger const DefaultSubItemCount = 24;
         DTDistributionBarItemView *view = self.items[i];
         view.selectable = self.selectable;
 
-        [self.singleData.itemValues enumerateObjectsUsingBlock:^(DTChartItemData *obj, NSUInteger idx, BOOL *stop) {
-            if (obj.itemValue.y == self.startHour + i) {
+//        [self.singleData.itemValues enumerateObjectsUsingBlock:^(DTChartItemData *obj, NSUInteger idx, BOOL *stop) {
+//            if (obj.itemValue.y == self.startHour + i) {
+//                view.itemData = obj;
+//                *stop = YES;
+//            }
+//        }];
+
+        for (DTChartItemData *obj in self.singleData.itemValues) {
+            if (obj.itemValue.y == (self.startHour + i) % 24) {
                 view.itemData = obj;
-                *stop = YES;
+                break;
             }
-        }];
+        }
 
         view.frame = CGRectMake(0, itemY, CGRectGetWidth(self.frame) * 0.9f, itemHeight);
 

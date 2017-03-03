@@ -44,6 +44,29 @@
     self.presentChart.secondTitle = @"平板";
 //    self.presentChart.startHour = 10;
     self.presentChart.valueSelectable = YES;
+    WEAK_SELF;
+    [self.presentChart setMainDistributionControllerTouchBlock:^NSString *(NSString *seriesId, NSInteger time) {
+        NSString *message = nil;
+        for (DTListCommonData *obj in weakSelf.listBarData) {
+            if (obj.isMainAxis && [obj.seriesId isEqualToString:seriesId]) {
+                for (DTCommonData *commonData in obj.commonDatas) {
+                    if (commonData.ptName.integerValue == time) {
+                        if (time < 10) {
+                            message = [NSString stringWithFormat:@"%@ 0%@:00-0%@:59\n%@", obj.seriesName, @(time), @(time), @(commonData.ptValue)];
+                        } else {
+                            message = [NSString stringWithFormat:@"%@ %@:00-%@:59\n%@", obj.seriesName, @(time), @(time), @(commonData.ptValue)];
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return message;
+    }];
+    [self.presentChart setSecondDistributionControllerTouchBlock:^NSString *(NSString *seriesId, NSInteger time) {
+        return nil;
+    }];
 
     [self.view addSubview:self.presentChart.chartView];
 
@@ -67,16 +90,7 @@
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"%@", @(i)];
-        CGFloat value = 0;
-        if (i <= 6) {
-            value = 20;
-        } else if (i <= 12) {
-            value = 820;
-        } else if (i <= 18) {
-            value = 1220;
-        } else {
-            value = 800;
-        }
+        CGFloat value = arc4random_uniform(2000);
         DTCommonData *data = [DTCommonData commonData:title value:baseValue + value];
         [list addObject:data];
     }
