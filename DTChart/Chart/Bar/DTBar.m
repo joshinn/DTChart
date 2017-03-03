@@ -39,8 +39,7 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 - (instancetype)init {
     if (self = [super init]) {
         self.clipsToBounds = YES;
-        self.userInteractionEnabled = YES;
-        _barSelectable = NO;
+        self.userInteractionEnabled = NO;
 
         _barColor = [UIColor orangeColor];
         _barBorderColor = [UIColor blueColor];
@@ -49,15 +48,6 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
     }
     return self;
-}
-
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
-
-    if (self.isBarSelectable) {
-        [self barDidSelected];
-    }
 }
 
 
@@ -139,16 +129,6 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
 #pragma mark - public method
 
-- (void)barDidSelected {
-
-    [self startSelectedAnimation];
-
-    id <DTBarDelegate> o = self.delegate;
-    if ([o respondsToSelector:@selector(_DTBarSelected:)]) {
-        [o _DTBarSelected:self];
-    }
-}
-
 - (void)startAppearAnimation {
     self.prevBarFrame = self.frame;
 
@@ -195,21 +175,6 @@ static CGFloat const DTBarSidesBorderWidth = 2;
     }                completion:^(BOOL finished) {
 
     }];
-}
-
-- (void)startSelectedAnimation {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-
-    animation.fromValue = @1.0;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.toValue = @1.1;
-    animation.duration = 0.2;
-    animation.repeatCount = 0;
-    animation.autoreverses = YES;
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeForwards;
-
-    [self.layer addAnimation:animation forKey:@"Float"];
 }
 
 @end

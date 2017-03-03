@@ -68,6 +68,10 @@
 }
 
 - (void)hide {
+    if (self.alpha == 0 || self.hidden) {
+        return;
+    }
+
     [UIView animateWithDuration:0.8 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.alpha = 0;
     }                completion:^(BOOL finished) {

@@ -48,6 +48,13 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
             }
         }];
 
+        [_barChart setBarChartTouchBlock:^NSString *(NSUInteger touchIndex) {
+            if (weakSelf.barChartControllerTouchBlock) {
+                return weakSelf.barChartControllerTouchBlock(touchIndex);
+            }
+            return nil;
+        }];
+
     }
     return self;
 }
@@ -122,8 +129,8 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 
     if (remain) {
         // 找出已有的最大值做对比
-        for(DTChartSingleData *sData in self.barChart.multiData){
-            for(DTChartItemData *itemData in sData.itemValues){
+        for (DTChartSingleData *sData in self.barChart.multiData) {
+            for (DTChartItemData *itemData in sData.itemValues) {
                 maxX = MAX(maxX, itemData.itemValue.x);
             }
         }

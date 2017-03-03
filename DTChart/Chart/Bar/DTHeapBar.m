@@ -114,7 +114,7 @@
     DTBar *bar = [DTBar bar:self.barOrientation style:DTBarBorderStyleNone];
     bar.delegate = self.delegate;
     bar.barData = data;
-    bar.barSelectable = self.isBarSelectable;
+
     bar.barColor = color;
     [self addSubview:bar];
 

@@ -48,6 +48,13 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
             }
         }];
 
+        [_barChart setBarChartTouchBlock:^NSString *(NSUInteger touchIndex) {
+            if (weakSelf.barChartControllerTouchBlock) {
+                return weakSelf.barChartControllerTouchBlock(touchIndex);
+            }
+            return nil;
+        }];
+
     }
     return self;
 }
@@ -66,6 +73,12 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         }
             break;
     }
+}
+
+- (void)setBarChartStyle:(DTBarChartStyle)barChartStyle {
+    _barChartStyle = barChartStyle;
+
+    self.barChart.barChartStyle = barChartStyle;
 }
 
 - (void)setBarWidth:(CGFloat)barWidth {
@@ -136,8 +149,8 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     if (remain) {
         // 找出已有的最大值做对比
-        for(DTChartSingleData *sData in self.barChart.multiData){
-            for(DTChartItemData *itemData in sData.itemValues){
+        for (DTChartSingleData *sData in self.barChart.multiData) {
+            for (DTChartItemData *itemData in sData.itemValues) {
                 maxY = MAX(maxY, itemData.itemValue.y);
             }
         }
@@ -335,7 +348,6 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
         self.barChart.showAnimation = ani;
     }
 }
-
 
 
 @end

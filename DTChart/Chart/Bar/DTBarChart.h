@@ -13,7 +13,7 @@
 typedef NS_ENUM(NSInteger, DTBarChartStyle) {
     DTBarChartStyleStartingLine,        // 同一个区间里，所有柱状体都从坐标轴开始，依次排序，默认属性
     DTBarChartStyleHeap,                // 同一个区间里的柱状条堆积一起逐层一个大的柱状体
-    DTBarChartStyleLump                 // 同一个区间里，一个是柱状条，其他是小的条形体
+    DTBarChartStyleLump,                 // 同一个区间里，一个是柱状条，其他是小的条形体
 };
 
 
@@ -33,5 +33,9 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
 @property(nonatomic) DTBarBorderStyle barBorderStyle;
 
 @property(nonatomic) CALayer *touchSelectedLine;
+
+@property(nonatomic) NSMutableArray<DTBar *> *chartBars;
+
+@property(nonatomic) NSString *(^barChartTouchBlock)(NSUInteger touchIndex);
 
 @end

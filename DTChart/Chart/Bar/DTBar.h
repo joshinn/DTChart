@@ -66,11 +66,6 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
  * 柱状体边线颜色
  */
 @property(nonatomic) UIColor *barBorderColor;
-/**
- * 是否可以被选中
- */
-@property(nonatomic, getter=isBarSelectable) BOOL barSelectable;
-
 
 /**
  * 实例化
@@ -81,18 +76,8 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
 + (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style;
 
 /**
- * 柱状体被选中
- */
-- (void)barDidSelected;
-
-/**
  * 显示柱状体出现动画
  */
 - (void)startAppearAnimation;
-
-/**
- * 被选择的动画
- */
-- (void)startSelectedAnimation;
 
 @end

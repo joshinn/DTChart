@@ -9,6 +9,7 @@
 #import "DTVerticalBarChart.h"
 #import "DTChartLabel.h"
 #import "DTHeapBar.h"
+#import "DTChartToastView.h"
 
 @interface DTVerticalBarChart ()
 
@@ -55,7 +56,7 @@
                 DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isValueSelectable;
+
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -70,6 +71,7 @@
 
                 bar.frame = CGRectMake(x, y, width, height);
                 [self.contentView addSubview:bar];
+                [self.chartBars addObject:bar];
 
                 if (self.isShowAnimation) {
                     [bar startAppearAnimation];
@@ -111,12 +113,13 @@
                     bar = [DTHeapBar bar:DTBarOrientationUp];
                     bar.barTag = itemData.itemValue.x;
                     [self.contentView addSubview:bar];
+                    [self.chartBars addObject:bar];
                 }
 
 
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isValueSelectable;
+
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -164,7 +167,7 @@
                     DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                     bar.barData = itemData;
                     bar.delegate = self;
-                    bar.barSelectable = self.isValueSelectable;
+
                     if (singleData.color) {
                         bar.barColor = singleData.color;
                     }
@@ -179,6 +182,7 @@
 
                     bar.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:bar];
+                    [self.chartBars addObject:bar];
 
                     if (self.isShowAnimation) {
                         [bar startAppearAnimation];
@@ -186,13 +190,13 @@
 
                 } else {
 
-                    UIView *lumpView = [UIView new];
+                    DTBar *lumpView = [DTBar bar:DTBarOrientationUp style:DTBarBorderStyleNone];
+                    lumpView.barData = itemData;
                     if (singleData.color) {
-                        lumpView.backgroundColor = singleData.color;
+                        lumpView.barColor = singleData.color;
                     } else {
-                        lumpView.backgroundColor = [UIColor yellowColor];
+                        lumpView.barColor = [UIColor yellowColor];
                     }
-
 
                     CGFloat width = self.coordinateAxisCellWidth * self.barWidth;
                     CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);
@@ -202,6 +206,7 @@
 
                     lumpView.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:lumpView];
+                    [self.chartBars addObject:lumpView];
                 }
 
 
@@ -213,7 +218,103 @@
 }
 
 
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = CGRectMake(point.x, 0, 1, CGRectGetHeight(self.contentView.bounds));
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+    self.touchSelectedLine.hidden = YES;
+}
+
+#pragma mark - touch event
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesBegan:touches withEvent:event];
+    } else {
+
+        [self touchKeyPoint:touches];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesMoved:touches withEvent:event];
+    } else {
+
+        [self touchKeyPoint:touches];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesEnded:touches withEvent:event];
+    } else {
+        [self hideTouchMessage];
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesCancelled:touches withEvent:event];
+    } else {
+        [self hideTouchMessage];
+    }
+}
+
+- (void)touchKeyPoint:(NSSet *)touches {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    BOOL containsPoint = NO;
+    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+        DTBar *bar = self.chartBars[i];
+        if (touchPoint.x >= CGRectGetMinX(bar.frame) && touchPoint.x <= CGRectGetMaxX(bar.frame)) {
+            containsPoint = YES;
+
+            NSString *message = nil;
+            for (DTChartSingleData *sData in self.multiData) {
+                if ([sData.itemValues containsObject:bar.barData]) {
+                    NSUInteger index = [sData.itemValues indexOfObject:bar.barData];
+
+                    if (self.barChartTouchBlock) {
+                        message = self.barChartTouchBlock(index);
+                    }
+                    break;
+                }
+            }
+
+            if (message) {
+                [self showTouchMessage:message touchPoint:CGPointMake(CGRectGetMidX(bar.frame), touchPoint.y)];
+            }
+
+            break;
+        }
+    }
+
+    if (!containsPoint) {
+        [self hideTouchMessage];
+    }
+}
+
+
 #pragma mark - override
+
+- (void)clearChartContent {
+    [super clearChartContent];
+
+    [self.chartBars removeAllObjects];
+}
 
 - (BOOL)drawXAxisLabels {
     if (![super drawXAxisLabels]) {

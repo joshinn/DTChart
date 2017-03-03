@@ -37,6 +37,13 @@ static NSUInteger const DefaultBarWidth = 1;
     return _touchSelectedLine;
 }
 
+- (NSMutableArray<DTBar *> *)chartBars {
+    if (!_chartBars) {
+        _chartBars = [NSMutableArray array];
+    }
+    return _chartBars;
+}
+
 #pragma mark - override
 
 - (BOOL)drawXAxisLabels {
@@ -73,7 +80,9 @@ static NSUInteger const DefaultBarWidth = 1;
 
 - (void)clearChartContent {
     [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj removeFromSuperview];
+        if ([obj isKindOfClass:[DTBar class]]) {
+            [obj removeFromSuperview];
+        }
     }];
 
     [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {

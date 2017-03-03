@@ -10,6 +10,7 @@
 #import "DTChartLabel.h"
 #import "DTChartData.h"
 #import "DTHeapBar.h"
+#import "DTChartToastView.h"
 
 
 @implementation DTHorizontalBarChart
@@ -51,7 +52,7 @@
                 DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isValueSelectable;
+
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -66,6 +67,7 @@
 
                 bar.frame = CGRectMake(x, y, width, height);
                 [self.contentView addSubview:bar];
+                [self.chartBars addObject:bar];
 
                 if (self.isShowAnimation) {
                     [bar startAppearAnimation];
@@ -73,18 +75,14 @@
 
                 break;
             }
-
         }
-
     }
 }
-
 
 - (void)generateHeapBars:(DTChartSingleData *)singleData
                     last:(BOOL)isLast
            xAxisMaxVaule:(DTAxisLabelData *)xMaxData
            xAxisMinValue:(DTAxisLabelData *)xMinData {
-
 
     for (NSUInteger i = 0; i < singleData.itemValues.count; ++i) {
         DTChartItemData *itemData = singleData.itemValues[i];
@@ -105,16 +103,16 @@
                     }
                 }];
 
-
                 if (!bar) {
                     bar = [DTHeapBar bar:DTBarOrientationRight];
                     [self.contentView addSubview:bar];
                     bar.barTag = itemData.itemValue.y;
+                    [self.chartBars addObject:bar];
                 }
 
                 bar.barData = itemData;
                 bar.delegate = self;
-                bar.barSelectable = self.isValueSelectable;
+
                 if (singleData.color) {
                     bar.barColor = singleData.color;
                 }
@@ -131,18 +129,14 @@
 
                 [bar appendData:itemData barLength:width barColor:bar.barColor needLayout:isLast];
 
-
                 if (isLast && self.isShowAnimation) {
                     [bar startAppearAnimation];
                 }
 
                 break;
             }
-
         }
-
     }
-
 }
 
 - (void)generateLumpBars:(DTChartSingleData *)singleData
@@ -164,7 +158,7 @@
                     DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                     bar.barData = itemData;
                     bar.delegate = self;
-                    bar.barSelectable = self.isValueSelectable;
+
                     if (singleData.color) {
                         bar.barColor = singleData.color;
                     }
@@ -179,6 +173,7 @@
 
                     bar.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:bar];
+                    [self.chartBars addObject:bar];
 
                     if (self.isShowAnimation) {
                         [bar startAppearAnimation];
@@ -187,7 +182,7 @@
                 } else {
 
                     DTBar *lump = [DTBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
-                    lump.barSelectable = self.isValueSelectable;
+
                     if (singleData.color) {
                         lump.barColor = singleData.color;
                     } else {
@@ -202,9 +197,8 @@
 
                     lump.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:lump];
-
+                    [self.chartBars addObject:lump];
                 }
-
 
                 break;
             }
@@ -214,7 +208,102 @@
     }
 }
 
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = CGRectMake(0, point.y, CGRectGetWidth(self.contentView.bounds), 1);
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+    self.touchSelectedLine.hidden = YES;
+}
+
+#pragma mark - touch event
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesBegan:touches withEvent:event];
+    } else {
+
+        [self touchKeyPoint:touches];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesMoved:touches withEvent:event];
+    } else {
+
+        [self touchKeyPoint:touches];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesEnded:touches withEvent:event];
+    } else {
+        [self hideTouchMessage];
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesCancelled:touches withEvent:event];
+    } else {
+        [self hideTouchMessage];
+    }
+}
+
+- (void)touchKeyPoint:(NSSet *)touches {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    BOOL containsPoint = NO;
+    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+        DTBar *bar = self.chartBars[i];
+        if (touchPoint.y >= CGRectGetMinY(bar.frame) && touchPoint.y <= CGRectGetMaxY(bar.frame)) {
+            containsPoint = YES;
+
+            NSString *message = nil;
+            for (DTChartSingleData *sData in self.multiData) {
+                if ([sData.itemValues containsObject:bar.barData]) {
+                    NSUInteger index = [sData.itemValues indexOfObject:bar.barData];
+
+                    if (self.barChartTouchBlock) {
+                        message = self.barChartTouchBlock(index);
+                    }
+                    break;
+                }
+            }
+
+            if (message) {
+                [self showTouchMessage:message touchPoint:CGPointMake(touchPoint.x, CGRectGetMidY(bar.frame))];
+            }
+
+            break;
+        }
+    }
+
+    if (!containsPoint) {
+        [self hideTouchMessage];
+    }
+}
+
 #pragma mark - override
+
+- (void)clearChartContent {
+    [super clearChartContent];
+
+    [self.chartBars removeAllObjects];
+}
 
 - (BOOL)drawXAxisLabels {
 

@@ -15,6 +15,8 @@
  */
 @property(nonatomic) CGFloat barWidth;
 
+@property(nonatomic) NSString *(^barChartControllerTouchBlock)(NSUInteger touchIndex);
+
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation __attribute__((unavailable("DTHorizontalBarChart can not add items")));
 
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation __attribute__((unavailable("DTHorizontalBarChart can not delete items")));

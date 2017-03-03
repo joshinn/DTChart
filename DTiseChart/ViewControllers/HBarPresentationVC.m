@@ -12,8 +12,8 @@
 
 @interface HBarPresentationVC ()
 
-@property (nonatomic) DTHorizontalBarChartController *tBarChartController;
-@property (nonatomic) DTHorizontalBarChartController *pBarChartController;
+@property(nonatomic) DTHorizontalBarChartController *tBarChartController;
+@property(nonatomic) DTHorizontalBarChartController *pBarChartController;
 
 @end
 
@@ -22,13 +22,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.view.backgroundColor = DTRGBColor(0x303030, 1);
-    
 
-        self.tBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
-        self.tBarChartController.chartMode = DTChartModeThumb;
-    
+    self.view.backgroundColor = DTRGBColor(0x303030, 1);
+
+
+    self.tBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
+    self.tBarChartController.chartMode = DTChartModeThumb;
+
     //    self.barChartController.barWidth = 2;
 
     [self.tBarChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
@@ -41,8 +41,9 @@
 //                    DTLog(@"main axis color = %@ \nseriesId = %@ type = %@", obj.color, obj.seriesId, @(obj.type));
 //                }];
     }];
+
     [self.view addSubview:self.tBarChartController.chartView];
-    
+
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     formatter.mainYAxisType = DTAxisFormatterTypeText;
     formatter.xAxisType = DTAxisFormatterTypeNumber;
@@ -50,9 +51,26 @@
 
     self.pBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:75 yAxis:41];
     self.pBarChartController.chartMode = DTChartModePresentation;
-    
+    self.pBarChartController.valueSelectable = YES;
+
+    NSMutableArray<DTListCommonData *> *listBarData = [self simulateListCommonData:1 pointCount:10 mainAxis:YES];
+    WEAK_SELF;
+    [self.pBarChartController setBarChartControllerTouchBlock:^NSString *(NSUInteger touchIndex) {
+        NSMutableString *mutableString = [NSMutableString string];
+        [listBarData enumerateObjectsUsingBlock:^(DTListCommonData *obj, NSUInteger idx, BOOL *stop) {
+            DTCommonData *commonData = obj.commonDatas[touchIndex];
+            [mutableString appendString:commonData.ptName];
+            [mutableString appendString:[NSString stringWithFormat:@" %@", @(commonData.ptValue)]];
+            if (idx < weakSelf.listBarData.count - 1) {
+                [mutableString appendString:@"\n"];
+            }
+        }];
+
+        return mutableString;
+    }];
+
     [self.view addSubview:self.pBarChartController.chartView];
-    [self.pBarChartController setItems:self.chartId listData:[self simulateListCommonData:1 pointCount:10 mainAxis:YES] axisFormat:formatter];
+    [self.pBarChartController setItems:self.chartId listData:listBarData axisFormat:formatter];
 
 
 //    [self.view addSubview:[self buttonFactory:@"加" frame:CGRectMake(0, CGRectGetMinY(self.tBarChartController.chartView.frame), 60, 48) action:@selector(add)]];
@@ -62,7 +80,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+
     [self.tBarChartController drawChart];
     [self.pBarChartController drawChart];
 }
@@ -92,7 +110,7 @@
         DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
         [list addObject:data];
     }
-    
+
     return list;
 }
 
@@ -107,21 +125,21 @@
     } else {
         return [NSString stringWithFormat:@"0%@", @(value)];
     }
-    
+
 }
 
 
 - (NSMutableArray<DTListCommonData *> *)simulateListCommonData:(NSUInteger)lineCount pointCount:(NSUInteger)pCount mainAxis:(BOOL)isMain {
     NSMutableArray<DTListCommonData *> *list = [NSMutableArray arrayWithCapacity:lineCount];
     for (NSUInteger i = 0; i < lineCount; ++i) {
-        
+
         NSString *seriesId = [NSString stringWithFormat:@"%@", @(arc4random_uniform(20) * arc4random_uniform(20))];
         NSString *seriesName = [NSString stringWithFormat:@"No.20%@", @(i)];
         DTListCommonData *listCommonData = [DTListCommonData listCommonData:seriesId seriesName:seriesName arrayData:[self simulateCommonData:pCount] mainAxis:isMain];
-        
+
         [list addObject:listCommonData];
     }
-    
+
     return list;
 }
 
