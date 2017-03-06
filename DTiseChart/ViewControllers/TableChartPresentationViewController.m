@@ -45,21 +45,22 @@
     label.font = [UIFont systemFontOfSize:20];
 
     self.tableChartController = [[DTTableChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
+    self.tableChartController.valueSelectable = YES;
     self.tableChartController.headViewHeight = 300;
     [self.view addSubview:self.tableChartController.chartView];
 
     [self.tableChartController.headView addSubview:label];
 
-    self.listLineData = [self simulateListCommonData:20 pointCount:self.chartTitles.count mainAxis:YES];
-//    self.listLineData[3].seriesId = self.listLineData[2].seriesId;
-//    self.listLineData[4].seriesId = self.listLineData[2].seriesId;
-//    self.listLineData[10].seriesId = self.listLineData[9].seriesId;
-//    self.listLineData[11].seriesId = self.listLineData[9].seriesId;
-//    self.listLineData[12].seriesId = self.listLineData[9].seriesId;
+    self.listLineData = [self simulateListCommonData:100 pointCount:self.chartTitles.count mainAxis:YES];
+    self.listLineData[3].seriesId = self.listLineData[2].seriesId;
+    self.listLineData[4].seriesId = self.listLineData[2].seriesId;
+    self.listLineData[10].seriesId = self.listLineData[9].seriesId;
+    self.listLineData[11].seriesId = self.listLineData[9].seriesId;
+    self.listLineData[12].seriesId = self.listLineData[9].seriesId;
 
 
 //    [self.listLineData addObjectsFromArray:[self simulateListCommonData:20 pointCount:self.chartTitles.count mainAxis:NO]];
-//    self.tableChartController.collapseColumn = 0;
+    self.tableChartController.collapseColumn = 0;
     __weak typeof(self) weakSelf = self;
     [self.tableChartController setTableChartExpandTouchBlock:^(NSString *seriesId) {
         DTLog(@"to expand seriesId = %@", seriesId);
@@ -97,7 +98,7 @@
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = self.chartTitles[i];
-        DTCommonData *data = [DTCommonData commonData:title stringValue:[NSString stringWithFormat:@"%@~%@", sId, @(row)]];
+        DTCommonData *data = [DTCommonData commonData:title stringValue:[NSString stringWithFormat:@"蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤蛤%@~%@", sId, @(row)]];
         [list addObject:data];
     }
 

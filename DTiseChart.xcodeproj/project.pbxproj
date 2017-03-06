@@ -50,6 +50,7 @@
 		65AF01511E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65AF01501E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m */; };
 		65AF01541E66B4010037863E /* DTMeasureDimensionHorizontalBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 65AF01531E66B4010037863E /* DTMeasureDimensionHorizontalBarChart.m */; };
 		65B3F6A21E6D007100A4F8F4 /* DTChartScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3F6A11E6D007000A4F8F4 /* DTChartScrollView.m */; };
+		65B3F6A51E6D111D00A4F8F4 /* DTTableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3F6A41E6D111D00A4F8F4 /* DTTableLabel.m */; };
 		65B4CB831E2E003500EFDA28 /* DTChartBlockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B4CB821E2E003500EFDA28 /* DTChartBlockModel.m */; };
 		65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE471E25D1EA00DC152B /* CollectionViewController.m */; };
 		65B7BE4D1E25D96E00DC152B /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7BE4C1E25D96E00DC152B /* GridCell.m */; };
@@ -176,6 +177,8 @@
 		65AF01531E66B4010037863E /* DTMeasureDimensionHorizontalBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTMeasureDimensionHorizontalBarChart.m; sourceTree = "<group>"; };
 		65B3F6A01E6D007000A4F8F4 /* DTChartScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartScrollView.h; sourceTree = "<group>"; };
 		65B3F6A11E6D007000A4F8F4 /* DTChartScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartScrollView.m; sourceTree = "<group>"; };
+		65B3F6A31E6D111D00A4F8F4 /* DTTableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableLabel.h; sourceTree = "<group>"; };
+		65B3F6A41E6D111D00A4F8F4 /* DTTableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTableLabel.m; sourceTree = "<group>"; };
 		65B4CB811E2E003500EFDA28 /* DTChartBlockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTChartBlockModel.h; sourceTree = "<group>"; };
 		65B4CB821E2E003500EFDA28 /* DTChartBlockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTChartBlockModel.m; sourceTree = "<group>"; };
 		65B7BE461E25D1EA00DC152B /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
@@ -288,8 +291,8 @@
 				653520311E28B6E100BFA2C9 /* DTVerticalBarChartController.m */,
 				65E347051E2F189800BE9A1F /* DTHorizontalBarChartController.h */,
 				65E347061E2F189800BE9A1F /* DTHorizontalBarChartController.m */,
-				65BDBB961E2CD38C00EB85F4 /* DTTableChartController.m */,
 				65BDBB971E2CD38C00EB85F4 /* DTTableChartController.h */,
+				65BDBB961E2CD38C00EB85F4 /* DTTableChartController.m */,
 				65E3470B1E2F761D00BE9A1F /* DTPieChartController.h */,
 				65E3470C1E2F761D00BE9A1F /* DTPieChartController.m */,
 				65F598701E31A11500B1DA79 /* DTDistributionChartController.h */,
@@ -412,6 +415,8 @@
 				65683FB91E5ED255003D841B /* DTTableChart.m */,
 				65683FBA1E5ED255003D841B /* DTTableChartCell.h */,
 				65683FBB1E5ED255003D841B /* DTTableChartCell.m */,
+				65B3F6A31E6D111D00A4F8F4 /* DTTableLabel.h */,
+				65B3F6A41E6D111D00A4F8F4 /* DTTableLabel.m */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -700,6 +705,7 @@
 				658F7FBD1E10F81F0024AB62 /* PieViewController.m in Sources */,
 				654D1E671E0267BB004F2F1F /* UIBezierPath+DTExternal.m in Sources */,
 				654284E11E24B29C00267603 /* DTDataManager.m in Sources */,
+				65B3F6A51E6D111D00A4F8F4 /* DTTableLabel.m in Sources */,
 				65E19EDE1E6521D10060059B /* DTTableChartSingleData.m in Sources */,
 				65683FC31E5ED255003D841B /* DTColorManager.m in Sources */,
 				65F598751E31BE5400B1DA79 /* DistributionPresentationVC.m in Sources */,

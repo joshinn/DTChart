@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DTTableChart.h"
 
-@class DTChartLabel;
 @class DTChartItemData;
 @class DTTableAxisLabelData;
 @class DTTableChartSingleData;
@@ -28,6 +27,10 @@ extern CGFloat const DTTableChartCellHeight;
  */
 - (void)chartCellOrderTouched:(BOOL)isMainAxis column:(NSUInteger)column;
 
+- (void)chartCellHintTouchBegin:(NSString *)text index:(NSUInteger)index touch:(UITouch *)touch;
+
+- (void)chartCellHintTouchEnd;
+
 @end
 
 @interface DTTableChartCell : UITableViewCell
@@ -44,6 +47,8 @@ extern CGFloat const DTTableChartCellHeight;
  * 为了能让表格与某些东西对齐
  */
 @property(nonatomic) CGFloat labelLeftOffset;
+
+@property(nonatomic) BOOL selectable;
 
 /**
  * 设置cell风格

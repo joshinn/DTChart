@@ -254,7 +254,7 @@
     [self.hChartController setItem:[self dataFromJson:json]];
     [self.hChartController drawChart];
 
-    
+
 
     [self.vChartController setItem:self.model2];
     [self.vChartController drawChart];

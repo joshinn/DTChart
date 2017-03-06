@@ -33,7 +33,7 @@
 }
 
 - (void)show:(NSString *)message location:(CGPoint)point {
-    CGRect rect = [message boundingRectWithSize:CGSizeMake(1000, 0)
+    CGRect rect = [message boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.superview.bounds) / 4, 0)
                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                      attributes:@{NSFontAttributeName: _titleLabel.font}
                                         context:nil];

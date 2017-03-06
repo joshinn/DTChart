@@ -9,6 +9,7 @@
 #import "DTTableChart.h"
 #import "DTTableChartCell.h"
 #import "DTTableChartSingleData.h"
+#import "DTChartToastView.h"
 
 
 @interface DTTableChart () <UITableViewDataSource, UITableViewDelegate, DTTableChartCellDelegate>
@@ -225,6 +226,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DTTableChartCell *cell = [tableView dequeueReusableCellWithIdentifier:DTTableChartCellReuseIdentifier];
+    cell.selectable = self.valueSelectable;
     cell.labelLeftOffset = self.tableLeftOffset;
     cell.delegate = self;
 
@@ -303,6 +305,14 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     }
 
     return copyData;
+}
+
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
 }
 
 #pragma mark - public method
@@ -485,6 +495,16 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     if (self.orderTouchBlock) {
         self.orderTouchBlock(isMainAxis, column);
     }
+}
+
+- (void)chartCellHintTouchBegin:(NSString *)text index:(NSUInteger)index touch:(UITouch *)touch {
+    CGPoint p = [touch locationInView:self.contentView];
+    NSString *message = [NSString stringWithFormat:@"%@\n%@", self.yAxisLabelDatas[index].title, text];
+    [self showTouchMessage:message touchPoint:p];
+}
+
+- (void)chartCellHintTouchEnd {
+    [self hideTouchMessage];
 }
 
 @end

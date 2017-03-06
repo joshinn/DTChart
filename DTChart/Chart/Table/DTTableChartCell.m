@@ -7,14 +7,14 @@
 //
 
 #import "DTTableChartCell.h"
-#import "DTChartLabel.h"
 #import "DTTableAxisLabelData.h"
 #import "DTTableChartSingleData.h"
+#import "DTTableLabel.h"
 
 
 CGFloat const DTTableChartCellHeight = 35;
 
-@interface DTTableChartCell ()
+@interface DTTableChartCell () <DTTableLabelDelegate>
 
 @property(nonatomic) NSArray<UIView *> *containerViews;
 @property(nonatomic) DTTableChartStyle style;
@@ -114,15 +114,16 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             UIView *container = [UIView new];
             container.frame = CGRectMake(x, 0, width, DTTableChartCellHeight);
 
-            DTChartLabel *label = [DTChartLabel chartLabel];
+            DTTableLabel *label = [[DTTableLabel alloc] init];
+            label.selectable = YES;
+            label.delegate = self;
+            label.adjustsFontSizeToFitWidth = NO;
             label.numberOfLines = 1;
             label.textColor = NormalLabelTextColor;
             label.tag = LabelViewTag;
             label.font = [UIFont systemFontOfSize:15];
             label.frame = container.bounds;
             label.textAlignment = NSTextAlignmentCenter;
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchEvent:)];
-            [label addGestureRecognizer:tap];
 
             [container addSubview:label];
 
@@ -178,8 +179,8 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
         UIView *container = self.containerViews[i];
 
-        DTChartLabel *label = [container viewWithTag:LabelViewTag];
-        label.userInteractionEnabled = NO;
+        DTTableLabel *label = [container viewWithTag:LabelViewTag];
+        label.selectable = NO;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
 
@@ -229,10 +230,10 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         UIButton *icon = [container viewWithTag:IconViewTag];
         icon.hidden = YES;
 
-        DTChartLabel *label = [container viewWithTag:LabelViewTag];
+        DTTableLabel *label = [container viewWithTag:LabelViewTag];
+        label.selectable = self.selectable;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
-        label.userInteractionEnabled = NO;
 
         DTChartItemData *itemData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
@@ -264,7 +265,10 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 } else {
                     label.text = @"展开…";
                 }
-                label.userInteractionEnabled = YES;
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchEvent:)];
+                [label addGestureRecognizer:tap];
+                label.selectable = NO;
+
                 label.textColor = ExpandLabelTextColor;
             } else if (singleData.isHeaderRow) {
                 if (singleData.expandType == DTTableChartCellDidExpand) {
@@ -272,7 +276,10 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 } else {
                     label.text = @"展开…";
                 }
-                label.userInteractionEnabled = YES;
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchEvent:)];
+                [label addGestureRecognizer:tap];
+                label.selectable = NO;
+
                 label.textColor = ExpandLabelTextColor;
             }
         }
@@ -282,8 +289,28 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         } else {
             label.backgroundColor = EvenRowBackgroundColor;
         }
-
     }
+}
+
+
+#pragma mark - DTTableLabelDelegate
+
+- (void)tableLabelTouchBegin:(DTTableLabel *)label touch:(UITouch *)touch {
+
+    UIView *view = label.superview;
+    __block NSUInteger index = 0;
+    [self.containerViews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
+        if (view == obj) {
+            index = idx;
+            *stop = YES;
+        }
+    }];
+
+    [self.delegate chartCellHintTouchBegin:label.text index:index touch:touch];
+}
+
+- (void)tableLabelTouchEnd {
+    [self.delegate chartCellHintTouchEnd];
 }
 
 @end
