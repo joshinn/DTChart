@@ -18,7 +18,6 @@
  * 存储pie图每个组成部分的百分比
  */
 @property(nonatomic, readwrite) NSMutableArray<NSNumber *> *percentages;
-@property(nonatomic, readwrite) NSMutableArray<NSNumber *> *singleTotal;
 
 @property(nonatomic) CGFloat radius;
 /**
@@ -41,7 +40,6 @@
 
     _selectBorderWidth = 1;
     _prevSelectedIndex = -1;
-    _drawSingleDataIndex = -1;
     self.pieRadius = MIN(self.xAxisCellCount, self.yAxisCellCount) / 2;
 }
 
@@ -65,11 +63,6 @@
     _pieRadius = pieRadius;
 
     _radius = pieRadius * self.coordinateAxisCellWidth;
-}
-
-- (void)updateOrigin:(CGFloat)xOffset yOffset:(CGFloat)yOffset {
-    _originPoint = CGPointMake(CGRectGetMidX(self.contentView.bounds) + xOffset * self.coordinateAxisCellWidth,
-            CGRectGetMidY(self.contentView.bounds) + yOffset * self.coordinateAxisCellWidth);;
 }
 
 #pragma mark - private method
@@ -142,8 +135,6 @@
             }
         }
     }
-
-
 }
 
 
@@ -162,7 +153,6 @@
 
         }
     }];
-
 }
 
 
@@ -186,15 +176,10 @@
     animation.duration = 1;
     animation.fromValue = @0;
     animation.toValue = @1;
-//    animation.delegate  = self;
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animation.removedOnCompletion = YES;
 
     [self.containerLayer.mask addAnimation:animation forKey:@"circleAnimation"];
-
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        self.containerLayer.mask = nil;
-//    });
 }
 
 - (void)startDisappearAnimation {
@@ -215,67 +200,13 @@
     });
 }
 
-
-/**
- * 绘制整体pie chart
- * @note 每个DTChartSingleData里的所有itemValue.y总和作为pie chart的组成部分
- */
-- (void)drawMultiDataChart {
-    CGFloat sum = 0;    // 所有数据总和
-    self.singleTotal = [NSMutableArray arrayWithCapacity:self.multiData.count];
-
-    for (DTChartSingleData *sData in self.multiData) {
-
-        CGFloat singleTotal = 0;    // 单组数据总和
-        for (DTChartItemData *obj in sData.itemValues) {
-            singleTotal += obj.itemValue.y;
-            sum += obj.itemValue.y;
-
-        }
-        [self.singleTotal addObject:@(singleTotal)];
-    }
-
-
-    CGFloat accumulate = 0; // 累积百分比
-
-    for (NSUInteger i = 0; i < self.multiData.count; ++i) {
-        DTChartSingleData *singleData = self.multiData[i];
-
-        CGFloat singleTotal = self.singleTotal[i].floatValue;
-
-        CGFloat valuePercentage = singleTotal / sum;
-
-        [self.percentages addObject:@(valuePercentage)];
-
-        DTPiePart *part = [self generatePiePartWithPartColor:singleData.color
-                                                 borderColor:singleData.secondColor
-                                                      radius:self.radius
-                                                      center:self.originPoint
-                                             startPercentage:accumulate
-                                               endPercentage:accumulate + valuePercentage];
-
-        part.index = i;
-
-        [self.containerLayer addSublayer:part];
-
-        accumulate += valuePercentage;
-    }
-
-}
-
 /**
  * 绘制指定单组数据的pie chart
- * @param index 数组multiData的序号
  * @note DTChartSingleData里的每个itemValue.y作为pie chart的组成部分
  */
-- (void)drawSingleDataChart:(NSUInteger)index {
-    if (self.multiData.count <= index) {
-        DTLog(@"Error: DTPieChart index越界");
-        return;
-    }
+- (void)drawSingleDataChart {
 
-
-    DTChartSingleData *sData = self.multiData[index];
+    DTChartSingleData *sData = self.multiData.firstObject;
     if (sData.itemValues.count == 0) {
         return;
     }
@@ -290,7 +221,6 @@
         // 颜色
         if (!itemData.color) {
             itemData.color = [self.colorManager getColor];
-
         }
         if (!itemData.secondColor) {
             itemData.secondColor = [self.colorManager getLightColor:itemData.color];
@@ -331,6 +261,20 @@
 
 }
 
+#pragma mark - public method
+
+- (void)updateFrame:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
+    CGFloat cellWidth = self.coordinateAxisCellWidth;
+    self.frame = (CGRect) {origin, CGSizeMake(xCount * cellWidth, yCount * cellWidth)};
+    ChartEdgeInsets insets = self.coordinateAxisInsets;
+    self.contentView.frame = CGRectMake(insets.left * cellWidth,
+            insets.top * cellWidth,
+            CGRectGetWidth(self.bounds) - (insets.left + insets.right) * cellWidth,
+            CGRectGetHeight(self.bounds) - (insets.top + insets.bottom) * cellWidth);
+
+    _originPoint = CGPointMake(CGRectGetMidX(self.contentView.bounds), CGRectGetMidY(self.contentView.bounds));
+}
+
 
 #pragma mark - override
 
@@ -368,12 +312,7 @@
 
     self.containerLayer.frame = self.contentView.bounds;
 
-    if (self.drawSingleDataIndex == -1) {
-        [self drawMultiDataChart];
-    } else {
-        [self drawSingleDataChart:(NSUInteger) self.drawSingleDataIndex];
-    }
-
+    [self drawSingleDataChart];
 
     if (self.isShowAnimation) {
         CGFloat lineWidth = self.radius + 2 * self.selectBorderWidth * self.coordinateAxisCellWidth;

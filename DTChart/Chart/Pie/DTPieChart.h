@@ -31,13 +31,6 @@ typedef void(^ItemsColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 @property(nonatomic, copy) DTPieChartCancelTouch pieChartTouchCancelBlock;
 
 /**
- * 指定绘制multiData里的单独某个数据
- * @attention -1表示绘制全部，默认
- * @attention 范围：[-1, multiData.count)
- */
-@property(nonatomic) NSInteger drawSingleDataIndex;
-
-/**
  * pie圆形图的半径
  */
 @property (nonatomic) CGFloat pieRadius;
@@ -58,11 +51,12 @@ typedef void(^ItemsColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 @property (nonatomic, copy) ItemsColorsCompletion itemsColorsCompletion;
 
 /**
- * 更新原点位置
- * @param xOffset 距离contendView中心的x偏移，以单元格为单元，负为左偏，正为右偏
- * @param yOffset 距离contendView中心的y偏移，以单元格为单元，负为左偏，正为右偏
+ * 更新chart的frame
+ * @param origin 等同frame.origin
+ * @param xCount x轴长度
+ * @param yCount y轴长度
  */
-- (void)updateOrigin:(CGFloat)xOffset yOffset:(CGFloat)yOffset;
+- (void)updateFrame:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount;
 
 /**
  * pie图里的数据和图形消失

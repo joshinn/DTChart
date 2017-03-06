@@ -54,9 +54,7 @@
 }
 
 - (void)itemClicked:(NSUInteger)index {
-    self.pieChart.drawSingleDataIndex = index;
-    self.pieChart.pieChartTouchBlock = nil;
-    [self.pieChart drawChart];
+
 }
 
 

@@ -8,12 +8,7 @@
 
 #import "DTChartController.h"
 
-/**
- * 触摸手势回调
- * @param seriesId 该组数据的seriesId
- * @param partIndex -1 表示当前pie chart是不同seriesId的搜游数据展示，0,1...表示是同一个seriesId数据细分展示
- */
-typedef void(^DTPieChartTouchBlock)(NSString *seriesId, NSInteger partIndex);
+typedef void(^DTPieChartTouchBlock)(NSInteger partIndex);
 
 typedef void(^MainChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 
@@ -27,14 +22,6 @@ typedef void(^SecondChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *in
  */
 @property(nonatomic) CGFloat chartRadius;
 
-/**
- * 指定绘制主pie图里multiData里的单独某个数据
- * @attention -1表示绘制全部，默认
- * @attention 范围：[-1, multiData.count)
- * @attention Presentation下，默认是-1
- */
-@property(nonatomic) NSInteger drawMainChartSingleIndex;
-
 @property(nonatomic, copy) DTPieChartTouchBlock pieChartTouchBlock;
 
 @property(nonatomic, copy) MainChartItemsColorsCompletion mainChartItemsColorsCompletionBlock;
@@ -45,4 +32,7 @@ typedef void(^SecondChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *in
 
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation __attribute__((unavailable("DTPieChartController can not delete items")));
 
+- (void)setSecondChartItems:(NSArray<DTListCommonData *> *)listData;
+
+- (void)drawSecondChart;
 @end

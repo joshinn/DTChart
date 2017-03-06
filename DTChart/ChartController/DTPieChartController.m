@@ -18,7 +18,8 @@
 @property(nonatomic) DTChartLabel *mainHintLabel;
 
 @property(nonatomic) DTPieChart *secondChart;
-@property(nonatomic) DTChartLabel *secondHintLabel;
+@property(nonatomic) UIView *secondHintContainerView;
+@property(nonatomic) NSMutableArray<UIColor *> *listSecondItemColors;
 
 @end
 
@@ -26,34 +27,38 @@
 
 @synthesize chartView = _chartView;
 @synthesize chartId = _chartId;
+@synthesize valueSelectable = _valueSelectable;
 
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
-        _mainChart = [[DTPieChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
-        _chartView = _mainChart;
+        UIView *containerView = [[UIView alloc] init];
+        _chartView = containerView;
+
+        _mainChart = [[DTPieChart alloc] initWithOrigin:CGPointZero xAxis:xCount yAxis:yCount];
+
+        containerView.frame = CGRectMake(origin.x, origin.y, xCount * _mainChart.coordinateAxisCellWidth, yCount * _mainChart.coordinateAxisCellWidth);
+
+        [containerView addSubview:_mainChart];
         self.chartMode = DTChartModeThumb;
 
         _mainHintLabel = [DTChartLabel chartLabel];
         _mainHintLabel.hidden = YES;
-        [_mainChart addSubview:_mainHintLabel];
+        [containerView addSubview:_mainHintLabel];
+
+        _secondHintContainerView = [UIView new];
+        _secondHintContainerView.hidden = YES;
+        [containerView addSubview:_secondHintContainerView];
+        _listSecondItemColors = [NSMutableArray array];
 
         WEAK_SELF;
         [_mainChart setPieChartTouchBlock:^(NSUInteger index) {
-            if (weakSelf.mainChart.drawSingleDataIndex == -1) {    // 绘制的是所有的数据
-                if (weakSelf.pieChartTouchBlock) {
-                    NSString *seriesId = weakSelf.mainChart.multiData[index].singleId;
-                    weakSelf.pieChartTouchBlock(seriesId, -1);
-                }
-            } else {    // 绘制单组详细数据
-                if (weakSelf.pieChartTouchBlock) {
-                    NSString *seriesId = weakSelf.mainChart.multiData[(NSUInteger) weakSelf.mainChart.drawSingleDataIndex].singleId;
-                    weakSelf.pieChartTouchBlock(seriesId, index);
-                }
+            if (weakSelf.pieChartTouchBlock) {
+                weakSelf.pieChartTouchBlock(index);
             }
 
-            if (weakSelf.mainChart.drawSingleDataIndex == -1) {
-                [weakSelf drawSecondPieChart:index];
+            if (weakSelf.chartMode == DTChartModePresentation) {
+                [weakSelf showMainChartHint:index];
             }
         }];
 
@@ -90,27 +95,41 @@
     _mainChart.pieRadius = chartRadius;
 }
 
-- (void)setDrawMainChartSingleIndex:(NSInteger)drawMainChartSingleIndex {
-    _drawMainChartSingleIndex = drawMainChartSingleIndex;
+- (void)setValueSelectable:(BOOL)valueSelectable {
+    _valueSelectable = valueSelectable;
 
-    self.mainChart.drawSingleDataIndex = drawMainChartSingleIndex;
+    _mainChart.valueSelectable = valueSelectable;
 }
 
 - (void)setChartMode:(DTChartMode)chartMode {
     [super setChartMode:chartMode];
 
+    CGFloat cellWidth = self.mainChart.coordinateAxisCellWidth;
+
     switch (chartMode) {
 
         case DTChartModeThumb: {
             self.chartRadius = 4.5;
-            [self.mainChart updateOrigin:0 yOffset:0];
+
+            CGFloat width = (self.chartRadius * 2 + 2) * cellWidth;
+            CGFloat x = (CGRectGetWidth(self.chartView.bounds) - width) / 2;
+            CGFloat y = (CGRectGetHeight(self.chartView.bounds) - width) / 2;
+            [self.mainChart updateFrame:CGPointMake(x, y)
+                                  xAxis:(NSUInteger) (width / cellWidth)
+                                  yAxis:(NSUInteger) (width / cellWidth)];
             [self removeSecondPieChart];
         }
             break;
         case DTChartModePresentation: {
             self.chartRadius = 12;
-            [self.mainChart updateOrigin:-16 yOffset:0];
-            self.mainChart.drawSingleDataIndex = -1;
+            CGFloat width = (self.chartRadius * 2 + 2) * cellWidth;
+            CGFloat x = 7 * cellWidth;
+            CGFloat y = (CGRectGetHeight(self.chartView.bounds) - width) / 2;
+
+            [self.mainChart updateFrame:CGPointMake(x, y)
+                                  xAxis:(NSUInteger) (width / cellWidth)
+                                  yAxis:(NSUInteger) (width / cellWidth)];
+
             [self loadSecondPieChart];
         }
             break;
@@ -120,27 +139,29 @@
 #pragma mark - private method
 
 - (void)loadSecondPieChart {
-    NSUInteger xAxisCellCount = 26;
-    NSUInteger yAxisCellCount = 16;
-    CGPoint origin = CGPointMake(CGRectGetWidth(self.mainChart.bounds) - xAxisCellCount * self.mainChart.coordinateAxisCellWidth,
-            CGRectGetHeight(self.mainChart.bounds) / 2 + (self.mainChart.pieRadius - yAxisCellCount) * self.mainChart.coordinateAxisCellWidth);
+    CGFloat radius = 6;
+    CGFloat cellWidth = self.mainChart.coordinateAxisCellWidth;
+    NSUInteger xAxisCellCount = (NSUInteger) (radius * 2 + 2);
+    NSUInteger yAxisCellCount = (NSUInteger) (radius * 2 + 2);
+    CGPoint origin = CGPointMake(CGRectGetMaxX(self.mainChart.frame) + 15 * cellWidth,
+            CGRectGetMidY(self.mainChart.frame) - radius / 2 * cellWidth);
     self.secondChart = [[DTPieChart alloc] initWithOrigin:origin xAxis:xAxisCellCount yAxis:yAxisCellCount];
-    self.secondChart.pieRadius = 6;
+    self.secondChart.pieRadius = radius;
     self.secondChart.showAnimation = self.isShowAnimation;
-    [self.secondChart updateOrigin:self.secondChart.pieRadius - xAxisCellCount / 2 yOffset:0];
 
     __weak typeof(self) weakSelf = self;
     [self.secondChart setItemsColorsCompletion:^(NSArray<DTChartBlockModel *> *infos) {
+        [weakSelf.listSecondItemColors removeAllObjects];
+        for (DTChartBlockModel *model in infos) {
+            [weakSelf.listSecondItemColors addObject:model.color];
+        }
+
         if (weakSelf.secondChartItemsColorsCompletionBlock) {
             weakSelf.secondChartItemsColorsCompletionBlock(infos);
         }
     }];
 
-    [self.mainChart addSubview:self.secondChart];
-
-    self.secondHintLabel = [DTChartLabel chartLabel];
-    self.secondHintLabel.hidden = YES;
-    [self.secondChart addSubview:self.secondHintLabel];
+    [self.chartView addSubview:self.secondChart];
 }
 
 - (void)removeSecondPieChart {
@@ -148,6 +169,22 @@
         [self.secondChart removeFromSuperview];
         self.secondChart = nil;
     }
+}
+
+/**
+ * 显示主表的文字提示
+ */
+- (void)showMainChartHint:(NSUInteger)index {
+    DTChartSingleData *sData = self.mainChart.multiData.firstObject;
+    CGFloat percent = self.mainChart.percentages[(NSUInteger) index].floatValue;
+    DTChartItemData *itemData = sData.itemValues[index];
+
+    self.mainHintLabel.attributedText = [self labelAttributedText:itemData.title value:@(itemData.itemValue.y) percentage:percent];
+    CGRect rect = [self.mainHintLabel.attributedText boundingRectWithSize:CGSizeMake(150, 0) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+    CGSize size = CGSizeMake(rect.size.width + 5, rect.size.height + 5);
+    self.mainHintLabel.frame = CGRectMake(CGRectGetMaxX(self.mainChart.frame) + 2 * self.mainChart.coordinateAxisCellWidth,
+            CGRectGetMidY(self.mainChart.frame) - size.height / 2, size.width, size.height);
+    self.mainHintLabel.hidden = NO;
 }
 
 - (NSAttributedString *)labelAttributedText:(NSString *)name value:(NSNumber *)value percentage:(CGFloat)per {
@@ -163,50 +200,52 @@
     return attributedString;
 }
 
-- (void)drawSecondPieChart:(NSInteger)index {
-    DTChartSingleData *sData = self.mainChart.multiData[(NSUInteger) index];
-    CGFloat percent = self.mainChart.percentages[(NSUInteger) index].floatValue;
-    NSNumber *value = self.mainChart.singleTotal[(NSUInteger) index];
-
-
-    self.mainHintLabel.attributedText = [self labelAttributedText:sData.singleName value:value percentage:percent];
-    CGRect rect = [self.mainHintLabel.attributedText boundingRectWithSize:CGSizeMake(0, 50) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-    CGSize size = CGSizeMake(rect.size.width + 5, rect.size.height + 5);
-    self.mainHintLabel.frame = CGRectMake(self.mainChart.originPoint.x + (self.mainChart.pieRadius + 3) * self.mainChart.coordinateAxisCellWidth,
-            self.mainChart.originPoint.y - size.height / 2, size.width, size.height);
-    self.mainHintLabel.hidden = NO;
-
-
-    self.secondChart.multiData = self.mainChart.multiData;
-    self.secondChart.drawSingleDataIndex = index;
+- (void)drawSecondPieChart {
     [self.secondChart drawChart];
 
-    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] init];
+    [self.secondHintContainerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromSuperview];
+    }];
+
+    CGFloat cellWidth = self.secondChart.coordinateAxisCellWidth;
+
+    CGFloat x = 2 * cellWidth;
+    CGFloat y = 0;
+    CGFloat maxWidth = 0;
+    DTChartSingleData *sData = self.secondChart.multiData.firstObject;
     for (NSUInteger i = 0; i < sData.itemValues.count; ++i) {
         DTChartItemData *itemData = sData.itemValues[i];
-        [mutableAttributedString appendAttributedString:[self labelAttributedText:itemData.title value:@(itemData.itemValue.y) percentage:self.secondChart.percentages[i].floatValue]];
 
-        if (i < sData.itemValues.count - 1) {
-            [mutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+        DTChartLabel *label = [DTChartLabel chartLabel];
+        label.attributedText = [self labelAttributedText:itemData.title value:@(itemData.itemValue.y) percentage:self.secondChart.percentages[i].floatValue];
+        CGRect rect = [label.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.chartView.bounds) - CGRectGetMaxX(self.secondChart.frame) - 3 * cellWidth, 0)
+                                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                         context:nil];
+        label.frame = CGRectMake(x, y, CGRectGetWidth(rect), CGRectGetHeight(rect));
+        if (maxWidth < CGRectGetWidth(rect)) {
+            maxWidth = CGRectGetWidth(rect);
         }
+
+        UIView *icon = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMidY(label.frame) - cellWidth / 2, cellWidth, cellWidth)];
+        icon.backgroundColor = self.listSecondItemColors[i];
+
+        [self.secondHintContainerView addSubview:icon];
+        [self.secondHintContainerView addSubview:label];
+
+        y += CGRectGetHeight(rect) + 2;
     }
-    self.secondHintLabel.attributedText = mutableAttributedString;
-    rect = [self.secondHintLabel.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.secondChart.bounds)
-                    - self.secondChart.originPoint.x
-                    - (self.secondChart.pieRadius + 2) * self.secondChart.coordinateAxisCellWidth, 0)
-                                                             options:NSStringDrawingUsesLineFragmentOrigin
-                                                             context:nil];
-    size = CGSizeMake(rect.size.width + 5, rect.size.height + 5);
-    self.secondHintLabel.frame = CGRectMake(0, 0, size.width, size.height);
-    self.secondHintLabel.center = CGPointMake(CGRectGetWidth(self.secondChart.bounds) - size.width / 2, CGRectGetMidY(self.secondChart.bounds));
-    self.secondHintLabel.hidden = NO;
+
+    self.secondHintContainerView.frame = CGRectMake(CGRectGetMaxX(self.secondChart.frame) + cellWidth, CGRectGetMidY(self.secondChart.frame) - y / 2, maxWidth + x, y);
+    self.secondHintContainerView.hidden = NO;
 }
 
 - (void)dismissSecondPieChart {
     self.mainHintLabel.attributedText = nil;
     self.mainHintLabel.hidden = YES;
-    self.secondHintLabel.attributedText = nil;
-    self.secondHintLabel.hidden = YES;
+    self.secondHintContainerView.hidden = YES;
+    [self.secondHintContainerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromSuperview];
+    }];
 
     [self.secondChart dismissChart:NO];
 }
@@ -220,7 +259,7 @@
         dataDic[@"multiData"] = self.mainChart.multiData;
     }
     if (self.mainChart.secondMultiData.count > 0) {
-        dataDic[@"secondMultiData"] = self.mainChart.secondMultiData;
+        dataDic[@"secondMultiData"] = self.secondChart.multiData;
     }
 
     [DTManager addChart:self.chartId object:@{@"data": dataDic}];
@@ -282,10 +321,9 @@
     }
 }
 
-- (void)processPieParts:(NSArray<DTListCommonData *> *)listData remainData:(BOOL)remain {
+- (void)processPieParts:(NSArray<DTListCommonData *> *)listData {
 
     NSMutableArray<DTChartSingleData *> *parts = [NSMutableArray arrayWithCapacity:listData.count];
-
 
     for (NSUInteger n = 0; n < listData.count; ++n) {
 
@@ -297,39 +335,66 @@
 
         NSArray<DTCommonData *> *values = listCommonData.commonDatas;
 
-        NSMutableArray<DTChartItemData *> *bar = [NSMutableArray array];
+        NSMutableArray<DTChartItemData *> *part = [NSMutableArray array];
 
         for (NSUInteger i = 0; i < values.count; ++i) {
 
             DTCommonData *data = values[i];
 
-            // 单个柱状体
             DTChartItemData *itemData = [DTChartItemData chartData];
             itemData.itemValue = ChartItemValueMake(i, data.ptValue);
             itemData.title = data.ptName;
-            [bar addObject:itemData];
+            [part addObject:itemData];
         }
 
 
-        // 单个柱状体
-        DTChartSingleData *singleData = [DTChartSingleData singleData:bar];
+        // pie图单个组成部分
+        DTChartSingleData *singleData = [DTChartSingleData singleData:part];
         singleData.singleId = listCommonData.seriesId;
         singleData.singleName = listCommonData.seriesName;
         [parts addObject:singleData];
     }
 
-    // 赋值柱状体数据
-    if (remain) {
-        NSMutableArray<DTChartSingleData *> *mutableArray = [NSMutableArray array];
-        if (self.mainChart.multiData.count > 0) {
-            [mutableArray addObjectsFromArray:self.mainChart.multiData];
+    // 赋值主图数据
+    self.mainChart.multiData = parts;
+
+}
+
+- (void)processSecondAxisPieParts:(NSArray<DTListCommonData *> *)listData {
+    NSMutableArray<DTChartSingleData *> *parts = [NSMutableArray arrayWithCapacity:listData.count];
+
+    for (NSUInteger n = 0; n < listData.count; ++n) {
+
+        DTListCommonData *listCommonData = listData[n];
+
+        if (listCommonData.isMainAxis) { // 是主轴 过滤
+            continue;
         }
-        [mutableArray addObjectsFromArray:parts];
-        self.mainChart.multiData = mutableArray.copy;
-    } else {
-        self.mainChart.multiData = parts;
+
+        NSArray<DTCommonData *> *values = listCommonData.commonDatas;
+
+        NSMutableArray<DTChartItemData *> *part = [NSMutableArray array];
+
+        for (NSUInteger i = 0; i < values.count; ++i) {
+
+            DTCommonData *data = values[i];
+
+            DTChartItemData *itemData = [DTChartItemData chartData];
+            itemData.itemValue = ChartItemValueMake(i, data.ptValue);
+            itemData.title = data.ptName;
+            [part addObject:itemData];
+        }
+
+
+        // pie图单个组成部分
+        DTChartSingleData *singleData = [DTChartSingleData singleData:part];
+        singleData.singleId = listCommonData.seriesId;
+        singleData.singleName = listCommonData.seriesName;
+        [parts addObject:singleData];
     }
 
+    // 赋值主图数据
+    self.secondChart.multiData = parts;
 }
 
 
@@ -339,7 +404,7 @@
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
 
-    [self processPieParts:listData remainData:NO];
+    [self processPieParts:listData];
 }
 
 - (void)drawChart {
@@ -361,7 +426,7 @@
         NSArray *secondMultiData = dataDic[@"secondMultiData"];
 
         [self checkMultiData:multiData compare:self.mainChart.multiData];
-        [self checkMultiData:secondMultiData compare:self.mainChart.secondMultiData];
+        [self checkMultiData:secondMultiData compare:self.secondChart.multiData];
         [self cacheMultiData];
 
         [self.mainChart drawChart];
@@ -375,5 +440,13 @@
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation {
 }
 
+
+- (void)setSecondChartItems:(NSArray<DTListCommonData *> *)listData {
+    [self processSecondAxisPieParts:listData];
+}
+
+- (void)drawSecondChart {
+    [self drawSecondPieChart];
+}
 
 @end
