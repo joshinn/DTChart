@@ -112,7 +112,6 @@
     [self.subBarColors addObject:color];
 
     DTBar *bar = [DTBar bar:self.barOrientation style:DTBarBorderStyleNone];
-    bar.delegate = self.delegate;
     bar.barData = data;
 
     bar.barColor = color;
@@ -123,11 +122,6 @@
     }
 
     [self relayoutSubBars];
-
-}
-
-
-- (void)barDidSelected {
 
 }
 

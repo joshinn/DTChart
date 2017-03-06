@@ -51,7 +51,6 @@
 
                 DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                 bar.barData = itemData;
-                bar.delegate = self;
 
                 if (singleData.color) {
                     bar.barColor = singleData.color;
@@ -111,7 +110,6 @@
                 }
 
                 bar.barData = itemData;
-                bar.delegate = self;
 
                 if (singleData.color) {
                     bar.barColor = singleData.color;
@@ -157,7 +155,6 @@
 
                     DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
                     bar.barData = itemData;
-                    bar.delegate = self;
 
                     if (singleData.color) {
                         bar.barColor = singleData.color;
@@ -423,12 +420,6 @@
     [super drawChart];
 }
 
-
-#pragma mark - DTBarDelegate
-
-- (void)_DTBarSelected:(DTBar *)bar {
-
-}
 
 
 @end

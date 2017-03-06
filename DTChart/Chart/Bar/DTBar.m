@@ -7,12 +7,9 @@
 //
 
 #import "DTBar.h"
-#import "DTChartData.h"
 
 @interface DTBar ()
 
-
-@property(nonatomic) CGRect barFrontViewFrame;
 @property(nonatomic) CGRect prevBarFrame;
 @property(nonatomic) UIView *barFrontView;
 

@@ -25,13 +25,6 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
 @class DTBar;
 
 
-@protocol DTBarDelegate <NSObject>
-
-@optional
-- (void)_DTBarSelected:(DTBar *)bar;
-
-@end
-
 
 /**
  * 柱状图里的柱状体
@@ -40,7 +33,6 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
  */
 @interface DTBar : UIView
 
-@property(nonatomic, weak) id <DTBarDelegate> delegate;
 /**
  * 柱状体方向
  */
@@ -57,7 +49,7 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
 /**
  * 存储数据model
  */
-@property(nonatomic, weak) DTChartItemData *barData;
+@property(nonatomic) DTChartItemData *barData;
 /**
  * 柱状体主颜色
  */

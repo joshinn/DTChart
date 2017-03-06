@@ -12,6 +12,9 @@
 #import "DTDimensionModel.h"
 #import "DTDimensionBarModel.h"
 #import "DTColor.h"
+#import "DTChartToastView.h"
+#import "DTDimensionBar.h"
+#import "DTDimensionSectionLine.h"
 
 @interface DTDimensionVerticalBarChart ()
 
@@ -65,6 +68,20 @@
 
                 DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
 
+                // 将每一层级的DTDimensionModel存储在DTBar上
+                for (DTBar *bar in self.chartBars) {
+                    if ([bar isKindOfClass:[DTDimensionBar class]]) {
+                        DTDimensionBar *dimensionBar = (DTDimensionBar *) bar;
+
+                        if (dimensionBar.dimensionModels.lastObject == model) {
+                            NSMutableArray *models = [NSMutableArray arrayWithArray:dimensionBar.dimensionModels];
+                            [models addObject:data];
+                            dimensionBar.dimensionModels = models;
+                        }
+                    }
+                }
+
+
                 CGFloat labelX = self.barX - returnModel2.sectionWidth - self.coordinateAxisCellWidth * (2 - (NSInteger) self.coordinateAxisInsets.left);
 
                 if (isDraw) {
@@ -106,10 +123,9 @@
                                 height = axisY + (returnModel2.level + 1) * self.coordinateAxisCellWidth - y;
                             }
 
-                            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x, y, 2, height)];
-                            line.backgroundColor = DTRGBColor(0x7b7b7b, 1);
-
-                            [self.contentView addSubview:line];
+                            DTDimensionSectionLine *sectionLine = [DTDimensionSectionLine layer];
+                            sectionLine.frame = CGRectMake(x, y, 2, height);
+                            [self.contentView.layer addSublayer:sectionLine];
                         }
                     }
                 }
@@ -150,7 +166,12 @@
 
                     CGFloat height = self.coordinateAxisCellWidth * ((model.ptValue - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);
 
-                    DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
+                    NSMutableArray *models = [NSMutableArray array];
+                    [models addObject:model];
+                    [models addObject:data];
+
+                    DTDimensionBar *bar = [DTDimensionBar bar:DTBarOrientationUp style:self.barBorderStyle];
+                    bar.dimensionModels = models;
                     bar.frame = CGRectMake(self.barX, axisY - height, barWidth, height);
 
                     DTDimensionBarModel *barModel = [self getBarModelByName:model.ptName];
@@ -158,8 +179,9 @@
                     bar.barBorderColor = barModel.secondColor;
 
                     [self.contentView addSubview:bar];
+                    [self.chartBars addObject:bar];
 
-                    if(self.showAnimation){
+                    if (self.showAnimation) {
                         [bar startAppearAnimation];
                     }
                 }
@@ -193,8 +215,12 @@
 
         if (isDraw) {
             CGFloat height = data.ptValue / 50 * axisYMax;
+            NSMutableArray *models = [NSMutableArray array];
+            [models addObject:data];
 
-            DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
+            DTDimensionBar *bar = [DTDimensionBar bar:DTBarOrientationUp style:self.barBorderStyle];
+            bar.dimensionModels = models;
+
             bar.frame = CGRectMake(self.barX, axisY - height, barWidth, height);
 
             DTDimensionBarModel *barModel = [self getBarModelByName:data.ptName];
@@ -202,8 +228,9 @@
             bar.barBorderColor = barModel.secondColor;
 
             [self.contentView addSubview:bar];
+            [self.chartBars addObject:bar];
 
-            if(self.showAnimation){
+            if (self.showAnimation) {
                 [bar startAppearAnimation];
             }
         }
@@ -230,6 +257,109 @@
 }
 
 
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = CGRectMake(point.x, 0, 1, CGRectGetHeight(self.contentView.bounds));
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+    self.touchSelectedLine.hidden = YES;
+}
+
+#pragma mark - touch event
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesBegan:touches withEvent:event];
+    } else {
+
+        [self touchKeyPoint:touches];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesMoved:touches withEvent:event];
+    } else {
+
+        [self touchKeyPoint:touches];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesEnded:touches withEvent:event];
+    } else {
+        [self hideTouchMessage];
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (!self.valueSelectable) {
+        [super touchesCancelled:touches withEvent:event];
+    } else {
+        [self hideTouchMessage];
+    }
+}
+
+- (void)touchKeyPoint:(NSSet *)touches {
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    BOOL containsPoint = NO;
+    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+        DTBar *bar = self.chartBars[i];
+        if (![bar isKindOfClass:[DTDimensionBar class]]) {
+            return;
+
+        }
+
+        DTDimensionBar *dimensionBar = (DTDimensionBar *) bar;
+
+        if (touchPoint.x >= CGRectGetMinX(bar.frame) && touchPoint.x <= CGRectGetMaxX(bar.frame)) {
+            containsPoint = YES;
+
+            NSMutableString *message = [NSMutableString string];
+            [dimensionBar.dimensionModels enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(DTDimensionModel *model, NSUInteger idx, BOOL *stop) {
+                if (model.ptName) {
+                    [message appendString:model.ptName];
+
+                    if (idx > 0) {
+                        [message appendString:@"\n"];
+                    } else {
+                        if (floorf(model.ptValue) != model.ptValue) {   // 有小数
+                            [message appendString:[NSString stringWithFormat:@"\n%.1f", model.ptValue]];
+                        } else {
+                            [message appendString:[NSString stringWithFormat:@"\n%@", @(model.ptValue)]];
+                        }
+
+                    }
+                }
+            }];
+
+            if (message.length > 0) {
+                [self showTouchMessage:message touchPoint:CGPointMake(CGRectGetMidX(bar.frame), touchPoint.y)];
+            }
+
+            break;
+        }
+    }
+
+    if (!containsPoint) {
+        [self hideTouchMessage];
+    }
+}
+
+
 #pragma mark - public method
 
 - (DTDimensionReturnModel *)calculate:(DTDimensionModel *)data {
@@ -242,14 +372,16 @@
 #pragma mark - override
 
 - (void)clearChartContent {
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[DTChartLabel class]]) {
-            [obj removeFromSuperview];
+    [super clearChartContent];
+
+    NSArray<CALayer *> *layers = self.contentView.layer.sublayers.copy;
+    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTDimensionSectionLine class]]) {
+            [obj removeFromSuperlayer];
         }
     }];
-    [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj removeFromSuperview];
-    }];
+
+    [self.chartBars removeAllObjects];
 }
 
 - (BOOL)drawXAxisLabels {
@@ -307,13 +439,6 @@
 
     [super drawChart];
 
-}
-
-
-#pragma mark - DTBarDelegate
-
-- (void)_DTBarSelected:(DTBar *)bar {
-    DTLog(@"%@", NSStringFromChartItemValue(bar.barData.itemValue));
 }
 
 

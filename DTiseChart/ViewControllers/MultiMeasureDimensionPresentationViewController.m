@@ -60,6 +60,7 @@
     DTMeasureDimensionHorizontalBarChartController *chartController = [[DTMeasureDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
     [self.view addSubview:chartController.chartView];
     chartController.chartId = @"1991";
+    chartController.valueSelectable = YES;
     [chartController setMainItem:self.model secondItem:self.model];
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;

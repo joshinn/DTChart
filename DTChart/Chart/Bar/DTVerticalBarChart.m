@@ -55,7 +55,6 @@
 
                 DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                 bar.barData = itemData;
-                bar.delegate = self;
 
                 if (singleData.color) {
                     bar.barColor = singleData.color;
@@ -118,7 +117,6 @@
 
 
                 bar.barData = itemData;
-                bar.delegate = self;
 
                 if (singleData.color) {
                     bar.barColor = singleData.color;
@@ -166,7 +164,6 @@
 
                     DTBar *bar = [DTBar bar:DTBarOrientationUp style:self.barBorderStyle];
                     bar.barData = itemData;
-                    bar.delegate = self;
 
                     if (singleData.color) {
                         bar.barColor = singleData.color;
@@ -438,11 +435,5 @@
     DTLog(@"#### end draw");
 }
 
-
-#pragma mark - DTBarDelegate
-
-- (void)_DTBarSelected:(DTBar *)bar {
-    DTLog(@"%@", NSStringFromChartItemValue(bar.barData.itemValue));
-}
 
 @end

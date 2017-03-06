@@ -12,6 +12,8 @@
 
 @interface DTDimensionVerticalBarChartController : DTChartController
 
+@property(nonatomic) NSString *(^dimensionBarChartControllerTouchBlock)(NSUInteger touchIndex);
+
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((unavailable("DTDimensionVerticalBarChartController use -setItem replace")));
 
 /**

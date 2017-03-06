@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
 };
 
 
-@interface DTBarChart : DTChartBaseComponent <DTBarDelegate>
+@interface DTBarChart : DTChartBaseComponent
 /**
  * 柱状图风格，默认DTBarChartStyleStartingLine
  */

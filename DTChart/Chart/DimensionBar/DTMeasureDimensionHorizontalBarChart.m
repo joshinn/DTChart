@@ -12,10 +12,13 @@
 #import "DTDimensionBarModel.h"
 #import "DTChartLabel.h"
 #import "DTColor.h"
+#import "DTDimensionBar.h"
+#import "DTChartToastView.h"
+#import "DTChartScrollView.h"
 
 @interface DTMeasureDimensionHorizontalBarChart ()
 
-@property(nonatomic) UIScrollView *scrollView;
+@property(nonatomic) DTChartScrollView *scrollView;
 
 @property(nonatomic) UIView *scrollMainContentView;
 @property(nonatomic) UIView *scrollSecondContentView;
@@ -46,7 +49,14 @@
     ChartEdgeInsets insets = self.coordinateAxisInsets;
 
     // scroll view
-    _scrollView = [[UIScrollView alloc] init];
+    _scrollView = [[DTChartScrollView alloc] init];
+    WEAK_SELF;
+    [_scrollView setScrollViewTouchBegin:^(CGPoint touchPoint) {
+        [weakSelf processScrollViewTouch:touchPoint];
+    }];
+    [_scrollView setScrollViewTouchEnd:^{
+        [weakSelf hideTouchMessage];
+    }];
     _scrollView.frame = CGRectMake(0,
             insets.top * self.coordinateAxisCellWidth,
             CGRectGetWidth(self.bounds) - insets.right * self.coordinateAxisCellWidth,
@@ -73,6 +83,10 @@
     [self addSubview:_scrollView];
 
     self.colorManager = [DTColorManager randomManager];
+
+    // 把提示view移到chart
+    [self.toastView removeFromSuperview];
+    [self addSubview:self.toastView];
 }
 
 - (NSMutableArray<DTDimensionBarModel *> *)levelLowestBarModels {
@@ -80,6 +94,13 @@
         _levelLowestBarModels = [NSMutableArray array];
     }
     return _levelLowestBarModels;
+}
+
+- (NSMutableArray<DTDimensionBar *> *)secondChartBars {
+    if (!_secondChartBars) {
+        _secondChartBars = [NSMutableArray array];
+    }
+    return _secondChartBars;
 }
 
 #pragma mark - private method
@@ -109,6 +130,20 @@
                 DTDimensionReturnModel *returnModel2 = [self layoutMainBars:model drawSubviews:isDraw];
 
                 DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
+
+                // 将每一层级的DTDimensionModel存储在DTBar上
+                for (DTBar *bar in self.chartBars) {
+                    if ([bar isKindOfClass:[DTDimensionBar class]]) {
+                        DTDimensionBar *dimensionBar = (DTDimensionBar *) bar;
+
+                        if (dimensionBar.dimensionModels.lastObject == model) {
+                            NSMutableArray *models = [NSMutableArray arrayWithArray:dimensionBar.dimensionModels];
+                            [models addObject:data];
+                            dimensionBar.dimensionModels = models;
+                        }
+                    }
+                }
+
 
                 CGFloat labelY = self.barY - returnModel2.sectionWidth - 2 * self.coordinateAxisCellWidth;
                 CGFloat labelX = (self.coordinateAxisInsets.left - returnModel2.level - 1) * self.coordinateAxisCellWidth;
@@ -194,7 +229,13 @@
 
                     CGFloat width = self.coordinateAxisCellWidth * ((model.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
 
-                    DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
+                    NSMutableArray *models = [NSMutableArray array];
+                    [models addObject:model];
+                    [models addObject:data];
+
+                    DTDimensionBar *bar = [DTDimensionBar bar:DTBarOrientationRight style:self.barBorderStyle];
+                    bar.dimensionModels = models;
+
                     bar.frame = CGRectMake(axisX, self.barY, width, barWidth);
 
                     DTDimensionBarModel *barModel = [self getBarModelByName:model.ptName];
@@ -202,6 +243,7 @@
                     bar.barBorderColor = barModel.secondColor;
 
                     [self.scrollMainContentView addSubview:bar];
+                    [self.chartBars addObject:bar];
 
                     if (self.showAnimation) {
                         [bar startAppearAnimation];
@@ -241,7 +283,12 @@
 
             CGFloat width = self.coordinateAxisCellWidth * ((data.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
 
-            DTBar *bar = [DTBar bar:DTBarOrientationRight style:self.barBorderStyle];
+            NSMutableArray *models = [NSMutableArray array];
+            [models addObject:data];
+
+            DTDimensionBar *bar = [DTDimensionBar bar:DTBarOrientationRight style:self.barBorderStyle];
+            bar.dimensionModels = models;
+
             bar.frame = CGRectMake(axisX, self.barY, width, barWidth);
 
             DTDimensionBarModel *barModel = [self getBarModelByName:data.ptName];
@@ -249,6 +296,7 @@
             bar.barBorderColor = barModel.secondColor;
 
             [self.scrollMainContentView addSubview:bar];
+            [self.chartBars addObject:bar];
 
             if (self.showAnimation) {
                 [bar startAppearAnimation];
@@ -281,6 +329,15 @@
                 DTDimensionReturnModel *returnModel2 = [self layoutSecondBars:model drawSubviews:isDraw];
 
                 DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
+
+                // 将每一层级的DTDimensionModel存储在DTBar上
+                for (DTDimensionBar *bar in self.secondChartBars) {
+                    if (bar.dimensionModels.lastObject == model) {
+                        NSMutableArray *models = [NSMutableArray arrayWithArray:bar.dimensionModels];
+                        [models addObject:data];
+                        bar.dimensionModels = models;
+                    }
+                }
 
                 CGFloat labelY = self.barY - returnModel2.sectionWidth - 2 * self.coordinateAxisCellWidth;
 
@@ -341,7 +398,13 @@
 
                     CGFloat width = self.coordinateAxisCellWidth * ((model.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
 
-                    DTBar *bar = [DTBar bar:DTBarOrientationLeft style:self.barBorderStyle];
+                    NSMutableArray *models = [NSMutableArray array];
+                    [models addObject:model];
+                    [models addObject:data];
+
+                    DTDimensionBar *bar = [DTDimensionBar bar:DTBarOrientationLeft style:self.barBorderStyle];
+                    bar.dimensionModels = models;
+
                     bar.frame = CGRectMake(axisX - width, self.barY, width, barWidth);
 
                     DTDimensionBarModel *barModel = [self getBarModelByName:model.ptName];
@@ -349,6 +412,7 @@
                     bar.barBorderColor = barModel.secondColor;
 
                     [self.scrollSecondContentView addSubview:bar];
+                    [self.secondChartBars addObject:bar];
 
                     if (self.showAnimation) {
                         [bar startAppearAnimation];
@@ -388,7 +452,11 @@
 
             CGFloat width = self.coordinateAxisCellWidth * ((data.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
 
-            DTBar *bar = [DTBar bar:DTBarOrientationLeft style:self.barBorderStyle];
+            NSMutableArray *models = [NSMutableArray array];
+            [models addObject:data];
+
+            DTDimensionBar *bar = [DTDimensionBar bar:DTBarOrientationLeft style:self.barBorderStyle];
+            bar.dimensionModels = models;
             bar.frame = CGRectMake(axisX - width, self.barY, width, barWidth);
 
             DTDimensionBarModel *barModel = [self getBarModelByName:data.ptName];
@@ -396,6 +464,7 @@
             bar.barBorderColor = barModel.secondColor;
 
             [self.scrollSecondContentView addSubview:bar];
+            [self.secondChartBars addObject:bar];
 
             if (self.showAnimation) {
                 [bar startAppearAnimation];
@@ -422,6 +491,87 @@
     return model;
 }
 
+/**
+ * 处理scrollView的触摸提示
+ * @param point 触摸点
+ */
+- (void)processScrollViewTouch:(CGPoint)point {
+    if (CGRectContainsPoint(self.scrollMainContentView.frame, point)) {
+        for (DTBar *bar in self.chartBars) {
+            if ([bar isKindOfClass:[DTDimensionBar class]] && point.y >= CGRectGetMinY(bar.frame) && point.y <= CGRectGetMaxY(bar.frame)) {
+
+                DTDimensionBar *dimensionBar = (DTDimensionBar *) bar;
+
+                [self generateMessage:dimensionBar locaion:CGPointMake(point.x, CGRectGetMidY(bar.frame) - self.scrollView.contentOffset.y + self.coordinateAxisInsets.top * self.coordinateAxisCellWidth)];
+
+                break;
+            }
+        }
+
+
+    } else if (CGRectContainsPoint(self.scrollSecondContentView.frame, point)) {
+        for (DTDimensionBar *bar in self.secondChartBars) {
+            if (point.y >= CGRectGetMinY(bar.frame) && point.y <= CGRectGetMaxY(bar.frame)) {
+                [self generateMessage:bar locaion:CGPointMake(point.x, CGRectGetMidY(bar.frame) - self.scrollView.contentOffset.y + self.coordinateAxisInsets.top * self.coordinateAxisCellWidth)];
+                break;
+            }
+        }
+    }
+}
+
+/**
+ * 生成触摸提示文字
+ * @param bar 触摸点对应的DTBar
+ * @param point 触摸点转换成提示框所在的父view点
+ */
+- (void)generateMessage:(DTDimensionBar *)bar locaion:(CGPoint)point {
+
+    NSMutableString *message = [NSMutableString string];
+    [bar.dimensionModels enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(DTDimensionModel *model, NSUInteger idx, BOOL *stop) {
+        if (model.ptName) {
+            [message appendString:model.ptName];
+
+            if (idx > 0) {
+                [message appendString:@"\n"];
+            } else {
+                if (floorf(model.ptValue) != model.ptValue) {   // 有小数
+                    [message appendString:[NSString stringWithFormat:@"\n%.1f", model.ptValue]];
+                } else {
+                    [message appendString:[NSString stringWithFormat:@"\n%@", @(model.ptValue)]];
+                }
+            }
+        }
+    }];
+
+    if (message.length > 0) {
+        [self showTouchMessage:message touchPoint:point];
+    }
+}
+
+
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    CGRect frame = CGRectMake(CGRectGetMinX(self.scrollView.frame) + CGRectGetMinX(self.scrollSecondContentView.frame),
+            point.y,
+            CGRectGetWidth(self.scrollMainContentView.frame) + CGRectGetWidth(self.scrollSecondContentView.frame),
+            1);
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = frame;
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+    self.touchSelectedLine.hidden = YES;
+}
+
 
 #pragma mark - public method
 
@@ -438,6 +588,7 @@
 }
 
 - (void)drawChart:(DTDimensionReturnModel *)returnModel {
+
     self.yOffset = 0;
 
     if (!returnModel) {
@@ -458,12 +609,16 @@
     }
 
     self.scrollMainContentView.frame = frame;
+    frame.origin = self.scrollSecondContentView.frame.origin;
+    self.scrollSecondContentView.frame = frame;
 
     self.scrollView.contentSize = frame.size;
 
     [super drawChart];
 
     [self drawSecondChart];
+
+    self.scrollView.selectable = self.valueSelectable;
 }
 
 
@@ -515,6 +670,9 @@
     [self.scrollSecondContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }];
+
+    [self.chartBars removeAllObjects];
+    [self.secondChartBars removeAllObjects];
 }
 
 
@@ -621,29 +779,18 @@
 - (void)drawSecondValues {
     self.barY = self.yOffset;
 
-    [self layoutSecondBars:self.mainDimensionModel drawSubviews:YES];
-
+    [self layoutSecondBars:self.secondDimensionModel drawSubviews:YES];
 }
 
-
 - (void)drawChart {
-
     [self drawChart:nil];
 }
 
-
 - (void)drawSecondChart {
-
     if ([self drawXSecondAxisLabels]) {
 
         [self drawSecondValues];
     }
-}
-
-#pragma mark - DTBarDelegate
-
-- (void)_DTBarSelected:(DTBar *)bar {
-    DTLog(@"%@", NSStringFromChartItemValue(bar.barData.itemValue));
 }
 
 

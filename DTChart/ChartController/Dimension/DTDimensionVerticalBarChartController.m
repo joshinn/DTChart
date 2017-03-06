@@ -31,6 +31,14 @@
         _chartView = _chart;
 
         _chart.barWidth = 2;
+
+        WEAK_SELF;
+        [_chart setBarChartTouchBlock:^NSString *(NSUInteger touchIndex) {
+            if (weakSelf.dimensionBarChartControllerTouchBlock) {
+                return weakSelf.dimensionBarChartControllerTouchBlock(touchIndex);
+            }
+            return nil;
+        }];
     }
     return self;
 }
@@ -105,7 +113,7 @@
         NSDictionary *chartDic = [DTManager queryByChartId:self.chartId];
         NSDictionary *dataDic = chartDic[@"data"];
         NSArray *barData = dataDic[@"barData"];
-    
+
         [self checkBarData:barData compare:self.chart.levelLowestBarModels];
         [self cacheBarData];
 

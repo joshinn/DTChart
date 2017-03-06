@@ -11,6 +11,7 @@
 @class DTDimensionModel;
 @class DTDimensionReturnModel;
 @class DTDimensionBarModel;
+@class DTDimensionBar;
 
 @interface DTMeasureDimensionHorizontalBarChart : DTBarChart
 
@@ -44,6 +45,10 @@
  * y轴第一个柱状体偏移量，默认0，让所有柱状体居中时使用
  */
 @property(nonatomic) CGFloat yOffset;
+/**
+ * 第二度量里，存储所有柱状体
+ */
+@property(nonatomic) NSMutableArray<DTDimensionBar *> *secondChartBars;
 
 /**
  * 不绘制柱状体等view，计算第一度量，该柱状图大小，层级等信息

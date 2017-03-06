@@ -69,10 +69,15 @@
     self.model1 = [self dataFromJson:json];
 
     DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(100, 80) xAxis:55 yAxis:31];
+    chartController.valueSelectable = YES;
     chartController.chartId = @"chart9527";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;
     [chartController setItem:self.model1];
+    [chartController setDimensionBarChartControllerTouchBlock:^NSString *(NSUInteger touchIndex) {
+
+        return nil;
+    }];
 
     self.vChartController = chartController;
 
@@ -91,6 +96,7 @@
     self.model2 = [self dataFromJson:json];
 
     DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7 + 190) xAxis:55 yAxis:31];
+    chartController.valueSelectable = YES;
     chartController.chartId = @"chart9528";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;
@@ -164,6 +170,7 @@
 
 
     DTDimensionHorizontalBarChart *barChart = [[DTDimensionHorizontalBarChart alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
+    barChart.valueSelectable = YES;
 //    DTDimensionVerticalBarChart *barChart = [[DTDimensionVerticalBarChart alloc] initWithOrigin:CGPointMake(15 * 5, 262 + 15 * 7) xAxis:85 yAxis:31];
     barChart.barWidth = 2;
 
@@ -237,8 +244,17 @@
 
 
 - (void)change:(UIButton *)sender {
-    [self.hChartController setItem:self.model1];
+    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+
+    [self.hChartController setItem:[self dataFromJson:json]];
     [self.hChartController drawChart];
+
+    
 
     [self.vChartController setItem:self.model2];
     [self.vChartController drawChart];
