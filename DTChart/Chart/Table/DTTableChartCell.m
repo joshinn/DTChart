@@ -306,7 +306,17 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         }
     }];
 
-    [self.delegate chartCellHintTouchBegin:label.text index:index touch:touch];
+    BOOL isMainAxis = YES;
+    if (self.style >= DTTableChartStyleT2C1C2) {
+        NSUInteger count = self.containerViews.count / 2;
+
+        if (index >= count) {
+            isMainAxis = NO;
+            index -= count;
+        }
+    }
+
+    [self.delegate chartCellHintTouchBegin:label.text index:index isMainAxis:isMainAxis touch:touch];
 }
 
 - (void)tableLabelTouchEnd {

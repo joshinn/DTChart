@@ -7,6 +7,7 @@
 //
 
 #import "DTChartController.h"
+#import "DTTableChart.h"
 
 @class DTTableChartTitleOrderModel;
 
@@ -23,6 +24,11 @@ typedef void(^DTTableChartExpandTouchBlock)(NSString *seriesId);
 typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 
 @interface DTTableChartController : DTChartController
+/**
+ * table cell布局风格
+ * @attention 要在[- (void)setItems:listData:axisFormat:]之后设置，否则无效
+ */
+@property(nonatomic) DTTableChartStyle tableChartStyle;
 /**
  * 头view
  */

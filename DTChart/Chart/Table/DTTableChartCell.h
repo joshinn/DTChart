@@ -27,7 +27,7 @@ extern CGFloat const DTTableChartCellHeight;
  */
 - (void)chartCellOrderTouched:(BOOL)isMainAxis column:(NSUInteger)column;
 
-- (void)chartCellHintTouchBegin:(NSString *)text index:(NSUInteger)index touch:(UITouch *)touch;
+- (void)chartCellHintTouchBegin:(NSString *)text index:(NSUInteger)index isMainAxis:(BOOL)isMainAxis touch:(UITouch *)touch;
 
 - (void)chartCellHintTouchEnd;
 

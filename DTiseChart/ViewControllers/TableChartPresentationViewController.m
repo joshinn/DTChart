@@ -52,15 +52,16 @@
     [self.tableChartController.headView addSubview:label];
 
     self.listLineData = [self simulateListCommonData:100 pointCount:self.chartTitles.count mainAxis:YES];
-    self.listLineData[3].seriesId = self.listLineData[2].seriesId;
-    self.listLineData[4].seriesId = self.listLineData[2].seriesId;
-    self.listLineData[10].seriesId = self.listLineData[9].seriesId;
-    self.listLineData[11].seriesId = self.listLineData[9].seriesId;
-    self.listLineData[12].seriesId = self.listLineData[9].seriesId;
+//    [self.listLineData addObjectsFromArray:[self simulateListCommonData:100 pointCount:self.chartTitles.count mainAxis:NO]];
+//    self.listLineData[3].seriesId = self.listLineData[2].seriesId;
+//    self.listLineData[4].seriesId = self.listLineData[2].seriesId;
+//    self.listLineData[10].seriesId = self.listLineData[9].seriesId;
+//    self.listLineData[11].seriesId = self.listLineData[9].seriesId;
+//    self.listLineData[12].seriesId = self.listLineData[9].seriesId;
 
 
 //    [self.listLineData addObjectsFromArray:[self simulateListCommonData:20 pointCount:self.chartTitles.count mainAxis:NO]];
-    self.tableChartController.collapseColumn = 0;
+//    self.tableChartController.collapseColumn = 0;
     __weak typeof(self) weakSelf = self;
     [self.tableChartController setTableChartExpandTouchBlock:^(NSString *seriesId) {
         DTLog(@"to expand seriesId = %@", seriesId);
@@ -85,6 +86,7 @@
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     [self.tableChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];
+    self.tableChartController.tableChartStyle = DTTableChartStyleC1C2B3;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -7,7 +7,6 @@
 //
 
 #import "DTTableChartController.h"
-#import "DTTableChart.h"
 #import "DTTableAxisLabelData.h"
 #import "DTTableChartSingleData.h"
 #import "DTTableChartTitleOrderModel.h"
@@ -66,6 +65,12 @@
     _tableLeftOffset = tableLeftOffset;
 
     _tableChart.tableLeftOffset = _tableLeftOffset;
+}
+
+- (void)setTableChartStyle:(DTTableChartStyle)tableChartStyle {
+    _tableChartStyle = tableChartStyle;
+
+    _tableChart.tableChartStyle = tableChartStyle;
 }
 
 
