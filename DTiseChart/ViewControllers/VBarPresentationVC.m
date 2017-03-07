@@ -25,6 +25,7 @@
 
 
     self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
+    self.barChartController.preferMainYAxisDataCount = 5;
     self.barChartController.chartMode = DTChartModePresentation;
 //    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
 //    self.barChartController.chartMode = DTChartModeThumb;

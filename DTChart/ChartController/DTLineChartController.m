@@ -17,6 +17,7 @@
 
 @property(nonatomic) NSUInteger mMaxXAxisCount;
 @property(nonatomic) NSUInteger mMaxYAxisCount;
+@property(nonatomic) NSUInteger mMaxYSecondAxisCount;
 
 
 @end
@@ -71,6 +72,11 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 
 - (NSUInteger)mMaxXAxisCount {
+    if (self.preferXAxisDataCount > 0) {
+        _mMaxXAxisCount = self.preferXAxisDataCount;
+        return _mMaxXAxisCount;
+    }
+
     _mMaxXAxisCount = ChartModeThumbXAxisMaxCount;
     switch (self.chartMode) {
         case DTChartModeThumb:
@@ -84,6 +90,11 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 }
 
 - (NSUInteger)mMaxYAxisCount {
+    if (self.preferMainYAxisDataCount > 0) {
+        _mMaxYAxisCount = self.preferMainYAxisDataCount;
+        return _mMaxYAxisCount;
+    }
+
     _mMaxYAxisCount = ChartModeThumbYAxisCount;
     switch (self.chartMode) {
         case DTChartModeThumb:
@@ -97,6 +108,24 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     return _mMaxYAxisCount;
 }
 
+- (NSUInteger)mMaxYSecondAxisCount {
+    if (self.preferSecondYAxisDataCount > 0) {
+        _mMaxYSecondAxisCount = self.preferSecondYAxisDataCount;
+        return _mMaxYSecondAxisCount;
+    }
+
+    _mMaxYSecondAxisCount = ChartModeThumbYAxisCount;
+    switch (self.chartMode) {
+        case DTChartModeThumb:
+            _mMaxYSecondAxisCount = ChartModeThumbYAxisCount;
+            break;
+        case DTChartModePresentation:
+            _mMaxYSecondAxisCount = ChartModePresentationYAxisCount;
+            break;
+    }
+
+    return _mMaxYSecondAxisCount;
+}
 
 #pragma mark - private method
 
@@ -204,7 +233,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
 - (void)processSecondAxisLabelDataAndLines:(NSArray<DTListCommonData *> *)listData {
 
-    NSUInteger maxYAxisCount = self.mMaxYAxisCount;
+    NSUInteger maxYAxisCount = self.mMaxYSecondAxisCount;
 
     CGFloat maxY = 0;
 

@@ -30,6 +30,10 @@
 
         _chartMode = DTChartModeThumb;
         _showAnimation = YES;
+
+        _preferMainYAxisDataCount = 0;
+        _preferSecondYAxisDataCount = 0;
+        _preferXAxisDataCount = 0;
     }
     return self;
 }

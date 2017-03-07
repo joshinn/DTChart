@@ -80,6 +80,18 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
  */
 @property(nonatomic, readonly) NSUInteger secondYAxisDataCount;
 /**
+ * 自定义y主轴数据量
+ */
+@property(nonatomic) NSUInteger preferMainYAxisDataCount;
+/**
+ * 自定义y副轴数据量
+ */
+@property(nonatomic) NSUInteger preferSecondYAxisDataCount;
+/**
+ * 自定义x轴数据量
+ */
+@property(nonatomic) NSUInteger preferXAxisDataCount;
+/**
  * 主轴颜色回调
  */
 @property(nonatomic, copy) MainAxisColorsCompletionBlock mainAxisColorsCompletionBlock;

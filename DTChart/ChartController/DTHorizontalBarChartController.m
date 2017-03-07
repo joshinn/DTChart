@@ -60,6 +60,11 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 }
 
 - (NSUInteger)mMaxXAxisCount {
+    if(self.preferXAxisDataCount > 0){
+        _mMaxXAxisCount = self.preferXAxisDataCount;
+        return _mMaxXAxisCount;
+    }
+
     _mMaxXAxisCount = ChartModeThumbXAxisCount;
     switch (self.chartMode) {
         case DTChartModeThumb:
@@ -74,6 +79,11 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 }
 
 - (NSUInteger)mMaxYAxisCount:(NSUInteger)valuesCount {
+    if(self.preferMainYAxisDataCount > 0){
+        _mMaxYAxisCount = self.preferMainYAxisDataCount;
+        return _mMaxYAxisCount;
+    }
+
     _mMaxYAxisCount = ChartModeThumbYAxisCount;
     switch (self.chartMode) {
         case DTChartModeThumb: {
