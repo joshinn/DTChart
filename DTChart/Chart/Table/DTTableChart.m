@@ -39,7 +39,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     NSArray *widths;
     switch (chartStyle) {
         case DTTableChartStyleC1C2: {
-            widths = @[@{@"label": @170}, @{@"gap": @30}, @{@"label": @960}, @{@"gap": @10}, @{@"label": @960}];
+            widths = @[@{@"label": @85}, @{@"gap": @15}, @{@"label": @480}, @{@"gap": @5}, @{@"label": @480}];
         }
             break;
 
@@ -56,7 +56,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
         }
             break;
         case DTTableChartStyleC1C3: {
-            widths = @[@{@"label": @170}, @{@"gap": @50}, @{@"label": @630}, @{@"gap": @10}, @{@"label": @630}, @{@"gap": @10}, @{@"label": @630}];
+            widths = @[@{@"label": @85}, @{@"gap": @25}, @{@"label": @315}, @{@"gap": @5}, @{@"label": @315}, @{@"gap": @5}, @{@"label": @315}];
         }
             break;
         case DTTableChartStyleC1C3B1: {
@@ -77,9 +77,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleC1C4: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10},
-                    @{@"label": @480}, @{@"gap": @10}, @{@"label": @480}, @{@"gap": @10},
-                    @{@"label": @480}, @{@"gap": @10}, @{@"label": @480}];
+                    @{@"label": @85}, @{@"gap": @5},
+                    @{@"label": @240}, @{@"gap": @5}, @{@"label": @240}, @{@"gap": @5},
+                    @{@"label": @240}, @{@"gap": @5}, @{@"label": @240}];
         }
             break;
         case DTTableChartStyleC1C4B1: {
@@ -91,9 +91,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleC1C5: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10},
-                    @{@"label": @380}, @{@"gap": @10}, @{@"label": @380}, @{@"gap": @10}, @{@"label": @380}, @{@"gap": @10},
-                    @{@"label": @380}, @{@"gap": @10}, @{@"label": @380}];
+                    @{@"label": @85}, @{@"gap": @5},
+                    @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}, @{@"gap": @5},
+                    @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}];
         }
             break;
         case DTTableChartStyleC1C5B1: {
@@ -133,26 +133,26 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleC1C7: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10},
-                    @{@"label": @270}, @{@"gap": @10}, @{@"label": @270}, @{@"gap": @10}, @{@"label": @270}, @{@"gap": @10},
-                    @{@"label": @270}, @{@"gap": @10}, @{@"label": @270}, @{@"gap": @10}, @{@"label": @270}, @{@"gap": @10},
-                    @{@"label": @270}];
+                    @{@"label": @85}, @{@"gap": @5},
+                    @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5},
+                    @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5},
+                    @{@"label": @135}];
         }
             break;
 
         case DTTableChartStyleC1C8: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10},
-                    @{@"label": @230}, @{@"gap": @10}, @{@"label": @230}, @{@"gap": @10}, @{@"label": @230}, @{@"gap": @10},
-                    @{@"label": @230}, @{@"gap": @10}, @{@"label": @230}, @{@"gap": @10}, @{@"label": @230}, @{@"gap": @10},
-                    @{@"label": @230}, @{@"gap": @10}, @{@"label": @230}];
+                    @{@"label": @85}, @{@"gap": @5},
+                    @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5},
+                    @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5},
+                    @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}];
         }
             break;
         case DTTableChartStyleC1C9: {
-            widths = @[@{@"label": @170}, @{@"gap": @10},
-                    @{@"label": @200}, @{@"gap": @10}, @{@"label": @200}, @{@"gap": @10}, @{@"label": @200}, @{@"gap": @10},
-                    @{@"label": @200}, @{@"gap": @10}, @{@"label": @200}, @{@"gap": @10}, @{@"label": @200}, @{@"gap": @10},
-                    @{@"label": @200}, @{@"gap": @10}, @{@"label": @200}, @{@"gap": @10}, @{@"label": @200}];
+            widths = @[@{@"label": @85}, @{@"gap": @5},
+                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
+                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
+                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}];
         }
             break;
         case DTTableChartStyleC1C1C5: {
@@ -191,26 +191,26 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleC1C1C31: {
             widths = @[
-                    @{@"label": @120}, @{@"gap": @10},
-                    @{@"label": @140}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
-                    @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10}, @{@"label": @50}, @{@"gap": @10},
+                    @{@"label": @60}, @{@"gap": @5},
+                    @{@"label": @70}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
+                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
                     @{@"label": @50}];
         }
             break;
         case DTTableChartStyleT2C1C2: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @50}, @{@"label": @410}, @{@"gap": @10}, @{@"label": @410},
-                    @{@"gap": @30},
-                    @{@"label": @170}, @{@"gap": @50}, @{@"label": @410}, @{@"gap": @10}, @{@"label": @410}];
+                    @{@"label": @85}, @{@"gap": @25}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
+                    @{@"gap": @15},
+                    @{@"label": @85}, @{@"gap": @25}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
         }
             break;
         case DTTableChartStyleT2C1C2B1: {
@@ -222,9 +222,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleT2C1C3: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10}, @{@"label": @270}, @{@"gap": @30}, @{@"label": @270}, @{@"gap": @30}, @{@"label": @270},
-                    @{@"gap": @30},
-                    @{@"label": @170}, @{@"gap": @10}, @{@"label": @270}, @{@"gap": @30}, @{@"label": @270}, @{@"gap": @30}, @{@"label": @270}];
+                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135},
+                    @{@"gap": @15},
+                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135}];
         }
             break;
         case DTTableChartStyleT2C1C3B1: {
@@ -236,9 +236,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleT2C1C4: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10}, @{@"label": @210}, @{@"gap": @10}, @{@"label": @210}, @{@"gap": @10}, @{@"label": @210}, @{@"gap": @10}, @{@"label": @210},
-                    @{@"gap": @30},
-                    @{@"label": @170}, @{@"gap": @10}, @{@"label": @210}, @{@"gap": @10}, @{@"label": @210}, @{@"gap": @10}, @{@"label": @210}, @{@"gap": @10}, @{@"label": @210}];
+                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105},
+                    @{@"gap": @15},
+                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}];
         }
             break;
         default: {

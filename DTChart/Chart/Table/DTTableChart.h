@@ -98,7 +98,7 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  * @param chartStyle 预设表格风格
  * @return 宽度
  *
- * @attention 宽度是px，需除以2
+ * @attention 宽度是dp
  */
 + (NSArray *)presetTableChartCellWidth:(DTTableChartStyle)chartStyle;
 

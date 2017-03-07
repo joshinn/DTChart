@@ -109,7 +109,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
     for (NSDictionary *dictionary in widths) {
         if (dictionary[@"label"]) {
             NSNumber *number = dictionary[@"label"];
-            CGFloat width = number.floatValue / 2;
+            CGFloat width = number.floatValue;
 
             UIView *container = [UIView new];
             container.frame = CGRectMake(x, 0, width, DTTableChartCellHeight);
@@ -141,7 +141,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
         } else if (dictionary[@"gap"]) {
             NSNumber *number = dictionary[@"gap"];
-            x += number.floatValue / 2;
+            x += number.floatValue;
         }
     }
     return list;
