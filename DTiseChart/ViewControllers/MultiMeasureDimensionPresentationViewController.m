@@ -34,7 +34,7 @@
     // Do any additional setup after loading the view.
     UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 48)];
     [changeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
+    [changeBtn setTitle:@"改模式" forState:UIControlStateNormal];
     [changeBtn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:changeBtn];
 
@@ -51,17 +51,24 @@
 - (void)chartControllerDraw {
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+    NSString *path = [bundle pathForResource:@"data4" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model = [self dataFromJson:json];
+    DTDimensionModel *model1 = [self dataFromJson:json];
+
+    path = [bundle pathForResource:@"data4-1" ofType:@"json"];
+    data = [NSData dataWithContentsOfFile:path];
+    json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model2 = [self dataFromJson:json];
+
 
     DTMeasureDimensionHorizontalBarChartController *chartController = [[DTMeasureDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
+//    chartController.barChartStyle = DTBarChartStyleHeap;
     [self.view addSubview:chartController.chartView];
     chartController.chartId = @"1991";
     chartController.valueSelectable = YES;
-    [chartController setMainItem:self.model secondItem:self.model];
+    [chartController setMainItem:model1 secondItem:model2];
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;
 
@@ -178,6 +185,12 @@
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model = [self dataFromJson:json];
+
+    if(self.chartController.barChartStyle == DTBarChartStyleHeap){
+        self.chartController.barChartStyle = DTBarChartStyleStartingLine;
+    } else if (self.chartController.barChartStyle == DTBarChartStyleStartingLine){
+        self.chartController.barChartStyle = DTBarChartStyleHeap;
+    }
 
     [self.chartController setMainItem:self.model secondItem:self.model];
     [self.chartController drawChart];

@@ -15,6 +15,8 @@
 #import "DTDimensionBar.h"
 #import "DTChartToastView.h"
 #import "DTChartScrollView.h"
+#import "DTDimensionSectionLine.h"
+#import "DTDimensionHeapBar.h"
 
 @interface DTMeasureDimensionHorizontalBarChart ()
 
@@ -105,13 +107,550 @@
 
 #pragma mark - private method
 
+
+#pragma mark - DTBarChartStyleHeap
+
+/**
+ * 第一度量
+ * 遍历数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图，会区别不同层级
+ * @param data 数据源
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
+ */
+- (DTDimensionReturnModel *)layoutHeapMainBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+    if (data.ptListValue.count > 0 && data.ptListValue.firstObject.ptListValue.count > 0) {
+        return [self layoutMainHighLevelHeapBars:data drawSubviews:isDraw];
+    } else {
+        return [self layoutMainLowLevelHeapBars:data drawSubviews:isDraw];
+    }
+}
+
+/**
+ * 第二度量
+ * 遍历数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图，会区别不同层级
+ * @param data 数据源
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
+ */
+- (DTDimensionReturnModel *)layoutHeapSecondBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+    if (data.ptListValue.count > 0 && data.ptListValue.firstObject.ptListValue.count > 0) {
+        return [self layoutSecondHighLevelHeapBars:data drawSubviews:isDraw];
+    } else {
+        return [self layoutSecondLowLevelHeapBars:data drawSubviews:isDraw];
+    }
+}
+
+
+/**
+ * 遍历层级大于2的数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图
+ * @param data 数据源
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
+ */
+- (DTDimensionReturnModel *)layoutMainHighLevelHeapBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+    CGFloat axisYMax = CGRectGetWidth(self.scrollMainContentView.bounds);
+    CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
+
+    DTDimensionReturnModel *returnModel = [[DTDimensionReturnModel alloc] init];
+    returnModel.level = 1;
+    returnModel.sectionWidth = self.barY;
+
+    if (data.ptListValue.count > 0) {
+
+        BOOL sectionStart = YES;
+
+        for (DTDimensionModel *model in data.ptListValue) {
+            if (model.ptListValue.count > 0) {
+                DTDimensionReturnModel *returnModel2 = [self layoutMainHighLevelHeapBars:model drawSubviews:isDraw];
+
+                if (returnModel2.level > 0) {
+
+                    // 将每一层级的DTDimensionModel存储在DTBar上
+                    for (DTBar *bar in self.chartBars) {
+                        if ([bar isKindOfClass:[DTDimensionBar class]]) {
+                            DTDimensionBar *dimensionBar = (DTDimensionBar *) bar;
+
+                            if (dimensionBar.dimensionModels.lastObject == model) {
+                                NSMutableArray *models = [NSMutableArray arrayWithArray:dimensionBar.dimensionModels];
+                                [models addObject:data];
+                                dimensionBar.dimensionModels = models;
+                            }
+                        }
+                    }
+
+                    CGFloat labelY = self.barY - returnModel2.sectionWidth - 2 * self.coordinateAxisCellWidth;
+                    CGFloat labelX = (self.coordinateAxisInsets.left - returnModel2.level - 1) * self.coordinateAxisCellWidth;
+
+                    if (isDraw) {
+
+                        CGFloat height;
+                        if (returnModel2.level > 1) {
+                            height = returnModel2.sectionWidth;
+                        } else {
+                            height = returnModel2.sectionWidth + self.coordinateAxisCellWidth;
+                        }
+
+                        DTChartLabel *titleLabel = [DTChartLabel chartLabel];
+                        titleLabel.adjustsFontSizeToFitWidth = NO;
+                        titleLabel.font = [UIFont systemFontOfSize:12];
+                        titleLabel.textAlignment = NSTextAlignmentCenter;
+                        titleLabel.text = model.ptName;
+
+                        titleLabel.frame = CGRectMake(labelX, labelY, self.coordinateAxisCellWidth, height);
+
+                        [self.scrollView addSubview:titleLabel];
+                    }
+
+                    if (sectionStart) {
+                        returnModel.level = returnModel2.level + 1;
+                        sectionStart = NO;
+                    } else {
+                        if (returnModel2.level >= 0) {
+
+                            if (isDraw) {
+                                CGFloat y = labelY - 1 - self.coordinateAxisCellWidth;
+                                CGFloat x = 0;
+
+                                CGFloat toX = axisYMax - (8 - returnModel2.level * 2) * self.coordinateAxisCellWidth;
+                                CGFloat width = toX - x;
+
+                                DTDimensionSectionLine *sectionLine = [DTDimensionSectionLine layer];
+                                sectionLine.frame = CGRectMake(x, y, width, 2);
+                                [self.scrollMainContentView.layer addSublayer:sectionLine];
+
+                            }
+                        }
+                    }
+
+                    if (returnModel2.level == 1) {
+                        self.barY += self.coordinateAxisCellWidth;
+                    }
+
+                } else {    // 加载柱状体
+
+                    CGFloat sum = 0;
+                    for (DTDimensionModel *item in model.ptListValue) {
+                        sum += item.ptValue;
+
+                        if (!isDraw) {
+                            BOOL exist = NO;
+                            for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
+                                if ([obj.title isEqualToString:item.ptName]) {
+                                    exist = YES;
+                                    break;
+                                }
+                            }
+
+                            if (!exist) {
+                                DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
+                                barModel.title = item.ptName;
+                                barModel.color = [self.colorManager getColor];
+                                barModel.secondColor = [self.colorManager getLightColor:barModel.color];
+                                [self.levelLowestBarModels addObject:barModel];
+                            }
+                        }
+                    }
+
+                    if (sum > self.mainAxisMaxX) {
+                        self.mainAxisMaxX = sum;
+                    }
+
+
+                    if (isDraw) {
+
+                        // 柱状体对应坐标轴标签
+                        DTChartLabel *titleLabel = [DTChartLabel chartLabel];
+                        titleLabel.adjustsFontSizeToFitWidth = NO;
+                        titleLabel.font = [UIFont systemFontOfSize:12];
+                        titleLabel.textAlignment = NSTextAlignmentCenter;
+                        titleLabel.text = model.ptName;
+
+                        CGRect bounding = [titleLabel.text boundingRectWithSize:CGSizeMake(0, self.coordinateAxisCellWidth)
+                                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                                     attributes:@{NSFontAttributeName: titleLabel.font}
+                                                                        context:nil];
+                        CGFloat height = MAX(CGRectGetHeight(bounding), barWidth);
+                        CGFloat labelY = self.barY + self.coordinateAxisCellWidth * self.coordinateAxisInsets.top;
+                        CGFloat labelX = (self.coordinateAxisInsets.left - returnModel2.level - 1) * self.coordinateAxisCellWidth;
+                        titleLabel.frame = CGRectMake(labelX, labelY + barWidth / 2 - height / 2, self.coordinateAxisCellWidth, height);
+                        titleLabel.textColor = DTColorGray;
+                        [self.scrollView addSubview:titleLabel];
+
+                        DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+                        DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+                        NSMutableArray *models = [NSMutableArray array];
+                        [models addObject:model];
+                        [models addObject:data];
+
+                        DTDimensionHeapBar *bar = [DTDimensionHeapBar heapBar:DTBarOrientationRight];
+                        bar.dimensionModels = models;
+
+                        bar.frame = CGRectMake(CGRectGetMinX(self.contentView.bounds), self.barY, 0, barWidth);
+
+                        for (NSUInteger i = 0; i < model.ptListValue.count; ++i) {
+                            DTDimensionModel *item = model.ptListValue[i];
+                            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+
+                            DTDimensionBarModel *barModel = [self getBarModelByName:item.ptName];
+                            [bar appendData:item barLength:itemLength barColor:barModel.color needLayout:i == model.ptListValue.count - 1];
+                        }
+
+                        [self.scrollMainContentView addSubview:bar];
+                        [self.chartBars addObject:bar];
+
+                        if (self.showAnimation) {
+                            [bar startAppearAnimation];
+                        }
+                    }
+
+                    self.barY += barWidth + self.coordinateAxisCellWidth;
+                }
+
+
+            } else {
+
+                returnModel.level = 0;
+
+            }
+        }
+        returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
+        return returnModel;
+
+    }
+
+    returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
+    return returnModel;
+}
+
+/**
+ * 遍历层级小于等于2的数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图
+ * @param data 数据源
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
+ */
+- (DTDimensionReturnModel *)layoutMainLowLevelHeapBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+    CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
+
+    DTDimensionReturnModel *returnModel = [[DTDimensionReturnModel alloc] init];
+    returnModel.level = 1;
+    returnModel.sectionWidth = self.barY;
+
+
+    CGFloat sum = 0;
+    for (DTDimensionModel *item in data.ptListValue) {
+        sum += item.ptValue;
+
+        if (!isDraw) {
+            BOOL exist = NO;
+            for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
+                if ([obj.title isEqualToString:item.ptName]) {
+                    exist = YES;
+                    break;
+                }
+            }
+
+            if (!exist) {
+                DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
+                barModel.title = item.ptName;
+                barModel.color = [self.colorManager getColor];
+                barModel.secondColor = [self.colorManager getLightColor:barModel.color];
+                [self.levelLowestBarModels addObject:barModel];
+            }
+        }
+    }
+
+    if (sum > self.mainAxisMaxX) {
+        self.mainAxisMaxX = sum;
+    }
+
+
+    if (isDraw) {
+        // 柱状体对应坐标轴标签
+        DTChartLabel *titleLabel = [DTChartLabel chartLabel];
+        titleLabel.adjustsFontSizeToFitWidth = NO;
+        titleLabel.font = [UIFont systemFontOfSize:12];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.text = data.ptName;
+
+        CGRect bounding = [titleLabel.text boundingRectWithSize:CGSizeMake(0, self.coordinateAxisCellWidth)
+                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                     attributes:@{NSFontAttributeName: titleLabel.font}
+                                                        context:nil];
+        CGFloat height = MAX(CGRectGetHeight(bounding), barWidth);
+        CGFloat labelY = self.barY + self.coordinateAxisCellWidth * self.coordinateAxisInsets.top;
+        CGFloat labelX = ((NSInteger) self.coordinateAxisInsets.left - returnModel.level) * self.coordinateAxisCellWidth;
+        titleLabel.frame = CGRectMake(labelX, labelY + barWidth / 2 - height / 2, self.coordinateAxisCellWidth, height);
+        titleLabel.textColor = DTColorGray;
+        [self.scrollView addSubview:titleLabel];
+
+
+        DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+        DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+        NSMutableArray *models = [NSMutableArray array];
+        [models addObject:data];
+
+        DTDimensionHeapBar *bar = [DTDimensionHeapBar heapBar:DTBarOrientationRight];
+        bar.dimensionModels = models;
+
+        bar.frame = CGRectMake(CGRectGetMinX(self.contentView.bounds), self.barY, 0, barWidth);
+
+        for (NSUInteger i = 0; i < data.ptListValue.count; ++i) {
+            DTDimensionModel *item = data.ptListValue[i];
+            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+
+            DTDimensionBarModel *barModel = [self getBarModelByName:item.ptName];
+            [bar appendData:item barLength:itemLength barColor:barModel.color needLayout:i == data.ptListValue.count - 1];
+        }
+        [self.scrollMainContentView addSubview:bar];
+        [self.chartBars addObject:bar];
+
+        if (self.showAnimation) {
+            [bar startAppearAnimation];
+        }
+    }
+
+    self.barY += barWidth + self.coordinateAxisCellWidth;
+
+    returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
+    return returnModel;
+}
+
+/**
+ * 第一度量
+ * 遍历层级大于2的数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图
+ * @param data 数据源
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
+ */
+- (DTDimensionReturnModel *)layoutSecondHighLevelHeapBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+    CGFloat axisYMax = CGRectGetWidth(self.scrollSecondContentView.bounds);
+    CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
+
+    DTDimensionReturnModel *returnModel = [[DTDimensionReturnModel alloc] init];
+    returnModel.level = 1;
+    returnModel.sectionWidth = self.barY;
+
+    if (data.ptListValue.count > 0) {
+
+        BOOL sectionStart = YES;
+
+        for (DTDimensionModel *model in data.ptListValue) {
+            if (model.ptListValue.count > 0) {
+                DTDimensionReturnModel *returnModel2 = [self layoutSecondHighLevelHeapBars:model drawSubviews:isDraw];
+
+                if (returnModel2.level > 0) {
+
+                    // 将每一层级的DTDimensionModel存储在DTBar上
+                    for (DTBar *bar in self.chartBars) {
+                        if ([bar isKindOfClass:[DTDimensionBar class]]) {
+                            DTDimensionBar *dimensionBar = (DTDimensionBar *) bar;
+
+                            if (dimensionBar.dimensionModels.lastObject == model) {
+                                NSMutableArray *models = [NSMutableArray arrayWithArray:dimensionBar.dimensionModels];
+                                [models addObject:data];
+                                dimensionBar.dimensionModels = models;
+                            }
+                        }
+                    }
+
+                    CGFloat labelY = self.barY - returnModel2.sectionWidth - 2 * self.coordinateAxisCellWidth;
+
+                    if (sectionStart) {
+                        returnModel.level = returnModel2.level + 1;
+                        sectionStart = NO;
+                    } else {
+                        if (returnModel2.level >= 0) {
+
+                            if (isDraw) {
+                                CGFloat y = labelY - 1 - self.coordinateAxisCellWidth;
+                                CGFloat x = axisYMax;
+
+                                CGFloat toX = (8 - returnModel2.level * 2) * self.coordinateAxisCellWidth;
+                                CGFloat width = ABS(toX - x);
+
+                                DTDimensionSectionLine *sectionLine = [DTDimensionSectionLine layer];
+                                sectionLine.frame = CGRectMake(x - width, y, width, 2);
+                                [self.scrollSecondContentView.layer addSublayer:sectionLine];
+
+                            }
+                        }
+                    }
+
+                    if (returnModel2.level == 1) {
+                        self.barY += self.coordinateAxisCellWidth;
+                    }
+
+                } else {    // 加载柱状体
+
+                    CGFloat sum = 0;
+                    for (DTDimensionModel *item in model.ptListValue) {
+                        sum += item.ptValue;
+
+                        if (!isDraw) {
+                            BOOL exist = NO;
+                            for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
+                                if ([obj.title isEqualToString:item.ptName]) {
+                                    exist = YES;
+                                    break;
+                                }
+                            }
+
+                            if (!exist) {
+                                DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
+                                barModel.title = item.ptName;
+                                barModel.color = [self.colorManager getColor];
+                                barModel.secondColor = [self.colorManager getLightColor:barModel.color];
+                                [self.levelLowestBarModels addObject:barModel];
+                            }
+                        }
+                    }
+
+                    if (sum > self.secondAxisMaxX) {
+                        self.secondAxisMaxX = sum;
+                    }
+
+
+                    if (isDraw) {
+
+                        // 柱状体
+                        DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+                        DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+                        NSMutableArray *models = [NSMutableArray array];
+                        [models addObject:model];
+                        [models addObject:data];
+
+                        DTDimensionHeapBar *bar = [DTDimensionHeapBar heapBar:DTBarOrientationLeft];
+                        bar.dimensionModels = models;
+
+                        bar.frame = CGRectMake(axisYMax, self.barY, 0, barWidth);
+
+                        for (NSUInteger i = 0; i < model.ptListValue.count; ++i) {
+                            DTDimensionModel *item = model.ptListValue[i];
+                            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+
+                            DTDimensionBarModel *barModel = [self getBarModelByName:item.ptName];
+                            [bar appendData:item barLength:itemLength barColor:barModel.color needLayout:i == model.ptListValue.count - 1];
+                        }
+
+                        [self.scrollSecondContentView addSubview:bar];
+                        [self.secondChartBars addObject:bar];
+
+                        if (self.showAnimation) {
+                            [bar startAppearAnimation];
+                        }
+                    }
+
+                    self.barY += barWidth + self.coordinateAxisCellWidth;
+                }
+
+
+            } else {
+
+                returnModel.level = 0;
+
+            }
+        }
+        returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
+        return returnModel;
+
+    }
+
+    returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
+    return returnModel;
+}
+
+/**
+ * 第二度量
+ * 遍历层级小于等于2的数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图
+ * @param data 数据源
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
+ */
+- (DTDimensionReturnModel *)layoutSecondLowLevelHeapBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+    CGFloat axisYMax = CGRectGetWidth(self.scrollSecondContentView.bounds);
+    CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
+
+    DTDimensionReturnModel *returnModel = [[DTDimensionReturnModel alloc] init];
+    returnModel.level = 1;
+    returnModel.sectionWidth = self.barY;
+
+
+    CGFloat sum = 0;
+    for (DTDimensionModel *item in data.ptListValue) {
+        sum += item.ptValue;
+
+        if (!isDraw) {
+            BOOL exist = NO;
+            for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
+                if ([obj.title isEqualToString:item.ptName]) {
+                    exist = YES;
+                    break;
+                }
+            }
+
+            if (!exist) {
+                DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
+                barModel.title = item.ptName;
+                barModel.color = [self.colorManager getColor];
+                barModel.secondColor = [self.colorManager getLightColor:barModel.color];
+                [self.levelLowestBarModels addObject:barModel];
+            }
+        }
+    }
+
+    if (sum > self.secondAxisMaxX) {
+        self.secondAxisMaxX = sum;
+    }
+
+
+    if (isDraw) {
+
+        // 柱状体
+        DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
+        DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+
+        NSMutableArray *models = [NSMutableArray array];
+        [models addObject:data];
+
+        DTDimensionHeapBar *bar = [DTDimensionHeapBar heapBar:DTBarOrientationLeft];
+        bar.dimensionModels = models;
+
+        bar.frame = CGRectMake(axisYMax, self.barY, 0, barWidth);
+
+        for (NSUInteger i = 0; i < data.ptListValue.count; ++i) {
+            DTDimensionModel *item = data.ptListValue[i];
+            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+
+            DTDimensionBarModel *barModel = [self getBarModelByName:item.ptName];
+            [bar appendData:item barLength:itemLength barColor:barModel.color needLayout:i == data.ptListValue.count - 1];
+        }
+        [self.scrollSecondContentView addSubview:bar];
+        [self.secondChartBars addObject:bar];
+
+        if (self.showAnimation) {
+            [bar startAppearAnimation];
+        }
+    }
+
+    self.barY += barWidth + self.coordinateAxisCellWidth;
+
+    returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
+    return returnModel;
+}
+
+
+#pragma mark - DTBarChartStyleStartingLine
+
 /**
  * 遍历数据源所有值，绘制柱状体和坐标轴标签
  * @param data 数据源
  * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
  * @return 遍历结果
  */
-- (DTDimensionReturnModel *)layoutMainBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+- (DTDimensionReturnModel *)layoutStartingLineMainBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
 
     CGFloat axisX = 0;
     CGFloat axisYMax = CGRectGetWidth(self.contentView.bounds) / 2;
@@ -127,7 +666,7 @@
 
         for (DTDimensionModel *model in data.ptListValue) {
             if (model.ptListValue.count > 0) {
-                DTDimensionReturnModel *returnModel2 = [self layoutMainBars:model drawSubviews:isDraw];
+                DTDimensionReturnModel *returnModel2 = [self layoutStartingLineMainBars:model drawSubviews:isDraw];
 
                 DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
 
@@ -183,10 +722,10 @@
                             CGFloat toX = axisYMax - (8 - returnModel2.level * 2) * self.coordinateAxisCellWidth;
                             CGFloat width = toX - x;
 
-                            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, 2)];
-                            line.backgroundColor = DTRGBColor(0x7b7b7b, 1);
+                            DTDimensionSectionLine *sectionLine = [DTDimensionSectionLine layer];
+                            sectionLine.frame = CGRectMake(x, y, width, 2);
 
-                            [self.scrollMainContentView addSubview:line];
+                            [self.scrollMainContentView.layer addSublayer:sectionLine];
                         }
                     }
                 }
@@ -199,13 +738,13 @@
 
 
                 if (!isDraw) {
-                    __block BOOL exist = NO;
-                    [self.levelLowestBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
+                    BOOL exist = NO;
+                    for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
                         if ([obj.title isEqualToString:model.ptName]) {
                             exist = YES;
-                            *stop = YES;
+                            break;
                         }
-                    }];
+                    }
 
                     if (!exist) {
                         DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
@@ -260,13 +799,15 @@
     } else {
 
         if (!isDraw) {
-            __block BOOL exist = NO;
-            [self.levelLowestBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
+
+            BOOL exist = NO;
+            for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
                 if ([obj.title isEqualToString:data.ptName]) {
                     exist = YES;
-                    *stop = YES;
+                    break;
                 }
-            }];
+            }
+
 
             if (!exist) {
                 DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
@@ -310,7 +851,7 @@
     return returnModel;
 }
 
-- (DTDimensionReturnModel *)layoutSecondBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
+- (DTDimensionReturnModel *)layoutStartingLineSecondBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
 
     CGFloat axisX = CGRectGetMaxX(self.scrollSecondContentView.bounds);
     CGFloat axisYMax = CGRectGetWidth(self.contentView.bounds) / 2;
@@ -326,7 +867,7 @@
 
         for (DTDimensionModel *model in data.ptListValue) {
             if (model.ptListValue.count > 0) {
-                DTDimensionReturnModel *returnModel2 = [self layoutSecondBars:model drawSubviews:isDraw];
+                DTDimensionReturnModel *returnModel2 = [self layoutStartingLineSecondBars:model drawSubviews:isDraw];
 
                 DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
 
@@ -354,10 +895,10 @@
                             CGFloat width = axisYMax - (8 - returnModel2.level * 2) * self.coordinateAxisCellWidth;
                             x -= width;
 
-                            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, 2)];
-                            line.backgroundColor = DTRGBColor(0x7b7b7b, 1);
+                            DTDimensionSectionLine *sectionLine = [DTDimensionSectionLine layer];
+                            sectionLine.frame = CGRectMake(x, y, width, 2);
 
-                            [self.scrollSecondContentView addSubview:line];
+                            [self.scrollSecondContentView.layer addSublayer:sectionLine];
                         }
                     }
                 }
@@ -370,13 +911,15 @@
 
 
                 if (!isDraw) {
-                    __block BOOL exist = NO;
-                    [self.levelLowestBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
+
+                    BOOL exist = NO;
+                    for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
                         if ([obj.title isEqualToString:model.ptName]) {
                             exist = YES;
-                            *stop = YES;
+                            break;
                         }
-                    }];
+                    }
+
 
                     if (!exist) {
                         DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
@@ -429,13 +972,13 @@
     } else {
 
         if (!isDraw) {
-            __block BOOL exist = NO;
-            [self.levelLowestBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
+            BOOL exist = NO;
+            for (DTDimensionBarModel *obj in self.levelLowestBarModels) {
                 if ([obj.title isEqualToString:data.ptName]) {
                     exist = YES;
-                    *stop = YES;
+                    break;
                 }
-            }];
+            }
 
             if (!exist) {
                 DTDimensionBarModel *barModel = [[DTDimensionBarModel alloc] init];
@@ -527,21 +1070,40 @@
 - (void)generateMessage:(DTDimensionBar *)bar locaion:(CGPoint)point {
 
     NSMutableString *message = [NSMutableString string];
-    [bar.dimensionModels enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(DTDimensionModel *model, NSUInteger idx, BOOL *stop) {
-        if (model.ptName) {
-            [message appendString:model.ptName];
+    if (self.barChartStyle == DTBarChartStyleStartingLine) {
+        [bar.dimensionModels enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(DTDimensionModel *model, NSUInteger idx, BOOL *stop) {
+            if (model.ptName) {
+                [message appendString:model.ptName];
 
-            if (idx > 0) {
-                [message appendString:@"\n"];
-            } else {
-                if (floorf(model.ptValue) != model.ptValue) {   // 有小数
-                    [message appendString:[NSString stringWithFormat:@"\n%.1f", model.ptValue]];
+                if (idx > 0) {
+                    [message appendString:@"\n"];
                 } else {
-                    [message appendString:[NSString stringWithFormat:@"\n%@", @(model.ptValue)]];
+                    if (floorf(model.ptValue) != model.ptValue) {   // 有小数
+                        [message appendString:[NSString stringWithFormat:@"\n%.1f", model.ptValue]];
+                    } else {
+                        [message appendString:[NSString stringWithFormat:@"\n%@", @(model.ptValue)]];
+                    }
+
                 }
             }
-        }
-    }];
+        }];
+    } else if (self.barChartStyle == DTBarChartStyleHeap) {
+        DTDimensionModel *model = bar.dimensionModels.firstObject;
+        [model.ptListValue enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(DTDimensionModel *obj, NSUInteger idx, BOOL *stop) {
+            if (obj.ptName) {
+                [message appendString:obj.ptName];
+                if (floorf(obj.ptValue) != obj.ptValue) {   // 有小数
+                    [message appendString:[NSString stringWithFormat:@"\n%.1f", obj.ptValue]];
+                } else {
+                    [message appendString:[NSString stringWithFormat:@"\n%@", @(obj.ptValue)]];
+                }
+
+                if (idx > 0) {
+                    [message appendString:@"\n"];
+                }
+            }
+        }];
+    }
 
     if (message.length > 0) {
         [self showTouchMessage:message touchPoint:point];
@@ -579,12 +1141,24 @@
     [self.levelLowestBarModels removeAllObjects];
     self.barY = 0;
     self.mainAxisMaxX = 0;
-    return [self layoutMainBars:data drawSubviews:NO];
+    if (self.barChartStyle == DTBarChartStyleStartingLine) {
+        return [self layoutStartingLineMainBars:data drawSubviews:NO];
+    } else if (self.barChartStyle == DTBarChartStyleHeap) {
+        return [self layoutHeapMainBars:data drawSubviews:NO];
+    } else {
+        return nil;
+    }
 }
 
 - (DTDimensionReturnModel *)calculateSecond:(DTDimensionModel *)data {
     self.secondAxisMaxX = 0;
-    return [self layoutSecondBars:data drawSubviews:NO];
+    if (self.barChartStyle == DTBarChartStyleStartingLine) {
+        return [self layoutStartingLineSecondBars:data drawSubviews:NO];
+    } else if (self.barChartStyle == DTBarChartStyleHeap) {
+        return [self layoutHeapSecondBars:data drawSubviews:NO];
+    } else {
+        return nil;
+    }
 }
 
 - (void)drawChart:(DTDimensionReturnModel *)returnModel {
@@ -671,6 +1245,14 @@
         [obj removeFromSuperview];
     }];
 
+    NSMutableArray<CALayer *> *layers = self.scrollMainContentView.layer.sublayers.mutableCopy;
+    [layers addObjectsFromArray:self.scrollSecondContentView.layer.sublayers];
+    [layers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTDimensionSectionLine class]]) {
+            [obj removeFromSuperlayer];
+        }
+    }];
+
     [self.chartBars removeAllObjects];
     [self.secondChartBars removeAllObjects];
 }
@@ -727,7 +1309,12 @@
 - (void)drawValues {
     self.barY = self.yOffset;
 
-    [self layoutMainBars:self.mainDimensionModel drawSubviews:YES];
+    if (self.barChartStyle == DTBarChartStyleStartingLine) {
+        [self layoutStartingLineMainBars:self.mainDimensionModel drawSubviews:YES];
+    } else if (self.barChartStyle == DTBarChartStyleHeap) {
+        [self layoutHeapMainBars:self.mainDimensionModel drawSubviews:YES];
+    }
+
 }
 
 
@@ -779,7 +1366,12 @@
 - (void)drawSecondValues {
     self.barY = self.yOffset;
 
-    [self layoutSecondBars:self.secondDimensionModel drawSubviews:YES];
+    if (self.barChartStyle == DTBarChartStyleStartingLine) {
+        [self layoutStartingLineSecondBars:self.secondDimensionModel drawSubviews:YES];
+    } else if (self.barChartStyle == DTBarChartStyleHeap) {
+        [self layoutHeapSecondBars:self.secondDimensionModel drawSubviews:YES];
+    }
+
 }
 
 - (void)drawChart {

@@ -93,6 +93,7 @@
             break;
         case DTBarOrientationLeft: {
             frame.size.width = totalLength;
+            frame.origin.x -= totalLength;
             self.frame = frame;
 
             [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
