@@ -54,7 +54,10 @@
         WEAK_SELF;
         [_mainChart setPieChartTouchBlock:^(NSUInteger index) {
             if (weakSelf.pieChartTouchBlock) {
-                weakSelf.pieChartTouchBlock(index);
+                DTChartSingleData *sData = weakSelf.mainChart.multiData.firstObject;
+                DTChartItemData *itemData = sData.itemValues[index];
+
+                weakSelf.pieChartTouchBlock(itemData.title, index);
             }
 
             if (weakSelf.chartMode == DTChartModePresentation) {

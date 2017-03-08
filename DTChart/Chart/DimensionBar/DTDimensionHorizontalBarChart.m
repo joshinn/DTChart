@@ -110,7 +110,7 @@
             if (model.ptListValue.count > 0) {
                 DTDimensionReturnModel *returnModel2 = [self layoutBars:model drawSubviews:isDraw];
 
-                DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
+//                DTLog(@"ptName = %@ sectionWidth = %@ level = %@", model.ptName, @(returnModel2.sectionWidth / 15), @(returnModel2.level));
 
                 // 将每一层级的DTDimensionModel存储在DTBar上
                 for (DTBar *bar in self.chartBars) {
@@ -241,7 +241,7 @@
             }
         }
         returnModel.sectionWidth = self.barY - returnModel.sectionWidth - self.coordinateAxisCellWidth * 2;
-        DTLog(@"level = %@,  cell count = %@", @(returnModel.level), @(returnModel.sectionWidth / 15));
+//        DTLog(@"level = %@,  cell count = %@", @(returnModel.level), @(returnModel.sectionWidth / 15));
         return returnModel;
 
     } else {

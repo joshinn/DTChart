@@ -38,8 +38,9 @@
             DTLog(@"main axis color = %@ \nseriesId = %@", obj.color, obj.seriesId);
         }];
     }];
-    [self.pieChartController setPieChartTouchBlock:^(NSInteger partIndex) {
-        DTLog(@"pie chart series index = %@", @(partIndex));
+    [self.pieChartController setPieChartTouchBlock:^(NSString *partName, NSInteger partIndex) {
+        DTLog(@"pie chart series name = %@ index = %@", partName, @(partIndex));
+
     }];
 
     [self.pieChartController setMainChartItemsColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
@@ -63,9 +64,8 @@
             DTLog(@"main axis color = %@ \nseriesId = %@", obj.color, obj.seriesId);
         }];
     }];
-    [self.pPieCC setPieChartTouchBlock:^(NSInteger partIndex) {
-        DTLog(@"pie chart series index = %@", @(partIndex));
-
+    [self.pPieCC setPieChartTouchBlock:^(NSString *partName, NSInteger partIndex) {
+        DTLog(@"pie chart series name = %@ index = %@", partName, @(partIndex));
         [weakSelf drawSubChart];
     }];
     [self.pPieCC setMainChartItemsColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {

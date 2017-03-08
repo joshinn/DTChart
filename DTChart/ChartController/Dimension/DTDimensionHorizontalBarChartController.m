@@ -47,6 +47,12 @@
     _chartId = [@"hDimBar-" stringByAppendingString:chartId];
 }
 
+- (void)setBarChartStyle:(DTBarChartStyle)barChartStyle {
+    _barChartStyle = barChartStyle;
+
+    self.chart.barChartStyle = barChartStyle;
+}
+
 /**
  * 把柱状图图的柱状体信息缓存起来
  */

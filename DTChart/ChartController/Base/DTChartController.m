@@ -132,13 +132,13 @@
         maxY *= isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
         yScaled = YES;
 
-        if (maxY < 10) {   // 1位整数
+        if (maxY <= 10) {   // 10以内
             NSUInteger y = 10;
             while (y % maxYAxisCount != 0) {
                 ++y;
             }
             maxY = y;
-        } else if (maxY < 100) {    // 2位数
+        } else if (maxY <= 100) {    // 100以内
             NSUInteger y = maxYAxisCount * 5;
             while (y < maxY) {
                 y += maxYAxisCount * 5;

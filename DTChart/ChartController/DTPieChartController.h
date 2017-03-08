@@ -8,7 +8,7 @@
 
 #import "DTChartController.h"
 
-typedef void(^DTPieChartTouchBlock)(NSInteger partIndex);
+typedef void(^DTPieChartTouchBlock)(NSString *partName, NSInteger partIndex);
 
 typedef void(^MainChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 

@@ -62,13 +62,14 @@
 - (void)chartController {
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"data3" ofType:@"json"];
+    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model1 = [self dataFromJson:json];
 
     DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(100, 80) xAxis:55 yAxis:31];
+    chartController.barChartStyle = DTBarChartStyleHeap;
     chartController.valueSelectable = YES;
     chartController.chartId = @"chart9527";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
@@ -96,6 +97,7 @@
     self.model2 = [self dataFromJson:json];
 
     DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7 + 190) xAxis:55 yAxis:31];
+    chartController.barChartStyle = DTBarChartStyleHeap;
     chartController.valueSelectable = YES;
     chartController.chartId = @"chart9528";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];

@@ -7,10 +7,13 @@
 //
 
 #import "DTChartController.h"
+#import "DTBarChart.h"
 
 @class DTDimensionModel;
 
 @interface DTDimensionVerticalBarChartController : DTChartController
+
+@property (nonatomic) DTBarChartStyle barChartStyle;
 
 @property(nonatomic) NSString *(^dimensionBarChartControllerTouchBlock)(NSUInteger touchIndex);
 
