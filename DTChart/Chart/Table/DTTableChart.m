@@ -160,7 +160,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
                     @{@"label": @70}, @{@"gap": @5},
                     @{@"label": @495}, @{@"gap": @5},
                     @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5},
-                    @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}];
+                    @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}];
         }
             break;
         case DTTableChartStyleC1C1C6: {
