@@ -45,9 +45,13 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 @property(nonatomic) NSInteger collapseColumn;
 
 /**
- * 设定每列的升降序图标
+ * 设定主表每列的升降序图标
  */
-@property(nonatomic) NSArray<DTTableChartTitleOrderModel *> *titleOrderModels;
+@property(nonatomic) NSArray<DTTableChartTitleOrderModel *> *mainTitleOrderModels;
+/**
+ * 设定副表每列的升降序图标
+ */
+@property(nonatomic) NSArray<DTTableChartTitleOrderModel *> *secondtitleOrderModels;
 
 /**
  * 展开/收起 回调

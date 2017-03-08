@@ -31,11 +31,43 @@
     self.chartTitles = [NSMutableArray array];
     [self.chartTitles addObject:@"来源"];
     [self.chartTitles addObject:@"来源明细"];
-    [self.chartTitles addObject:@"来访次数"];
-    [self.chartTitles addObject:@"新来访占比"];
-    [self.chartTitles addObject:@"跳出率"];
-    [self.chartTitles addObject:@"平均访问深度"];
-    [self.chartTitles addObject:@"平均访问时长"];
+//    [self.chartTitles addObject:@"来访次数"];
+//    [self.chartTitles addObject:@"新来访占比"];
+//    [self.chartTitles addObject:@"跳出率"];
+//    [self.chartTitles addObject:@"平均访问深度"];
+//    [self.chartTitles addObject:@"平均访问时长"];
+    [self.chartTitles addObject:@"d0"];
+    [self.chartTitles addObject:@"d1"];
+    [self.chartTitles addObject:@"d2"];
+    [self.chartTitles addObject:@"d3"];
+    [self.chartTitles addObject:@"d4"];
+    [self.chartTitles addObject:@"d5"];
+    [self.chartTitles addObject:@"d6"];
+    [self.chartTitles addObject:@"d7"];
+    [self.chartTitles addObject:@"d8"];
+    [self.chartTitles addObject:@"d9"];
+    [self.chartTitles addObject:@"d10"];
+    [self.chartTitles addObject:@"d11"];
+    [self.chartTitles addObject:@"d12"];
+    [self.chartTitles addObject:@"d13"];
+    [self.chartTitles addObject:@"d14"];
+    [self.chartTitles addObject:@"d15"];
+    [self.chartTitles addObject:@"d16"];
+    [self.chartTitles addObject:@"d17"];
+    [self.chartTitles addObject:@"d18"];
+    [self.chartTitles addObject:@"d19"];
+    [self.chartTitles addObject:@"d20"];
+    [self.chartTitles addObject:@"d21"];
+    [self.chartTitles addObject:@"d22"];
+    [self.chartTitles addObject:@"d23"];
+    [self.chartTitles addObject:@"d24"];
+    [self.chartTitles addObject:@"d25"];
+    [self.chartTitles addObject:@"d26"];
+    [self.chartTitles addObject:@"d27"];
+    [self.chartTitles addObject:@"d28"];
+    [self.chartTitles addObject:@"d29"];
+    [self.chartTitles addObject:@"d30"];
+    [self.chartTitles addObject:@"d31"];
 
 
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 30, 100, 60)];
@@ -73,20 +105,33 @@
     {
         [self.chartTitles enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
             DTTableChartTitleOrderModel *model = [[DTTableChartTitleOrderModel alloc] init];
-            if(idx < 3){
-                model.showOrder = NO;
-            } else{
+
+            if (idx == 0) {
                 model.showOrder = YES;
                 model.ascending = YES;
+                model.highlighted = YES;
+            } else if (idx == 1) {
+                model.showOrder = YES;
+                model.ascending = YES;
+                model.highlighted = NO;
+            } else if (idx == 2) {
+                model.showOrder = YES;
+                model.ascending = NO;
+                model.highlighted = YES;
+            } else {
+                model.showOrder = YES;
+                model.ascending = NO;
+                model.highlighted = NO;
             }
+
             [orderModels addObject:model];
         }];
     }
-    self.tableChartController.titleOrderModels = orderModels;
+    self.tableChartController.mainTitleOrderModels = orderModels;
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     [self.tableChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];
-    self.tableChartController.tableChartStyle = DTTableChartStyleC1C2B3;
+    self.tableChartController.tableChartStyle = DTTableChartStyleC1C1C5;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

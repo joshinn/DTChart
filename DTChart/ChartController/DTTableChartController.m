@@ -101,14 +101,14 @@
 
             if (n == 0) {
                 DTTableAxisLabelData *yLabelData = [[DTTableAxisLabelData alloc] initWithTitle:data.ptName value:i];
-                if (self.titleOrderModels.count > i) {
-                    DTTableChartTitleOrderModel *orderModel = self.titleOrderModels[i];
-                    yLabelData.showOrder = orderModel.showOrder;
-                    yLabelData.ascending = orderModel.ascending;
+                if (self.mainTitleOrderModels.count > i) {
+                    DTTableChartTitleOrderModel *orderModel = self.mainTitleOrderModels[i];
+                    yLabelData.showOrder = orderModel.isShowOrder;
+                    yLabelData.ascending = orderModel.isAscending;
+                    yLabelData.highlighted = orderModel.isHighlighted;
                 }
                 [yAxisLabelDatas addObject:yLabelData];
             }
-
 
             DTChartItemData *itemData = [DTChartItemData chartData];
             itemData.title = data.ptStringValue;
@@ -151,10 +151,11 @@
 
             if (n == 0) {
                 DTTableAxisLabelData *yLabelData = [[DTTableAxisLabelData alloc] initWithTitle:data.ptName value:i];
-                if (self.titleOrderModels.count > i) {
-                    DTTableChartTitleOrderModel *orderModel = self.titleOrderModels[i];
-                    yLabelData.showOrder = orderModel.showOrder;
-                    yLabelData.ascending = orderModel.ascending;
+                if (self.secondtitleOrderModels.count > i) {
+                    DTTableChartTitleOrderModel *orderModel = self.secondtitleOrderModels[i];
+                    yLabelData.showOrder = orderModel.isShowOrder;
+                    yLabelData.ascending = orderModel.isAscending;
+                    yLabelData.highlighted = orderModel.isHighlighted;
                 }
                 [yAxisLabelDatas addObject:yLabelData];
             }

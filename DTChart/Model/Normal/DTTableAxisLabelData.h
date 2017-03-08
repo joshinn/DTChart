@@ -17,5 +17,10 @@
  * 是否是升序，默认YES
  */
 @property(nonatomic, getter=isAscending) BOOL ascending;
+/**
+ * 是否高亮
+ */
+@property(nonatomic, getter=isHighlighted) BOOL highlighted;
+
 
 @end

@@ -191,19 +191,19 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleC1C1C31: {
             widths = @[
-                    @{@"label": @60}, @{@"gap": @5},
-                    @{@"label": @70}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5}, @{@"label": @25}, @{@"gap": @5},
-                    @{@"label": @50}];
+                    @{@"label": @31}, @{@"gap": @2},
+                    @{@"label": @39}, @{@"gap": @2},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                    @{@"label": @31}];
         }
             break;
         case DTTableChartStyleT2C1C2: {

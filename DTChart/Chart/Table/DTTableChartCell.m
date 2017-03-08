@@ -19,7 +19,9 @@ CGFloat const DTTableChartCellHeight = 35;
 @property(nonatomic) NSArray<UIView *> *containerViews;
 @property(nonatomic) DTTableChartStyle style;
 @property(nonatomic) UIImage *ascendImg;
+@property(nonatomic) UIImage *ascendHighlightedImg;
 @property(nonatomic) UIImage *descendImg;
+@property(nonatomic) UIImage *descendHighlightedImg;
 
 @property(nonatomic) DTTableChartSingleData *cellData;
 
@@ -63,6 +65,16 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
     return _ascendImg;
 }
 
+- (UIImage *)ascendHighlightedImg {
+    if (!_ascendHighlightedImg) {
+        NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+        NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+        _ascendHighlightedImg = [UIImage imageWithContentsOfFile:[bundle.resourcePath stringByAppendingPathComponent:@"ascendPress.png"]];
+        _ascendHighlightedImg = [UIImage imageWithCGImage:_ascendHighlightedImg.CGImage scale:2 orientation:_ascendHighlightedImg.imageOrientation];
+    }
+    return _ascendHighlightedImg;
+}
+
 - (UIImage *)descendImg {
     if (!_descendImg) {
         NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
@@ -73,6 +85,15 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
     return _descendImg;
 }
 
+- (UIImage *)descendHighlightedImg {
+    if (!_descendHighlightedImg) {
+        NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+        NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+        _descendHighlightedImg = [UIImage imageWithContentsOfFile:[bundle.resourcePath stringByAppendingPathComponent:@"descendPress.png"]];
+        _descendHighlightedImg = [UIImage imageWithCGImage:_descendHighlightedImg.CGImage scale:2 orientation:_descendHighlightedImg.imageOrientation];
+    }
+    return _descendHighlightedImg;
+}
 
 #pragma mark - private method
 
@@ -121,7 +142,11 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             label.numberOfLines = 1;
             label.textColor = NormalLabelTextColor;
             label.tag = LabelViewTag;
-            label.font = [UIFont systemFontOfSize:15];
+            if (self.style == DTTableChartStyleC1C1C31) {
+                label.font = [UIFont systemFontOfSize:11];
+            } else {
+                label.font = [UIFont systemFontOfSize:14];
+            }
             label.frame = container.bounds;
             label.textAlignment = NSTextAlignmentCenter;
 
@@ -157,8 +182,8 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             [obj removeFromSuperview];
         }];
 
-        _containerViews = [self layoutSubviewsWithWidths:widths];
         _style = style;
+        _containerViews = [self layoutSubviewsWithWidths:widths];
 
     } else if (style == DTTableChartStyleNone) {
         [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
@@ -201,12 +226,21 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
         if (axisLabelData) {
             label.text = axisLabelData.title;
-            icon.hidden = !axisLabelData.isShowOrder;
-            if (axisLabelData.ascending) {
-                [icon setImage:self.ascendImg forState:UIControlStateNormal];
+            icon.hidden = NO;//!axisLabelData.isShowOrder;
+            if (axisLabelData.isHighlighted) {
+                if (axisLabelData.ascending) {
+                    [icon setImage:self.ascendHighlightedImg forState:UIControlStateNormal];
+                } else {
+                    [icon setImage:self.descendHighlightedImg forState:UIControlStateNormal];
+                }
             } else {
-                [icon setImage:self.descendImg forState:UIControlStateNormal];
+                if (axisLabelData.ascending) {
+                    [icon setImage:self.ascendImg forState:UIControlStateNormal];
+                } else {
+                    [icon setImage:self.descendImg forState:UIControlStateNormal];
+                }
             }
+
 
         } else {
             label.text = @"";
