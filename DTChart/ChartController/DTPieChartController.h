@@ -28,6 +28,8 @@ typedef void(^SecondChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *in
 
 @property(nonatomic, copy) SecondChartItemsColorsCompletion secondChartItemsColorsCompletionBlock;
 
+- (void)dismissSecondPieChart;
+
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation __attribute__((unavailable("DTPieChartController can not add items")));
 
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation __attribute__((unavailable("DTPieChartController can not delete items")));

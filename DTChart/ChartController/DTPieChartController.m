@@ -203,55 +203,6 @@
     return attributedString;
 }
 
-- (void)drawSecondPieChart {
-    [self.secondChart drawChart];
-
-    [self.secondHintContainerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj removeFromSuperview];
-    }];
-
-    CGFloat cellWidth = self.secondChart.coordinateAxisCellWidth;
-
-    CGFloat x = 2 * cellWidth;
-    CGFloat y = 0;
-    CGFloat maxWidth = 0;
-    DTChartSingleData *sData = self.secondChart.multiData.firstObject;
-    for (NSUInteger i = 0; i < sData.itemValues.count; ++i) {
-        DTChartItemData *itemData = sData.itemValues[i];
-
-        DTChartLabel *label = [DTChartLabel chartLabel];
-        label.attributedText = [self labelAttributedText:itemData.title value:@(itemData.itemValue.y) percentage:self.secondChart.percentages[i].floatValue];
-        CGRect rect = [label.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.chartView.bounds) - CGRectGetMaxX(self.secondChart.frame) - 3 * cellWidth, 0)
-                                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                                         context:nil];
-        label.frame = CGRectMake(x, y, CGRectGetWidth(rect), CGRectGetHeight(rect));
-        if (maxWidth < CGRectGetWidth(rect)) {
-            maxWidth = CGRectGetWidth(rect);
-        }
-
-        UIView *icon = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMidY(label.frame) - cellWidth / 2, cellWidth, cellWidth)];
-        icon.backgroundColor = self.listSecondItemColors[i];
-
-        [self.secondHintContainerView addSubview:icon];
-        [self.secondHintContainerView addSubview:label];
-
-        y += CGRectGetHeight(rect) + 2;
-    }
-
-    self.secondHintContainerView.frame = CGRectMake(CGRectGetMaxX(self.secondChart.frame) + cellWidth, CGRectGetMidY(self.secondChart.frame) - y / 2, maxWidth + x, y);
-    self.secondHintContainerView.hidden = NO;
-}
-
-- (void)dismissSecondPieChart {
-    self.mainHintLabel.attributedText = nil;
-    self.mainHintLabel.hidden = YES;
-    self.secondHintContainerView.hidden = YES;
-    [self.secondHintContainerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj removeFromSuperview];
-    }];
-
-    [self.secondChart dismissChart:NO];
-}
 
 /**
  * 把柱状图图的multiData和secondMultiData缓存起来
@@ -398,6 +349,58 @@
 
     // 赋值主图数据
     self.secondChart.multiData = parts;
+}
+
+#pragma mark - public method
+
+- (void)drawSecondPieChart {
+    [self.secondChart drawChart];
+
+    [self.secondHintContainerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromSuperview];
+    }];
+
+    CGFloat cellWidth = self.secondChart.coordinateAxisCellWidth;
+
+    CGFloat x = 2 * cellWidth;
+    CGFloat y = 0;
+    CGFloat maxWidth = 0;
+    DTChartSingleData *sData = self.secondChart.multiData.firstObject;
+    for (NSUInteger i = 0; i < sData.itemValues.count; ++i) {
+        DTChartItemData *itemData = sData.itemValues[i];
+
+        DTChartLabel *label = [DTChartLabel chartLabel];
+        label.attributedText = [self labelAttributedText:itemData.title value:@(itemData.itemValue.y) percentage:self.secondChart.percentages[i].floatValue];
+        CGRect rect = [label.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.chartView.bounds) - CGRectGetMaxX(self.secondChart.frame) - 3 * cellWidth, 0)
+                                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                         context:nil];
+        label.frame = CGRectMake(x, y, CGRectGetWidth(rect), CGRectGetHeight(rect));
+        if (maxWidth < CGRectGetWidth(rect)) {
+            maxWidth = CGRectGetWidth(rect);
+        }
+
+        UIView *icon = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMidY(label.frame) - cellWidth / 2, cellWidth, cellWidth)];
+        icon.backgroundColor = self.listSecondItemColors[i];
+
+        [self.secondHintContainerView addSubview:icon];
+        [self.secondHintContainerView addSubview:label];
+
+        y += CGRectGetHeight(rect) + 2;
+    }
+
+    self.secondHintContainerView.frame = CGRectMake(CGRectGetMaxX(self.secondChart.frame) + cellWidth, CGRectGetMidY(self.secondChart.frame) - y / 2, maxWidth + x, y);
+    self.secondHintContainerView.hidden = NO;
+}
+
+- (void)dismissSecondPieChart {
+    self.mainHintLabel.attributedText = nil;
+    self.mainHintLabel.hidden = YES;
+    self.secondHintContainerView.hidden = YES;
+    [self.secondHintContainerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromSuperview];
+    }];
+
+    [self.secondChart dismissChart:NO];
 }
 
 

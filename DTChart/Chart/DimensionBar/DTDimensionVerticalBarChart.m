@@ -50,10 +50,10 @@
 #pragma mark - private method
 
 /**
- * 绘制DTBarChartStyleHeap模式下的柱状图
+ * 遍历数据源所有值，绘制DTBarChartStyleHeap模式下的柱状图
  * @param data 数据源
- * @param isDraw 是否绘制view。NO时，相当于计算整个图表的y轴最大值、frame等信息
- * @return x轴层级信息
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
  */
 - (DTDimensionReturnModel *)layoutHeapBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
 
@@ -288,10 +288,10 @@
 }
 
 /**
- * 绘制DTBarChartStyleStartingLine模式下的柱状图
+ * 遍历数据源所有值，绘制DTBarChartStyleStartingLine模式下的柱状图
  * @param data 数据源
- * @param isDraw 是否绘制view。NO时，相当于计算整个图表的y轴最大值、frame等信息
- * @return x轴层级信息
+ * @param isDraw NO：不绘制柱状体和坐标轴标签，纯遍历数据源里的所有值
+ * @return 遍历结果
  */
 - (DTDimensionReturnModel *)layoutStartingLineBars:(DTDimensionModel *)data drawSubviews:(BOOL)isDraw {
 
