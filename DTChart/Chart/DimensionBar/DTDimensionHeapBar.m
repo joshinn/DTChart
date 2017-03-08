@@ -18,10 +18,10 @@
 
 @implementation DTDimensionHeapBar
 
-+ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style {
++ (instancetype)heapBar:(DTBarOrientation)orientation {
     DTDimensionHeapBar *bar = [[DTDimensionHeapBar alloc] init];
     bar.barOrientation = orientation;
-    bar.barBorderStyle = style;
+    bar.barBorderStyle = DTBarBorderStyleNone;
     return bar;
 }
 

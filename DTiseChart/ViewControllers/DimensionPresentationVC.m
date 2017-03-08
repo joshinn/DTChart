@@ -66,8 +66,9 @@
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model1 = [self dataFromJson:json];
+    DTDimensionModel *model = [self dataFromJson:json];
 
+    self.model1 = model;
     DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(100, 80) xAxis:55 yAxis:31];
     chartController.barChartStyle = DTBarChartStyleHeap;
     chartController.valueSelectable = YES;
@@ -90,7 +91,7 @@
 - (void)horizontalChartController {
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"data" ofType:@"json"];
+    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];

@@ -10,7 +10,7 @@
 
 @interface DTDimensionHeapBar : DTDimensionBar
 
-+ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style;
++ (instancetype)heapBar:(DTBarOrientation)orientation;
 
 - (void)appendData:(DTDimensionModel *)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need;
 @end
