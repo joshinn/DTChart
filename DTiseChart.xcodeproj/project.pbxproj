@@ -10,6 +10,7 @@
 		6524368A1E70ECDF002E003C /* DTDimensionBurgerBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 652436891E70ECDF002E003C /* DTDimensionBurgerBarChart.m */; };
 		6524368D1E7139B1002E003C /* DTDimensionBurgerLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6524368C1E7139B1002E003C /* DTDimensionBurgerLineModel.m */; };
 		652436901E714E22002E003C /* DTDimensionBurgerBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6524368F1E714E22002E003C /* DTDimensionBurgerBarChartController.m */; };
+		652436931E715490002E003C /* DTMeasureDimensionBurgerBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 652436921E715490002E003C /* DTMeasureDimensionBurgerBarChart.m */; };
 		652E821D1E696C5E006C28E0 /* DTDimensionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 652E821C1E696C5E006C28E0 /* DTDimensionBar.m */; };
 		652E82201E697429006C28E0 /* DTDimensionSectionLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 652E821F1E697429006C28E0 /* DTDimensionSectionLine.m */; };
 		6533453F1E30574700F6CE48 /* PiePresentationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6533453E1E30574700F6CE48 /* PiePresentationVC.m */; };
@@ -99,6 +100,8 @@
 		6524368C1E7139B1002E003C /* DTDimensionBurgerLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimensionBurgerLineModel.m; sourceTree = "<group>"; };
 		6524368E1E714E22002E003C /* DTDimensionBurgerBarChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimensionBurgerBarChartController.h; sourceTree = "<group>"; };
 		6524368F1E714E22002E003C /* DTDimensionBurgerBarChartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimensionBurgerBarChartController.m; sourceTree = "<group>"; };
+		652436911E715490002E003C /* DTMeasureDimensionBurgerBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTMeasureDimensionBurgerBarChart.h; sourceTree = "<group>"; };
+		652436921E715490002E003C /* DTMeasureDimensionBurgerBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTMeasureDimensionBurgerBarChart.m; sourceTree = "<group>"; };
 		652E821B1E696C5E006C28E0 /* DTDimensionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimensionBar.h; sourceTree = "<group>"; };
 		652E821C1E696C5E006C28E0 /* DTDimensionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimensionBar.m; sourceTree = "<group>"; };
 		652E821E1E697429006C28E0 /* DTDimensionSectionLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimensionSectionLine.h; sourceTree = "<group>"; };
@@ -620,6 +623,8 @@
 				65AF01531E66B4010037863E /* DTMeasureDimensionHorizontalBarChart.m */,
 				652436881E70ECDF002E003C /* DTDimensionBurgerBarChart.h */,
 				652436891E70ECDF002E003C /* DTDimensionBurgerBarChart.m */,
+				652436911E715490002E003C /* DTMeasureDimensionBurgerBarChart.h */,
+				652436921E715490002E003C /* DTMeasureDimensionBurgerBarChart.m */,
 				652E821B1E696C5E006C28E0 /* DTDimensionBar.h */,
 				652E821C1E696C5E006C28E0 /* DTDimensionBar.m */,
 				65A0B02E1E6EBC52006B0801 /* DTDimensionHeapBar.h */,
@@ -719,6 +724,7 @@
 				653345421E30D09500F6CE48 /* NSNumber+DTExternal.m in Sources */,
 				65751E0A1E4583A70029C1B3 /* FillPresentationVC.m in Sources */,
 				65F598721E31A11500B1DA79 /* DTDistributionChartController.m in Sources */,
+				652436931E715490002E003C /* DTMeasureDimensionBurgerBarChart.m in Sources */,
 				65AF01511E669E6B0037863E /* MultiMeasureDimensionPresentationViewController.m in Sources */,
 				65683FCC1E5ED255003D841B /* DTTableChart.m in Sources */,
 				65683FBD1E5ED255003D841B /* DTBarChart.m in Sources */,

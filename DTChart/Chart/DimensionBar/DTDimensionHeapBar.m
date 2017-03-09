@@ -153,6 +153,11 @@
         }
     }
 
+    UIView *v = self.subviews.lastObject;
+    if ([v isKindOfClass:[DTDimensionBar class]]) {
+        return (DTDimensionBar *) v;
+    }
+    
     return nil;
 }
 

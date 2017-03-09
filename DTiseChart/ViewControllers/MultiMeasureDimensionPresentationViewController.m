@@ -12,6 +12,7 @@
 #import "DTDimensionModel.h"
 #import "DTMeasureDimensionHorizontalBarChart.h"
 #import "DTMeasureDimensionHorizontalBarChartController.h"
+#import "DTMeasureDimensionBurgerBarChart.h"
 
 @interface MultiMeasureDimensionPresentationViewController ()
 
@@ -45,6 +46,7 @@
     [super viewDidAppear:animated];
 
     [self chartControllerDraw];
+    [self drawBurgerChart];
 //    [self chartDraw];
 }
 
@@ -63,7 +65,7 @@
     DTDimensionModel *model2 = [self dataFromJson:json];
 
 
-    DTMeasureDimensionHorizontalBarChartController *chartController = [[DTMeasureDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
+    DTMeasureDimensionHorizontalBarChartController *chartController = [[DTMeasureDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75) xAxis:55 yAxis:31];
 //    chartController.barChartStyle = DTBarChartStyleHeap;
     [self.view addSubview:chartController.chartView];
     chartController.chartId = @"1991";
@@ -76,6 +78,46 @@
 
     [chartController drawChart];
 
+}
+
+- (void)drawBurgerChart {
+    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+    NSString *path = [bundle pathForResource:@"data4" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model1 = [self dataFromJson:json];
+
+    path = [bundle pathForResource:@"data4-1" ofType:@"json"];
+    data = [NSData dataWithContentsOfFile:path];
+    json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model2 = [self dataFromJson:json];
+
+    NSMutableArray *xLabelDatas = [NSMutableArray array];
+    for (NSUInteger i = 0; i < 5; i++) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * 25)] value:i * 0.25f];
+        [xLabelDatas addObject:labelData];
+    }
+    NSMutableArray *xSecondLabelDatas = [NSMutableArray array];
+    for (NSUInteger i = 0; i < 5; i++) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * 25)] value:i * 0.25f];
+        [xSecondLabelDatas addObject:labelData];
+    }
+
+    DTMeasureDimensionBurgerBarChart *burgerChart = [[DTMeasureDimensionBurgerBarChart alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75 + 32 * 15) xAxis:55 yAxis:31];
+    burgerChart.valueSelectable = YES;
+    burgerChart.barWidth = 2;
+    burgerChart.yOffset = 2 * 15;
+    burgerChart.mainDimensionModel = model1;
+    burgerChart.secondDimensionModel = model2;
+    burgerChart.xAxisLabelDatas = xLabelDatas;
+    burgerChart.xSecondAxisLabelDatas = xSecondLabelDatas;
+    burgerChart.contentView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    burgerChart.showCoordinateAxisGrid = YES;
+    [self.view addSubview:burgerChart];
+
+    [burgerChart drawChart];
 }
 
 - (void)chartDraw {
@@ -186,9 +228,9 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model = [self dataFromJson:json];
 
-    if(self.chartController.barChartStyle == DTBarChartStyleHeap){
+    if (self.chartController.barChartStyle == DTBarChartStyleHeap) {
         self.chartController.barChartStyle = DTBarChartStyleStartingLine;
-    } else if (self.chartController.barChartStyle == DTBarChartStyleStartingLine){
+    } else if (self.chartController.barChartStyle == DTBarChartStyleStartingLine) {
         self.chartController.barChartStyle = DTBarChartStyleHeap;
     }
 

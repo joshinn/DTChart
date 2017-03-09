@@ -72,6 +72,8 @@
     _scrollSecondContentView = [[UIView alloc] init];
     [_scrollView addSubview:_scrollSecondContentView];
 
+    [self addSubview:_scrollView];
+
     _yAxisLine = [UIView new];
     _yAxisLine.backgroundColor = DTRGBColor(0x7b7b7b, 1);
     [self addSubview:_yAxisLine];
@@ -82,7 +84,6 @@
         self.coordinateAxisInsets = insets;
     }
 
-    [self addSubview:_scrollView];
 
     self.colorManager = [DTColorManager randomManager];
 
@@ -104,9 +105,6 @@
     }
     return _secondChartBars;
 }
-
-#pragma mark - private method
-
 
 #pragma mark - DTBarChartStyleHeap
 
@@ -515,8 +513,8 @@
                     if (isDraw) {
 
                         // 柱状体
-                        DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
-                        DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+                        DTAxisLabelData *xMaxData = self.xSecondAxisLabelDatas.lastObject;
+                        DTAxisLabelData *xMinData = self.xSecondAxisLabelDatas.firstObject;
 
                         NSMutableArray *models = [NSMutableArray array];
                         [models addObject:model];
@@ -529,7 +527,7 @@
 
                         for (NSUInteger i = 0; i < model.ptListValue.count; ++i) {
                             DTDimensionModel *item = model.ptListValue[i];
-                            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+                            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
 
                             DTDimensionBarModel *barModel = [self getBarModelByName:item.ptName];
                             [bar appendData:item barLength:itemLength barColor:barModel.color needLayout:i == model.ptListValue.count - 1];
@@ -609,8 +607,8 @@
     if (isDraw) {
 
         // 柱状体
-        DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
-        DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
+        DTAxisLabelData *xMaxData = self.xSecondAxisLabelDatas.lastObject;
+        DTAxisLabelData *xMinData = self.xSecondAxisLabelDatas.firstObject;
 
         NSMutableArray *models = [NSMutableArray array];
         [models addObject:data];
@@ -622,7 +620,7 @@
 
         for (NSUInteger i = 0; i < data.ptListValue.count; ++i) {
             DTDimensionModel *item = data.ptListValue[i];
-            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+            CGFloat itemLength = self.coordinateAxisCellWidth * ((item.ptValue - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
 
             DTDimensionBarModel *barModel = [self getBarModelByName:item.ptName];
             [bar appendData:item barLength:itemLength barColor:barModel.color needLayout:i == data.ptListValue.count - 1];
@@ -1022,6 +1020,9 @@
 }
 
 
+#pragma mark - private method
+
+
 - (DTDimensionBarModel *)getBarModelByName:(NSString *)name {
     __block DTDimensionBarModel *model = nil;
     [self.levelLowestBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
@@ -1236,9 +1237,6 @@
         }
     }];
     [self.scrollMainContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj removeFromSuperview];
-    }];
-    [self.scrollSecondContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }];
     [self.scrollSecondContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {

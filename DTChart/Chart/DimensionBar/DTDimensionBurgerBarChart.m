@@ -28,6 +28,8 @@
 
 @synthesize barBorderStyle = _barBorderStyle;
 
+static NSUInteger const BarGap = 6;
+
 - (void)initial {
     [super initial];
 
@@ -121,7 +123,7 @@
         }
 
 
-        self.barX += barWidth + 6 * self.coordinateAxisCellWidth;
+        self.barX += barWidth + BarGap * self.coordinateAxisCellWidth;
         [self.contentView addSubview:heapBar];
 
         [self.chartBars addObject:heapBar];
@@ -212,7 +214,8 @@
             [heapBar removeFromSuperview];
             [self.chartLines[i - 1] hide];
 
-            self.barX -= (self.barWidth + 6) * self.coordinateAxisCellWidth;
+        } else {
+            self.barX = CGRectGetMaxX(heapBar.frame) + BarGap * self.coordinateAxisCellWidth;
         }
     }
 

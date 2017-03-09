@@ -414,6 +414,8 @@
 }
 
 - (void)drawChart {
+    [self dismissSecondPieChart];
+
     [super drawChart];
 
     if (![DTManager checkExistByChartId:self.chartId]) {
