@@ -33,7 +33,7 @@
 - (void)initial {
     [super initial];
 
-    _barBorderStyle = DTBarBorderStyleSidesBorder;
+    _barBorderStyle = DTBarBorderStyleNone;
     _barX = 0;
     self.barChartStyle = DTBarChartStyleStartingLine;
 

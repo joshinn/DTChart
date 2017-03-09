@@ -93,12 +93,26 @@
                     <view key="view" contentMode="scaleToFill" id="4Ri-3l-nKG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kII-Fv-8Kc">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="kII-Fv-8Kc" secondAttribute="trailing" id="NgP-xU-HQ4"/>
+                            <constraint firstItem="fGN-XY-6lo" firstAttribute="top" secondItem="kII-Fv-8Kc" secondAttribute="bottom" id="WgR-Tr-Pfl"/>
+                            <constraint firstItem="kII-Fv-8Kc" firstAttribute="leading" secondItem="4Ri-3l-nKG" secondAttribute="leading" id="ngv-3k-qk9"/>
+                            <constraint firstItem="kII-Fv-8Kc" firstAttribute="top" secondItem="3ix-Hf-4kO" secondAttribute="bottom" id="oD4-OQ-ARa"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="scrollView" destination="kII-Fv-8Kc" id="KC6-rY-YiQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ViJ-N2-kvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1321" y="1747"/>
+            <point key="canvasLocation" x="1320.8" y="1746.4767616191905"/>
         </scene>
         <!--双度量-->
         <scene sceneID="x5W-jl-blq">

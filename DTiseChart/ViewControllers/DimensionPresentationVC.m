@@ -13,11 +13,16 @@
 #import "DTDimensionVerticalBarChartController.h"
 #import "DTDimensionHorizontalBarChart.h"
 #import "DTDimensionHorizontalBarChartController.h"
+#import "DTDimensionBurgerBarChart.h"
+#import "DTDimensionBurgerBarChartController.h"
 
 @interface DimensionPresentationVC ()
 
+@property(weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property(nonatomic) DTDimensionVerticalBarChartController *vChartController;
 @property(nonatomic) DTDimensionHorizontalBarChartController *hChartController;
+
+@property(nonatomic) DTDimensionBurgerBarChart *burgerBarChart;
 
 @property(nonatomic) DTDimensionModel *model1;
 @property(nonatomic) DTDimensionModel *model2;
@@ -30,12 +35,13 @@
     [super viewDidLoad];
     self.view.backgroundColor = DTRGBColor(0x2f2f2f, 1);
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.scrollView.contentSize = CGSizeMake(0, 2000);
 
-    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 48)];
+    UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 60, 60, 48)];
     [changeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [changeBtn setTitle:@"更新" forState:UIControlStateNormal];
+    [changeBtn setTitle:@"改模式" forState:UIControlStateNormal];
     [changeBtn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:changeBtn];
+    [self.scrollView addSubview:changeBtn];
 
     // Do any additional setup after loading the view.
 
@@ -47,8 +53,13 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model1 = [self dataFromJson:json];
 
+    CGFloat sum = self.model1.childrenSumValue;
+
+    [self reverseDimensionModel:self.model1];
 
 //    [self horizontalChart];
+
+    [self burgerBarChartController];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -56,6 +67,21 @@
 
     [self chartController];
     [self horizontalChartController];
+}
+
+- (DTDimensionModel *)reverseDimensionModel:(DTDimensionModel *)model {
+
+    if (model.ptListValue.count > 0) {
+        for (DTDimensionModel *item in model.ptListValue) {
+            DTDimensionModel *nextModel = [self reverseDimensionModel:item];
+
+
+        }
+    } else {
+
+    }
+
+    return nil;
 }
 
 
@@ -69,7 +95,7 @@
     DTDimensionModel *model = [self dataFromJson:json];
 
     self.model1 = model;
-    DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(100, 80) xAxis:55 yAxis:31];
+    DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 60) xAxis:55 yAxis:31];
     chartController.barChartStyle = DTBarChartStyleHeap;
     chartController.valueSelectable = YES;
     chartController.chartId = @"chart9527";
@@ -83,7 +109,7 @@
 
     self.vChartController = chartController;
 
-    [self.view addSubview:chartController.chartView];
+    [self.scrollView addSubview:chartController.chartView];
 
     [chartController drawChart];
 }
@@ -96,20 +122,45 @@
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model2 = [self dataFromJson:json];
-
+    DTDimensionModel *model = self.model2;
+//    DTDimensionModel *item = model.ptListValue.firstObject;
+//    NSMutableArray *array = [NSMutableArray array];
+//    for(NSUInteger i = 0; i < 300; ++i){
+//        [array addObject:item];
+//    }
+//    model.ptListValue = array;
+    
     DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7 + 190) xAxis:55 yAxis:31];
     chartController.barChartStyle = DTBarChartStyleHeap;
     chartController.valueSelectable = YES;
     chartController.chartId = @"chart9528";
     chartController.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     chartController.showCoordinateAxisGrid = YES;
-    [chartController setItem:self.model2];
+    [chartController setItem:model];
 
     self.hChartController = chartController;
 
-    [self.view addSubview:chartController.chartView];
+    [self.scrollView addSubview:chartController.chartView];
 
     [chartController drawChart];
+}
+
+-(void)burgerBarChartController{
+    DTDimensionBurgerBarChartController *burgerController = [[DTDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * (7 + 33) + 190) xAxis:55 yAxis:31];
+    burgerController.showCoordinateAxisGrid = YES;
+    burgerController.valueSelectable = YES;
+    [self.scrollView addSubview:burgerController.chartView];
+
+    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model = [self dataFromJson:json];
+    [burgerController setItem:model];
+
+    [burgerController drawChart];
 }
 
 
@@ -147,7 +198,7 @@
 
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor whiteColor];
     barChart.dimensionModel = self.model1;
-    [self.view addSubview:barChart];
+    [self.scrollView addSubview:barChart];
 //    barChart.showCoordinateAxisLine  = NO;
     barChart.showCoordinateAxisLine = YES;
     barChart.showCoordinateAxisGrid = YES;
@@ -191,7 +242,7 @@
 
     barChart.xAxisLabelColor = barChart.yAxisLabelColor = [UIColor whiteColor];
     barChart.dimensionModel = self.model1;
-    [self.view addSubview:barChart];
+    [self.scrollView addSubview:barChart];
 //    barChart.showCoordinateAxisLine  = NO;
     barChart.showCoordinateAxisLine = YES;
     barChart.showCoordinateAxisGrid = YES;
@@ -246,19 +297,64 @@
 }
 
 
-- (void)change:(UIButton *)sender {
+- (void)showBurgerBarChart {
+    NSMutableArray<DTAxisLabelData *> *yLabelDatas = [NSMutableArray arrayWithCapacity:11];
+    for (NSUInteger i = 0; i < 11; i++) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * 10)] value:i * 0.1f];
+        [yLabelDatas addObject:labelData];
+    }
+
+
+    self.burgerBarChart = [[DTDimensionBurgerBarChart alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * (7 + 33) + 190) xAxis:55 yAxis:31];
+    self.burgerBarChart.barWidth = 2;
+    self.burgerBarChart.yAxisLabelDatas = yLabelDatas;
+    self.burgerBarChart.contentView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    self.burgerBarChart.showCoordinateAxisGrid = YES;
+    self.burgerBarChart.showAnimation = YES;
+    self.burgerBarChart.valueSelectable = YES;
+    [self.scrollView addSubview:self.burgerBarChart];
+
+
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
     NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model = [self dataFromJson:json];
 
-    [self.hChartController setItem:[self dataFromJson:json]];
+    self.burgerBarChart.dimensionModel = model;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.burgerBarChart drawChart];
+    });
+
+}
+
+- (void)change:(UIButton *)sender {
+//    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+//    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+//    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+//    NSData *data = [NSData dataWithContentsOfFile:path];
+//    NSError *error = nil;
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+//
+//    [self.hChartController setItem:[self dataFromJson:json]];
+
+    if (self.hChartController.barChartStyle == DTBarChartStyleHeap) {
+        self.hChartController.barChartStyle = DTBarChartStyleStartingLine;
+    } else if (self.hChartController.barChartStyle == DTBarChartStyleStartingLine) {
+        self.hChartController.barChartStyle = DTBarChartStyleHeap;
+    }
+
     [self.hChartController drawChart];
 
 
-
+    if (self.vChartController.barChartStyle == DTBarChartStyleHeap) {
+        self.vChartController.barChartStyle = DTBarChartStyleStartingLine;
+    } else if (self.vChartController.barChartStyle == DTBarChartStyleStartingLine) {
+        self.vChartController.barChartStyle = DTBarChartStyleHeap;
+    }
     [self.vChartController setItem:self.model2];
     [self.vChartController drawChart];
 }

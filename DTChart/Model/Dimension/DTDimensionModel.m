@@ -18,5 +18,44 @@
     return model;
 }
 
+- (instancetype)init {
+    if (self = [super init]) {
+        _childrenSumValue = -1;
+    }
+    return self;
+}
+
+- (void)setPtValue:(CGFloat)ptValue {
+    _ptValue = ptValue;
+
+    _childrenSumValue = -1;
+}
+
+- (void)setPtListValue:(NSArray<DTDimensionModel *> *)ptListValue {
+    _ptListValue = ptListValue;
+
+    _childrenSumValue = -1;
+}
+
+- (CGFloat)childrenSumValue {
+    if (_childrenSumValue == -1) {
+        _childrenSumValue = [self childrenSum:self];
+    }
+    return _childrenSumValue;
+}
+
+- (CGFloat)childrenSum:(DTDimensionModel *)model {
+    CGFloat sum = 0;
+    if (model.ptListValue.count > 0) {
+        for (DTDimensionModel *item in model.ptListValue) {
+            sum += [self childrenSum:item];
+        }
+    } else {
+        sum += model.ptValue;
+    }
+
+    return sum;
+}
+
 @end
 

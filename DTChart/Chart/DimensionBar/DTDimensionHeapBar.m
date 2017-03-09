@@ -14,6 +14,8 @@
 @property(nonatomic) NSMutableArray<NSNumber *> *subBarLength;
 @property(nonatomic) NSMutableArray<UIColor *> *subBarColors;
 
+@property(nonatomic) NSArray<DTDimensionModel *> *itemDatas;
+
 @end
 
 @implementation DTDimensionHeapBar
@@ -46,6 +48,13 @@
         _subBarColors = [NSMutableArray<UIColor *> array];
     }
     return _subBarColors;
+}
+
+- (NSArray<DTDimensionModel *> *)itemDatas {
+    if (!_itemDatas) {
+        _itemDatas = self.heapData.copy;
+    }
+    return _itemDatas;
 }
 
 
@@ -110,23 +119,41 @@
 
 }
 
-#pragma mark -public method
+#pragma mark - public method
 
 - (void)appendData:(DTDimensionModel *)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need {
+    DTBarBorderStyle style = self.subBarBorderStyle;
+    self.subBarBorderStyle = DTBarBorderStyleNone;
+
+    [self appendData:data barLength:length barColor:color barBorderColor:nil needLayout:need];
+
+    self.subBarBorderStyle = style;
+}
+
+- (void)appendData:(DTDimensionModel *)data barLength:(CGFloat)length barColor:(UIColor *)color barBorderColor:(UIColor *)borderColor needLayout:(BOOL)need {
     [self.heapData addObject:data];
     [self.subBarLength addObject:@(length)];
     [self.subBarColors addObject:color];
 
-    DTBar *bar = [DTBar bar:self.barOrientation style:DTBarBorderStyleNone];
+    DTDimensionBar *bar = [DTDimensionBar bar:self.barOrientation style:self.subBarBorderStyle];
+    bar.dimensionModels = @[data];
     bar.barColor = color;
+    bar.barBorderColor = borderColor;
     [self addSubview:bar];
 
-    if (!need) {
-        return;
+    if (need) {
+        [self relayoutSubBars];
+    }
+}
+
+- (DTDimensionBar *)touchSubBar:(CGPoint)point {
+    for (UIView *v in self.subviews) {
+        if ([v isKindOfClass:[DTDimensionBar class]] && CGRectContainsPoint(v.frame, point)) {
+            return (DTDimensionBar *) v;
+        }
     }
 
-    [self relayoutSubBars];
-
+    return nil;
 }
 
 

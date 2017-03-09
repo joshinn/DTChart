@@ -190,7 +190,9 @@
                     CGFloat width = self.coordinateAxisCellWidth * ((itemData.itemValue.x - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
                     CGFloat x = width - self.coordinateAxisCellWidth / 3;
                     CGFloat y = (yData.axisPosition - 1) * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - height) / 2;
-                    width = self.coordinateAxisCellWidth / 3;
+                    if (width > 0) {
+                        width = self.coordinateAxisCellWidth / 3;
+                    }
 
                     lump.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:lump];
@@ -419,7 +421,6 @@
 - (void)drawChart {
     [super drawChart];
 }
-
 
 
 @end

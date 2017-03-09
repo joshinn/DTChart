@@ -44,10 +44,9 @@
 
     self.userInteractionEnabled = YES;
 
-    _barBorderStyle = DTBarBorderStyleSidesBorder;
+    _barBorderStyle = DTBarBorderStyleNone;
     _barY = 0;
     _yOffset = self.coordinateAxisCellWidth;
-
 
     // scroll view
     _scrollView = [[DTChartScrollView alloc] init];

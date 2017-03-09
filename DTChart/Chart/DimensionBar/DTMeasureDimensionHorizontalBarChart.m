@@ -44,7 +44,7 @@
 
     self.userInteractionEnabled = YES;
 
-    _barBorderStyle = DTBarBorderStyleSidesBorder;
+    _barBorderStyle = DTBarBorderStyleNone;
     _barY = 0;
     _yOffset = 0;
 

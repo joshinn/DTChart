@@ -17,6 +17,8 @@
 
 @property(nonatomic) CGFloat ptValue;
 
+@property(nonatomic) CGFloat childrenSumValue;
+
 + (instancetype)initWith:(NSString *)name list:(NSArray<DTDimensionModel *> *)list value:(CGFloat)value;
 @end
 

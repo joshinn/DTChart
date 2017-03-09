@@ -199,7 +199,9 @@
                     CGFloat height = self.coordinateAxisCellWidth * ((itemData.itemValue.y - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);
                     CGFloat x = xData.axisPosition * self.coordinateAxisCellWidth + (self.coordinateAxisCellWidth - width) / 2;
                     CGFloat y = CGRectGetHeight(self.contentView.frame) - height;
-                    height = self.coordinateAxisCellWidth / 3;
+                    if (height > 0) {
+                        height = self.coordinateAxisCellWidth / 3;
+                    }
 
                     lumpView.frame = CGRectMake(x, y, width, height);
                     [self.contentView addSubview:lumpView];
