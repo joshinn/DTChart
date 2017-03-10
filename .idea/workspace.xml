@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionBurgerBarChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionBurgerBarChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHeapBar.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHeapBar.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m" afterPath="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/DTiseChart.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/MultiMeasureDimensionPresentationViewController.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/MultiMeasureDimensionPresentationViewController.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.m" afterPath="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m" afterPath="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/resources.bundle/data.json" afterPath="$PROJECT_DIR$/DTChart/resources.bundle/data.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" />
     </list>
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,8 +30,8 @@
       <file leaf-file-name="DimensionPresentationVC.m" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="301" column="4" lean-forward="false" selection-start-line="301" selection-start-column="4" selection-end-line="305" selection-end-column="0" />
+            <state relative-caret-position="338">
+              <caret line="109" column="9" lean-forward="false" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
               <folding>
                 <element signature="e#150#185#0" expanded="true" />
               </folding>
@@ -42,71 +39,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DTMeasureDimensionHorizontalBarChart.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.h">
+      <file leaf-file-name="DTDimensionModel.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="668">
-              <caret line="50" column="71" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="50" selection-end-column="71" />
+            <state relative-caret-position="300">
+              <caret line="21" column="40" lean-forward="true" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DTMeasureDimensionHorizontalBarChart.m" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.m">
+      <file leaf-file-name="DTDimensionModel.m" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="1073" column="60" lean-forward="true" selection-start-line="1073" selection-start-column="60" selection-end-line="1073" selection-end-column="60" />
-              <folding>
-                <element signature="e#162#210#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="311">
+              <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DTDimensionBurgerBarChart.m" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionBurgerBarChart.m">
+      <file leaf-file-name="data3.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data3.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="177" column="8" lean-forward="false" selection-start-line="177" selection-start-column="8" selection-end-line="177" selection-end-column="8" />
-              <folding>
-                <element signature="e#151#188#0" expanded="true" />
-                <element signature="e#1357#2127#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DTMeasureDimensionBurgerBarChart.m" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="545" column="57" lean-forward="false" selection-start-line="545" selection-start-column="57" selection-end-line="545" selection-end-column="57" />
-              <folding>
-                <element signature="e#158#202#0" expanded="true" />
-                <element signature="e#2488#3300#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiMeasureDimensionPresentationViewController.m" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/MultiMeasureDimensionPresentationViewController.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="109" column="29" lean-forward="true" selection-start-line="109" selection-start-column="29" selection-end-line="109" selection-end-column="29" />
-              <folding>
-                <element signature="e#173#232#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DTDimensionHeapBar.m" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHeapBar.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="144" column="31" lean-forward="true" selection-start-line="144" selection-start-column="31" selection-end-line="144" selection-end-column="31" />
+            <state relative-caret-position="765">
+              <caret line="82" column="25" lean-forward="false" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -116,9 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dismissSecondPieChart</find>
-      <find>@{@&quot;label&quot;: @50}, @{@&quot;gap&quot;: @10}</find>
-      <find>/ 2</find>
       <find>DTDimensionBar</find>
       <find>bar.frame = CGRectMake(self.barX, axisY - height, barWidth, height);</find>
       <find>CGFloat height = self.coordinateAxisCellWidth * ((model.ptValue - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);</find>
@@ -146,6 +100,9 @@
       <find>6</find>
       <find>4</find>
       <find>BarGap</find>
+      <find>mainTitleOrderModels</find>
+      <find>secondtitleOrderModels</find>
+      <find>41</find>
     </findStrings>
     <replaceStrings>
       <replace>Light</replace>
@@ -200,22 +157,17 @@
         <option value="$PROJECT_DIR$/DTChart/ChartController/Base/DTChartController.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionVerticalBarChartController.m" />
-        <option value="$PROJECT_DIR$/DTChart/resources.bundle/data3.json" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionHorizontalBarChartController.h" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/PiePresentationVC.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.h" />
-        <option value="$PROJECT_DIR$/DTChart/resources.bundle/data.json" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTMeasureDimensionHorizontalBarChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTMeasureDimensionHorizontalBarChartController.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/Model/Normal/DTTableChartTitleOrderModel.h" />
         <option value="$PROJECT_DIR$/DTChart/Model/Normal/DTTableAxisLabelData.h" />
-        <option value="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/TableChartPresentationViewController.m" />
-        <option value="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h" />
-        <option value="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/Bar/DTVerticalBarChart.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/Bar/DTHorizontalBarChart.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBurgerBarChart.h" />
@@ -229,14 +181,19 @@
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionVerticalBurgerBarChart.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionBurgerBarChartController.h" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/Dimension/DTDimensionBurgerBarChartController.m" />
-        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" />
         <option value="$PROJECT_DIR$/DTChart/ChartController/DTPieChartController.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.h" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionBurgerBarChart.m" />
         <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHeapBar.m" />
-        <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.m" />
         <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/MultiMeasureDimensionPresentationViewController.m" />
+        <option value="$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.m" />
+        <option value="$PROJECT_DIR$/DTChart/resources.bundle/data3.json" />
+        <option value="$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.m" />
+        <option value="$PROJECT_DIR$/DTChart/resources.bundle/data.json" />
+        <option value="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h" />
+        <option value="$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m" />
+        <option value="$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m" />
       </list>
     </option>
   </component>
@@ -420,11 +377,13 @@
       <workItem from="1488865708897" duration="12806000" />
       <workItem from="1488935570130" duration="17971000" />
       <workItem from="1488984448320" duration="26170000" />
+      <workItem from="1489069420606" duration="2823000" />
+      <workItem from="1489109080140" duration="10009000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="895484000" />
+    <option name="totallyTimeSpent" value="908316000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -439,25 +398,25 @@
     <frame x="-1920" y="-462" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2459189" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3211382" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3096591" sideWeight="0.5059571" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31910568" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.398374" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2459189" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32317072" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15165877" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3902439" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3211382" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.398374" sideWeight="0.4940429" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32317072" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3902439" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -590,12 +549,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m</url>
-          <line>186</line>
+          <line>331</line>
           <option name="timeStamp" value="226" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m</url>
-          <line>188</line>
+          <line>333</line>
           <option name="timeStamp" value="231" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -640,83 +599,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m</url>
-          <line>72</line>
-          <option name="timeStamp" value="259" />
+          <line>85</line>
+          <option name="timeStamp" value="261" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="260" />
+      <option name="time" value="262" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="AppleRunConfiguration">
-        <watch expression="self.mainHintLabel.frame" language="ObjectiveC" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/Normal/DTTableAxisLabelData.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="56" lean-forward="false" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/Normal/DTTableAxisLabelData.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/TableChartPresentationViewController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/Normal/DTTableChartTitleOrderModel.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
           <caret line="53" column="29" lean-forward="false" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
-          <folding>
-            <element signature="e#149#178#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="229" column="46" lean-forward="false" selection-start-line="229" selection-start-column="46" selection-end-line="229" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="328" column="21" lean-forward="false" selection-start-line="328" selection-start-column="21" selection-end-line="328" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -724,15 +622,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
           <caret line="18" column="3" lean-forward="false" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Bar/DTVerticalBarChart.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="203" column="21" lean-forward="true" selection-start-line="203" selection-start-column="21" selection-end-line="203" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -748,23 +637,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="19" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -772,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-95">
           <caret line="16" column="16" lean-forward="false" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -788,7 +659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="17" column="44" lean-forward="false" selection-start-line="17" selection-start-column="44" selection-end-line="17" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -796,7 +666,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1793">
           <caret line="128" column="30" lean-forward="false" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -817,7 +686,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="13" column="11" lean-forward="false" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -825,7 +693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="37" column="1" lean-forward="true" selection-start-line="37" selection-start-column="1" selection-end-line="37" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -833,7 +700,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -841,7 +707,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
           <caret line="688" column="8" lean-forward="false" selection-start-line="688" selection-start-column="8" selection-end-line="688" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -857,7 +722,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-493">
           <caret line="139" column="31" lean-forward="false" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -873,258 +737,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="512">
           <caret line="69" column="34" lean-forward="false" selection-start-line="68" selection-start-column="8" selection-end-line="69" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data2.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-          <folding>
-            <element signature="e#392#488#0" expanded="false" />
-            <element signature="e#510#605#0" expanded="false" />
-            <element signature="e#661#1223#0" expanded="false" />
-            <element signature="e#721#1205#0" expanded="false" />
-            <element signature="e#743#836#0" expanded="false" />
-            <element signature="e#858#951#0" expanded="false" />
-            <element signature="e#973#1069#0" expanded="false" />
-            <element signature="e#1091#1185#0" expanded="false" />
-            <element signature="e#1267#2397#0" expanded="false" />
-            <element signature="e#1319#2383#0" expanded="false" />
-            <element signature="e#1337#1785#0" expanded="false" />
-            <element signature="e#1397#1767#0" expanded="false" />
-            <element signature="e#1419#1513#0" expanded="false" />
-            <element signature="e#1535#1631#0" expanded="false" />
-            <element signature="e#1653#1747#0" expanded="false" />
-            <element signature="e#1803#2367#0" expanded="false" />
-            <element signature="e#1863#2349#0" expanded="false" />
-            <element signature="e#1885#1981#0" expanded="false" />
-            <element signature="e#2003#2097#0" expanded="false" />
-            <element signature="e#2119#2213#0" expanded="false" />
-            <element signature="e#2235#2329#0" expanded="false" />
-            <element signature="e#2429#7074#0" expanded="false" />
-            <element signature="e#2487#3618#0" expanded="false" />
-            <element signature="e#2539#3604#0" expanded="false" />
-            <element signature="e#2557#3008#0" expanded="false" />
-            <element signature="e#2617#2990#0" expanded="false" />
-            <element signature="e#2639#2735#0" expanded="false" />
-            <element signature="e#2757#2853#0" expanded="false" />
-            <element signature="e#2875#2970#0" expanded="false" />
-            <element signature="e#3026#3588#0" expanded="false" />
-            <element signature="e#3086#3570#0" expanded="false" />
-            <element signature="e#3108#3201#0" expanded="false" />
-            <element signature="e#3223#3316#0" expanded="false" />
-            <element signature="e#3338#3434#0" expanded="false" />
-            <element signature="e#3456#3550#0" expanded="false" />
-            <element signature="e#3684#4749#0" expanded="false" />
-            <element signature="e#3702#4153#0" expanded="false" />
-            <element signature="e#3762#4135#0" expanded="false" />
-            <element signature="e#3784#3880#0" expanded="false" />
-            <element signature="e#3902#3998#0" expanded="false" />
-            <element signature="e#4020#4115#0" expanded="false" />
-            <element signature="e#4171#4733#0" expanded="false" />
-            <element signature="e#4231#4715#0" expanded="false" />
-            <element signature="e#4253#4346#0" expanded="false" />
-            <element signature="e#4368#4461#0" expanded="false" />
-            <element signature="e#4483#4579#0" expanded="false" />
-            <element signature="e#4601#4695#0" expanded="false" />
-            <element signature="e#4829#5894#0" expanded="false" />
-            <element signature="e#4847#5298#0" expanded="false" />
-            <element signature="e#4907#5280#0" expanded="false" />
-            <element signature="e#4929#5025#0" expanded="false" />
-            <element signature="e#5047#5143#0" expanded="false" />
-            <element signature="e#5165#5260#0" expanded="false" />
-            <element signature="e#5316#5878#0" expanded="false" />
-            <element signature="e#5376#5860#0" expanded="false" />
-            <element signature="e#5398#5491#0" expanded="false" />
-            <element signature="e#5513#5606#0" expanded="false" />
-            <element signature="e#5628#5724#0" expanded="false" />
-            <element signature="e#5746#5840#0" expanded="false" />
-            <element signature="e#5922#7052#0" expanded="false" />
-            <element signature="e#5974#7038#0" expanded="false" />
-            <element signature="e#5992#6440#0" expanded="false" />
-            <element signature="e#6052#6422#0" expanded="false" />
-            <element signature="e#6074#6168#0" expanded="false" />
-            <element signature="e#6190#6286#0" expanded="false" />
-            <element signature="e#6308#6402#0" expanded="false" />
-            <element signature="e#6458#7022#0" expanded="false" />
-            <element signature="e#6518#7004#0" expanded="false" />
-            <element signature="e#6540#6636#0" expanded="false" />
-            <element signature="e#6658#6752#0" expanded="false" />
-            <element signature="e#6774#6868#0" expanded="false" />
-            <element signature="e#6890#6984#0" expanded="false" />
-            <element signature="e#7143#8274#0" expanded="false" />
-            <element signature="e#7195#8260#0" expanded="false" />
-            <element signature="e#7213#7664#0" expanded="false" />
-            <element signature="e#7273#7646#0" expanded="false" />
-            <element signature="e#7295#7391#0" expanded="false" />
-            <element signature="e#7413#7509#0" expanded="false" />
-            <element signature="e#7531#7626#0" expanded="false" />
-            <element signature="e#7682#8244#0" expanded="false" />
-            <element signature="e#7742#8226#0" expanded="false" />
-            <element signature="e#7764#7857#0" expanded="false" />
-            <element signature="e#7879#7972#0" expanded="false" />
-            <element signature="e#7994#8090#0" expanded="false" />
-            <element signature="e#8112#8206#0" expanded="false" />
-            <element signature="e#8340#9405#0" expanded="false" />
-            <element signature="e#8358#8809#0" expanded="false" />
-            <element signature="e#8418#8791#0" expanded="false" />
-            <element signature="e#8440#8536#0" expanded="false" />
-            <element signature="e#8558#8654#0" expanded="false" />
-            <element signature="e#8676#8771#0" expanded="false" />
-            <element signature="e#8827#9389#0" expanded="false" />
-            <element signature="e#8887#9371#0" expanded="false" />
-            <element signature="e#8909#9002#0" expanded="false" />
-            <element signature="e#9024#9117#0" expanded="false" />
-            <element signature="e#9139#9235#0" expanded="false" />
-            <element signature="e#9257#9351#0" expanded="false" />
-            <element signature="e#9485#10550#0" expanded="false" />
-            <element signature="e#9503#9954#0" expanded="false" />
-            <element signature="e#9563#9936#0" expanded="false" />
-            <element signature="e#9585#9681#0" expanded="false" />
-            <element signature="e#9703#9799#0" expanded="false" />
-            <element signature="e#9821#9916#0" expanded="false" />
-            <element signature="e#9972#10534#0" expanded="false" />
-            <element signature="e#10032#10516#0" expanded="false" />
-            <element signature="e#10054#10147#0" expanded="false" />
-            <element signature="e#10169#10262#0" expanded="false" />
-            <element signature="e#10284#10380#0" expanded="false" />
-            <element signature="e#10402#10496#0" expanded="false" />
-            <element signature="e#10578#11708#0" expanded="false" />
-            <element signature="e#10630#11694#0" expanded="false" />
-            <element signature="e#10648#11096#0" expanded="false" />
-            <element signature="e#10708#11078#0" expanded="false" />
-            <element signature="e#10730#10824#0" expanded="false" />
-            <element signature="e#10846#10942#0" expanded="false" />
-            <element signature="e#10964#11058#0" expanded="false" />
-            <element signature="e#11114#11678#0" expanded="false" />
-            <element signature="e#11174#11660#0" expanded="false" />
-            <element signature="e#11196#11292#0" expanded="false" />
-            <element signature="e#11314#11408#0" expanded="false" />
-            <element signature="e#11430#11524#0" expanded="false" />
-            <element signature="e#11546#11640#0" expanded="false" />
-            <element signature="e#11784#16375#0" expanded="false" />
-            <element signature="e#11798#12929#0" expanded="false" />
-            <element signature="e#11850#12915#0" expanded="false" />
-            <element signature="e#11868#12319#0" expanded="false" />
-            <element signature="e#11928#12301#0" expanded="false" />
-            <element signature="e#11950#12046#0" expanded="false" />
-            <element signature="e#12068#12164#0" expanded="false" />
-            <element signature="e#12186#12281#0" expanded="false" />
-            <element signature="e#12337#12899#0" expanded="false" />
-            <element signature="e#12397#12881#0" expanded="false" />
-            <element signature="e#12419#12512#0" expanded="false" />
-            <element signature="e#12534#12627#0" expanded="false" />
-            <element signature="e#12649#12745#0" expanded="false" />
-            <element signature="e#12767#12861#0" expanded="false" />
-            <element signature="e#12995#14060#0" expanded="false" />
-            <element signature="e#13013#13464#0" expanded="false" />
-            <element signature="e#13073#13446#0" expanded="false" />
-            <element signature="e#13095#13191#0" expanded="false" />
-            <element signature="e#13213#13309#0" expanded="false" />
-            <element signature="e#13331#13426#0" expanded="false" />
-            <element signature="e#13482#14044#0" expanded="false" />
-            <element signature="e#13542#14026#0" expanded="false" />
-            <element signature="e#13564#13657#0" expanded="false" />
-            <element signature="e#13679#13772#0" expanded="false" />
-            <element signature="e#13794#13890#0" expanded="false" />
-            <element signature="e#13912#14006#0" expanded="false" />
-            <element signature="e#14140#15205#0" expanded="false" />
-            <element signature="e#14158#14609#0" expanded="false" />
-            <element signature="e#14218#14591#0" expanded="false" />
-            <element signature="e#14240#14336#0" expanded="false" />
-            <element signature="e#14358#14454#0" expanded="false" />
-            <element signature="e#14476#14571#0" expanded="false" />
-            <element signature="e#14627#15189#0" expanded="false" />
-            <element signature="e#14687#15171#0" expanded="false" />
-            <element signature="e#14709#14802#0" expanded="false" />
-            <element signature="e#14824#14917#0" expanded="false" />
-            <element signature="e#14939#15035#0" expanded="false" />
-            <element signature="e#15057#15151#0" expanded="false" />
-            <element signature="e#15233#16363#0" expanded="false" />
-            <element signature="e#15285#16349#0" expanded="false" />
-            <element signature="e#15303#15751#0" expanded="false" />
-            <element signature="e#15363#15733#0" expanded="false" />
-            <element signature="e#15385#15479#0" expanded="false" />
-            <element signature="e#15501#15597#0" expanded="false" />
-            <element signature="e#15619#15713#0" expanded="false" />
-            <element signature="e#15769#16333#0" expanded="false" />
-            <element signature="e#15829#16315#0" expanded="false" />
-            <element signature="e#15851#15947#0" expanded="false" />
-            <element signature="e#15969#16063#0" expanded="false" />
-            <element signature="e#16085#16179#0" expanded="false" />
-            <element signature="e#16201#16295#0" expanded="false" />
-            <element signature="e#16395#18286#0" expanded="false" />
-            <element signature="e#16439#18276#0" expanded="false" />
-            <element signature="e#16453#17123#0" expanded="false" />
-            <element signature="e#16505#17109#0" expanded="false" />
-            <element signature="e#16523#17093#0" expanded="false" />
-            <element signature="e#16583#17075#0" expanded="false" />
-            <element signature="e#16605#16701#0" expanded="false" />
-            <element signature="e#16723#16819#0" expanded="false" />
-            <element signature="e#16841#16937#0" expanded="false" />
-            <element signature="e#16959#17055#0" expanded="false" />
-            <element signature="e#17137#18264#0" expanded="false" />
-            <element signature="e#17189#18250#0" expanded="false" />
-            <element signature="e#17207#17770#0" expanded="false" />
-            <element signature="e#17267#17752#0" expanded="false" />
-            <element signature="e#17289#17383#0" expanded="false" />
-            <element signature="e#17405#17501#0" expanded="false" />
-            <element signature="e#17523#17617#0" expanded="false" />
-            <element signature="e#17639#17732#0" expanded="false" />
-            <element signature="e#17788#18234#0" expanded="false" />
-            <element signature="e#17848#18216#0" expanded="false" />
-            <element signature="e#17870#17964#0" expanded="false" />
-            <element signature="e#17986#18080#0" expanded="false" />
-            <element signature="e#18102#18196#0" expanded="false" />
-            <element signature="e#18306#21935#0" expanded="false" />
-            <element signature="e#18342#21929#0" expanded="false" />
-            <element signature="e#18352#20599#0" expanded="false" />
-            <element signature="e#18400#20589#0" expanded="false" />
-            <element signature="e#18414#19549#0" expanded="false" />
-            <element signature="e#18466#19535#0" expanded="false" />
-            <element signature="e#18484#18936#0" expanded="false" />
-            <element signature="e#18544#18918#0" expanded="false" />
-            <element signature="e#18566#18662#0" expanded="false" />
-            <element signature="e#18684#18780#0" expanded="false" />
-            <element signature="e#18802#18898#0" expanded="false" />
-            <element signature="e#18954#19519#0" expanded="false" />
-            <element signature="e#19014#19501#0" expanded="false" />
-            <element signature="e#19036#19129#0" expanded="false" />
-            <element signature="e#19151#19247#0" expanded="false" />
-            <element signature="e#19269#19365#0" expanded="false" />
-            <element signature="e#19387#19481#0" expanded="false" />
-            <element signature="e#19563#20577#0" expanded="false" />
-            <element signature="e#19615#20563#0" expanded="false" />
-            <element signature="e#19633#20081#0" expanded="false" />
-            <element signature="e#19693#20063#0" expanded="false" />
-            <element signature="e#19715#19809#0" expanded="false" />
-            <element signature="e#19831#19927#0" expanded="false" />
-            <element signature="e#19949#20043#0" expanded="false" />
-            <element signature="e#20099#20547#0" expanded="false" />
-            <element signature="e#20159#20529#0" expanded="false" />
-            <element signature="e#20181#20277#0" expanded="false" />
-            <element signature="e#20299#20393#0" expanded="false" />
-            <element signature="e#20415#20509#0" expanded="false" />
-            <element signature="e#20609#21921#0" expanded="false" />
-            <element signature="e#20656#21911#0" expanded="false" />
-            <element signature="e#20670#21339#0" expanded="false" />
-            <element signature="e#20722#21325#0" expanded="false" />
-            <element signature="e#20740#21309#0" expanded="false" />
-            <element signature="e#20800#21291#0" expanded="false" />
-            <element signature="e#20822#20918#0" expanded="false" />
-            <element signature="e#20940#21035#0" expanded="false" />
-            <element signature="e#21057#21153#0" expanded="false" />
-            <element signature="e#21175#21271#0" expanded="false" />
-            <element signature="e#21353#21899#0" expanded="false" />
-            <element signature="e#21405#21885#0" expanded="false" />
-            <element signature="e#21423#21869#0" expanded="false" />
-            <element signature="e#21483#21851#0" expanded="false" />
-            <element signature="e#21505#21599#0" expanded="false" />
-            <element signature="e#21621#21715#0" expanded="false" />
-            <element signature="e#21737#21831#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1132,7 +744,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
           <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1151,39 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <marker date="1489045301000" expanded="true" signature="225:372" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data3.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="90" column="1" lean-forward="false" selection-start-line="90" selection-start-column="1" selection-end-line="90" selection-end-column="1" />
-          <folding>
-            <element signature="e#224#296#0" expanded="false" />
-            <element signature="e#310#382#0" expanded="false" />
-            <element signature="e#414#819#0" expanded="false" />
-            <element signature="e#458#809#0" expanded="false" />
-            <element signature="e#472#541#0" expanded="false" />
-            <element signature="e#555#627#0" expanded="false" />
-            <element signature="e#641#713#0" expanded="false" />
-            <element signature="e#727#797#0" expanded="false" />
-            <element signature="e#839#1633#0" expanded="false" />
-            <element signature="e#875#1627#0" expanded="false" />
-            <element signature="e#885#1205#0" expanded="false" />
-            <element signature="e#929#1195#0" expanded="false" />
-            <element signature="e#943#1013#0" expanded="false" />
-            <element signature="e#1027#1099#0" expanded="false" />
-            <element signature="e#1113#1183#0" expanded="false" />
-            <element signature="e#1215#1619#0" expanded="false" />
-            <element signature="e#1259#1609#0" expanded="false" />
-            <element signature="e#1273#1345#0" expanded="false" />
-            <element signature="e#1359#1429#0" expanded="false" />
-            <element signature="e#1443#1513#0" expanded="false" />
-            <element signature="e#1527#1597#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1199,7 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="18" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1207,10 +784,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
           <caret line="71" column="13" lean-forward="false" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
-          <folding>
-            <element signature="e#161#208#0" expanded="false" />
-            <element signature="e#444#479#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1218,9 +791,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="e#161#190#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1247,24 +817,6 @@
         <state relative-caret-position="278">
           <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="668">
-          <caret line="50" column="71" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="50" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="301" column="4" lean-forward="false" selection-start-line="301" selection-start-column="4" selection-end-line="305" selection-end-column="0" />
-          <folding>
-            <element signature="e#150#185#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1300,7 +852,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1312,53 +863,165 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/MultiMeasureDimensionPresentationViewController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="89" column="56" lean-forward="true" selection-start-line="89" selection-start-column="56" selection-end-line="89" selection-end-column="56" />
+          <folding>
+            <element signature="e#173#232#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionHeapBar.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="144" column="31" lean-forward="true" selection-start-line="144" selection-start-column="31" selection-end-line="144" selection-end-column="31" />
+        <state relative-caret-position="180">
+          <caret line="12" column="66" lean-forward="true" selection-start-line="12" selection-start-column="66" selection-end-line="12" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTTableChartController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="158" column="17" lean-forward="true" selection-start-line="158" selection-start-column="17" selection-end-line="158" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.m">
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Table/DTTableChart.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="1073" column="60" lean-forward="true" selection-start-line="1073" selection-start-column="60" selection-end-line="1073" selection-end-column="60" />
+        <state relative-caret-position="423">
+          <caret line="289" column="40" lean-forward="true" selection-start-line="289" selection-start-column="40" selection-end-line="289" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="15" column="21" lean-forward="false" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Table/DTTableChartCell.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="221" column="0" lean-forward="true" selection-start-line="221" selection-start-column="0" selection-end-line="221" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data2.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
           <folding>
-            <element signature="e#162#210#0" expanded="true" />
+            <element signature="e#18306#21935#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Base/DTChartLabel.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="27" lean-forward="true" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/ChartController/DTVerticalBarChartController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/Bar/DTVerticalBarChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="340" column="52" lean-forward="true" selection-start-line="340" selection-start-column="52" selection-end-line="340" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="656">
+          <caret line="560" column="22" lean-forward="true" selection-start-line="560" selection-start-column="22" selection-end-line="560" selection-end-column="22" />
+          <folding>
+            <element signature="e#158#202#0" expanded="false" />
+            <element signature="e#2488#3300#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTDimensionBurgerBarChart.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="177" column="8" lean-forward="false" selection-start-line="177" selection-start-column="8" selection-end-line="177" selection-end-column="8" />
+        <state relative-caret-position="347">
+          <caret line="191" column="9" lean-forward="false" selection-start-line="191" selection-start-column="9" selection-end-line="191" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="926">
+          <caret line="1073" column="60" lean-forward="false" selection-start-line="1073" selection-start-column="60" selection-end-line="1073" selection-end-column="60" />
           <folding>
-            <element signature="e#151#188#0" expanded="true" />
-            <element signature="e#1357#2127#0" expanded="false" />
+            <element signature="e#162#210#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionBurgerBarChart.m">
+    <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar/DTMeasureDimensionHorizontalBarChart.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="545" column="57" lean-forward="false" selection-start-line="545" selection-start-column="57" selection-end-line="545" selection-end-column="57" />
+        <state relative-caret-position="750">
+          <caret line="50" column="71" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="50" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTChart/Model/Dimension/DTDimensionModel.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="21" column="40" lean-forward="true" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/DimensionPresentationVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="109" column="9" lean-forward="false" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
           <folding>
-            <element signature="e#158#202#0" expanded="true" />
-            <element signature="e#2488#3300#0" expanded="false" />
+            <element signature="e#150#185#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/MultiMeasureDimensionPresentationViewController.m">
+    <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data3.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="109" column="29" lean-forward="true" selection-start-line="109" selection-start-column="29" selection-end-line="109" selection-end-column="29" />
-          <folding>
-            <element signature="e#173#232#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="765">
+          <caret line="82" column="25" lean-forward="false" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>

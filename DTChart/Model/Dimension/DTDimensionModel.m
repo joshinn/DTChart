@@ -21,6 +21,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _childrenSumValue = -1;
+        _objectId = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, CFUUIDCreate(NULL)));
     }
     return self;
 }

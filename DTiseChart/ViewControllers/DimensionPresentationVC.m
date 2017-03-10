@@ -15,6 +15,8 @@
 #import "DTDimensionHorizontalBarChartController.h"
 #import "DTDimensionBurgerBarChart.h"
 #import "DTDimensionBurgerBarChartController.h"
+#include <objc/runtime.h>
+
 
 @interface DimensionPresentationVC ()
 
@@ -53,13 +55,35 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model1 = [self dataFromJson:json];
 
-    CGFloat sum = self.model1.childrenSumValue;
 
-    [self reverseDimensionModel:self.model1];
+
+    // *********************
+    NSMutableArray *array = @[].mutableCopy;
+    [self divideDimensionModel:self.model1 array:array];
+
+    for (NSUInteger i = 0; i < array.count; ++i) {
+        DTDimensionModel *model = array[i];
+
+        DTDimensionModel *tModel = model;
+        while (tModel.ptListValue.firstObject != nil) {
+            tModel = tModel.ptListValue.firstObject;
+        }
+        model.ptValue = tModel.ptValue;
+        tModel.ptValue = 0;
+
+        DTDimensionModel *reverseModel = [self reverseDimensionModel:model];
+        array[i] = reverseModel;
+
+    }
+
+    DTDimensionModel * mergedModel = [self mergeArrayToDimensionModel:array];
+
+    // *********************
 
 //    [self horizontalChart];
 
-    [self burgerBarChartController];
+
+    [self burgerBarChartController:mergedModel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,19 +93,140 @@
     [self horizontalChartController];
 }
 
-- (DTDimensionModel *)reverseDimensionModel:(DTDimensionModel *)model {
+
+- (DTDimensionModel *)mergeArrayToDimensionModel:(NSArray *)array {
+
+
+    NSMutableArray<NSString *> *names = [NSMutableArray array];
+
+    for (DTDimensionModel *model in array) {
+
+        BOOL exist = NO;
+        for (NSString *name in names) {
+            if ([name isEqualToString:model.ptName]) {
+                exist = YES;
+                break;
+            }
+        }
+
+        if (!exist) {
+            [names addObject:model.ptName];
+        }
+    }
+
+    DTDimensionModel *pModel = [[DTDimensionModel alloc] init];
+    
+    
+    for (NSString *name in names) {
+        NSMutableArray<DTDimensionModel *> *sameNameArray = [NSMutableArray array];
+
+        for (DTDimensionModel *model in array) {
+            if ([name isEqualToString:model.ptName]) {
+                [sameNameArray addObject:model];
+            }
+        }
+
+        if (sameNameArray.count > 0) {
+            DTDimensionModel *firstModel = sameNameArray.firstObject;
+            DTDimensionModel *cModel = [[DTDimensionModel alloc] init];
+            cModel.ptName = firstModel.ptName;
+            cModel.ptValue = firstModel.ptValue;
+            
+            NSMutableArray *ptListValue = [NSMutableArray arrayWithArray:pModel.ptListValue];
+            [ptListValue addObject:cModel];
+            pModel.ptListValue = ptListValue.copy;
+            
+            NSMutableArray *subArray = [NSMutableArray array];
+            for (DTDimensionModel *model in sameNameArray) {
+                if(model.ptListValue.count > 0){
+                    [subArray addObject:model.ptListValue.firstObject];
+                }
+                
+            }
+
+            if (subArray.count > 0) {
+                DTDimensionModel *tempModel = [self mergeArrayToDimensionModel:subArray];
+                
+                cModel.ptListValue = tempModel.ptListValue;
+                
+                DTLog(@"cModel = %@", cModel.ptName);
+            }else{
+                cModel.ptListValue = @[sameNameArray.firstObject];
+            }
+        }
+    }
+
+
+
+
+    return pModel;
+}
+
+
+- (void)divideDimensionModel:(DTDimensionModel *)model array:(NSMutableArray *)array {
 
     if (model.ptListValue.count > 0) {
         for (DTDimensionModel *item in model.ptListValue) {
-            DTDimensionModel *nextModel = [self reverseDimensionModel:item];
+            [self divideDimensionModel:item array:array];
+
+            DTLog(@"array name = %@", model.ptName);
+
+
+            DTDimensionModel *tModel = nil;
+            NSArray *tempArray = array.copy;
+            for (DTDimensionModel *m in tempArray) {
+                if ([m.objectId isEqualToString:item.objectId]) {
+                    tModel = m;
+
+
+                    NSUInteger index = [array indexOfObject:tModel];
+                    [array removeObject:tModel];
+
+
+                    DTDimensionModel *cModel = [[DTDimensionModel alloc] init];
+                    cModel.ptValue = model.ptValue;
+                    cModel.ptName = model.ptName;
+                    cModel.objectId = model.objectId;
+                    cModel.ptListValue = @[tModel];
+
+                    [array insertObject:cModel atIndex:index];
+
+                }
+            }
 
 
         }
     } else {
-
+        [array addObject:model];
     }
 
-    return nil;
+}
+
+- (DTDimensionModel *)reverseDimensionModel:(DTDimensionModel *)model {
+    if (model.ptListValue.count > 0) {
+        DTDimensionModel *rModel = [self reverseDimensionModel:model.ptListValue.firstObject];
+
+
+        DTDimensionModel *tModel = rModel;
+        while (tModel.ptListValue.firstObject != nil) {
+            tModel = tModel.ptListValue.firstObject;
+        }
+
+
+        DTDimensionModel *cModel = [[DTDimensionModel alloc] init];
+        cModel.ptValue = model.ptValue;
+        cModel.ptName = model.ptName;
+        cModel.objectId = model.objectId;
+
+        tModel.ptListValue = @[cModel];
+
+        return rModel;
+
+    } else {
+        return model;
+    }
+
+
 }
 
 
@@ -129,7 +274,7 @@
 //        [array addObject:item];
 //    }
 //    model.ptListValue = array;
-    
+
     DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7 + 190) xAxis:55 yAxis:31];
     chartController.barChartStyle = DTBarChartStyleHeap;
     chartController.valueSelectable = YES;
@@ -145,19 +290,19 @@
     [chartController drawChart];
 }
 
--(void)burgerBarChartController{
+- (void)burgerBarChartController:(DTDimensionModel *)model {
     DTDimensionBurgerBarChartController *burgerController = [[DTDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * (7 + 33) + 190) xAxis:55 yAxis:31];
     burgerController.showCoordinateAxisGrid = YES;
     burgerController.valueSelectable = YES;
     [self.scrollView addSubview:burgerController.chartView];
 
-    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSError *error = nil;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    DTDimensionModel *model = [self dataFromJson:json];
+//    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+//    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+//    NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
+//    NSData *data = [NSData dataWithContentsOfFile:path];
+//    NSError *error = nil;
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    
     [burgerController setItem:model];
 
     [burgerController drawChart];

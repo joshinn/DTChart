@@ -226,7 +226,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
         if (axisLabelData) {
             label.text = axisLabelData.title;
-            icon.hidden = NO;//!axisLabelData.isShowOrder;
+            icon.hidden = !axisLabelData.isShowOrder;
             if (axisLabelData.isHighlighted) {
                 if (axisLabelData.ascending) {
                     [icon setImage:self.ascendHighlightedImg forState:UIControlStateNormal];

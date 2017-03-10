@@ -1,17 +1,34 @@
 {
-  "name": "Q5",
   "data": [
     {
-      "name": "强意向",
-      "value": 8
+      "name": "Q5",
+      "data": [
+        {
+          "name": "强意向",
+          "value": 8
+        },
+        {
+          "name": "高意向",
+          "value": 15.8
+        }
+      ]
     },
     {
-      "name": "中意向",
-      "value": 16.1
-    },
-    {
-      "name": "高意向",
-      "value": 15.8
+      "name": "A8",
+      "data": [
+        {
+          "name": "强意向",
+          "value": 28
+        },
+        {
+          "name": "中意向",
+          "value": 6.1
+        },
+        {
+          "name": "高意向",
+          "value": 25.8
+        }
+      ]
     }
   ]
 }
