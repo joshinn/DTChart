@@ -54,12 +54,13 @@
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model1 = [self dataFromJson:json];
-
+    DTDimensionModel *model1 = [self dataFromJson:json];
+    
 
 
     // *********************
     NSMutableArray *array = @[].mutableCopy;
-    [self divideDimensionModel:self.model1 array:array];
+    [self divideDimensionModel:model1 array:array];
 
     for (NSUInteger i = 0; i < array.count; ++i) {
         DTDimensionModel *model = array[i];
@@ -68,7 +69,13 @@
         while (tModel.ptListValue.firstObject != nil) {
             tModel = tModel.ptListValue.firstObject;
         }
-        model.ptValue = tModel.ptValue;
+        
+        if(model.ptName.length > 0){
+            model.ptValue = tModel.ptValue;
+        }else{
+            model.ptListValue.firstObject.ptValue = tModel.ptValue;
+        }
+        
         tModel.ptValue = 0;
 
         DTDimensionModel *reverseModel = [self reverseDimensionModel:model];
@@ -109,7 +116,7 @@
             }
         }
 
-        if (!exist) {
+        if (!exist && model.ptName) {
             [names addObject:model.ptName];
         }
     }
@@ -212,7 +219,7 @@
             tModel = tModel.ptListValue.firstObject;
         }
 
-
+        
         DTDimensionModel *cModel = [[DTDimensionModel alloc] init];
         cModel.ptValue = model.ptValue;
         cModel.ptName = model.ptName;

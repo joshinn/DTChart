@@ -96,7 +96,10 @@ static NSUInteger const BarGap = 6;
         heapBar.frame = CGRectMake(self.barX, CGRectGetMaxY(self.contentView.bounds), barWidth, 0);
 
         for (DTDimensionModel *model in data.ptListValue) {
-            CGFloat height = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);
+            CGFloat height = 0;
+            if (sum > 0) {
+                height = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - yMinData.value) / (yMaxData.value - yMinData.value)) * (yMaxData.axisPosition - yMinData.axisPosition);
+            }
 
             UIColor *color = [self.colorManager getColor];
             UIColor *borderColor = [self.colorManager getLightColor:color];
@@ -105,7 +108,7 @@ static NSUInteger const BarGap = 6;
 
         }
 
-        if (!CGRectIsEmpty(fromFrame)) {
+        if (CGRectGetWidth(fromFrame) != 0 || CGRectGetHeight(fromFrame) != 0) {
             DTDimensionBurgerLineModel *lineModel = [[DTDimensionBurgerLineModel alloc] init];
 
             UIBezierPath *path = [UIBezierPath bezierPath];
