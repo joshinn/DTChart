@@ -32,7 +32,7 @@
         _chart = [[DTDimensionHorizontalBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _chart;
 
-        _chart.barWidth = 2;
+        _chart.barWidth = 1;
     }
     return self;
 }

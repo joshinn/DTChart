@@ -229,10 +229,10 @@
                                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                                      attributes:@{NSFontAttributeName: titleLabel.font}
                                                                         context:nil];
-                        CGFloat height = MAX(CGRectGetHeight(bounding), barWidth);
+                        CGFloat height = self.coordinateAxisCellWidth;
                         CGFloat labelY = self.barY + self.coordinateAxisCellWidth * self.coordinateAxisInsets.top;
                         CGFloat labelX = (self.coordinateAxisInsets.left - returnModel2.level - 1) * self.coordinateAxisCellWidth;
-                        titleLabel.frame = CGRectMake(labelX, labelY + barWidth / 2 - height / 2, self.coordinateAxisCellWidth, height);
+                        titleLabel.frame = CGRectMake(labelX + self.self.coordinateAxisCellWidth, labelY + barWidth / 2 - height / 2 - self.coordinateAxisCellWidth, CGRectGetWidth(bounding), height);
                         titleLabel.textColor = DTColorGray;
                         [self.scrollView addSubview:titleLabel];
 
@@ -338,10 +338,10 @@
                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                      attributes:@{NSFontAttributeName: titleLabel.font}
                                                         context:nil];
-        CGFloat height = MAX(CGRectGetHeight(bounding), barWidth);
+        CGFloat height = self.coordinateAxisCellWidth;
         CGFloat labelY = self.barY + self.coordinateAxisCellWidth * self.coordinateAxisInsets.top;
         CGFloat labelX = ((NSInteger) self.coordinateAxisInsets.left - returnModel.level) * self.coordinateAxisCellWidth;
-        titleLabel.frame = CGRectMake(labelX, labelY + barWidth / 2 - height / 2, self.coordinateAxisCellWidth, height);
+        titleLabel.frame = CGRectMake(labelX + self.coordinateAxisCellWidth, labelY + barWidth / 2 - height / 2 - self.coordinateAxisCellWidth, CGRectGetWidth(bounding), height);
         titleLabel.textColor = DTColorGray;
         [self.scrollView addSubview:titleLabel];
 

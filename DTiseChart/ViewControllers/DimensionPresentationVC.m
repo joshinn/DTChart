@@ -275,12 +275,12 @@
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     self.model2 = [self dataFromJson:json];
     DTDimensionModel *model = self.model2;
-//    DTDimensionModel *item = model.ptListValue.firstObject;
-//    NSMutableArray *array = [NSMutableArray array];
-//    for(NSUInteger i = 0; i < 300; ++i){
-//        [array addObject:item];
-//    }
-//    model.ptListValue = array;
+    DTDimensionModel *item = model.ptListValue.firstObject;
+    NSMutableArray *array = [NSMutableArray array];
+    for(NSUInteger i = 0; i < 15; ++i){
+        [array addObject:item];
+    }
+    model.ptListValue = array;
 
     DTDimensionHorizontalBarChartController *chartController = [[DTDimensionHorizontalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7 + 190) xAxis:55 yAxis:31];
     chartController.barChartStyle = DTBarChartStyleHeap;
