@@ -13,6 +13,7 @@
 #import "DTMeasureDimensionHorizontalBarChart.h"
 #import "DTMeasureDimensionHorizontalBarChartController.h"
 #import "DTMeasureDimensionBurgerBarChart.h"
+#import "DTMeasureDimensionBurgerBarChartController.h"
 
 @interface MultiMeasureDimensionPresentationViewController ()
 
@@ -40,13 +41,15 @@
     [self.view addSubview:changeBtn];
 
 
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
     [self chartControllerDraw];
-    [self drawBurgerChart];
+//    [self drawBurgerChart];
+    [self drawBurgerChartController];
 //    [self chartDraw];
 }
 
@@ -118,6 +121,32 @@
     [self.view addSubview:burgerChart];
 
     [burgerChart drawChart];
+}
+
+- (void)drawBurgerChartController {
+
+    NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
+    NSString *path = [bundle pathForResource:@"data4" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model1 = [self dataFromJson:json];
+
+    path = [bundle pathForResource:@"data4-1" ofType:@"json"];
+    data = [NSData dataWithContentsOfFile:path];
+    json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    DTDimensionModel *model2 = [self dataFromJson:json];
+
+    DTMeasureDimensionBurgerBarChartController *controller = [[DTMeasureDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75 + 32 * 15) xAxis:55 yAxis:31];
+    [self.view addSubview:controller.chartView];
+
+    controller.valueSelectable = YES;
+    controller.showCoordinateAxisGrid = YES;
+    controller.chartId = @"1992";
+    controller.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [controller setMainItem:model1 secondItem:model2];
+    [controller drawChart];
 }
 
 - (void)chartDraw {

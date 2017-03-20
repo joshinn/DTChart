@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterType) {
     DTAxisFormatterTypeText = 0,    // 文字
     DTAxisFormatterTypeNumber = 1,  // 数值
     DTAxisFormatterTypeDate = 2,    // 日期
+    DTAxisFormatterTypeSecond = 3,    // 秒
 };
 
 typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {

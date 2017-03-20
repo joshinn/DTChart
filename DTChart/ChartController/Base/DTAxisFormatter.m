@@ -129,6 +129,28 @@ static NSString *const DateFormatterTime = @"HH:mm";
     return mutableString;
 }
 
+- (NSString *)handleTypeSecond:(CGFloat)value {
+    NSMutableString *mutableString = [NSMutableString string];
+
+    if (value > 3600) {
+        NSUInteger hour = (NSUInteger) (value / 3600);
+        value -= hour * 3600;
+        [mutableString appendString:[NSString stringWithFormat:@"%@h", @(hour)]];
+    }
+
+    if (value > 60) {
+        NSUInteger min = (NSUInteger) (value / 60);
+        value -= min * 60;
+        [mutableString appendString:[NSString stringWithFormat:@"%@min", @(min)]];
+    }
+
+    if (value > 0) {
+        [mutableString appendString:[NSString stringWithFormat:@"%@s", @(value)]];
+    }
+
+    return mutableString;
+}
+
 #pragma mark - public method
 
 
@@ -139,6 +161,8 @@ static NSString *const DateFormatterTime = @"HH:mm";
         return [NSString stringWithFormat:format, value * scale];
     } else if (type == DTAxisFormatterTypeDate) {
         return [self handleDate:string dateSubType:dateSubType];
+    } else if (type == DTAxisFormatterTypeSecond) {
+        return [self handleTypeSecond:value];
     }
     return string;
 }

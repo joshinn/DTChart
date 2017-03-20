@@ -8,7 +8,6 @@
 
 #import "DTMeasureDimensionBurgerBarChart.h"
 #import "DTDimensionModel.h"
-#import "DTDimensionBarModel.h"
 #import "DTDimensionBar.h"
 #import "DTDimensionBurgerLineModel.h"
 #import "DTChartToastView.h"
@@ -97,7 +96,7 @@ static NSUInteger const BarGap = 4;
 #pragma mark - private method
 
 - (void)drawBars:(DTDimensionModel *)data frame:(CGRect)frame {
-    if ([self layoutMainHeapBars:data fromFrame:frame drawSubviews:YES]) {
+    if ([self layoutMainHeapBars:data fromFrame:frame]) {
         CGRect fromFrame = CGRectZero;
         DTBar *lastBar = self.chartBars.lastObject;
         if (lastBar && [lastBar isKindOfClass:[DTDimensionHeapBar class]]) {
@@ -114,7 +113,7 @@ static NSUInteger const BarGap = 4;
     }
 }
 
-- (BOOL)layoutMainHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame drawSubviews:(BOOL)isDraw {
+- (BOOL)layoutMainHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame {
     CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
 
     BOOL draw = NO;
@@ -137,10 +136,9 @@ static NSUInteger const BarGap = 4;
             UIColor *borderColor = [self.colorManager getLightColor:color];
             [heapBar appendData:model barLength:length barColor:color barBorderColor:borderColor needLayout:model == data.ptListValue.lastObject];
 
-
         }
 
-        if (!CGRectIsEmpty(fromFrame)) {
+        if (CGRectGetWidth(fromFrame) != 0 || CGRectGetHeight(fromFrame) != 0) {
             DTDimensionBurgerLineModel *lineModel = [[DTDimensionBurgerLineModel alloc] init];
 
             UIBezierPath *path = [UIBezierPath bezierPath];
@@ -175,7 +173,7 @@ static NSUInteger const BarGap = 4;
 }
 
 - (void)drawSecondBars:(DTDimensionModel *)data frame:(CGRect)frame {
-    if ([self layoutSecondHeapBars:data fromFrame:frame drawSubviews:YES]) {
+    if ([self layoutSecondHeapBars:data fromFrame:frame]) {
         CGRect fromFrame = CGRectZero;
         DTDimensionHeapBar *lastHeapBar = self.secondChartBars.lastObject;
         if (lastHeapBar) {
@@ -191,7 +189,7 @@ static NSUInteger const BarGap = 4;
     }
 }
 
-- (BOOL)layoutSecondHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame drawSubviews:(BOOL)isDraw {
+- (BOOL)layoutSecondHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame {
     CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
 
     BOOL draw = NO;
@@ -216,7 +214,7 @@ static NSUInteger const BarGap = 4;
 
         }
 
-        if (!CGRectIsEmpty(fromFrame)) {
+        if (CGRectGetWidth(fromFrame) != 0 || CGRectGetHeight(fromFrame) != 0) {
             DTDimensionBurgerLineModel *lineModel = [[DTDimensionBurgerLineModel alloc] init];
 
             UIBezierPath *path = [UIBezierPath bezierPath];
@@ -258,7 +256,6 @@ static NSUInteger const BarGap = 4;
     [self.toastView hide];
     self.touchSelectedLine.hidden = YES;
 }
-
 
 #pragma mark - touch event
 
