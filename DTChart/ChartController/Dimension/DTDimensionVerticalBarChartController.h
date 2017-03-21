@@ -22,6 +22,7 @@
 /**
  * 赋值，柱状图的所有值
  * @param dimensionModel 数据
+ * @return 图表内容宽度是否超过了contentView
  */
-- (void)setItem:(DTDimensionModel *)dimensionModel;
+- (BOOL)setItem:(DTDimensionModel *)dimensionModel;
 @end

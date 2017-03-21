@@ -129,7 +129,7 @@
 
 #pragma mark - public method
 
-- (void)setItem:(DTDimensionModel *)dimensionModel {
+- (BOOL)setItem:(DTDimensionModel *)dimensionModel {
     self.chart.dimensionModel = dimensionModel;
 
     DTDimensionReturnModel *returnModel = [self.chart calculate:dimensionModel];
@@ -141,6 +141,8 @@
 
     // y轴label data
     self.chart.yAxisLabelDatas = [super generateYAxisLabelData:4 yAxisMaxValue:self.chart.maxY isMainAxis:YES];
+
+    return returnModel.sectionWidth > self.chart.xAxisCellCount * self.chart.coordinateAxisCellWidth;
 }
 
 @end

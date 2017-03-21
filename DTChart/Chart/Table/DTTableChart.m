@@ -39,7 +39,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     NSArray *widths;
     switch (chartStyle) {
         case DTTableChartStyleC1C2: {
-            widths = @[@{@"label": @85}, @{@"gap": @15}, @{@"label": @480}, @{@"gap": @5}, @{@"label": @480}];
+            widths = @[@{@"label": @90}, @{@"gap": @10}, @{@"label": @480}, @{@"gap": @5}, @{@"label": @480}];
         }
             break;
 
@@ -208,9 +208,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleT2C1C2: {
             widths = @[
-                    @{@"label": @85}, @{@"gap": @25}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
+                    @{@"label": @90}, @{@"gap": @20}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
                     @{@"gap": @15},
-                    @{@"label": @85}, @{@"gap": @25}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
+                    @{@"label": @90}, @{@"gap": @20}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
         }
             break;
         case DTTableChartStyleT2C1C2B1: {
@@ -222,9 +222,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
             break;
         case DTTableChartStyleT2C1C3: {
             widths = @[
-                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135},
-                    @{@"gap": @15},
-                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135}, @{@"gap": @15}, @{@"label": @135}];
+                    @{@"label": @90}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135},
+                    @{@"gap": @20},
+                    @{@"label": @90}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}];
         }
             break;
         case DTTableChartStyleT2C1C3B1: {
