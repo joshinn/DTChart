@@ -10,10 +10,13 @@
 #import "DTBarChart.h"
 
 @class DTDimensionModel;
+@class DTDimensionBarModel;
 
 @interface DTMeasureDimensionHorizontalBarChartController : DTChartController
 
-@property (nonatomic) DTBarChartStyle barChartStyle;
+@property(nonatomic) DTBarChartStyle barChartStyle;
+
+@property(nonatomic) NSArray<DTDimensionBarModel *> *levelLowestBarModels;
 
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((unavailable("DTMeasureDimensionHorizontalBarChartController use -setMainItem:secondItem: replace")));
 

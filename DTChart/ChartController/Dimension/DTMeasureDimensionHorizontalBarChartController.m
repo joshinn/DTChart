@@ -54,6 +54,10 @@
     self.chart.barChartStyle = barChartStyle;
 }
 
+- (NSArray<DTDimensionBarModel *> *)levelLowestBarModels {
+    return self.chart.levelLowestBarModels.copy;
+}
+
 /**
  * 把柱状图图的柱状体信息缓存起来
  */
