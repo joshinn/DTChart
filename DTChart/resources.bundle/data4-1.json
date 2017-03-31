@@ -14,15 +14,18 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 22.1
+                      "value1": 22.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 36.1
+                      "value1": 36.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 80
+                      "value1": 80,
+                      "value2": 22.1
                     }
                   ]
                 },
@@ -31,19 +34,23 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 28
+                      "value1": 28,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 30
+                      "value1": 30,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 38.1
+                      "value1": 38.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 29
+                      "value1": 29,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -57,15 +64,18 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 24
+                      "value1": 24,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 43.5
+                      "value1": 43.5,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 32
+                      "value1": 32,
+                      "value2": 22.1
                     }
                   ]
                 },
@@ -74,19 +84,23 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 12.1
+                      "value1": 12.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 23
+                      "value1": 23,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 15
+                      "value1": 15,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 41
+                      "value1": 41,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -105,19 +119,23 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 52.1
+                      "value1": 52.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 22.1
+                      "value1": 22.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 16.1
+                      "value1": 16.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 32.5
+                      "value1": 32.5,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -131,19 +149,23 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 14
+                      "value1": 14,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 13.5
+                      "value1": 13.5,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 32
+                      "value1": 32,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 23
+                      "value1": 23,
+                      "value2": 22.1
                     }
                   ]
                 },
@@ -152,15 +174,18 @@
                   "data": [
                     {
                       "name": "高意向",
-                      "value": 23
+                      "value1": 23,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 15
+                      "value1": 15,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 41
+                      "value1": 41,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -184,15 +209,18 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 12.1
+                      "value1": 12.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 16.1
+                      "value1": 16.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 32.5
+                      "value1": 32.5,
+                      "value2": 22.1
                     }
                   ]
                 },
@@ -201,19 +229,23 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 18
+                      "value1": 18,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 15.8
+                      "value1": 15.8,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 38.1
+                      "value1": 38.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 29
+                      "value1": 29,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -227,15 +259,19 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 14
+                      "value1": 14,
+                      "value2": 22.1
+
                     },
                     {
                       "name": "高意向",
-                      "value": 13.5
+                      "value1": 13.5,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 32
+                      "value1": 32,
+                      "value2": 22.1
                     }
                   ]
                 },
@@ -244,15 +280,18 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 22.1
+                      "value1": 22.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 23
+                      "value1": 23,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 41
+                      "value1": 41,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -271,19 +310,23 @@
                   "data": [
                     {
                       "name": "强意向",
-                      "value": 22.1
+                      "value1": 22.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "高意向",
-                      "value": 48.1
+                      "value1": 48.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 36.1
+                      "value1": 36.1,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 15.5
+                      "value1": 15.5,
+                      "value2": 22.1
                     }
                   ]
                 }
@@ -297,15 +340,18 @@
                   "data": [
                     {
                       "name": "高意向",
-                      "value": 43
+                      "value1": 43,
+                      "value2": 22.1
                     },
                     {
                       "name": "中意向",
-                      "value": 33
+                      "value1": 33,
+                      "value2": 22.1
                     },
                     {
                       "name": "低意向",
-                      "value": 15
+                      "value1": 15,
+                      "value2": 22.1
                     }
                   ]
                 }

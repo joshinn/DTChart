@@ -10,6 +10,38 @@
 
 @implementation DTDimensionModel
 
++ (instancetype)initWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index {
+    return [self dataFromJson:dictionary valueName:[NSString stringWithFormat:@"value%@", @(index)]];
+}
+
++ (DTDimensionModel *)dataFromJson:(NSDictionary *)json valueName:(NSString *)valueName {
+    DTDimensionModel *model = [[DTDimensionModel alloc] init];
+
+    if (json[@"name"]) {
+        model.ptName = json[@"name"];
+    }
+
+    if (json[@"data"]) {
+        id data = json[@"data"];
+        if ([data isKindOfClass:[NSArray class]]) {
+
+            NSArray *array = data;
+            NSMutableArray<DTDimensionModel *> *list = [NSMutableArray arrayWithCapacity:array.count];
+            for (NSDictionary *dictionary in array) {
+                DTDimensionModel *model2 = [self dataFromJson:dictionary valueName:valueName];
+                [list addObject:model2];
+            }
+
+            model.ptListValue = list;
+        }
+    }
+    if (json[valueName]) {
+        model.ptValue = [json[valueName] floatValue];
+    }
+
+    return model;
+}
+
 + (instancetype)initWith:(NSString *)name list:(NSArray<DTDimensionModel *> *)list value:(CGFloat)value {
     DTDimensionModel *model = [[DTDimensionModel alloc] init];
     model.ptName = name;

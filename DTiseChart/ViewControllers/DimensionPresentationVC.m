@@ -53,8 +53,8 @@
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model1 = [self dataFromJson:json];
-    DTDimensionModel *model1 = [self dataFromJson:json];
+    self.model1 = [DTDimensionModel initWithDictionary:json measureIndex:1];
+    DTDimensionModel *model1 = [DTDimensionModel initWithDictionary:json measureIndex:1];
     
 
 
@@ -244,7 +244,7 @@
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    DTDimensionModel *model = [self dataFromJson:json];
+    DTDimensionModel *model = [DTDimensionModel initWithDictionary:json measureIndex:1];
 
     self.model1 = model;
     DTDimensionVerticalBarChartController *chartController = [[DTDimensionVerticalBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 60) xAxis:55 yAxis:31];
@@ -273,7 +273,7 @@
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    self.model2 = [self dataFromJson:json];
+    self.model2 = [DTDimensionModel initWithDictionary:json measureIndex:1];
     DTDimensionModel *model = self.model2;
     DTDimensionModel *item = model.ptListValue.firstObject;
     NSMutableArray *array = [NSMutableArray array];
@@ -420,34 +420,6 @@
     return singleData;
 }
 
-- (DTDimensionModel *)dataFromJson:(NSDictionary *)json {
-    DTDimensionModel *model = [[DTDimensionModel alloc] init];
-
-    if (json[@"name"]) {
-        model.ptName = json[@"name"];
-    }
-
-    if (json[@"data"]) {
-        id data = json[@"data"];
-        if ([data isKindOfClass:[NSArray class]]) {
-
-            NSArray *array = data;
-            NSMutableArray<DTDimensionModel *> *list = [NSMutableArray arrayWithCapacity:array.count];
-            for (NSDictionary *dictionary in array) {
-                DTDimensionModel *model2 = [self dataFromJson:dictionary];
-                [list addObject:model2];
-            }
-
-            model.ptListValue = list;
-        }
-    }
-    if (json[@"value"]) {
-        model.ptValue = [json[@"value"] floatValue];
-    }
-
-    return model;
-}
-
 
 - (void)showBurgerBarChart {
     NSMutableArray<DTAxisLabelData *> *yLabelDatas = [NSMutableArray arrayWithCapacity:11];
@@ -473,7 +445,7 @@
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    DTDimensionModel *model = [self dataFromJson:json];
+    DTDimensionModel *model = [DTDimensionModel initWithDictionary:json measureIndex:1];
 
     self.burgerBarChart.dimensionModel = model;
 

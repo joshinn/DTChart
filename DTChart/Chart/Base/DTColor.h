@@ -24,13 +24,13 @@
 
 
 // 紫色
-#define DTColorPurple DTRGBColor(0x772F6D, 1)
+#define DTColorPurple DTRGBColor(0xE73275, 1)
 // 紫色
 #define DTColorPurpleLight DTRGBColor(0xC43168, 1)
 
 
 // 洋红
-#define DTColorMagenta DTRGBColor(0xE73275, 1)
+#define DTColorMagenta DTRGBColor(0x772F6D, 1)
 // 洋红
 #define DTColorMagentaLight DTRGBColor(0x692F61, 1)
 

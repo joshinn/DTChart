@@ -21,7 +21,16 @@
 
 @property(nonatomic) NSString *objectId;
 
+/**
+ * 通过字典创建
+ * @param dictionary 字典
+ * @param index 度量序号，从1开始
+ * @return DTDimensionModel instance
+ */
++ (instancetype)initWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index;
+
 + (instancetype)initWith:(NSString *)name list:(NSArray<DTDimensionModel *> *)list value:(CGFloat)value;
+
 @end
 
 

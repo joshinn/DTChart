@@ -5,11 +5,11 @@
       "data": [
         {
           "name": "强意向",
-          "value": 8
+          "value1": 8
         },
         {
           "name": "高意向",
-          "value": 15.8
+          "value1": 15.8
         }
       ]
     },
@@ -18,15 +18,15 @@
       "data": [
         {
           "name": "强意向",
-          "value": 28
+          "value1": 28
         },
         {
           "name": "中意向",
-          "value": 6.1
+          "value1": 6.1
         },
         {
           "name": "高意向",
-          "value": 25.8
+          "value1": 25.8
         }
       ]
     }
