@@ -135,6 +135,7 @@
 
 - (BOOL)setItem:(DTDimensionModel *)dimensionModel {
     self.chart.dimensionModel = dimensionModel;
+    self.chart.maxY = 0;
 
     DTDimensionReturnModel *returnModel = [self.chart calculate:dimensionModel];
     ChartEdgeInsets insets = self.chart.coordinateAxisInsets;

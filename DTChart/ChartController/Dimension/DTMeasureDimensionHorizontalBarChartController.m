@@ -33,7 +33,7 @@
         _chart = [[DTMeasureDimensionHorizontalBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _chart;
 
-        _chart.barWidth = 2;
+        _chart.barWidth = 1;
     }
     return self;
 }
@@ -131,6 +131,9 @@
 
     self.chart.mainDimensionModel = mainItem;
     self.chart.secondDimensionModel = secondItem;
+    
+    self.chart.mainAxisMaxX = 0;
+    self.chart.secondAxisMaxX = 0;
 
     DTDimensionReturnModel *returnModel = [self.chart calculateMain:mainItem];
     self.returnModel = returnModel;

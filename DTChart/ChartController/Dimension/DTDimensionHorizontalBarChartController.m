@@ -128,7 +128,8 @@
 
 - (void)setItem:(DTDimensionModel *)dimensionModel {
     self.chart.dimensionModel = dimensionModel;
-
+    self.chart.maxX = 0;
+    
     DTDimensionReturnModel *returnModel = [self.chart calculate:dimensionModel];
     self.returnModel = returnModel;
     ChartEdgeInsets insets = self.chart.coordinateAxisInsets;

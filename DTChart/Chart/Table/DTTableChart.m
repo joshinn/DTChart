@@ -183,6 +183,15 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
                     @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}];
         }
             break;
+        case DTTableChartStyleC1C1C9: {
+            widths = @[
+                    @{@"label": @190}, @{@"gap": @5},
+                    @{@"label": @135}, @{@"gap": @5},
+                    @{@"label": @75}, @{@"gap": @5},
+                    @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5},
+                    @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}];
+        }
+            break;
         case DTTableChartStyleC1C1C14: {
             widths = @[
                     @{@"label": @105}, @{@"gap": @5},
@@ -211,7 +220,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
         }
             break;
         case DTTableChartStyleT2C1C1: {
-            widths = @[@{@"label": @105}, @{@"gap": @5}, @{@"label": @415}, @{@"gap":@15},
+            widths = @[@{@"label": @105}, @{@"gap": @5}, @{@"label": @415}, @{@"gap": @15},
                     @{@"label": @105}, @{@"gap": @5}, @{@"label": @415}];
         }
             break;

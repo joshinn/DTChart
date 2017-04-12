@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, DTTableChartStyle) {
     DTTableChartStyleC1C1C5 = 1150,     ///< 流量来源
     DTTableChartStyleC1C1C6 = 1160,     ///< 经典留存率、滚动留存率
     DTTableChartStyleC1C1C8 = 1180,     ///< 经典留存率、滚动留存率
+    DTTableChartStyleC1C1C9 = 1190,     ///< 经典留存率、滚动留存率
     DTTableChartStyleC1C1C14 = 11140,   ///< 经典留存率、滚动留存率
     DTTableChartStyleC1C1C31 = 11310,
 
