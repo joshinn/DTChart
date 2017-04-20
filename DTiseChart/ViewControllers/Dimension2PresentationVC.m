@@ -13,6 +13,8 @@
 
 @interface Dimension2PresentationVC ()
 
+@property (nonatomic) DTDimensionBarChartController *chartController;
+
 @end
 
 @implementation Dimension2PresentationVC
@@ -102,7 +104,7 @@
 
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-    NSString *path = [bundle pathForResource:@"d2" ofType:@"json"];
+    NSString *path = [bundle pathForResource:@"d3" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSError *error = nil;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -137,6 +139,8 @@
     listSecondModel.maxValue = max2Value;
     listSecondModel.minValue = min2Value;
 
+//    listSecondModel = nil;
+
     DTDimensionBarChartController *chartController = [[DTDimensionBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
     chartController.chartId = @"0905";
     chartController.showCoordinateAxisGrid = YES;
@@ -144,6 +148,8 @@
     [chartController setMainData:listMainModel secondData:listSecondModel];
     [self.view addSubview:chartController.chartView];
     [chartController drawChart];
+
+    self.chartController = chartController;
 }
 
 @end

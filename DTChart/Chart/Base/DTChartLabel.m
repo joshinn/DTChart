@@ -11,7 +11,7 @@
 @implementation DTChartLabel
 
 + (instancetype)chartLabel {
-    DTChartLabel *label = [[DTChartLabel alloc] init];
+    DTChartLabel *label = [[self alloc] init];
     return label;
 }
 

@@ -12,5 +12,10 @@
 
 @interface DTDimensionBarChartController : DTChartController
 
-- (void)setMainData:(DTDimension2ListModel *)mainData secondData:(DTDimension2ListModel *)secondData;
+@property(nonatomic, copy) NSString *(^controllerTouchLabelBlock)(NSUInteger row, NSUInteger index);
+
+@property(nonatomic, copy) NSString *(^controllerTouchBarBlock)(NSUInteger row, BOOL isMainAxis);
+
+
+- (void)setMainData:(nonnull DTDimension2ListModel *)mainData secondData:(nullable DTDimension2ListModel *)secondData;
 @end

@@ -10,11 +10,12 @@
 #import "DTDimensionBarChartCell.h"
 #import "DTDimension2Model.h"
 #import "DTChartLabel.h"
+#import "DTChartToastView.h"
 
 CGFloat const DimensionLabelWidth = 70;
 CGFloat const DimensionLabelGap = 5;
 
-@interface DTDimensionBarChart () <UITableViewDataSource, UITableViewDelegate>
+@interface DTDimensionBarChart () <UITableViewDataSource, UITableViewDelegate, DTDimensionBarChartCellDelegate>
 
 @property(nonatomic) UITableView *tableView;
 
@@ -49,7 +50,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     _prepare = NO;
 
-    self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 1, self.coordinateAxisInsets.right, self.coordinateAxisInsets.bottom);
+    self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, self.coordinateAxisInsets.right, self.coordinateAxisInsets.bottom);
 
     self.tableView.frame = self.contentView.bounds;
     [self.contentView addSubview:self.tableView];
@@ -58,6 +59,11 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     [self addSubview:self.secondTitleLabel];
 }
 
+- (void)setCoordinateAxisInsets:(ChartEdgeInsets)coordinateAxisInsets {
+    [super setCoordinateAxisInsets:coordinateAxisInsets];
+
+    self.tableView.frame = self.contentView.bounds;
+}
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -106,6 +112,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DTDimensionBarChartCell *barChartCell = [tableView dequeueReusableCellWithIdentifier:DTDimensionBarChartCellId];
 
+    barChartCell.delegate = self;
     barChartCell.cellSize = CGSizeMake(CGRectGetWidth(tableView.bounds), tableView.rowHeight);
     barChartCell.titleWidth = DimensionLabelWidth;
     barChartCell.titleGap = DimensionLabelGap;
@@ -144,6 +151,28 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 }
 
 
+#pragma mark - private method
+
+- (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+    [self.touchSelectedLine removeFromSuperlayer];
+    [self.contentView.layer addSublayer:self.touchSelectedLine];
+    self.touchSelectedLine.hidden = NO;
+
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    self.touchSelectedLine.frame = CGRectMake(0, point.y, CGRectGetWidth(self.contentView.bounds), 1);
+    [CATransaction commit];
+
+    [self.toastView show:message location:point];
+}
+
+- (void)hideTouchMessage {
+    [self.toastView hide];
+
+    self.touchSelectedLine.hidden = YES;
+}
+
+
 #pragma mark - override
 
 - (BOOL)drawXAxisLabels {
@@ -169,10 +198,6 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     for (NSUInteger i = 0; i < self.xAxisLabelDatas.count; ++i) {
         DTAxisLabelData *data = self.xAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
-
-        if (data.hidden) {
-            continue;
-        }
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
         if (self.secondData) {
@@ -209,6 +234,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         }
 
         xLabel.frame = (CGRect) {CGPointMake(x, y), size};
+        xLabel.hidden = data.hidden;
 
         [self addSubview:xLabel];
     }
@@ -259,10 +285,6 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         DTAxisLabelData *data = self.xSecondAxisLabelDatas[i];
         data.axisPosition = sectionCellCount * i;
 
-        if (data.hidden) {
-            continue;
-        }
-
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
         xLabel.textColor = SecondBarColor;
 
@@ -296,6 +318,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         }
 
         xLabel.frame = (CGRect) {CGPointMake(x, y), size};
+        xLabel.hidden = data.hidden;
 
         [self addSubview:xLabel];
     }
@@ -315,4 +338,58 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     [self drawXSecondAxisLabels];
 }
+
+
+#pragma mark - DTDimensionBarChartCellDelegate
+
+- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell labelIndex:(NSUInteger)index touch:(UITouch *)touch {
+
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
+    NSString *message = nil;
+    if (self.touchLabelBlock) {
+        message = self.touchLabelBlock((NSUInteger) indexPath.row, index);
+    }
+
+    if (message.length == 0) {
+        message = self.mainData.listDimensions[(NSUInteger) indexPath.row].ptNames[index];
+    }
+
+    CGPoint cellTouchPoint = [touch locationInView:cell];
+    CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
+    CGPoint location = [touch locationInView:self.tableView];
+    location.y = location.y - self.tableView.contentOffset.y + deltaY;
+
+    [self showTouchMessage:message touchPoint:location];
+}
+
+- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain touch:(UITouch *)touch {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSString *message;
+
+    if (self.touchBarBlock) {
+        message = self.touchBarBlock((NSUInteger) indexPath.row, isMain);
+    }
+
+    if (message.length == 0) {
+        if (isMain) {
+            message = [NSString stringWithFormat:@"%@", @(self.mainData.listDimensions[(NSUInteger) indexPath.row].ptValue)];
+        } else {
+            message = [NSString stringWithFormat:@"%@", @(self.secondData.listDimensions[(NSUInteger) indexPath.row].ptValue)];
+        }
+    }
+
+    CGPoint cellTouchPoint = [touch locationInView:cell];
+    CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
+    CGPoint location = [touch locationInView:self.tableView];
+    location.y = location.y - self.tableView.contentOffset.y + deltaY;
+
+    [self showTouchMessage:message touchPoint:location];
+}
+
+- (void)chartCellHintTouchEnd {
+    [self hideTouchMessage];
+}
+
+
 @end

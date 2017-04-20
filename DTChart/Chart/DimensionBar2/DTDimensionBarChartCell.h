@@ -10,6 +10,7 @@
 #import "DTColor.h"
 
 @class DTDimension2Model;
+@class DTDimensionBarChartCell;
 
 #define MainBarColor DTColorBlue;
 #define MainBarBorderColor DTColorBlueLight;
@@ -17,7 +18,23 @@
 #define SecondBarBorderColor DTColorPinkLight;
 
 
+@protocol DTDimensionBarChartCellDelegate <NSObject>
+
+@optional
+- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell labelIndex:(NSUInteger)index touch:(UITouch *)touch;
+
+- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain touch:(UITouch *)touch;
+
+- (void)chartCellHintTouchEnd;
+
+
+@end
+
 @interface DTDimensionBarChartCell : UITableViewCell
+
+@property(nonatomic, weak) id <DTDimensionBarChartCellDelegate> delegate;
+
+@property(nonatomic, getter=isSelectable) BOOL selectable;
 
 @property(nonatomic) CGSize cellSize;
 @property(nonatomic) CGFloat titleWidth;

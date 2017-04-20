@@ -42,10 +42,13 @@
 
     CGFloat width = CGRectGetWidth(rect) + 30;
     CGFloat height = CGRectGetHeight(rect) + 30;
-    CGFloat x = point.x + 30;
+    CGFloat x = point.x - 30 - width;
     CGFloat y = point.y - height - 30;
     if (x + width > CGRectGetMaxX(self.superview.bounds)) {
         x -= width + 60;
+    }
+    if (x < CGRectGetMinX(self.superview.bounds)) {
+        x += width + 60;
     }
 
     if (y < 0) {

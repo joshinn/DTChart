@@ -25,4 +25,8 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
  */
 @property(nonatomic, copy) NSArray<DTAxisLabelData *> *xSecondAxisLabelDatas;
 
+@property(nonatomic, copy) NSString *(^touchLabelBlock)(NSUInteger row, NSUInteger index);
+
+@property(nonatomic, copy) NSString *(^touchBarBlock)(NSUInteger row, BOOL isMainAxis);
+
 @end

@@ -10,13 +10,14 @@
 #import "DTBar.h"
 #import "DTDimension2Model.h"
 #import "DTDimensionSectionLine.h"
+#import "DTTableLabel.h"
 
 @interface DTDimensionBarChartCell ()
 
 @property(nonatomic) DTBar *mainBar;
 @property(nonatomic) DTBar *secondBar;
 
-@property(nonatomic) NSMutableArray<UILabel *> *labels;
+@property(nonatomic) NSMutableArray<DTChartLabel *> *labels;
 
 @property(nonatomic) DTDimension2Model *mainData;
 @property(nonatomic) DTDimension2Model *secondData;
@@ -48,18 +49,17 @@
     return self;
 }
 
-- (NSMutableArray<UILabel *> *)labels {
+- (NSMutableArray<DTChartLabel *> *)labels {
     if (!_labels) {
         _labels = [NSMutableArray array];
     }
     return _labels;
 }
 
-- (UILabel *)labelFactory {
-    UILabel *label = [[UILabel alloc] init];
+- (DTChartLabel *)labelFactory {
+    DTChartLabel *label = [DTChartLabel chartLabel];
     label.font = [UIFont systemFontOfSize:10];
     label.textColor = [UIColor whiteColor];
-//    label.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3];
     return label;
 }
 
@@ -76,7 +76,7 @@
         [self.labels removeAllObjects];
 
         for (NSUInteger i = 0; i < mainData.ptNames.count; ++i) {
-            UILabel *label = [self labelFactory];
+            DTChartLabel *label = [self labelFactory];
             label.frame = CGRectMake(i * (self.titleWidth + self.titleGap), 0, self.titleWidth, 15);
             [self.labels addObject:label];
             [self.contentView addSubview:label];
@@ -125,6 +125,57 @@
         }
     } else {
         self.secondBar.hidden = YES;
+    }
+}
+
+#pragma mark - touch
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+
+    UITouch *touch = touches.anyObject;
+    CGPoint location = [touch locationInView:self];
+
+    if (location.x < self.mainNegativeLimitX) {
+        __block NSInteger index = -1;
+        [self.labels enumerateObjectsUsingBlock:^(DTChartLabel *label, NSUInteger idx, BOOL *stop) {
+            if (CGRectGetMinX(label.frame) <= location.x && location.x <= CGRectGetMaxX(label.frame)) {
+                index = idx;
+                *stop = YES;
+            }
+        }];
+
+        if (index >= 0) {
+            id <DTDimensionBarChartCellDelegate> o = self.delegate;
+            if ([o respondsToSelector:@selector(chartCellHintTouchBegin:labelIndex:touch:)]) {
+                [o chartCellHintTouchBegin:self labelIndex:(NSUInteger) index touch:touch];
+            }
+        }
+    } else {
+
+        BOOL isMain = location.x < self.secondNegativeLimitX;
+        id <DTDimensionBarChartCellDelegate> o = self.delegate;
+        if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:touch:)]) {
+            [o chartCellHintTouchBegin:self isMainAxisBar:isMain touch:touch];
+        }
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
+    [super touchesEnded:touches withEvent:event];
+
+    id <DTDimensionBarChartCellDelegate> o = self.delegate;
+    if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {
+        [o chartCellHintTouchEnd];
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
+    [super touchesCancelled:touches withEvent:event];
+
+    id <DTDimensionBarChartCellDelegate> o = self.delegate;
+    if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {
+        [o chartCellHintTouchEnd];
     }
 }
 

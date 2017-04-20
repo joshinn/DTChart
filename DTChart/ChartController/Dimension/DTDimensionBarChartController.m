@@ -27,6 +27,23 @@
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _chart = [[DTDimensionBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _chart;
+
+        WEAK_SELF;
+        [_chart setTouchLabelBlock:^NSString *(NSUInteger row, NSUInteger index) {
+            if (weakSelf.controllerTouchLabelBlock) {
+                return weakSelf.controllerTouchLabelBlock(row, index);
+            } else {
+                return nil;
+            }
+        }];
+
+        [_chart setTouchBarBlock:^NSString *(NSUInteger row, BOOL isMainAxis) {
+            if (weakSelf.controllerTouchBarBlock) {
+                return weakSelf.controllerTouchBarBlock(row, isMainAxis);
+            } else {
+                return nil;
+            }
+        }];
     }
     return self;
 }
@@ -109,17 +126,26 @@
 
 #pragma mark - public method
 
-- (void)setMainData:(DTDimension2ListModel *)mainData secondData:(DTDimension2ListModel *)secondData {
+- (void)setMainData:(nonnull DTDimension2ListModel *)mainData secondData:(nullable DTDimension2ListModel *)secondData {
     if (mainData && secondData && mainData.listDimensions.count != secondData.listDimensions.count) {
         return;
     }
 
-    self.chart.mainData = mainData;
-    self.chart.secondData = secondData;
+    if (mainData) {
+        self.chart.mainData = mainData;
+        [self processXLabelData:4 axisMaxValue:mainData.maxValue axisMinValue:mainData.minValue isMainAxis:YES];
+    }
 
-//    [self processXLabelData:4 axisMaxValue:300 axisMinValue:-950 isMainAxis:YES];
-    [self processXLabelData:4 axisMaxValue:mainData.maxValue axisMinValue:mainData.minValue isMainAxis:YES];
-    [self processXLabelData:4 axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
+    if (secondData) {
+        self.chart.secondData = secondData;
+        [self processXLabelData:4 axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
+
+        ChartEdgeInsets insets = self.chart.coordinateAxisInsets;
+        self.chart.coordinateAxisInsets = ChartEdgeInsetsMake(insets.left, 1, insets.right, insets.bottom);
+    } else {
+        ChartEdgeInsets insets = self.chart.coordinateAxisInsets;
+        self.chart.coordinateAxisInsets = ChartEdgeInsetsMake(insets.left, 0, insets.right, insets.bottom);
+    }
 }
 
 
