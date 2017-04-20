@@ -24,6 +24,8 @@ typedef void(^SecondChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *in
 
 @property(nonatomic, copy) DTPieChartTouchBlock pieChartTouchBlock;
 
+@property(nonatomic, copy) void (^pieChartTouchCancelBlock)(NSUInteger index);
+
 @property(nonatomic, copy) MainChartItemsColorsCompletion mainChartItemsColorsCompletionBlock;
 
 @property(nonatomic, copy) SecondChartItemsColorsCompletion secondChartItemsColorsCompletionBlock;

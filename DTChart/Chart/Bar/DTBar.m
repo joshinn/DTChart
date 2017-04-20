@@ -26,7 +26,7 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 }
 
 + (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style {
-    DTBar *bar = [[DTBar alloc] init];
+    DTBar *bar = [[self alloc] init];
     bar.barOrientation = orientation;
     bar.barBorderStyle = style;
     return bar;

@@ -12,7 +12,7 @@
 @implementation DTDimensionBar
 
 + (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style {
-    DTDimensionBar *bar = [[DTDimensionBar alloc] init];
+    DTDimensionBar *bar = [super bar:orientation style:style];
     bar.barOrientation = orientation;
     bar.barBorderStyle = style;
     return bar;

@@ -10,7 +10,7 @@
 #import <CoreGraphics/CGBase.h>
 
 
-@interface DTCommonData : NSObject
+@interface DTCommonData : NSObject<NSCopying>
 
 @property(nonatomic) NSString *ptName;
 @property(nonatomic) CGFloat ptValue;
@@ -27,7 +27,7 @@
 @end
 
 
-@interface DTListCommonData : NSObject
+@interface DTListCommonData : NSObject<NSCopying>
 
 @property(nonatomic) NSString *seriesId;
 /**

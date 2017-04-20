@@ -36,7 +36,7 @@
         }
     }
     if (json[valueName]) {
-        model.ptValue = [json[valueName] floatValue];
+        model.ptValue = [json[valueName] doubleValue];
     }
 
     return model;

@@ -25,6 +25,17 @@
 }
 
 
+- (id)copyWithZone:(nullable NSZone *)zone {
+    DTCommonData *commonData = [[[self class] allocWithZone:zone] init];
+    [self processCopy:commonData];
+    return commonData;
+}
+
+- (void)processCopy:(DTCommonData *)copiedModel {
+    copiedModel.ptName = self.ptName.copy;
+    copiedModel.ptStringValue = self.ptStringValue.copy;
+    copiedModel.ptValue = self.ptValue;
+}
 @end
 
 
@@ -46,4 +57,21 @@
     return self;
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone {
+    DTListCommonData *listCommonData = [[[self class] allocWithZone:zone] init];
+    [self processCopy:listCommonData];
+    return listCommonData;
+}
+
+- (void)processCopy:(DTListCommonData *)copiedModel {
+    copiedModel.seriesId = self.seriesId;
+    copiedModel.seriesName = self.seriesName.copy;
+    copiedModel.mainAxis = self.isMainAxis;
+
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.commonDatas.count];
+    for (DTCommonData *commonData in self.commonDatas) {
+        [array addObject:commonData.copy];
+    }
+    copiedModel.commonDatas = array.count > 0 ? array.copy : nil;
+}
 @end

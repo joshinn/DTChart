@@ -15,6 +15,4 @@
 
 @property(nonatomic) NSArray<DTDimensionModel *> *dimensionModels;
 
-+ (instancetype)bar:(DTBarOrientation)orientation style:(DTBarBorderStyle)style;
-
 @end

@@ -66,7 +66,11 @@
         }];
 
         [_mainChart setPieChartTouchCancelBlock:^(NSUInteger index) {
-            [weakSelf dismissSecondPieChart];
+            if (weakSelf.pieChartTouchCancelBlock) {
+                weakSelf.pieChartTouchCancelBlock(index);
+            } else {
+                [weakSelf dismissSecondPieChart];
+            }
         }];
 
         [_mainChart setColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
