@@ -7,10 +7,11 @@
 //
 
 #import "DTDimensionBarChart.h"
-#import "DTDimensionBarChartCell.h"
 #import "DTDimension2Model.h"
 #import "DTChartLabel.h"
 #import "DTChartToastView.h"
+#import "DTDimensionBarChartCell.h"
+#import "DTDimensionBarModel.h"
 
 CGFloat const DimensionLabelWidth = 70;
 CGFloat const DimensionLabelGap = 5;
@@ -57,6 +58,8 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     [self addSubview:self.mainTitleLabel];
     [self addSubview:self.secondTitleLabel];
+
+    self.colorManager = [DTColorManager randomManager];
 }
 
 - (void)setCoordinateAxisInsets:(ChartEdgeInsets)coordinateAxisInsets {
@@ -99,6 +102,20 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     return _secondTitleLabel;
 }
 
+- (NSMutableArray<DTDimensionBarModel *> *)levelMainBarModels {
+    if (!_levelMainBarModels) {
+        _levelMainBarModels = [NSMutableArray array];
+    }
+    return _levelMainBarModels;
+}
+
+- (NSMutableArray<DTDimensionBarModel *> *)levelSecondBarModels {
+    if (!_levelSecondBarModels) {
+        _levelSecondBarModels = [NSMutableArray array];
+    }
+    return _levelSecondBarModels;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -132,17 +149,14 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     NSUInteger index = (NSUInteger) indexPath.row;
     DTDimension2Model *data = self.mainData.listDimensions[index];
     DTDimension2Model *secondData = self.secondData.listDimensions[index];
-    DTDimension2Model *prev;
+    DTDimension2Model *prev = nil;
     if (index > 0) {
         prev = self.mainData.listDimensions[index - 1];
-    } else {
-        prev = nil;
     }
-    DTDimension2Model *next;
+
+    DTDimension2Model *next = nil;
     if (index < self.mainData.listDimensions.count - 1) {
         next = self.mainData.listDimensions[index + 1];
-    } else {
-        next = nil;
     }
 
     [barChartCell setCellData:data second:secondData prev:prev next:next];
@@ -175,13 +189,26 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
 #pragma mark - override
 
+- (void)clearChartContent {
+    [super clearChartContent];
+
+    [self.levelMainBarModels removeAllObjects];
+    [self.levelSecondBarModels removeAllObjects];
+
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[DTChartLabel class]]) {
+            [obj removeFromSuperview];
+        }
+    }];
+}
+
 - (BOOL)drawXAxisLabels {
     if (self.xAxisLabelDatas.count < 2) {
         DTLog(@"Error: x轴标签数量小于2");
         return NO;
     }
 
-    NSUInteger yLabelContentCellCount = (NSUInteger) (self.mainData.listDimensions.firstObject.ptNames.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
+    NSUInteger yLabelContentCellCount = (NSUInteger) (self.mainData.listDimensions.firstObject.roots.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
     NSUInteger barContentCellCount = self.xAxisCellCount - yLabelContentCellCount;   ///< 柱状体最大的空间
 
     if (self.secondData) {
@@ -251,7 +278,9 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 }
 
 - (void)drawChart {
-    [super drawChart];
+
+    [self clearChartContent];
+
     self.prepare = YES;
 
     if (self.secondData) {
@@ -262,6 +291,10 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         self.mainTitleLabel.hidden = YES;
         self.secondTitleLabel.hidden = YES;
     }
+
+    if ([self drawXAxisLabels] && [self drawYAxisLabels]) {
+        [self drawValues];
+    }
 }
 
 - (BOOL)drawXSecondAxisLabels {
@@ -270,7 +303,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         return NO;
     }
 
-    NSUInteger yLabelContentCellCount = (NSUInteger) (self.secondData.listDimensions.firstObject.ptNames.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
+    NSUInteger yLabelContentCellCount = (NSUInteger) (self.secondData.listDimensions.firstObject.roots.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
     NSUInteger barContentCellCount = self.xAxisCellCount - yLabelContentCellCount;   ///< 柱状体最大的空间
 
     barContentCellCount /= 2;
@@ -334,8 +367,6 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 }
 
 - (void)drawSecondChart {
-    [super drawSecondChart];
-
     [self drawXSecondAxisLabels];
 }
 
@@ -352,7 +383,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     }
 
     if (message.length == 0) {
-        message = self.mainData.listDimensions[(NSUInteger) indexPath.row].ptNames[index];
+        message = self.mainData.listDimensions[(NSUInteger) indexPath.row].roots[index].name;
     }
 
     CGPoint cellTouchPoint = [touch locationInView:cell];
@@ -365,17 +396,28 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
 - (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain touch:(UITouch *)touch {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSString *message;
+    NSMutableString *message = [NSMutableString string];
 
     if (self.touchBarBlock) {
-        message = self.touchBarBlock((NSUInteger) indexPath.row, isMain);
+        NSString *string = self.touchBarBlock((NSUInteger) indexPath.row, isMain);
+        if(string.length > 0){
+            [message appendString:string];
+        }
     }
 
     if (message.length == 0) {
+        NSArray<DTDimension2Item *> *items = nil;
         if (isMain) {
-            message = [NSString stringWithFormat:@"%@", @(self.mainData.listDimensions[(NSUInteger) indexPath.row].ptValue)];
+            items = self.mainData.listDimensions[(NSUInteger) indexPath.row].items;
         } else {
-            message = [NSString stringWithFormat:@"%@", @(self.secondData.listDimensions[(NSUInteger) indexPath.row].ptValue)];
+            items = self.secondData.listDimensions[(NSUInteger) indexPath.row].items;
+        }
+
+        for (DTDimension2Item *item in items) {
+            [message appendString:[NSString stringWithFormat:@"%@: %@", item.name, @(item.value)]];
+            if (item != items.lastObject) {
+                [message appendString:@"\n"];
+            }
         }
     }
 
@@ -391,5 +433,38 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     [self hideTouchMessage];
 }
 
+- (UIColor *)chartCellRequestItemColor:(id)data isMainAxis:(BOOL)isMain {
+    UIColor *color = nil;
+
+    if ([data isKindOfClass:[DTDimension2Item class]]) {
+        DTDimension2Item *item = data;
+
+        BOOL exist = NO;
+        NSMutableArray<DTDimensionBarModel *> *list = nil;
+        if (isMain) {
+            list = self.levelMainBarModels;
+        } else {
+            list = self.levelSecondBarModels;
+        }
+
+        for (DTDimensionBarModel *model in list) {
+            if ([model.title isEqualToString:item.name]) {
+
+                color = model.color;
+                exist = YES;
+                break;
+            }
+        }
+
+        if (!exist) {
+            color = [self.colorManager getColor];
+            DTDimensionBarModel *model = [[DTDimensionBarModel alloc] init];
+            model.color = color;
+            model.title = item.name;
+            [list addObject:model];
+        }
+    }
+    return color;
+}
 
 @end

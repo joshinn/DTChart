@@ -9,17 +9,35 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CGBase.h>
 
+
+typedef NS_ENUM(NSInteger, DTDimensionBarStyle) {
+    DTDimensionBarStyleStartLine = 0,
+    DTDimensionBarStyleHeap = 1,
+};
+
+@interface DTDimension2Item : NSObject
+
+@property(nonatomic) NSString *name;
+
+@property(nonatomic) CGFloat value;
+
++ (instancetype)initWithName:(NSString *)name value:(CGFloat)value;
+
+@end
+
+
 @interface DTDimension2Model : NSObject
 
-@property(nonatomic) NSString *ptName;
+@property(nonatomic) NSArray<DTDimension2Item *> *roots;
 
-@property(nonatomic) CGFloat ptValue;
+@property(nonatomic) NSArray<DTDimension2Item *> *items;
 
-@property(nonatomic) NSArray<NSString *> *ptNames;
+@property(nonatomic) CGFloat itemsMaxValue;
+@property(nonatomic) CGFloat itemsMinValue;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index;
+- (instancetype)initStartLineWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index;
 
-- (instancetype)initFromJson:(NSDictionary *)json valueName:(NSString *)valueName;
+- (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index prevModel:(DTDimension2Model *)prevModel;
 @end
 
 

@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, DTBarOrientation) {
     DTBarOrientationUp,         // 方向朝上，默认方向
     DTBarOrientationRight,       // 方向朝右
     DTBarOrientationLeft,       // 方向朝左
+    DTBarOrientationDown,       // 方向朝左
 };
 
 
@@ -24,6 +25,20 @@ typedef NS_ENUM(NSInteger, DTBarBorderStyle) {
 @class DTChartItemData;
 @class DTBar;
 
+CG_INLINE DTBarOrientation NegativeOrientation(DTBarOrientation orientation) {
+    switch (orientation) {
+        case DTBarOrientationUp:
+            return DTBarOrientationDown;
+        case DTBarOrientationRight:
+            return DTBarOrientationLeft;
+        case DTBarOrientationLeft:
+            return DTBarOrientationRight;
+        case DTBarOrientationDown:
+            return DTBarOrientationUp;
+        default:
+            return DTBarOrientationDown;
+    }
+}
 
 
 /**

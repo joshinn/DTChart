@@ -60,8 +60,15 @@
 
 - (void)processXLabelData:(NSUInteger)axisCount axisMaxValue:(CGFloat)maxValue axisMinValue:(CGFloat)minValue isMainAxis:(BOOL)isMainAxis {
 
+    
     if (minValue >= 0) {
-        self.chart.xAxisLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:YES];
+    
+        NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:YES];
+        if (isMainAxis) {
+            self.chart.xAxisLabelDatas = xLabelDatas;
+        } else {
+            self.chart.xSecondAxisLabelDatas = xLabelDatas;
+        }
 
     } else {
         CGFloat max = 0;

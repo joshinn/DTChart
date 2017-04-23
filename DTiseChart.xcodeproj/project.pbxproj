@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65086BE41EAA18A20029D34B /* DTDimension2HeapBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65086BE31EAA18A20029D34B /* DTDimension2HeapBar.m */; };
+		65086BE71EAA1D790029D34B /* DTDimension2Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 65086BE61EAA1D790029D34B /* DTDimension2Bar.m */; };
 		6524368A1E70ECDF002E003C /* DTDimensionBurgerBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 652436891E70ECDF002E003C /* DTDimensionBurgerBarChart.m */; };
 		6524368D1E7139B1002E003C /* DTDimensionBurgerLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6524368C1E7139B1002E003C /* DTDimensionBurgerLineModel.m */; };
 		652436901E714E22002E003C /* DTDimensionBurgerBarChartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6524368F1E714E22002E003C /* DTDimensionBurgerBarChartController.m */; };
@@ -100,6 +102,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65086BE21EAA18A20029D34B /* DTDimension2HeapBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimension2HeapBar.h; sourceTree = "<group>"; };
+		65086BE31EAA18A20029D34B /* DTDimension2HeapBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimension2HeapBar.m; sourceTree = "<group>"; };
+		65086BE51EAA1D790029D34B /* DTDimension2Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimension2Bar.h; sourceTree = "<group>"; };
+		65086BE61EAA1D790029D34B /* DTDimension2Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimension2Bar.m; sourceTree = "<group>"; };
 		652436881E70ECDF002E003C /* DTDimensionBurgerBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimensionBurgerBarChart.h; sourceTree = "<group>"; };
 		652436891E70ECDF002E003C /* DTDimensionBurgerBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTDimensionBurgerBarChart.m; sourceTree = "<group>"; };
 		6524368B1E7139B1002E003C /* DTDimensionBurgerLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTDimensionBurgerLineModel.h; sourceTree = "<group>"; };
@@ -311,6 +317,10 @@
 				653D0EA81EA5E8FB009CA8EA /* DTDimensionBarChart.m */,
 				653D0EAA1EA5EC39009CA8EA /* DTDimensionBarChartCell.h */,
 				653D0EAB1EA5EC39009CA8EA /* DTDimensionBarChartCell.m */,
+				65086BE21EAA18A20029D34B /* DTDimension2HeapBar.h */,
+				65086BE31EAA18A20029D34B /* DTDimension2HeapBar.m */,
+				65086BE51EAA1D790029D34B /* DTDimension2Bar.h */,
+				65086BE61EAA1D790029D34B /* DTDimension2Bar.m */,
 			);
 			path = DimensionBar2;
 			sourceTree = "<group>";
@@ -779,6 +789,7 @@
 				652E82201E697429006C28E0 /* DTDimensionSectionLine.m in Sources */,
 				658F7FBC1E10F81F0024AB62 /* LineViewController.m in Sources */,
 				65B7BE481E25D1EA00DC152B /* CollectionViewController.m in Sources */,
+				65086BE71EAA1D790029D34B /* DTDimension2Bar.m in Sources */,
 				65CC6DFB1E0D0AC300E2C36B /* UIColor+DTExternal.m in Sources */,
 				653D0EB21EA5FC61009CA8EA /* DTDimension2Model.m in Sources */,
 				65E347071E2F189800BE9A1F /* DTHorizontalBarChartController.m in Sources */,
@@ -822,6 +833,7 @@
 				65BB07131EA778ED00E51DC3 /* DTDimensionBarChartController.m in Sources */,
 				65EEFC631E5FE11F00ED5F84 /* DTDimensionVerticalBarChart.m in Sources */,
 				65EEFC661E60059700ED5F84 /* DimensionPresentationVC.m in Sources */,
+				65086BE41EAA18A20029D34B /* DTDimension2HeapBar.m in Sources */,
 				652E821D1E696C5E006C28E0 /* DTDimensionBar.m in Sources */,
 				65E19EDA1E6521D10060059B /* DTChartData.m in Sources */,
 				65683FBF1E5ED255003D841B /* DTHorizontalBarChart.m in Sources */,

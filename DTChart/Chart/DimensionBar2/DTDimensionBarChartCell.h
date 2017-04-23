@@ -17,7 +17,6 @@
 #define SecondBarColor DTColorPink;
 #define SecondBarBorderColor DTColorPinkLight;
 
-
 @protocol DTDimensionBarChartCellDelegate <NSObject>
 
 @optional
@@ -27,6 +26,8 @@
 
 - (void)chartCellHintTouchEnd;
 
+@required
+- (UIColor *)chartCellRequestItemColor:(id)data isMainAxis:(BOOL)isMain;
 
 @end
 

@@ -10,6 +10,7 @@
 
 @class DTDimension2Model;
 @class DTDimension2ListModel;
+@class DTDimensionBarModel;
 
 UIKIT_EXTERN CGFloat const DimensionLabelWidth;
 UIKIT_EXTERN CGFloat const DimensionLabelGap;
@@ -17,9 +18,12 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 
 @interface DTDimensionBarChart : DTBarChart
 
+
 @property(nonatomic) DTDimension2ListModel *mainData;
 @property(nonatomic) DTDimension2ListModel *secondData;
 
+@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelMainBarModels;
+@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelSecondBarModels;
 /**
  * 第二个度量x轴标签数组
  */

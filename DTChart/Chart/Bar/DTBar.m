@@ -98,26 +98,34 @@ static CGFloat const DTBarSidesBorderWidth = 2;
 
         case DTBarOrientationUp: {
             if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
-                self.barFrontView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), DTBarTopBorderWidth);
+                self.barFrontView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), DTBarTopBorderWidth);
             } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
-                self.barFrontView.frame = CGRectMake(DTBarSidesBorderWidth, 0, CGRectGetWidth(self.frame) - DTBarSidesBorderWidth * 2, CGRectGetHeight(self.frame));
+                self.barFrontView.frame = CGRectMake(DTBarSidesBorderWidth, 0, CGRectGetWidth(self.bounds) - DTBarSidesBorderWidth * 2, CGRectGetHeight(self.bounds));
             }
         }
             break;
 
         case DTBarOrientationRight: {
             if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
-                self.barFrontView.frame = CGRectMake(CGRectGetWidth(self.frame) - DTBarTopBorderWidth, 0, DTBarTopBorderWidth, CGRectGetHeight(self.frame));
+                self.barFrontView.frame = CGRectMake(CGRectGetMaxX(self.bounds) - DTBarTopBorderWidth, 0, DTBarTopBorderWidth, CGRectGetHeight(self.bounds));
             } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
-                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
+                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - DTBarSidesBorderWidth * 2);
             }
         }
             break;
-        case DTBarOrientationLeft:{
+        case DTBarOrientationLeft: {
             if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
-                self.barFrontView.frame = CGRectMake(0, 0, DTBarTopBorderWidth, CGRectGetHeight(self.frame));
+                self.barFrontView.frame = CGRectMake(0, 0, DTBarTopBorderWidth, CGRectGetHeight(self.bounds));
             } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
-                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - DTBarSidesBorderWidth * 2);
+                self.barFrontView.frame = CGRectMake(0, DTBarSidesBorderWidth, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - DTBarSidesBorderWidth * 2);
+            }
+        }
+            break;
+        case DTBarOrientationDown: {
+            if (self.barBorderStyle == DTBarBorderStyleTopBorder) {
+                self.barFrontView.frame = CGRectMake(0, CGRectGetMaxY(self.bounds) - DTBarTopBorderWidth, CGRectGetWidth(self.bounds), DTBarTopBorderWidth);
+            } else if (self.barBorderStyle == DTBarBorderStyleSidesBorder) {
+                self.barFrontView.frame = CGRectMake(DTBarSidesBorderWidth, 0, CGRectGetWidth(self.bounds) - DTBarSidesBorderWidth * 2, CGRectGetHeight(self.bounds));
             }
         }
             break;
@@ -153,11 +161,19 @@ static CGFloat const DTBarSidesBorderWidth = 2;
             }];
         }
             break;
-        case DTBarOrientationLeft:{
+        case DTBarOrientationLeft: {
             fromFrame = CGRectMake(CGRectGetMaxX(self.prevBarFrame), CGRectGetMinY(self.prevBarFrame), 0, CGRectGetHeight(self.prevBarFrame));
             [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
                 [subviewFrame addObject:NSStringFromCGRect(obj.frame)];
                 obj.frame = CGRectMake(0, 0, 0, CGRectGetHeight(self.bounds));
+            }];
+        }
+            break;
+        case DTBarOrientationDown:{
+            fromFrame = CGRectMake(CGRectGetMinX(self.prevBarFrame), CGRectGetMinY(self.prevBarFrame), CGRectGetWidth(self.prevBarFrame), 0);
+            [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+                [subviewFrame addObject:NSStringFromCGRect(obj.frame)];
+                obj.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), 0);
             }];
         }
             break;

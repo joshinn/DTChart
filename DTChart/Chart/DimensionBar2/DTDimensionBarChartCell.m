@@ -7,15 +7,15 @@
 //
 
 #import "DTDimensionBarChartCell.h"
-#import "DTBar.h"
 #import "DTDimension2Model.h"
 #import "DTDimensionSectionLine.h"
 #import "DTTableLabel.h"
+#import "DTDimension2HeapBar.h"
 
 @interface DTDimensionBarChartCell ()
 
-@property(nonatomic) DTBar *mainBar;
-@property(nonatomic) DTBar *secondBar;
+@property(nonatomic) DTDimension2HeapBar *mainBar;
+@property(nonatomic) DTDimension2HeapBar *secondBar;
 
 @property(nonatomic) NSMutableArray<DTChartLabel *> *labels;
 
@@ -33,12 +33,12 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
 
-        _mainBar = [DTBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
+        _mainBar = [DTDimension2HeapBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
         _mainBar.barColor = MainBarColor;
         _mainBar.barBorderColor = MainBarBorderColor;
         [self.contentView addSubview:_mainBar];
 
-        _secondBar = [DTBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
+        _secondBar = [DTDimension2HeapBar bar:DTBarOrientationRight style:DTBarBorderStyleNone];
         _secondBar.barColor = SecondBarColor;
         _secondBar.barBorderColor = SecondBarBorderColor;
         [self.contentView addSubview:_secondBar];
@@ -63,19 +63,21 @@
     return label;
 }
 
+
 #pragma mark - public method
 
 - (void)setCellData:(DTDimension2Model *)mainData second:(DTDimension2Model *)secondData prev:(DTDimension2Model *)prevData next:(DTDimension2Model *)nextData {
     _mainData = mainData;
     _secondData = secondData;
 
-    if (self.labels.count != mainData.ptNames.count) {
+
+    if (self.labels.count != mainData.roots.count) {
         [self.labels enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
             [obj removeFromSuperview];
         }];
         [self.labels removeAllObjects];
 
-        for (NSUInteger i = 0; i < mainData.ptNames.count; ++i) {
+        for (NSUInteger i = 0; i < mainData.roots.count; ++i) {
             DTChartLabel *label = [self labelFactory];
             label.frame = CGRectMake(i * (self.titleWidth + self.titleGap), 0, self.titleWidth, 15);
             [self.labels addObject:label];
@@ -84,44 +86,63 @@
     }
 
     BOOL align = NO;
-    for (NSUInteger i = 0; i < mainData.ptNames.count; ++i) {
-        NSString *prevName = prevData.ptNames[i];
-        NSString *name = mainData.ptNames[i];
-        NSString *nextName = nextData.ptNames[i];
+    for (NSUInteger i = 0; i < mainData.roots.count; ++i) {
+        NSString *prevName = prevData.roots[i].name;
+        NSString *name = mainData.roots[i].name;
+        NSString *nextName = nextData.roots[i].name;
         if ([prevName isEqualToString:name]) {
             self.labels[i].text = nil;
         } else {
             self.labels[i].text = name;
         }
 
+        self.sectionLine.hidden = nextName == nil;
         if (!align && ![name isEqualToString:nextName]) {
             align = YES;
+
+            self.sectionLine.hidden = (i == mainData.roots.count - 1);
+
             [CATransaction begin];
             [CATransaction setDisableActions:YES];
             self.sectionLine.frame = CGRectMake(CGRectGetMinX(self.labels[i].frame), 22, self.cellSize.width, 2);
             [CATransaction commit];
         }
-        self.sectionLine.hidden = nextName == nil;
     }
 
-    CGFloat barWidth = 0;
-    if (mainData.ptValue >= 0) {
-        barWidth = mainData.ptValue / self.mainPositiveLimitValue * (self.mainPositiveLimitX - self.mainZeroX);
-        self.mainBar.frame = CGRectMake(self.mainZeroX, 0, barWidth, 15);
-    } else {
-        barWidth = mainData.ptValue / self.mainNegativeLimitValue * (self.mainZeroX - self.mainNegativeLimitX);
-        self.mainBar.frame = CGRectMake(self.mainZeroX - barWidth, 0, barWidth, 15);
+    [self.mainBar resetBar];
+    for (DTDimension2Item *item in mainData.items) {
+        CGFloat barWidth = 0;
+        if (item.value >= 0) {
+            barWidth = item.value / self.mainPositiveLimitValue * (self.mainPositiveLimitX - self.mainZeroX);
+        } else {
+            barWidth = -item.value / self.mainNegativeLimitValue * (self.mainZeroX - self.mainNegativeLimitX);
+        }
+        self.mainBar.frame = CGRectMake(self.mainZeroX, 0, 0, 15);
+        UIColor *color = [self.delegate chartCellRequestItemColor:item isMainAxis:YES];
+        if (!color) {
+            color = [UIColor colorWithRed:(arc4random_uniform(255) / 255.f) green:(arc4random_uniform(255) / 255.f) blue:(arc4random_uniform(255) / 255.f) alpha:1];
+        }
+        [self.mainBar appendData:item barLength:barWidth barColor:color needLayout:item == mainData.items.lastObject];
     }
 
 
     if (secondData) {
+        [self.secondBar resetBar];
+
         self.secondBar.hidden = NO;
-        if (secondData.ptValue >= 0) {
-            barWidth = secondData.ptValue / self.secondPositiveLimitValue * (self.secondPositiveLimitX - self.secondZeroX);
-            self.secondBar.frame = CGRectMake(self.secondZeroX, 0, barWidth, 15);
-        } else {
-            barWidth = secondData.ptValue / self.secondNegativeLimitValue * (self.secondZeroX - self.secondNegativeLimitX);
-            self.secondBar.frame = CGRectMake(self.secondZeroX - barWidth, 0, barWidth, 15);
+        for (DTDimension2Item *item in secondData.items) {
+            CGFloat barWidth = 0;
+            if (item.value >= 0) {
+                barWidth = item.value / self.secondPositiveLimitValue * (self.secondPositiveLimitX - self.secondZeroX);
+            } else {
+                barWidth = -item.value / self.secondNegativeLimitValue * (self.secondZeroX - self.secondNegativeLimitX);
+            }
+            self.secondBar.frame = CGRectMake(self.secondZeroX, 0, 0, 15);
+            UIColor *color = [self.delegate chartCellRequestItemColor:item isMainAxis:NO];
+            if (!color) {
+                color = [UIColor colorWithRed:(arc4random_uniform(255) / 255.f) green:(arc4random_uniform(255) / 255.f) blue:(arc4random_uniform(255) / 255.f) alpha:1];
+            }
+            [self.secondBar appendData:item barLength:barWidth barColor:color needLayout:item == secondData.items.lastObject];
         }
     } else {
         self.secondBar.hidden = YES;
