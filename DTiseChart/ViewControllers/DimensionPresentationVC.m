@@ -299,6 +299,7 @@
 
 - (void)burgerBarChartController:(DTDimensionModel *)model {
     DTDimensionBurgerBarChartController *burgerController = [[DTDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * (7 + 33) + 190) xAxis:55 yAxis:31];
+    burgerController.chartMode = DTChartModePresentation;
     burgerController.showCoordinateAxisGrid = YES;
     burgerController.valueSelectable = YES;
     [self.scrollView addSubview:burgerController.chartView];

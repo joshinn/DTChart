@@ -30,7 +30,7 @@
         _chartView = _chart;
 
         _chart.barWidth = 2;
-        _chart.yOffset = 2 * _chart.coordinateAxisCellWidth;
+        _chart.yOffset = 2;
     }
     return self;
 }
@@ -43,6 +43,18 @@
  */
 - (void)setChartId:(NSString *)chartId {
     _chartId = [@"hMeaDimBurgerBar-" stringByAppendingString:chartId];
+}
+
+- (void)setChartMode:(DTChartMode)chartMode {
+    [super setChartMode:chartMode];
+
+    if (chartMode == DTChartModeThumb) {
+        _chart.barWidth = 1;
+        _chart.barGap = 2;
+    } else if (chartMode == DTChartModePresentation) {
+        _chart.barWidth = 2;
+        _chart.barGap = 6;
+    }
 }
 
 /**
@@ -88,7 +100,7 @@
 
 - (void)drawChart {
     [super drawChart];
-    
+
     [self.chart drawChart];
 
 //    if (![DTManager checkExistByChartId:self.chartId]) {
@@ -119,14 +131,22 @@
     self.chart.mainDimensionModel = mainItem;
     self.chart.secondDimensionModel = secondItem;
 
+    NSUInteger divideParts = 0;
+    if (self.chartMode == DTChartModeThumb) {
+        divideParts = 3;
+    } else if (self.chartMode == DTChartModePresentation) {
+        divideParts = 5;
+    }
+
+    CGFloat itemValue = 1.0f / (divideParts - 1);
     NSMutableArray *xLabelDatas = [NSMutableArray array];
-    for (NSUInteger i = 0; i < 5; i++) {
-        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * 25)] value:i * 0.25f];
+    for (NSUInteger i = 0; i < divideParts; i++) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * (NSUInteger) (itemValue * 100))] value:i * itemValue];
         [xLabelDatas addObject:labelData];
     }
     NSMutableArray *xSecondLabelDatas = [NSMutableArray array];
-    for (NSUInteger i = 0; i < 5; i++) {
-        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * 25)] value:i * 0.25f];
+    for (NSUInteger i = 0; i < divideParts; i++) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * (NSUInteger) (itemValue * 100))] value:i * itemValue];
         [xSecondLabelDatas addObject:labelData];
     }
 

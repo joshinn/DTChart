@@ -28,15 +28,17 @@
 
 @synthesize barBorderStyle = _barBorderStyle;
 
-static NSUInteger const BarGap = 6;
-
 - (void)initial {
     [super initial];
 
     self.coordinateAxisInsets = ChartEdgeInsetsMake(1, 0, 0, 0);
 
+    _barGap = 2;
+
     _barBorderStyle = DTBarBorderStyleNone;
     _barX = 0;
+    _xOffset = 6;
+
     self.barChartStyle = DTBarChartStyleStartingLine;
 
     self.colorManager = [DTColorManager randomManager];
@@ -126,7 +128,7 @@ static NSUInteger const BarGap = 6;
         }
 
 
-        self.barX += barWidth + BarGap * self.coordinateAxisCellWidth;
+        self.barX += barWidth + self.barGap * self.coordinateAxisCellWidth;
         [self.contentView addSubview:heapBar];
 
         [self.chartBars addObject:heapBar];
@@ -218,7 +220,7 @@ static NSUInteger const BarGap = 6;
             [self.chartLines[i - 1] hide];
 
         } else {
-            self.barX = CGRectGetMaxX(heapBar.frame) + BarGap * self.coordinateAxisCellWidth;
+            self.barX = CGRectGetMaxX(heapBar.frame) + self.barGap * self.coordinateAxisCellWidth;
         }
     }
 
@@ -317,18 +319,12 @@ static NSUInteger const BarGap = 6;
 }
 
 - (void)drawValues {
-    self.barX = self.xOffset;
+    self.barX = self.xOffset * self.coordinateAxisCellWidth;
 
-//    [self layoutHeapBars:self.dimensionModel drawSubviews:YES];
     [self drawBars:self.dimensionModel frame:CGRectZero];
 }
 
 - (void)drawChart {
-
-//    if (self.levelLowestBarModels.count == 0) {
-//        [self calculate:self.dimensionModel];
-//    }
-    self.xOffset = 6 * self.coordinateAxisCellWidth;
 
     [super drawChart];
 

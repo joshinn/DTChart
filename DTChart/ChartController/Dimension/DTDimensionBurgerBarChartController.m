@@ -58,6 +58,20 @@
     self.chart.barChartStyle = barChartStyle;
 }
 
+- (void)setChartMode:(DTChartMode)chartMode {
+    [super setChartMode:chartMode];
+
+    if (chartMode == DTChartModeThumb) {
+        _chart.barWidth = 1;
+        _chart.barGap = 2;
+        _chart.xOffset = 2;
+    } else if (chartMode == DTChartModePresentation) {
+        _chart.barWidth = 2;
+        _chart.barGap = 6;
+        _chart.xOffset = 6;
+    }
+}
+
 #pragma mark - override
 
 
@@ -72,17 +86,20 @@
 - (void)setItem:(DTDimensionModel *)dimensionModel {
     self.chart.dimensionModel = dimensionModel;
 
-//    self.chart.xOffset = (CGRectGetWidth(self.chart.contentView.bounds) - returnModel.sectionWidth) / 2;
-//    self.chart.xOffset = (NSInteger) (self.chart.xOffset / 15) * 15;
-
     // y轴label data
-    NSMutableArray<DTAxisLabelData *> *yLabelDatas = [NSMutableArray arrayWithCapacity:11];
-    for (NSUInteger i = 0; i < 11; i++) {
-        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * 10)] value:i * 0.1f];
+    NSUInteger divideParts = 0;
+    if (self.chartMode == DTChartModeThumb) {
+        divideParts = 3;
+    } else if (self.chartMode == DTChartModePresentation) {
+        divideParts = 11;
+    }
+    NSMutableArray<DTAxisLabelData *> *yLabelDatas = [NSMutableArray arrayWithCapacity:3];
+    CGFloat itemValue = 1.0f / (divideParts - 1);
+    for (NSUInteger i = 0; i < divideParts; i++) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@%%", @(i * (NSUInteger) (itemValue * 100))] value:i * itemValue];
         [yLabelDatas addObject:labelData];
     }
     self.chart.yAxisLabelDatas = yLabelDatas;
-
 }
 
 

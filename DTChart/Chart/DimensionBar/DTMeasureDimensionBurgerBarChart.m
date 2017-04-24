@@ -37,7 +37,6 @@
 
 @synthesize barBorderStyle = _barBorderStyle;
 
-static NSUInteger const BarGap = 4;
 
 - (void)initial {
     [super initial];
@@ -46,6 +45,7 @@ static NSUInteger const BarGap = 4;
     self.barChartStyle = DTBarChartStyleStartingLine;
     _barY = 0;
     _yOffset = 0;
+    _barGap = 2;
 
     ChartEdgeInsets insets = self.coordinateAxisInsets;
 
@@ -156,7 +156,7 @@ static NSUInteger const BarGap = 4;
         }
 
 
-        self.barY += barWidth + BarGap * self.coordinateAxisCellWidth;
+        self.barY += barWidth + self.barGap * self.coordinateAxisCellWidth;
         [self.scrollMainContentView addSubview:heapBar];
 
         [self.chartBars addObject:heapBar];
@@ -232,7 +232,7 @@ static NSUInteger const BarGap = 4;
         }
 
 
-        self.barY += barWidth + BarGap * self.coordinateAxisCellWidth;
+        self.barY += barWidth + self.barGap * self.coordinateAxisCellWidth;
         [self.scrollSecondContentView addSubview:heapBar];
 
         [self.secondChartBars addObject:heapBar];
@@ -354,7 +354,7 @@ static NSUInteger const BarGap = 4;
             [lines[i - 1] hide];
 
         } else {
-            self.barY = CGRectGetMaxY(heapBar.frame) + BarGap * self.coordinateAxisCellWidth;
+            self.barY = CGRectGetMaxY(heapBar.frame) + self.barGap * self.coordinateAxisCellWidth;
         }
     }
 
@@ -497,7 +497,7 @@ static NSUInteger const BarGap = 4;
 }
 
 - (void)drawValues {
-    self.barY = self.yOffset;
+    self.barY = self.yOffset * self.coordinateAxisCellWidth;
 
     [self drawBars:self.mainDimensionModel frame:CGRectZero];
 }
@@ -549,7 +549,7 @@ static NSUInteger const BarGap = 4;
 }
 
 - (void)drawSecondValues {
-    self.barY = self.yOffset;
+    self.barY = self.yOffset * self.coordinateAxisCellWidth;
 
     [self drawSecondBars:self.secondDimensionModel frame:CGRectZero];
 }

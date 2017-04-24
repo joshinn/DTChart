@@ -20,5 +20,9 @@
  * x轴第一个柱状体偏移量，默认0，让所有柱状体居中时使用
  */
 @property(nonatomic) CGFloat xOffset;
+/**
+ * 柱状体之间的距离，默认2个单元格
+ */
+@property (nonatomic) CGFloat barGap;
 
 @end

@@ -17,6 +17,5 @@
 
 @property(nonatomic) NSString *(^dimensionBarChartControllerTouchBlock)(NSUInteger touchIndex);
 
-
 - (void)setItem:(DTDimensionModel *)dimensionModel;
 @end

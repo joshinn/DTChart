@@ -7,7 +7,6 @@
 //
 
 #import "DTHeapBar.h"
-#import "DTBar.h"
 
 @interface DTHeapBar ()
 
@@ -97,6 +96,11 @@
                 obj.frame = CGRectMake(totalLength - width, 0, width, CGRectGetHeight(self.bounds));
                 totalLength -= width;
             }];
+
+        }
+            break;
+        case DTBarOrientationDown:{
+            // todo
 
         }
             break;

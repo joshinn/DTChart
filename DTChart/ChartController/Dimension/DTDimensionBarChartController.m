@@ -8,7 +8,7 @@
 
 #import "DTDimensionBarChartController.h"
 #import "DTDimensionBarChart.h"
-#import "DTDimension2Model.h"
+#import "DTDataManager.h"
 
 @interface DTDimensionBarChartController ()
 
@@ -48,6 +48,12 @@
     return self;
 }
 
+- (void)setChartStyle:(DTDimensionBarStyle)chartStyle {
+    _chartStyle = chartStyle;
+
+    self.chart.chartStyle = chartStyle;
+}
+
 #pragma mark - private method
 
 /**
@@ -60,9 +66,9 @@
 
 - (void)processXLabelData:(NSUInteger)axisCount axisMaxValue:(CGFloat)maxValue axisMinValue:(CGFloat)minValue isMainAxis:(BOOL)isMainAxis {
 
-    
+
     if (minValue >= 0) {
-    
+
         NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:YES];
         if (isMainAxis) {
             self.chart.xAxisLabelDatas = xLabelDatas;
@@ -120,13 +126,10 @@
     }
 }
 
-
 #pragma mark - override
-
 
 - (void)drawChart {
     [super drawChart];
-
 
     [self.chart drawChart];
 }

@@ -129,6 +129,7 @@
     DTMeasureDimensionBurgerBarChartController *controller = [[DTMeasureDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75 + 32 * 15) xAxis:55 yAxis:31];
     [self.view addSubview:controller.chartView];
 
+    controller.chartMode = DTChartModeThumb;
     controller.valueSelectable = YES;
     controller.showCoordinateAxisGrid = YES;
     controller.chartId = @"1992";

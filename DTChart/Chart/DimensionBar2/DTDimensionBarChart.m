@@ -7,7 +7,6 @@
 //
 
 #import "DTDimensionBarChart.h"
-#import "DTDimension2Model.h"
 #import "DTChartLabel.h"
 #import "DTChartToastView.h"
 #import "DTDimensionBarChartCell.h"
@@ -400,7 +399,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     if (self.touchBarBlock) {
         NSString *string = self.touchBarBlock((NSUInteger) indexPath.row, isMain);
-        if(string.length > 0){
+        if (string.length > 0) {
             [message appendString:string];
         }
     }
@@ -435,6 +434,17 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
 - (UIColor *)chartCellRequestItemColor:(id)data isMainAxis:(BOOL)isMain {
     UIColor *color = nil;
+    if (self.chartStyle == DTDimensionBarStyleStartLine) {  ///< 模式1
+        if (isMain) {
+
+            color = MainBarColor;
+        } else {
+            color = SecondBarColor;
+        }
+        return color;
+    }
+
+    // 模式2
 
     if ([data isKindOfClass:[DTDimension2Item class]]) {
         DTDimension2Item *item = data;

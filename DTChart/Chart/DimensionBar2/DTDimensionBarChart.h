@@ -7,6 +7,7 @@
 //
 
 #import "DTBarChart.h"
+#import "DTDimension2Model.h"
 
 @class DTDimension2Model;
 @class DTDimension2ListModel;
@@ -18,6 +19,7 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 
 @interface DTDimensionBarChart : DTBarChart
 
+@property (nonatomic) DTDimensionBarStyle chartStyle;
 
 @property(nonatomic) DTDimension2ListModel *mainData;
 @property(nonatomic) DTDimension2ListModel *secondData;

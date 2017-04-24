@@ -7,10 +7,13 @@
 //
 
 #import "DTChartController.h"
+#import "DTDimension2Model.h"
 
 @class DTDimension2ListModel;
 
 @interface DTDimensionBarChartController : DTChartController
+
+@property (nonatomic) DTDimensionBarStyle chartStyle;
 
 @property(nonatomic, copy) NSString *_Nullable(^ _Nullable controllerTouchLabelBlock)(NSUInteger row, NSUInteger index);
 

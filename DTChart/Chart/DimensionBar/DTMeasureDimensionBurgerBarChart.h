@@ -46,6 +46,11 @@
  */
 @property(nonatomic) CGFloat yOffset;
 /**
+ * 柱状体之间的距离，默认2个单元格
+ */
+@property(nonatomic) CGFloat barGap;
+
+/**
  * 第二度量里，存储所有柱状体
  */
 @property(nonatomic) NSMutableArray<DTDimensionHeapBar *> *secondChartBars;
