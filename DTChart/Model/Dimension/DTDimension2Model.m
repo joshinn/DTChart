@@ -28,22 +28,22 @@
 
 - (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index prevModel:(DTDimension2Model *)prevModel {
     DTDimension2Model *model = [self initFromJson:dictionary valueName:[NSString stringWithFormat:@"value%@", @(index)] style:DTDimensionBarStyleHeap];
-
-    if (model.roots.count != prevModel.roots.count) {
+    
+    if (!prevModel || model.roots.count != prevModel.roots.count) {
         return model;
     }
-
+    
     BOOL isDifferent = NO;
     for (NSUInteger i = 0; i < model.roots.count; ++i) {
         DTDimension2Item *item1 = model.roots[i];
         DTDimension2Item *item2 = prevModel.roots[i];
-
+        
         if (![item1.name isEqualToString:item2.name]) {
             isDifferent = YES;
             break;
         }
     }
-
+    
     if (!isDifferent) { // 相同的根节点，合并
         NSMutableArray *items = prevModel.items.mutableCopy;
         [items addObjectsFromArray:model.items];
@@ -57,26 +57,26 @@
 
 - (instancetype)initFromJson:(NSDictionary *)json valueName:(NSString *)valueName style:(DTDimensionBarStyle)style {
     if (self = [super init]) {
-        NSArray *names = json[@"names"];
+        NSArray *names = json[@"name"];
         CGFloat value = (CGFloat) [json[valueName] doubleValue];
-
-        if (names.count > 1) {
+        
+        if (names.count > 0) {
             NSMutableArray<DTDimension2Item *> *roots = [NSMutableArray arrayWithCapacity:names.count - 1];
-
+            
             NSUInteger count = 0;
             if (style == DTDimensionBarStyleStartLine) {
                 count = names.count;
             } else if (style == DTDimensionBarStyleHeap) {
                 count = names.count - 1;
             }
-
+            
             for (NSUInteger i = 0; i < count; ++i) {
                 NSString *name = names[i];
                 [roots addObject:[DTDimension2Item initWithName:name value:0]];
             }
             _roots = roots;
         }
-
+        
         NSMutableArray<DTDimension2Item *> *items = [NSMutableArray array];
         [items addObject:[DTDimension2Item initWithName:names.lastObject value:value]];
         _items = items;

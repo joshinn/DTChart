@@ -8,7 +8,6 @@
 
 #import "DTDimensionBarChartController.h"
 #import "DTDimensionBarChart.h"
-#import "DTDataManager.h"
 
 @interface DTDimensionBarChartController ()
 
@@ -53,6 +52,7 @@
 
     self.chart.chartStyle = chartStyle;
 }
+
 
 #pragma mark - private method
 

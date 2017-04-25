@@ -45,9 +45,12 @@ CGFloat const DimensionLabelGap = 5;
 
 static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
+@synthesize valueSelectable = _valueSelectable;
+
+
 - (void)initial {
     [super initial];
-
+    self.userInteractionEnabled = YES;
     _prepare = NO;
 
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, self.coordinateAxisInsets.right, self.coordinateAxisInsets.bottom);
@@ -115,6 +118,10 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     return _levelSecondBarModels;
 }
 
+- (void)setValueSelectable:(BOOL)valueSelectable {
+    _valueSelectable = valueSelectable;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -132,6 +139,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     barChartCell.cellSize = CGSizeMake(CGRectGetWidth(tableView.bounds), tableView.rowHeight);
     barChartCell.titleWidth = DimensionLabelWidth;
     barChartCell.titleGap = DimensionLabelGap;
+    barChartCell.selectable = self.valueSelectable;
 
     barChartCell.mainZeroX = self.mainZeroX;
     barChartCell.mainPositiveLimitValue = self.mainPositiveLimitValue;

@@ -154,6 +154,10 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 
+    if(!self.selectable){
+        return;
+    }
+
     UITouch *touch = touches.anyObject;
     CGPoint location = [touch locationInView:self];
 
@@ -174,7 +178,12 @@
         }
     } else {
 
-        BOOL isMain = location.x < self.secondNegativeLimitX;
+        BOOL isMain = YES;
+        if(location.x >= self.mainNegativeLimitX && location.x <= self.mainPositiveLimitX){
+            isMain = YES;
+        } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX){
+            isMain = NO;
+        }
         id <DTDimensionBarChartCellDelegate> o = self.delegate;
         if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:touch:)]) {
             [o chartCellHintTouchBegin:self isMainAxisBar:isMain touch:touch];
@@ -185,6 +194,10 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
 
+    if(!self.selectable){
+        return;
+    }
+
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
     if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {
         [o chartCellHintTouchEnd];
@@ -193,6 +206,10 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
     [super touchesCancelled:touches withEvent:event];
+
+    if(!self.selectable){
+        return;
+    }
 
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
     if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {

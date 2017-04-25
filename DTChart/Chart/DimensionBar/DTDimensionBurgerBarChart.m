@@ -27,10 +27,12 @@
 @implementation DTDimensionBurgerBarChart
 
 @synthesize barBorderStyle = _barBorderStyle;
+@synthesize valueSelectable = _valueSelectable;
 
 - (void)initial {
     [super initial];
 
+    self.userInteractionEnabled = YES;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(1, 0, 0, 0);
 
     _barGap = 2;
@@ -51,11 +53,16 @@
     return _chartLines;
 }
 
+- (void)setValueSelectable:(BOOL)valueSelectable {
+    _valueSelectable = valueSelectable;
+}
 
 #pragma mark - private method
 
 - (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
-    [self.toastView show:message location:point];
+    if (self.isValueSelectable) {
+        [self.toastView show:message location:point];
+    }
 }
 
 - (void)hideTouchMessage {
