@@ -267,36 +267,23 @@
 #pragma mark - touch event
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (!self.valueSelectable) {
-        [super touchesBegan:touches withEvent:event];
-    } else {
+    [super touchesBegan:touches withEvent:event];
 
-        [self touchKeyPoint:touches];
-    }
+    [self touchKeyPoint:touches];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (!self.valueSelectable) {
-        [super touchesMoved:touches withEvent:event];
-    } else {
-
-    }
+    [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (!self.valueSelectable) {
-        [super touchesEnded:touches withEvent:event];
-    } else {
-        [self hideTouchMessage];
-    }
+    [super touchesEnded:touches withEvent:event];
+    [self hideTouchMessage];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (!self.valueSelectable) {
-        [super touchesCancelled:touches withEvent:event];
-    } else {
-        [self hideTouchMessage];
-    }
+    [super touchesCancelled:touches withEvent:event];
+    [self hideTouchMessage];
 }
 
 - (void)touchKeyPoint:(NSSet *)touches {
