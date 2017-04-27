@@ -68,6 +68,11 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 @property(nonatomic) CGFloat tableLeftOffset;
 
 /**
+ * 触摸提示回调
+ */
+@property(nonatomic, copy) NSString *(^chartHintTouchBlock)(NSInteger row, NSInteger index);
+
+/**
  * 实例化
  * @param origin 等同于frame.origin
  * @param xCount frame.size.width 换算成单元格数

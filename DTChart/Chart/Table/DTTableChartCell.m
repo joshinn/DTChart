@@ -350,7 +350,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         }
     }
 
-    [self.delegate chartCellHintTouchBegin:label.text index:index isMainAxis:isMainAxis touch:touch];
+    [self.delegate chartCellHintTouchBegin:self text:label.text index:index isMainAxis:isMainAxis touch:touch];
 }
 
 - (void)tableLabelTouchEnd {

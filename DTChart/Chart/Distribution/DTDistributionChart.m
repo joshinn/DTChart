@@ -38,11 +38,13 @@ static NSString *const kChineseTimeKey = @"chinese";
     _startHour = 7;
     self.chartYAxisStyle = DTDistributionChartYAxisStyleNone;
 
+    _nullLevelColor = DTDistributionNullLevelColor;
     _lowLevelColor = DTDistributionLowLevelColor;
     _middleLevelColor = DTDistributionMiddleLevelColor;
     _highLevelColor = DTDistributionHighLevelColor;
     _supremeLevelColor = DTDistributionSupremeLevelColor;
 
+    _nullLevel = 0;
     _lowLevel = 100;
     _middleLevel = 500;
     _highLevel = 1000;
@@ -304,7 +306,9 @@ static NSString *const kChineseTimeKey = @"chinese";
 }
 
 - (UIColor *)getLevelColor:(CGFloat)value {
-    if (value < self.lowLevel) {
+    if (value < self.nullLevel) {
+        return self.nullLevelColor;
+    } else if (value < self.lowLevel) {
         return self.lowLevelColor;
     } else if (value < self.middleLevel) {
         return self.middleLevelColor;
@@ -602,7 +606,7 @@ static NSString *const kChineseTimeKey = @"chinese";
 
 }
 
-- (void)distributionBarItemEndTouch{
+- (void)distributionBarItemEndTouch {
     [self.toastView hide];
 }
 

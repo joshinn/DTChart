@@ -48,9 +48,9 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
             }
         }];
 
-        [_barChart setBarChartTouchBlock:^NSString *(NSUInteger touchIndex) {
+        [_barChart setBarChartTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
             if (weakSelf.barChartControllerTouchBlock) {
-                return weakSelf.barChartControllerTouchBlock(touchIndex);
+                return weakSelf.barChartControllerTouchBlock(dataIndex, barIndex);
             }
             return nil;
         }];

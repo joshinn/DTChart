@@ -17,6 +17,12 @@
  */
 @property (nonatomic) CGFloat barWidth;
 
-@property(nonatomic) NSString *(^barChartControllerTouchBlock)(NSUInteger touchIndex);
+/**
+ * 柱状图触摸回调
+ * @return 触摸提示内容
+ * @note param dataIndex 第几组数据
+ * @note param barIndex  数据里的第几根柱状体
+ */
+@property(nonatomic) NSString *(^barChartControllerTouchBlock)(NSUInteger dataIndex, NSUInteger barIndex);
 
 @end

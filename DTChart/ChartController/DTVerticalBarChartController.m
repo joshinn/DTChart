@@ -48,9 +48,9 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
             }
         }];
 
-        [_barChart setBarChartTouchBlock:^NSString *(NSUInteger touchIndex) {
+        [_barChart setBarChartTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
             if (weakSelf.barChartControllerTouchBlock) {
-                return weakSelf.barChartControllerTouchBlock(touchIndex);
+                return weakSelf.barChartControllerTouchBlock(dataIndex, barIndex);
             }
             return nil;
         }];
@@ -88,7 +88,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 }
 
 - (NSUInteger)mMaxXAxisCount:(NSUInteger)valuesCount {
-    if(self.preferXAxisDataCount > 0){
+    if (self.preferXAxisDataCount > 0) {
         _mMaxXAxisCount = self.preferXAxisDataCount;
         return _mMaxXAxisCount;
     }
@@ -116,7 +116,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 }
 
 - (NSUInteger)mMaxYAxisCount {
-    if(self.preferMainYAxisDataCount > 0){
+    if (self.preferMainYAxisDataCount > 0) {
         _mMaxYAxisCount = self.preferMainYAxisDataCount;
         return _mMaxYAxisCount;
     }

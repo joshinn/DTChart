@@ -40,7 +40,6 @@
         _secondMiddleLevel = _middleLevel = 500;
         _secondHighLevel = _highLevel = 1000;
 
-
         _mainTitleLabel = [self labelFactory];
         _secondTitleLabel = [self labelFactory];
 
@@ -58,6 +57,8 @@
     label.textColor = DTRGBColor(0xc0c0c0, 1);
     label.font = [UIFont systemFontOfSize:15];
     label.textAlignment = NSTextAlignmentCenter;
+    label.adjustsFontSizeToFitWidth = NO;
+    label.numberOfLines = 1;
 
     return label;
 }
@@ -97,6 +98,12 @@
     }
 }
 
+- (void)setNullLevel:(CGFloat)nullLevel {
+    _nullLevel = nullLevel;
+
+    _mainDistributionChart.nullLevel = nullLevel;
+}
+
 - (void)setLowLevel:(CGFloat)lowLevel {
     _lowLevel = lowLevel;
 
@@ -113,6 +120,12 @@
     _highLevel = highLevel;
 
     _mainDistributionChart.highLevel = highLevel;
+}
+
+- (void)setSecondNullLevel:(CGFloat)secondNullLevel {
+    _secondNullLevel = secondNullLevel;
+
+    _secondDistributionChart.nullLevel = secondNullLevel;
 }
 
 - (void)setSecondLowLevel:(CGFloat)secondLowLevel {
@@ -138,6 +151,76 @@
 
     self.mainDistributionChart.valueSelectable = valueSelectable;
     self.secondDistributionChart.valueSelectable = valueSelectable;
+}
+
+- (NSString *)nullLevelTitle {
+    if (!_nullLevelTitle) {
+        _nullLevelTitle = @"空";
+    }
+    return _nullLevelTitle;
+}
+
+- (NSString *)lowLevelTitle {
+    if (!_lowLevelTitle) {
+        _lowLevelTitle = [NSString stringWithFormat:@"~%@", @(self.lowLevel)];
+    }
+    return _lowLevelTitle;
+}
+
+- (NSString *)middleLevelTitle {
+    if (!_middleLevelTitle) {
+        _middleLevelTitle = [NSString stringWithFormat:@"~%@", @(self.middleLevel)];
+    }
+    return _middleLevelTitle;
+}
+
+- (NSString *)highLevelTitle {
+    if (!_highLevelTitle) {
+        _highLevelTitle = [NSString stringWithFormat:@"~%@", @(self.highLevel)];
+    }
+    return _highLevelTitle;
+}
+
+- (NSString *)supremeLevelTitle {
+    if (!_supremeLevelTitle) {
+        _supremeLevelTitle = [NSString stringWithFormat:@">=%@", @(self.highLevel)];
+    }
+    return _supremeLevelTitle;
+}
+
+- (NSString *)secondNullLevelTitle {
+    if (!_secondNullLevelTitle) {
+        _secondNullLevelTitle = @"空";
+    }
+    return _secondNullLevelTitle;
+}
+
+- (NSString *)secondLowLevelTitle {
+    if (!_secondLowLevelTitle) {
+        _secondLowLevelTitle = [NSString stringWithFormat:@"~%@", @(self.secondLowLevel)];
+    }
+    return _secondLowLevelTitle;
+}
+
+- (NSString *)secondMiddleLevelTitle {
+    if (!_secondMiddleLevelTitle) {
+        _secondMiddleLevelTitle = [NSString stringWithFormat:@"~%@", @(self.secondMiddleLevel)];
+    }
+    return _secondMiddleLevelTitle;
+}
+
+- (NSString *)secondHighLevelTitle {
+    if (!_secondHighLevelTitle) {
+        _secondHighLevelTitle = [NSString stringWithFormat:@"~%@", @(self.secondHighLevel)];
+    }
+    return _secondHighLevelTitle;
+}
+
+- (NSString *)secondSupremeLevelTitle {
+    if (!_secondSupremeLevelTitle) {
+        _secondSupremeLevelTitle = [NSString stringWithFormat:@">=%@", @(self.secondHighLevel)];
+    }
+    return _secondSupremeLevelTitle;
 }
 
 #pragma mark - private method
@@ -197,13 +280,20 @@
 
         self.mainLevelColorIndicator = [self levelColorIndicateView:
                         CGRectMake(CGRectGetMinX(self.mainDistributionChart.frame),
-                                CGRectGetMinY(self.mainDistributionChart.frame) - 2 * self.mainDistributionChart.coordinateAxisCellWidth,
+                                CGRectGetMinY(self.mainDistributionChart.frame) - 3 * self.mainDistributionChart.coordinateAxisCellWidth,
                                 CGRectGetWidth(self.mainDistributionChart.frame) - 4 * self.mainDistributionChart.coordinateAxisCellWidth / 10,
-                                self.mainDistributionChart.coordinateAxisCellWidth)
-                                                              colos:@[self.mainDistributionChart.lowLevelColor,
+                                self.mainDistributionChart.coordinateAxisCellWidth * 2)
+                                                              colos:@[self.mainDistributionChart.nullLevelColor,
+                                                                      self.mainDistributionChart.lowLevelColor,
                                                                       self.mainDistributionChart.middleLevelColor,
                                                                       self.mainDistributionChart.highLevelColor,
-                                                                      self.mainDistributionChart.supremeLevelColor]];
+                                                                      self.mainDistributionChart.supremeLevelColor]
+                                                             titles:@[self.nullLevelTitle,
+                                                                     self.lowLevelTitle,
+                                                                     self.middleLevelTitle,
+                                                                     self.highLevelTitle,
+                                                                     self.supremeLevelTitle]];
+
         [self.chartView addSubview:self.mainLevelColorIndicator];
     }
 
@@ -221,7 +311,8 @@
             initWithOrigin:CGPointMake(CGRectGetMaxX(self.mainDistributionChart.frame) + self.mainDistributionChart.coordinateAxisCellWidth, CGRectGetMinY(self.mainDistributionChart.frame)) xAxis:35 yAxis:29];
     self.secondDistributionChart.chartYAxisStyle = DTDistributionChartYAxisStyleLarge;
     self.secondDistributionChart.startHour = self.startHour;
-    self.secondDistributionChart.lowLevelColor = DTRGBColor(0x01081A, 1);
+    self.secondDistributionChart.nullLevelColor = DTDistributionNullLevelColor;
+    self.secondDistributionChart.lowLevelColor = DTDistributionLowLevelColor;
     self.secondDistributionChart.middleLevelColor = DTRGBColor(0x014898, 1);
     self.secondDistributionChart.highLevelColor = DTRGBColor(0x018E75, 1);
     self.secondDistributionChart.supremeLevelColor = DTRGBColor(0xAAC901, 1);
@@ -245,10 +336,17 @@
                             CGRectGetMinY(self.mainLevelColorIndicator.frame),
                             CGRectGetWidth(self.mainLevelColorIndicator.frame),
                             CGRectGetHeight(self.mainLevelColorIndicator.frame))
-                                                            colos:@[self.secondDistributionChart.lowLevelColor,
+                                                            colos:@[self.secondDistributionChart.nullLevelColor,
+                                                                    self.secondDistributionChart.lowLevelColor,
                                                                     self.secondDistributionChart.middleLevelColor,
                                                                     self.secondDistributionChart.highLevelColor,
-                                                                    self.secondDistributionChart.supremeLevelColor]];
+                                                                    self.secondDistributionChart.supremeLevelColor]
+                                                           titles:@[self.secondNullLevelTitle,
+                                                                   self.secondLowLevelTitle,
+                                                                   self.secondMiddleLevelTitle,
+                                                                   self.secondHighLevelTitle,
+                                                                   self.secondSupremeLevelTitle
+                                                           ]];
 
     [self.chartView addSubview:self.secondLevelColorIndicator];
 }
@@ -268,13 +366,13 @@
  * 生成强弱颜色指示view
  * @param frame view的frame
  * @param colors 强弱颜色数据
+ * @param titles 指示view对应的文字
  * @return view
  */
-- (UIView *)levelColorIndicateView:(CGRect)frame colos:(NSArray<UIColor *> *)colors {
+- (UIView *)levelColorIndicateView:(CGRect)frame colos:(NSArray<UIColor *> *)colors titles:(NSArray<NSString *> *)titles {
     UIView *container = [[UIView alloc] initWithFrame:frame];
 
     DTChartLabel *label = [self labelFactory];
-    label.numberOfLines = 1;
     label.text = @"会话次数 弱到强";
 
     CGSize size = [label.text sizeWithAttributes:@{NSFontAttributeName: label.font}];
@@ -285,12 +383,25 @@
     CGFloat levelViewWidth = (CGRectGetWidth(frame) - size.width) / colors.count;
     CGFloat gap = 3;
     CGFloat x = CGRectGetMaxX(label.frame) + gap;
-    for (UIColor *color in colors) {
-        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(x, 0, levelViewWidth - gap, CGRectGetHeight(frame))];
+    for (NSUInteger i = 0; i < colors.count; ++i) {
+        UIColor *color = colors[i];
+
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(x, 0, levelViewWidth - gap, CGRectGetHeight(frame) / 2)];
         v.backgroundColor = color;
         [container addSubview:v];
 
         x += levelViewWidth;
+
+        {
+            DTChartLabel *valueLabel = [self labelFactory];
+            valueLabel.font = [UIFont systemFontOfSize:10];
+            CGRect labelFrame = v.frame;
+            labelFrame.origin.y = CGRectGetMaxY(v.frame);
+            valueLabel.frame = labelFrame;
+            valueLabel.text = titles[i];
+            [container addSubview:valueLabel];
+        }
+
     }
 
     return container;

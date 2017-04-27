@@ -54,18 +54,12 @@
     self.pBarChartController.valueSelectable = YES;
 
     NSMutableArray<DTListCommonData *> *listBarData = [self simulateListCommonData:1 pointCount:10 mainAxis:YES];
-    WEAK_SELF;
-    [self.pBarChartController setBarChartControllerTouchBlock:^NSString *(NSUInteger touchIndex) {
+    
+    [self.pBarChartController setBarChartControllerTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
         NSMutableString *mutableString = [NSMutableString string];
-        [listBarData enumerateObjectsUsingBlock:^(DTListCommonData *obj, NSUInteger idx, BOOL *stop) {
-            DTCommonData *commonData = obj.commonDatas[touchIndex];
-            [mutableString appendString:commonData.ptName];
-            [mutableString appendString:[NSString stringWithFormat:@" %@", @(commonData.ptValue)]];
-            if (idx < weakSelf.listBarData.count - 1) {
-                [mutableString appendString:@"\n"];
-            }
-        }];
-
+        DTCommonData *commonData = listBarData[dataIndex].commonDatas[barIndex];
+        [mutableString appendString:commonData.ptName];
+        [mutableString appendString:[NSString stringWithFormat:@"data:%@ bar:%@ -> %@", @(dataIndex), @(barIndex), @(commonData.ptValue)]];
         return mutableString;
     }];
 

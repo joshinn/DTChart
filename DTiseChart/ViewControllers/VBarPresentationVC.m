@@ -43,19 +43,14 @@
 //        }];
     }];
     WEAK_SELF;
-    [self.barChartController setBarChartControllerTouchBlock:^NSString *(NSUInteger touchIndex) {
+    [self.barChartController setBarChartControllerTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
         NSMutableString *mutableString = [NSMutableString string];
-        [weakSelf.listBarData enumerateObjectsUsingBlock:^(DTListCommonData *obj, NSUInteger idx, BOOL *stop) {
-            DTCommonData *commonData = obj.commonDatas[touchIndex];
-            [mutableString appendString:commonData.ptName];
-            [mutableString appendString:[NSString stringWithFormat:@" %@", @(commonData.ptValue)]];
-            if (idx < weakSelf.listBarData.count - 1) {
-                [mutableString appendString:@"\n"];
-            }
-        }];
-
+        DTCommonData *commonData = weakSelf.listBarData[dataIndex].commonDatas[barIndex];
+        [mutableString appendString:commonData.ptName];
+        [mutableString appendString:[NSString stringWithFormat:@"data:%@ bar:%@ -> %@", @(dataIndex), @(barIndex), @(commonData.ptValue)]];
         return mutableString;
     }];
+
     [self.view addSubview:self.barChartController.chartView];
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];

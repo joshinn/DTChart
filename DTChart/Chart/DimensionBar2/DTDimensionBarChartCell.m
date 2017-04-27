@@ -60,6 +60,8 @@
     DTChartLabel *label = [DTChartLabel chartLabel];
     label.font = [UIFont systemFontOfSize:10];
     label.textColor = [UIColor whiteColor];
+    label.adjustsFontSizeToFitWidth = NO;
+    label.numberOfLines = 1;
     return label;
 }
 

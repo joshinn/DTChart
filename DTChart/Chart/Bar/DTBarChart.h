@@ -36,6 +36,12 @@ typedef NS_ENUM(NSInteger, DTBarChartStyle) {
 
 @property(nonatomic) NSMutableArray<DTBar *> *chartBars;
 
-@property(nonatomic) NSString *(^barChartTouchBlock)(NSUInteger touchIndex);
+/**
+ * 柱状图触摸回调
+ * @return 触摸提示内容
+ * @note param dataIndex 第几组数据
+ * @note param barIndex  数据里的第几根柱状体
+ */
+@property(nonatomic) NSString *(^barChartTouchBlock)(NSUInteger dataIndex, NSUInteger barIndex);
 
 @end

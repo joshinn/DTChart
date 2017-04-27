@@ -95,6 +95,10 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  * 排序回调
  */
 @property(nonatomic, copy) DTTableChartOrderTouch orderTouchBlock;
+/**
+ * 触摸提示回调
+ */
+@property(nonatomic, copy) NSString *(^chartCellHintTouchBlock)(NSInteger row, NSInteger index);
 
 /**
  * 获取表格一行所有label和间隙的宽度

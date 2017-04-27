@@ -69,7 +69,7 @@
     [self.chartTitles addObject:@"d30"];
     [self.chartTitles addObject:@"d31"];
 
-
+    __weak typeof(self) weakSelf = self;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 30, 100, 60)];
     label.text = @"这是内容";
     label.textAlignment = NSTextAlignmentCenter;
@@ -79,6 +79,12 @@
     self.tableChartController = [[DTTableChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     self.tableChartController.valueSelectable = YES;
     self.tableChartController.headViewHeight = 300;
+    [self.tableChartController setChartHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
+        DTListCommonData *listCommonData = weakSelf.listLineData[(NSUInteger) row];
+        DTCommonData *commonData = listCommonData.commonDatas[(NSUInteger) index];
+
+        return [NSString stringWithFormat:@"Touch -> %@ : %@", commonData.ptName, commonData.ptStringValue];
+    }];
     [self.view addSubview:self.tableChartController.chartView];
 
     [self.tableChartController.headView addSubview:label];
@@ -94,7 +100,7 @@
 
 //    [self.listLineData addObjectsFromArray:[self simulateListCommonData:20 pointCount:self.chartTitles.count mainAxis:NO]];
 //    self.tableChartController.collapseColumn = 0;
-    __weak typeof(self) weakSelf = self;
+
     [self.tableChartController setTableChartExpandTouchBlock:^(NSString *seriesId) {
         DTLog(@"to expand seriesId = %@", seriesId);
 

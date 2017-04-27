@@ -8,7 +8,6 @@
 
 #import "DTDistributionBar.h"
 #import "DTChartData.h"
-#import "DTColor.h"
 
 NSUInteger const DTDistributionBarSectionGapRatio = 30;
 NSUInteger const DTDistributionBarItemGap = 1;
@@ -79,7 +78,6 @@ static NSUInteger const DefaultSubItemCount = 24;
         for (NSUInteger i = 0; i < DefaultSubItemCount; ++i) {
             DTDistributionBarItemView *v = [DTDistributionBarItemView new];
             v.userInteractionEnabled = YES;
-            v.backgroundColor = DTDistributionLowLevelColor;
 
             [views addObject:v];
             [self addSubview:v];

@@ -33,6 +33,7 @@
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         UIView *containerView = [[UIView alloc] init];
+        containerView.backgroundColor = DTRGBColor(0x404040, 1);
         _chartView = containerView;
 
         _mainChart = [[DTPieChart alloc] initWithOrigin:CGPointZero xAxis:xCount yAxis:yCount];
@@ -130,7 +131,7 @@
         case DTChartModePresentation: {
             self.chartRadius = 12;
             CGFloat width = (self.chartRadius * 2 + 2) * cellWidth;
-            CGFloat x = 7 * cellWidth;
+            CGFloat x = 4 * cellWidth;
             CGFloat y = (CGRectGetHeight(self.chartView.bounds) - width) / 2;
 
             [self.mainChart updateFrame:CGPointMake(x, y)
@@ -150,7 +151,7 @@
     CGFloat cellWidth = self.mainChart.coordinateAxisCellWidth;
     NSUInteger xAxisCellCount = (NSUInteger) (radius * 2 + 2);
     NSUInteger yAxisCellCount = (NSUInteger) (radius * 2 + 2);
-    CGPoint origin = CGPointMake(CGRectGetMaxX(self.mainChart.frame) + 15 * cellWidth,
+    CGPoint origin = CGPointMake(CGRectGetMaxX(self.mainChart.frame) + 13 * cellWidth,
             CGRectGetMidY(self.mainChart.frame) - radius / 2 * cellWidth);
     self.secondChart = [[DTPieChart alloc] initWithOrigin:origin xAxis:xAxisCellCount yAxis:yAxisCellCount];
     self.secondChart.pieRadius = radius;

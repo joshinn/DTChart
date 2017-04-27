@@ -78,10 +78,20 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 }
 
 
-#pragma mark - private method
-
+#pragma mark - touch event
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UIView *superView = self.superview;
+    while (superView) {
+        if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *) superView;
+            scrollView.scrollEnabled = NO;
+            superView = nil;
+        } else {
+            superView = superView.superview;
+        }
+    }
+
     [self touchKeyPoint:touches filterRepeat:NO];
 }
 
@@ -91,10 +101,32 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self hideTouchMessage];
+
+    UIView *superView = self.superview;
+    while (superView) {
+        if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *) superView;
+            scrollView.scrollEnabled = YES;
+            superView = nil;
+        } else {
+            superView = superView.superview;
+        }
+    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self hideTouchMessage];
+
+    UIView *superView = self.superview;
+    while (superView) {
+        if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *) superView;
+            scrollView.scrollEnabled = YES;
+            superView = nil;
+        } else {
+            superView = superView.superview;
+        }
+    }
 }
 
 /**
@@ -131,20 +163,11 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 
         DTLineChartSingleData *sData = (DTLineChartSingleData *) item;
 
-        CGRect bound = CGRectMake(sData.itemValues.firstObject.position.x - TouchOffsetMaxDistance,
-                sData.itemValues[sData.maxValueIndex].position.y - 2 * TouchOffsetMaxDistance,
-                sData.itemValues.lastObject.position.x - sData.itemValues.firstObject.position.x + 2 * TouchOffsetMaxDistance,
-                sData.itemValues[sData.minValueIndex].position.y - sData.itemValues[sData.maxValueIndex].position.y + 2 * TouchOffsetMaxDistance);
-
-        // 不在这个区域，直接忽略
-        if (!CGRectContainsPoint(bound, touchPoint)) {
-            continue;
-        }
 
         for (NSUInteger n = 0; n < sData.itemValues.count; ++n) {
             DTChartItemData *itemData = sData.itemValues[n];
 
-            CGFloat distance = CGPointGetDistance(touchPoint, itemData.position);
+            CGFloat distance = ABS(touchPoint.x - itemData.position.x);
             if (distance < TouchOffsetMaxDistance) {
                 selectedItemData = itemData;
 
@@ -215,6 +238,8 @@ static CGFloat const TouchOffsetMaxDistance = 15;
     [self.toastView hide];
     self.touchSelectedLine.hidden = YES;
 }
+
+#pragma mark - private method
 
 /**
  * 创建单个数据对象的折线路径

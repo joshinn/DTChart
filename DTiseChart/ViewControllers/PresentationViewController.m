@@ -25,6 +25,10 @@
 
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, 1366, 800)];
+    scrollView.contentSize = CGSizeMake(1366, 1600);
+    [self.view addSubview:scrollView];
+
     self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     self.lineChartController.chartMode = DTChartModePresentation;
     self.lineChartController.valueSelectable = YES;
@@ -53,7 +57,7 @@
             DTLog(@"main axis color = %@ \nseriesId = %@", obj.color, obj.seriesId);
         }];
     }];
-    [self.view addSubview:self.lineChartController.chartView];
+    [scrollView addSubview:self.lineChartController.chartView];
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     formatter.mainYAxisFormat = @"%.0f%%";

@@ -37,6 +37,12 @@
                 weakSelf.tableChartOrderTouchBlock(isMainAxis, column);
             }
         }];
+        [_tableChart setChartCellHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
+            if (weakSelf.chartHintTouchBlock) {
+                return weakSelf.chartHintTouchBlock(row, index);
+            }
+            return nil;
+        }];
 
         _chartView = _tableChart;
         _tableLeftOffset = 0;

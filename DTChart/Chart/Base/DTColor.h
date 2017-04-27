@@ -85,17 +85,4 @@
 #define DTColorArray  @[DTColorGreen, DTColorBlue, DTColorPurple, DTColorMagenta, DTColorYellow, DTColorOrange, DTColorDarkBlue, DTColorDarkGreen, DTColorRed, DTColorCyan, DTColorGray, DTColorPink]
 #define DTLightColorArray  @[DTColorGreenLight, DTColorBlueLight, DTColorPurpleLight, DTColorMagentaLight, DTColorYellowLight, DTColorOrangeLight, DTColorDarkBlueLight, DTColorDarkGreenLight, DTColorRedLight, DTColorCyanLight, DTColorGrayLight, DTColorPinkLight]
 
-
-#pragma mark - DTDistributionChart的颜色
-
-/** 程度最低 */
-#define DTDistributionLowLevelColor DTRGBColor(0x01081a, 1)
-/** 程度中等 */
-#define DTDistributionMiddleLevelColor DTRGBColor(0x014898, 1)
-/** 程度高 */
-#define DTDistributionHighLevelColor DTRGBColor(0x0095d9, 1)
-/** 程度最高 */
-#define DTDistributionSupremeLevelColor DTRGBColor(0x5ac3d9, 1)
-
-
 #endif /* DTColor_h */

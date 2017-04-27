@@ -30,12 +30,9 @@
 
         _chart.barWidth = 2;
 
-        WEAK_SELF;
-        [_chart setBarChartTouchBlock:^NSString *(NSUInteger touchIndex) {
-            if (weakSelf.dimensionBarChartControllerTouchBlock) {
-                return weakSelf.dimensionBarChartControllerTouchBlock(touchIndex);
-            }
-            return nil;
+        [_chart setBarChartTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
+
+            return @"触摸回调";
         }];
     }
     return self;

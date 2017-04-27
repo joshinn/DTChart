@@ -29,9 +29,9 @@
     [self.listBarData addObjectsFromArray:[self simulateListCommonData:7 pointCount:24 mainAxis:NO]];
 
     self.thumbChart = [[DTDistributionChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
-    self.thumbChart.lowLevel = 10000;
-    self.thumbChart.middleLevel = 20000;
-    self.thumbChart.highLevel = 30000;
+    self.thumbChart.lowLevel = 100;
+    self.thumbChart.middleLevel = 500;
+    self.thumbChart.highLevel = 1000;
 
     [self.view addSubview:self.thumbChart.chartView];
 
@@ -90,7 +90,9 @@
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"%@", @(i)];
-        CGFloat value = arc4random_uniform(2000);
+        NSInteger v1 = arc4random_uniform(2000);
+        NSInteger v2 = arc4random_uniform(200);
+        CGFloat value = v1 - v2;
         DTCommonData *data = [DTCommonData commonData:title value:baseValue + value];
         [list addObject:data];
     }

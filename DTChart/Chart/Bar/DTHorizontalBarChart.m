@@ -8,7 +8,6 @@
 
 #import "DTHorizontalBarChart.h"
 #import "DTChartLabel.h"
-#import "DTChartData.h"
 #import "DTHeapBar.h"
 #import "DTChartToastView.h"
 
@@ -272,12 +271,13 @@
             containsPoint = YES;
 
             NSString *message = nil;
-            for (DTChartSingleData *sData in self.multiData) {
+            for (NSUInteger dataIndex = 0; dataIndex < self.multiData.count; ++dataIndex) {
+                DTChartSingleData *sData = self.multiData[dataIndex];
                 if ([sData.itemValues containsObject:bar.barData]) {
-                    NSUInteger index = [sData.itemValues indexOfObject:bar.barData];
+                    NSUInteger barIndex = [sData.itemValues indexOfObject:bar.barData];
 
                     if (self.barChartTouchBlock) {
-                        message = self.barChartTouchBlock(index);
+                        message = self.barChartTouchBlock(dataIndex, barIndex);
                     }
                     break;
                 }

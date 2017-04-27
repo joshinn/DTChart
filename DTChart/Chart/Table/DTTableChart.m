@@ -617,8 +617,9 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     }
 }
 
-- (void)chartCellHintTouchBegin:(NSString *)text index:(NSUInteger)index isMainAxis:(BOOL)isMainAxis touch:(UITouch *)touch {
+- (void)chartCellHintTouchBegin:(DTTableChartCell *)cell text:(NSString *)text index:(NSUInteger)index isMainAxis:(BOOL)isMainAxis touch:(UITouch *)touch {
     CGPoint p = [touch locationInView:self.contentView];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
     NSString *title;
     if (isMainAxis) {
@@ -627,7 +628,12 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
         title = self.ySecondAxisLabelDatas[index].title;
     }
 
-    NSString *message = [NSString stringWithFormat:@"%@\n%@", title, text];
+    NSString *message = nil;
+    if (self.chartCellHintTouchBlock) {
+        message = self.chartCellHintTouchBlock(indexPath.row, index);
+    } else {
+        message = [NSString stringWithFormat:@"%@\n%@", title, text];
+    }
     [self showTouchMessage:message touchPoint:p];
 }
 
