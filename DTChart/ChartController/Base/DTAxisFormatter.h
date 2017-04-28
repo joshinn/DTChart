@@ -40,6 +40,10 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 @property(nonatomic) NSString *mainYAxisFormat;
 /**
+ * DTAxisFormatterTypeNumber下，y主轴的单位，默认nil
+ */
+@property(nonatomic) NSString *mainYAxisUnit;
+/**
  * DTAxisFormatterTypeNumber下，y主轴数据缩放比，默认1
  */
 @property(nonatomic) CGFloat mainYAxisScale;

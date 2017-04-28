@@ -109,7 +109,7 @@
     if (maxY == 0) {    // 最大值是0，只显示0标签
         maxY = 1;
 
-        NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
+        NSMutableArray < DTAxisLabelData * > *yAxisLabelDatas = [NSMutableArray array];
 
         for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
             CGFloat y = maxY * 1.0f / maxYAxisCount * i;
@@ -126,6 +126,7 @@
 
     BOOL yScaled = NO;  // 需要缩放时，记录缩放行为
 
+    // 确定坐标轴最大值
     if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
             || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
 
@@ -162,9 +163,22 @@
 
 
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
+    NSInteger unitScale = 1;
 
     for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
         CGFloat y = maxY / maxYAxisCount * i;
+
+        if (i == 1) {
+            NSInteger intY = (NSInteger) y;
+            if (intY % (NSInteger) pow(10, 9) == 0) {
+                unitScale = (NSInteger) pow(10, 9);
+            } else if (intY % (NSInteger) pow(10, 6) == 0) {
+                unitScale = (NSInteger) pow(10, 6);
+            } else if (intY % (NSInteger) pow(10, 3) == 0) {
+                unitScale = (NSInteger) pow(10, 3);
+            }
+
+        }
 
         if (yScaled) {
             y /= isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
@@ -179,9 +193,9 @@
             }
         } else if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeNumber) {
             if (isMainAxis) {
-                title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];
+                title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];// / unitScale];
             } else {
-                title = [self.axisFormatter getSecondYAxisLabelTitle:nil orValue:y];
+                title = [self.axisFormatter getSecondYAxisLabelTitle:nil orValue:y]; // / unitScale];
             }
         }
 

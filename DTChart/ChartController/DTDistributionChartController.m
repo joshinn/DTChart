@@ -229,10 +229,6 @@
     if (self.mainDistributionChart.superview) {
         [self.mainDistributionChart removeFromSuperview];
     }
-    if (self.mainLevelColorIndicator) {
-        [self.mainLevelColorIndicator removeFromSuperview];
-        self.mainLevelColorIndicator = nil;
-    }
 
     if (self.chartMode == DTChartModeThumb) {
         self.mainDistributionChart = [[DTDistributionChart alloc] initWithOrigin:CGPointMake(0, 0) xAxis:17 yAxis:11];
@@ -278,23 +274,6 @@
         frame.origin.x = x;
         self.mainDistributionChart.frame = frame;
 
-        self.mainLevelColorIndicator = [self levelColorIndicateView:
-                        CGRectMake(CGRectGetMinX(self.mainDistributionChart.frame),
-                                CGRectGetMinY(self.mainDistributionChart.frame) - 3 * self.mainDistributionChart.coordinateAxisCellWidth,
-                                CGRectGetWidth(self.mainDistributionChart.frame) - 4 * self.mainDistributionChart.coordinateAxisCellWidth / 10,
-                                self.mainDistributionChart.coordinateAxisCellWidth * 2)
-                                                              colos:@[self.mainDistributionChart.nullLevelColor,
-                                                                      self.mainDistributionChart.lowLevelColor,
-                                                                      self.mainDistributionChart.middleLevelColor,
-                                                                      self.mainDistributionChart.highLevelColor,
-                                                                      self.mainDistributionChart.supremeLevelColor]
-                                                             titles:@[self.nullLevelTitle,
-                                                                     self.lowLevelTitle,
-                                                                     self.middleLevelTitle,
-                                                                     self.highLevelTitle,
-                                                                     self.supremeLevelTitle]];
-
-        [self.chartView addSubview:self.mainLevelColorIndicator];
     }
 
     self.mainTitleLabel.frame = CGRectMake(CGRectGetMinX(self.mainDistributionChart.frame), 0,
@@ -331,24 +310,62 @@
     self.secondTitleLabel.frame = CGRectMake(CGRectGetMaxX(self.secondDistributionChart.frame) - CGRectGetWidth(self.mainTitleLabel.frame),
             0, CGRectGetWidth(self.mainTitleLabel.frame), self.secondDistributionChart.coordinateAxisCellWidth);
 
-    self.secondLevelColorIndicator = [self levelColorIndicateView:
-                    CGRectMake(CGRectGetMaxX(self.secondDistributionChart.frame) - CGRectGetWidth(self.secondDistributionChart.contentView.bounds),
-                            CGRectGetMinY(self.mainLevelColorIndicator.frame),
-                            CGRectGetWidth(self.mainLevelColorIndicator.frame),
-                            CGRectGetHeight(self.mainLevelColorIndicator.frame))
-                                                            colos:@[self.secondDistributionChart.nullLevelColor,
-                                                                    self.secondDistributionChart.lowLevelColor,
-                                                                    self.secondDistributionChart.middleLevelColor,
-                                                                    self.secondDistributionChart.highLevelColor,
-                                                                    self.secondDistributionChart.supremeLevelColor]
-                                                           titles:@[self.secondNullLevelTitle,
-                                                                   self.secondLowLevelTitle,
-                                                                   self.secondMiddleLevelTitle,
-                                                                   self.secondHighLevelTitle,
-                                                                   self.secondSupremeLevelTitle
-                                                           ]];
 
-    [self.chartView addSubview:self.secondLevelColorIndicator];
+}
+
+- (void)loadIndicatorViews:(BOOL)isMainIndicator {
+    UIView *indicator = nil;
+    CGRect frame;
+    NSArray *colors = nil;
+    NSArray *titles = nil;
+    if (isMainIndicator) {
+        indicator = self.mainLevelColorIndicator;
+        frame = CGRectMake(CGRectGetMinX(self.mainDistributionChart.frame),
+                CGRectGetMinY(self.mainDistributionChart.frame) - 3 * self.mainDistributionChart.coordinateAxisCellWidth,
+                CGRectGetWidth(self.mainDistributionChart.frame) - 4 * self.mainDistributionChart.coordinateAxisCellWidth / 10,
+                self.mainDistributionChart.coordinateAxisCellWidth * 2);
+
+        colors = @[self.mainDistributionChart.nullLevelColor,
+                self.mainDistributionChart.lowLevelColor,
+                self.mainDistributionChart.middleLevelColor,
+                self.mainDistributionChart.highLevelColor,
+                self.mainDistributionChart.supremeLevelColor];
+        titles = @[self.nullLevelTitle,
+                self.lowLevelTitle,
+                self.middleLevelTitle,
+                self.highLevelTitle,
+                self.supremeLevelTitle];
+    } else {
+        indicator = self.secondLevelColorIndicator;
+
+        frame = self.mainLevelColorIndicator.frame;
+        frame.origin.x = CGRectGetMaxX(self.secondDistributionChart.frame) - CGRectGetWidth(self.secondDistributionChart.contentView.bounds);
+
+        colors = @[self.secondDistributionChart.nullLevelColor,
+                self.secondDistributionChart.lowLevelColor,
+                self.secondDistributionChart.middleLevelColor,
+                self.secondDistributionChart.highLevelColor,
+                self.secondDistributionChart.supremeLevelColor];
+        titles = @[self.secondNullLevelTitle,
+                self.secondLowLevelTitle,
+                self.secondMiddleLevelTitle,
+                self.secondHighLevelTitle,
+                self.secondSupremeLevelTitle];
+    }
+    if (indicator) {
+        [indicator removeFromSuperview];
+    }
+
+
+    indicator = [self levelColorIndicateView:frame colos:colors titles:titles];
+
+    [self.chartView addSubview:indicator];
+
+    if (isMainIndicator) {
+        self.mainLevelColorIndicator = indicator;
+    } else {
+        self.secondLevelColorIndicator = indicator;
+    }
 }
 
 - (void)dismissSecondChart {
@@ -376,7 +393,7 @@
     label.text = @"会话次数 弱到强";
 
     CGSize size = [label.text sizeWithAttributes:@{NSFontAttributeName: label.font}];
-    label.frame = CGRectMake(0, 0, size.width, CGRectGetHeight(frame));
+    label.frame = CGRectMake(0, 0, size.width, CGRectGetHeight(frame) / 2);
 
     [container addSubview:label];
 
@@ -504,11 +521,17 @@
 - (void)drawChart {
     [super drawChart];
 
-    self.mainTitleLabel.text = self.mainTitle;
+    if (self.chartMode == DTChartModePresentation) {
+        self.mainTitleLabel.text = self.mainTitle;
+        [self loadIndicatorViews:YES];
+    }
 
     [self.mainDistributionChart drawChart];
     if (self.secondDistributionChart) {
-        self.secondTitleLabel.text = self.secondTitle;
+        if (self.chartMode == DTChartModePresentation) {
+            self.secondTitleLabel.text = self.secondTitle;
+            [self loadIndicatorViews:NO];
+        }
         [self.secondDistributionChart drawChart];
     }
 }

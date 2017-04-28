@@ -41,9 +41,10 @@
     self.presentChart = [[DTDistributionChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:75 yAxis:41];
     self.presentChart.chartMode = DTChartModePresentation;
     self.presentChart.mainTitle = @"手机";
-    self.presentChart.secondTitle = @"平板";
+    self.presentChart.secondTitle = @"平板22";
 //    self.presentChart.startHour = 10;
     self.presentChart.valueSelectable = YES;
+    self.presentChart.secondNullLevelTitle = @"呵呵哒";
     WEAK_SELF;
     [self.presentChart setMainDistributionControllerTouchBlock:^NSString *(NSString *seriesId, NSInteger time) {
         NSString *message = nil;
