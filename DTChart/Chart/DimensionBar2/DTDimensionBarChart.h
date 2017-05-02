@@ -19,7 +19,7 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 
 @interface DTDimensionBarChart : DTBarChart
 
-@property (nonatomic) DTDimensionBarStyle chartStyle;
+@property(nonatomic) DTDimensionBarStyle chartStyle;
 
 @property(nonatomic) DTDimension2ListModel *mainData;
 @property(nonatomic) DTDimension2ListModel *secondData;
@@ -30,6 +30,9 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
  * 第二个度量x轴标签数组
  */
 @property(nonatomic, copy) NSArray<DTAxisLabelData *> *xSecondAxisLabelDatas;
+
+@property(nonatomic) NSString *mainNotation;
+@property(nonatomic) NSString *secondNotation;
 
 @property(nonatomic, copy) NSString *(^touchLabelBlock)(NSUInteger row, NSUInteger index);
 

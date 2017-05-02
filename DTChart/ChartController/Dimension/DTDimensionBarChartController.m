@@ -66,7 +66,6 @@
 
 - (void)processXLabelData:(NSUInteger)axisCount axisMaxValue:(CGFloat)maxValue axisMinValue:(CGFloat)minValue isMainAxis:(BOOL)isMainAxis {
 
-
     if (minValue >= 0) {
 
         NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:YES];
@@ -90,13 +89,15 @@
         }
 
         for (NSUInteger i = 1; i < axisCount; ++i) {
-            NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount - i yAxisMaxValue:max isMainAxis:YES];
+            NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount - i yAxisMaxValue:max isMainAxis:isMainAxis];
 
             if (-min < xLabelDatas[i].value) {
                 NSMutableArray<DTAxisLabelData *> *negativeLabelDatas = [NSMutableArray array];
                 NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+                NSInteger notation = isMainAxis ? self.axisFormatter.mainYAxisNotation : self.axisFormatter.secondYAxisNotation;
+
                 for (NSUInteger j = 0; j < i; ++j) {
-                    DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@", @(-xLabelDatas[j + 1].value)] value:-xLabelDatas[j + 1].value];
+                    DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@", @(-xLabelDatas[j + 1].value / notation)] value:-xLabelDatas[j + 1].value];
                     [negativeLabelDatas insertObject:xLabelData atIndex:0];
                     [indexSet addIndex:j];
                 }
@@ -124,6 +125,35 @@
 
         }
     }
+
+    if (isMainAxis) {
+        self.chart.mainNotation = [self getNotationLabelText:YES];
+    } else {
+        self.chart.secondNotation = [self getNotationLabelText:NO];
+    }
+}
+
+/**
+ * 获取y轴对应的倍数文字
+ * @param isMain 是否是主轴
+ * @return 文字
+ */
+- (NSString *)getNotationLabelText:(BOOL)isMain {
+    NSInteger notation = isMain ? self.axisFormatter.mainYAxisNotation : self.axisFormatter.secondYAxisNotation;
+    NSString *unit = isMain ? self.axisFormatter.mainYAxisUnit : self.axisFormatter.secondYAxisUnit;
+    if (!unit) {
+        unit = @"";
+    }
+
+    if (notation == 1000) {
+        return [NSString stringWithFormat:@"×10³%@", unit];
+    } else if (notation == 1000000) {
+        return [NSString stringWithFormat:@"×10⁶%@", unit];
+    } else if (notation == 1000000000) {
+        return [NSString stringWithFormat:@"×10⁹%@", unit];
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - override
@@ -141,6 +171,11 @@
         return;
     }
 
+    DTAxisFormatter *axisFormatter = [DTAxisFormatter axisFormatter];
+    axisFormatter.mainYAxisType = DTAxisFormatterTypeNumber;
+    axisFormatter.secondYAxisType = DTAxisFormatterTypeNumber;
+    self.axisFormatter = axisFormatter;
+
     if (mainData) {
         self.chart.mainData = mainData;
         [self processXLabelData:4 axisMaxValue:mainData.maxValue axisMinValue:mainData.minValue isMainAxis:YES];
@@ -149,12 +184,6 @@
     if (secondData) {
         self.chart.secondData = secondData;
         [self processXLabelData:4 axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
-
-        ChartEdgeInsets insets = self.chart.coordinateAxisInsets;
-        self.chart.coordinateAxisInsets = ChartEdgeInsetsMake(insets.left, 1, insets.right, insets.bottom);
-    } else {
-        ChartEdgeInsets insets = self.chart.coordinateAxisInsets;
-        self.chart.coordinateAxisInsets = ChartEdgeInsetsMake(insets.left, 0, insets.right, insets.bottom);
     }
 }
 

@@ -53,7 +53,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     self.userInteractionEnabled = YES;
     _prepare = NO;
 
-    self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, self.coordinateAxisInsets.right, self.coordinateAxisInsets.bottom);
+    self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 2);
 
     self.tableView.frame = self.contentView.bounds;
     [self.contentView addSubview:self.tableView];
@@ -220,12 +220,20 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     if (self.secondData) {
         barContentCellCount /= 2;
-        self.mainTitleLabel.frame = CGRectMake((self.coordinateAxisInsets.left + yLabelContentCellCount) * self.coordinateAxisCellWidth,
-                0, barContentCellCount * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
-        self.mainTitleLabel.text = self.mainData.title;
+        if (self.mainNotation.length > 0) {
+            self.mainTitleLabel.text = [NSString stringWithFormat:@"%@(%@)", self.mainData.title, self.mainNotation];
+        } else {
+            self.mainTitleLabel.text = self.mainData.title;
+        }
     } else {
-        self.mainTitleLabel.text = nil;
+        if (self.mainNotation.length > 0) {
+            self.mainTitleLabel.text = [NSString stringWithFormat:@"(%@)", self.mainNotation];
+        } else {
+            self.mainTitleLabel.text = nil;
+        }
     }
+    self.mainTitleLabel.frame = CGRectMake((self.coordinateAxisInsets.left + yLabelContentCellCount) * self.coordinateAxisCellWidth,
+            CGRectGetMaxY(self.bounds) - self.coordinateAxisCellWidth, barContentCellCount * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
 
     NSUInteger sectionCellCount = barContentCellCount / (self.xAxisLabelDatas.count - 1);
 
@@ -316,8 +324,13 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     barContentCellCount /= 2;
 
     self.secondTitleLabel.frame = CGRectMake((self.coordinateAxisInsets.left + yLabelContentCellCount + barContentCellCount) * self.coordinateAxisCellWidth,
-            0, barContentCellCount * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
-    self.secondTitleLabel.text = self.secondData.title;
+            CGRectGetMaxY(self.bounds) - self.coordinateAxisCellWidth, barContentCellCount * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
+
+    if (self.secondNotation.length > 0) {
+        self.secondTitleLabel.text = [NSString stringWithFormat:@"%@(%@)", self.secondData.title, self.secondNotation];
+    } else {
+        self.secondTitleLabel.text = self.secondData.title;
+    }
 
     NSUInteger sectionCellCount = barContentCellCount / (self.xSecondAxisLabelDatas.count - 1);
 
