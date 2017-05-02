@@ -21,4 +21,3 @@ Pod::Spec.new do |s|
   s.prefix_header_file = 'DTChart/DTChart-Prefix.pch'
 
 end
-o
