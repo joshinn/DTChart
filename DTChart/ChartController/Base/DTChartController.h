@@ -101,6 +101,15 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 @property(nonatomic, copy) SecondAxisColorsCompletionBlock secondAxisColorsCompletionBlock;
 
 /**
+ * 主Y轴取值的最大限制，0表示无限制，默认0
+ */
+@property(nonatomic) CGFloat mainYAxisMaxValueLimit;
+/**
+ * 副Y轴取值的最大限制，0表示无限制，默认0
+ */
+@property(nonatomic) CGFloat secondYAxisMaxValueLimit;
+
+/**
  * 实例化
  * @param origin 等同于frame.origin
  * @param xCount frame.size.width 换算成单元格数
@@ -111,7 +120,7 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
 
 /**
  * 构造y轴数据
- * @param maxYAxisCount y轴限制的label数量
+ * @param maxYAxisCount y轴限制的label数量，轴等分数
  * @param maxY y轴最大值
  * @param isMainAxis 是否主轴
  * @return y轴label data

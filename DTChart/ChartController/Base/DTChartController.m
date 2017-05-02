@@ -124,16 +124,23 @@
         return yAxisLabelDatas;
     }
 
+
     BOOL yScaled = NO;  // 需要缩放时，记录缩放行为
+    CGFloat scale = isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
+    CGFloat maxLimit = isMainAxis ? self.mainYAxisMaxValueLimit : self.secondYAxisMaxValueLimit;
+    maxLimit *= scale;
 
     // 确定坐标轴最大值
     if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
             || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
 
-        maxY *= isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
+        maxY *= scale;
         yScaled = YES;
 
-        if (maxY <= 10) {   // 10以内
+        if (maxY <= maxYAxisCount && maxYAxisCount < 10) {  // 10以内，从0，1，2...maxYAxisCount
+            maxY = maxYAxisCount;
+
+        } else if (maxY <= 10) {   // 10以内
             NSUInteger y = 10;
             while (y % maxYAxisCount != 0) {
                 ++y;
@@ -158,6 +165,14 @@
             }
 
             maxY = y;
+        }
+
+        if (maxY > maxLimit && maxLimit > 0) {
+            maxY = maxLimit;
+
+            while (maxYAxisCount >= 1 && maxLimit / maxYAxisCount != (NSInteger) (maxY / maxYAxisCount)) {
+                --maxYAxisCount;
+            }
         }
     }
 
@@ -190,7 +205,7 @@
         }
 
         if (yScaled) {
-            y /= isMainAxis ? self.axisFormatter.mainYAxisScale : self.axisFormatter.secondYAxisScale;
+            y /= scale;
         }
 
         NSString *title;

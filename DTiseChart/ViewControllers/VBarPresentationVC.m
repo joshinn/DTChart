@@ -24,14 +24,15 @@
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
 
-    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
-    self.barChartController.preferMainYAxisDataCount = 5;
+    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:71 yAxis:37];
+//    self.barChartController.preferMainYAxisDataCount = 5;
     self.barChartController.chartMode = DTChartModePresentation;
 //    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
 //    self.barChartController.chartMode = DTChartModeThumb;
     self.barChartController.valueSelectable = YES;
     self.barChartController.axisBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
     self.barChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
+    self.barChartController.mainYAxisMaxValueLimit = 1;
 
     [self.barChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
 //        [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
@@ -58,6 +59,8 @@
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;
+    formatter.mainYAxisScale = 100;
+    formatter.mainYAxisFormat = @"%.0f%%";
     formatter.secondYAxisType = DTAxisFormatterTypeNumber;
     formatter.xAxisType = DTAxisFormatterTypeDate;
     formatter.xAxisDateSubType = DTAxisFormatterDateSubTypeMonth | DTAxisFormatterDateSubTypeDay;
@@ -110,7 +113,8 @@
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"2016-12-%@~2016-12-%@", [self dayString:i + 1], [self dayString:i + 2]];
-        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
+//        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
+        DTCommonData *data = [DTCommonData commonData:title value:baseValue + 1];
         [list addObject:data];
     }
 
@@ -118,7 +122,7 @@
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
-    return [self simulateCommonData:count baseValue:3000];
+    return [self simulateCommonData:count baseValue:0];
 }
 
 

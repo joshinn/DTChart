@@ -29,11 +29,12 @@
     scrollView.contentSize = CGSizeMake(1366, 1600);
     [self.view addSubview:scrollView];
 
-    self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
+    self.lineChartController = [[DTLineChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:71 yAxis:37];
     self.lineChartController.chartMode = DTChartModePresentation;
     self.lineChartController.valueSelectable = YES;
     self.lineChartController.axisBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
     self.lineChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
+    self.lineChartController.mainYAxisMaxValueLimit = 1;
 
     WEAK_SELF;
     [self.lineChartController setLineChartTouchBlock:^NSString *(NSString *seriesId, NSUInteger pointIndex) {
@@ -60,7 +61,7 @@
     [scrollView addSubview:self.lineChartController.chartView];
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
-    formatter.mainYAxisFormat = @"%.0f";
+    formatter.mainYAxisFormat = @"%.0f%%";
     formatter.mainYAxisUnit = @"人";
     formatter.mainYAxisScale = 100;
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;

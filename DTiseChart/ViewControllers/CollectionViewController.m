@@ -122,14 +122,15 @@ static NSString *const TableGridCellId = @"TableGridCell";
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
-    return [self simulateCommonData:count baseValue:200];
+    return [self simulateCommonData:count baseValue:0];
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count baseValue:(CGFloat)baseValue {
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"2016-12-%@~2016-12-%@", [self dayString:i + 1], [self dayString:i + 2]];
-        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform((uint32_t) (baseValue / 2))];
+//        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform((uint32_t) (baseValue / 2))];
+        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(100) / 100.f];
 //        data.ptValue = 0;
         [list addObject:data];
     }
