@@ -9,6 +9,7 @@
 #import "DTHorizontalBarChartController.h"
 #import "DTHorizontalBarChart.h"
 #import "DTDataManager.h"
+#import "DTChartLabel.h"
 
 @interface DTHorizontalBarChartController ()
 
@@ -60,7 +61,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 }
 
 - (NSUInteger)mMaxXAxisCount {
-    if(self.preferXAxisDataCount > 0){
+    if (self.preferXAxisDataCount > 0) {
         _mMaxXAxisCount = self.preferXAxisDataCount;
         return _mMaxXAxisCount;
     }
@@ -79,7 +80,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 }
 
 - (NSUInteger)mMaxYAxisCount:(NSUInteger)valuesCount {
-    if(self.preferMainYAxisDataCount > 0){
+    if (self.preferMainYAxisDataCount > 0) {
         _mMaxYAxisCount = self.preferMainYAxisDataCount;
         return _mMaxYAxisCount;
     }
@@ -226,6 +227,49 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 
     // x轴label data
     self.barChart.xAxisLabelDatas = [super generateYAxisLabelData:maxXAxisCount yAxisMaxValue:maxX isMainAxis:YES];
+
+    self.barChart.mainNotationLabel.text = [self getNotationLabelText];
+
+    CGRect frame = self.barChart.mainNotationLabel.frame;
+    CGRect bounding = [self.barChart.mainNotationLabel.text boundingRectWithSize:CGSizeMake(self.barChart.coordinateAxisCellWidth, 0)
+                                                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                                      attributes:@{NSFontAttributeName: self.barChart.mainNotationLabel.font}
+                                                                         context:nil];
+    bounding.size.height += 5;
+    frame.origin.y += CGRectGetHeight(frame) - CGRectGetHeight(bounding);
+    frame.size.height = CGRectGetHeight(bounding);
+    self.barChart.mainNotationLabel.frame = frame;
+}
+
+/**
+ * 获取x轴对应的倍数文字
+ * @return 文字
+ */
+- (NSString *)getNotationLabelText {
+    NSInteger notation = self.axisFormatter.mainYAxisNotation;
+    NSString *unit = self.axisFormatter.mainYAxisUnit;
+
+    if (notation == 1000) {
+        if (unit.length == 0) {
+            return [NSString stringWithFormat:@"×\n10³"];
+        } else {
+            return [NSString stringWithFormat:@"×\n10³\n%@", unit];
+        }
+    } else if (notation == 1000000) {
+        if (unit.length == 0) {
+            return [NSString stringWithFormat:@"×\n10⁹"];
+        } else {
+            return [NSString stringWithFormat:@"×\n10⁶\n%@", unit];
+        }
+    } else if (notation == 1000000000) {
+        if (unit.length == 0) {
+            return [NSString stringWithFormat:@"×\n10⁹"];
+        } else {
+            return [NSString stringWithFormat:@"×\n10⁹\n%@", unit];
+        }
+    } else {
+        return nil;
+    }
 }
 
 /**

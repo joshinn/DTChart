@@ -170,12 +170,21 @@
 
         if (i == 1) {
             NSInteger intY = (NSInteger) y;
-            if (intY % (NSInteger) pow(10, 9) == 0) {
-                unitScale = (NSInteger) pow(10, 9);
-            } else if (intY % (NSInteger) pow(10, 6) == 0) {
-                unitScale = (NSInteger) pow(10, 6);
-            } else if (intY % (NSInteger) pow(10, 3) == 0) {
-                unitScale = (NSInteger) pow(10, 3);
+
+            NSInteger notation = 1000000000;
+            while (notation >= 1000) {
+                if (intY % notation == 0) {
+                    unitScale = notation;
+                    if (isMainAxis) {
+                        self.axisFormatter.mainYAxisNotation = notation;
+                    } else {
+                        self.axisFormatter.secondYAxisNotation = notation;
+                    }
+
+                    break;
+                } else {
+                    notation /= 1000;
+                }
             }
 
         }
@@ -193,9 +202,9 @@
             }
         } else if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeNumber) {
             if (isMainAxis) {
-                title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];// / unitScale];
+                title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y / unitScale];
             } else {
-                title = [self.axisFormatter getSecondYAxisLabelTitle:nil orValue:y]; // / unitScale];
+                title = [self.axisFormatter getSecondYAxisLabelTitle:nil orValue:y / unitScale];
             }
         }
 

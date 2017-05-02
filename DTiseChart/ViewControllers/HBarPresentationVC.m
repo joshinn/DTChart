@@ -52,6 +52,8 @@
     self.pBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:75 yAxis:41];
     self.pBarChartController.chartMode = DTChartModePresentation;
     self.pBarChartController.valueSelectable = YES;
+    self.pBarChartController.axisBackgroundColor = [UIColor lightGrayColor];
+    self.pBarChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
 
     NSMutableArray<DTListCommonData *> *listBarData = [self simulateListCommonData:1 pointCount:10 mainAxis:YES];
     
@@ -109,7 +111,7 @@
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
-    return [self simulateCommonData:count baseValue:300];
+    return [self simulateCommonData:count baseValue:30000];
 }
 
 

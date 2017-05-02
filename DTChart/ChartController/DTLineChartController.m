@@ -10,6 +10,7 @@
 #import "DTLineChart.h"
 #import "DTLineChartSingleData.h"
 #import "DTDataManager.h"
+#import "DTChartLabel.h"
 
 @interface DTLineChartController ()
 
@@ -222,6 +223,9 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     // y轴label data
     self.lineChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:YES];
 
+    self.lineChart.mainNotationLabel.text = [self getNotationLabelText:YES];
+
+
     if (listSecondAxisData.count > 0) {
         [self processSecondAxisLabelDataAndLines:listSecondAxisData];
     } else {
@@ -246,6 +250,31 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     // y副轴label data
     self.lineChart.ySecondAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:NO];
+
+    self.lineChart.secondNotationLabel.text = [self getNotationLabelText:NO];
+}
+
+/**
+ * 获取y轴对应的倍数文字
+ * @param isMain 是否是主轴
+ * @return 文字
+ */
+- (NSString *)getNotationLabelText:(BOOL)isMain {
+    NSInteger notation = isMain ? self.axisFormatter.mainYAxisNotation : self.axisFormatter.secondYAxisNotation;
+    NSString *unit = isMain ? self.axisFormatter.mainYAxisUnit : self.axisFormatter.secondYAxisUnit;
+    if (!unit) {
+        unit = @"";
+    }
+
+    if (notation == 1000) {
+        return [NSString stringWithFormat:@"×10³%@", unit];
+    } else if (notation == 1000000) {
+        return [NSString stringWithFormat:@"×10⁶%@", unit];
+    } else if (notation == 1000000000) {
+        return [NSString stringWithFormat:@"×10⁹%@", unit];
+    } else {
+        return nil;
+    }
 }
 
 /**

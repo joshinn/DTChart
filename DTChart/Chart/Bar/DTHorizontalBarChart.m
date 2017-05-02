@@ -21,6 +21,14 @@
     [super initial];
 
     _barBorderStyle = DTBarBorderStyleTopBorder;
+    ChartEdgeInsets insets = self.coordinateAxisInsets;
+    insets.top = 0;
+    insets.right = 1;
+    self.coordinateAxisInsets = insets;
+
+    self.mainNotationLabel.textAlignment = NSTextAlignmentCenter;
+    self.mainNotationLabel.numberOfLines = 0;
+    self.mainNotationLabel.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame), CGRectGetMaxY(self.contentView.frame) - 6 * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth, 6 * self.coordinateAxisCellWidth);
 }
 
 #pragma mark - private method
@@ -340,6 +348,10 @@
         xLabel.frame = (CGRect) {CGPointMake(x, y), size};
 
         [self addSubview:xLabel];
+    }
+
+    if (!self.mainNotationLabel.superview) {
+        [self addSubview:self.mainNotationLabel];
     }
 
     return YES;

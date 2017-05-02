@@ -160,15 +160,13 @@
             DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
             [list addObject:data];
         }
-
-
     }
 
     return list;
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count prev:(NSMutableArray<DTCommonData *> *)prevArray {
-    return [self simulateCommonData:count baseValue:300 prev:prevArray];
+    return [self simulateCommonData:count baseValue:8000 prev:prevArray];
 }
 
 

@@ -30,6 +30,7 @@
 //    self.barChartController = [[DTVerticalBarChartController alloc] initWithOrigin:CGPointMake(15 * 8, 6 * 15) xAxis:23 yAxis:11];
 //    self.barChartController.chartMode = DTChartModeThumb;
     self.barChartController.valueSelectable = YES;
+    self.barChartController.axisBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
     self.barChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
     [self.barChartController setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
@@ -52,6 +53,8 @@
     }];
 
     [self.view addSubview:self.barChartController.chartView];
+
+    self.listBarData = [self simulateListCommonData:1 pointCount:11 mainAxis:YES];
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;
@@ -115,7 +118,7 @@
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
-    return [self simulateCommonData:count baseValue:300];
+    return [self simulateCommonData:count baseValue:3000];
 }
 
 

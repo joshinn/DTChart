@@ -60,7 +60,8 @@
     [scrollView addSubview:self.lineChartController.chartView];
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
-    formatter.mainYAxisFormat = @"%.0f人";
+    formatter.mainYAxisFormat = @"%.0f";
+    formatter.mainYAxisUnit = @"人";
     formatter.mainYAxisScale = 100;
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;
     formatter.secondYAxisType = DTAxisFormatterTypeNumber;

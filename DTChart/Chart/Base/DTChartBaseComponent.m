@@ -9,6 +9,7 @@
 #import "DTChartBaseComponent.h"
 #import "DTChartBlockModel.h"
 #import "DTChartToastView.h"
+#import "DTChartLabel.h"
 
 
 CGFloat const DefaultCoordinateAxisCellWidth = 15;
@@ -35,7 +36,7 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
 
     _coordinateAxisCellWidth = cell;
 
-    _coordinateAxisInsets = ChartEdgeInsetsMake(1, 0, 0, 1);
+    _coordinateAxisInsets = ChartEdgeInsetsMake(1, 1, 0, 1);
     _xAxisCellCount = xCount - _coordinateAxisInsets.left - _coordinateAxisInsets.right;
     _yAxisCellCount = yCount - _coordinateAxisInsets.top - _coordinateAxisInsets.bottom;
 
@@ -175,6 +176,27 @@ CGFloat const DefaultCoordinateAxisCellWidth = 15;
     _singleData = singleData;
 
     _multiData = nil;
+}
+
+- (DTChartLabel *)mainNotationLabel {
+    if (!_mainNotationLabel) {
+        _mainNotationLabel = [DTChartLabel chartLabel];
+        _mainNotationLabel.textAlignment = NSTextAlignmentLeft;
+        _mainNotationLabel.adjustsFontSizeToFitWidth = NO;
+        _mainNotationLabel.numberOfLines = 1;
+    }
+    return _mainNotationLabel;
+}
+
+- (DTChartLabel *)secondNotationLabel {
+    if (!_secondNotationLabel) {
+        _secondNotationLabel = [DTChartLabel chartLabel];
+        _secondNotationLabel.textAlignment = NSTextAlignmentRight;
+        _secondNotationLabel.adjustsFontSizeToFitWidth = NO;
+        _secondNotationLabel.numberOfLines = 1;
+        _secondNotationLabel.secondAxis = YES;
+    }
+    return _secondNotationLabel;
 }
 
 #pragma mark - private method

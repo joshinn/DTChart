@@ -9,6 +9,7 @@
 #import "DTVerticalBarChartController.h"
 #import "DTVerticalBarChart.h"
 #import "DTDataManager.h"
+#import "DTChartLabel.h"
 
 @interface DTVerticalBarChartController ()
 
@@ -246,6 +247,30 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 
     // y轴label data
     self.barChart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:YES];
+
+    self.barChart.mainNotationLabel.text = [self getNotationLabelText];
+}
+
+/**
+ * 获取y轴对应的倍数文字
+ * @return 文字
+ */
+- (NSString *)getNotationLabelText {
+    NSInteger notation = self.axisFormatter.mainYAxisNotation;
+    NSString *unit = self.axisFormatter.mainYAxisUnit;
+    if (!unit) {
+        unit = @"";
+    }
+
+    if (notation == 1000) {
+        return [NSString stringWithFormat:@"×10³%@", unit];
+    } else if (notation == 1000000) {
+        return [NSString stringWithFormat:@"×10⁶%@", unit];
+    } else if (notation == 1000000000) {
+        return [NSString stringWithFormat:@"×10⁹%@", unit];
+    } else {
+        return nil;
+    }
 }
 
 /**

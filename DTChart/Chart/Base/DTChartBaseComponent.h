@@ -12,6 +12,7 @@
 
 @class DTChartBlockModel;
 @class DTChartToastView;
+@class DTChartLabel;
 
 CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
     CGFloat fx = (point2.x - point1.x);
@@ -156,7 +157,16 @@ typedef void(^SecondAxisColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
 /**
  * 点击提示框
  */
-@property (nonatomic) DTChartToastView *toastView;
+@property(nonatomic) DTChartToastView *toastView;
+
+/**
+ * 主轴数值倍数显示label，显示“×10³”、“×10⁶”、“×10⁹”
+ */
+@property(nonatomic) DTChartLabel *mainNotationLabel;
+/**
+ * 副轴数值倍数显示label，显示“×10³”、“×10⁶”、“×10⁹”
+ */
+@property(nonatomic) DTChartLabel *secondNotationLabel;
 
 #pragma mark - ####### method #######
 
@@ -271,6 +281,7 @@ typedef void(^SecondAxisColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
  * 清除坐标系里的副轴轴标签和值线条
  */
 - (void)clearSecondChartContent;
+
 /**
  * 给secondMultiData生成颜色
  * @param needInitial 颜色是否需要重置

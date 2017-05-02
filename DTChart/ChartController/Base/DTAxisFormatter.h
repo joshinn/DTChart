@@ -44,6 +44,11 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 @property(nonatomic) NSString *mainYAxisUnit;
 /**
+ * DTAxisFormatterTypeNumber下，y主轴的数值的倍数，默认1
+ * @note 一般是10的3次方，6次方，9次方
+ */
+@property(nonatomic) NSInteger mainYAxisNotation;
+/**
  * DTAxisFormatterTypeNumber下，y主轴数据缩放比，默认1
  */
 @property(nonatomic) CGFloat mainYAxisScale;
@@ -63,6 +68,16 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 @property(nonatomic) NSString *secondYAxisFormat;
 /**
+ * DTAxisFormatterTypeNumber下，y副轴的单位，默认nil
+ */
+@property(nonatomic) NSString *secondYAxisUnit;
+/**
+ * DTAxisFormatterTypeNumber下，y副轴的数值的倍数，默认1
+ * @note 一般是10的3次方，6次方，9次方
+ */
+@property(nonatomic) NSInteger secondYAxisNotation;
+
+/**
  * DTAxisFormatterTypeNumber下，y副轴数据缩放比，默认1
  */
 @property(nonatomic) CGFloat secondYAxisScale;
@@ -81,6 +96,10 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  * DTAxisFormatterTypeNumber下，x轴的文字格式，默认 "%.0f"
  */
 @property(nonatomic) NSString *xAxisFormat;
+/**
+ * DTAxisFormatterTypeNumber下，x轴的单位，默认nil
+ */
+@property(nonatomic) NSString *xAxisUnit;
 /**
  * DTAxisFormatterTypeNumber下，x轴数据缩放比，默认1
  */

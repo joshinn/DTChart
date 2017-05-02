@@ -33,7 +33,6 @@
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         UIView *containerView = [[UIView alloc] init];
-        containerView.backgroundColor = DTRGBColor(0x404040, 1);
         _chartView = containerView;
 
         _mainChart = [[DTPieChart alloc] initWithOrigin:CGPointZero xAxis:xCount yAxis:yCount];

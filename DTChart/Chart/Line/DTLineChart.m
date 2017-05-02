@@ -451,6 +451,12 @@ static CGFloat const TouchOffsetMaxDistance = 15;
         [self addSubview:yLabel];
     }
 
+    if (!self.mainNotationLabel.superview) {
+        [self addSubview:self.mainNotationLabel];
+    }
+    self.mainNotationLabel.frame = CGRectMake(CGRectGetMinX(self.contentView.frame), 0, 6 * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
+
+
     return YES;
 }
 
@@ -713,6 +719,11 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 
         [self addSubview:yLabel];
     }
+
+    if (!self.secondNotationLabel.superview) {
+        [self addSubview:self.secondNotationLabel];
+    }
+    self.secondNotationLabel.frame = CGRectMake(CGRectGetMaxX(self.contentView.frame) - 6 * self.coordinateAxisCellWidth, 0, 6 * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
 
     return YES;
 }

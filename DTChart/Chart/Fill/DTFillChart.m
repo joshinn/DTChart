@@ -372,6 +372,11 @@ static CGFloat const TouchOffsetMaxDistance = 15;
         [self addSubview:yLabel];
     }
 
+    if (!self.mainNotationLabel.superview) {
+        [self addSubview:self.mainNotationLabel];
+    }
+    self.mainNotationLabel.frame = CGRectMake(CGRectGetMinX(self.contentView.frame), 0, 6 * self.coordinateAxisCellWidth, self.coordinateAxisCellWidth);
+
     return YES;
 }
 
