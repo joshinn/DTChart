@@ -241,7 +241,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             container.tag = SecondAxisOrderButtonTagPrefix + halfViewsCount;
             if (i == (self.containerViews.count / 2) && self.secondColor) {
                 flagView.hidden = NO;
-                flagView.backgroundColor = self.mainColor;
+                flagView.backgroundColor = self.secondColor;
             } else {
                 flagView.hidden = YES;
                 flagView.backgroundColor = [UIColor clearColor];

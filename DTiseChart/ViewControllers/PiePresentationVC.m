@@ -55,9 +55,10 @@
     [self.pieChartController setItems:self.chartId listData:self.listBarData axisFormat:nil];
 
 
-    self.pPieCC = [[DTPieChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:75 yAxis:41];
+    self.pPieCC = [[DTPieChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:71 yAxis:37];
     self.pPieCC.chartMode = DTChartModePresentation;
     self.pPieCC.valueSelectable = YES;
+    self.pPieCC.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
 
     [self.pPieCC setMainAxisColorsCompletionBlock:^(NSArray<DTChartBlockModel *> *infos) {
         [infos enumerateObjectsUsingBlock:^(DTChartBlockModel *obj, NSUInteger idx, BOOL *stop) {
@@ -88,7 +89,7 @@
 
 
 - (void)drawSubChart {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.pPieCC setSecondChartItems:[self simulateListCommonData:1 pointCount:6 mainAxis:NO]];
         [self.pPieCC drawSecondChart];
     });

@@ -130,7 +130,7 @@
         case DTChartModePresentation: {
             self.chartRadius = 12;
             CGFloat width = (self.chartRadius * 2 + 2) * cellWidth;
-            CGFloat x = 4 * cellWidth;
+            CGFloat x = 2 * cellWidth;
             CGFloat y = (CGRectGetHeight(self.chartView.bounds) - width) / 2;
 
             [self.mainChart updateFrame:CGPointMake(x, y)
@@ -150,7 +150,7 @@
     CGFloat cellWidth = self.mainChart.coordinateAxisCellWidth;
     NSUInteger xAxisCellCount = (NSUInteger) (radius * 2 + 2);
     NSUInteger yAxisCellCount = (NSUInteger) (radius * 2 + 2);
-    CGPoint origin = CGPointMake(CGRectGetMaxX(self.mainChart.frame) + 13 * cellWidth,
+    CGPoint origin = CGPointMake(CGRectGetMaxX(self.mainChart.frame) + 10 * cellWidth,
             CGRectGetMidY(self.mainChart.frame) - radius / 2 * cellWidth);
     self.secondChart = [[DTPieChart alloc] initWithOrigin:origin xAxis:xAxisCellCount yAxis:yAxisCellCount];
     self.secondChart.pieRadius = radius;
@@ -344,7 +344,6 @@
             itemData.color = [self.secondChart.colorManager getColor];
             [part addObject:itemData];
         }
-
 
         // pie图单个组成部分
         DTChartSingleData *singleData = [DTChartSingleData singleData:part];

@@ -30,6 +30,7 @@
 @implementation DTPieChart
 
 @synthesize originPoint = _originPoint;
+@synthesize colorManager = _colorManager;
 
 - (void)initial {
     [super initial];
@@ -63,6 +64,13 @@
     _pieRadius = pieRadius;
 
     _radius = pieRadius * self.coordinateAxisCellWidth;
+}
+
+- (DTColorManager *)colorManager {
+    if (!_colorManager) {
+        _colorManager = [DTColorManager randomManager];
+    }
+    return _colorManager;
 }
 
 #pragma mark - private method
@@ -167,7 +175,7 @@
     partLayer.partColor = partColor;
     partLayer.selectColor = borderColor;
     partLayer.selectBorderWidth = self.selectBorderWidth * self.coordinateAxisCellWidth;
-
+    DTLog(@"startPercentage = %@ endPercentage = %@ partColor = %@", @(startPercentage), @(endPercentage), partColor);
     return partLayer;
 }
 
@@ -211,7 +219,7 @@
         return;
     }
 
-    self.colorManager = [DTColorManager randomManager];
+    NSMutableArray<UIColor *> *existColors = [NSMutableArray array];
 
     CGFloat sum = 0;    // 所有数据总和
     NSMutableArray<DTChartBlockModel *> *infos = [NSMutableArray arrayWithCapacity:self.multiData.count];
@@ -221,6 +229,8 @@
         // 颜色
         if (!itemData.color) {
             itemData.color = [self.colorManager getColor];
+        } else {
+            [existColors addObject:itemData.color];
         }
         if (!itemData.secondColor) {
             itemData.secondColor = [self.colorManager getLightColor:itemData.color];
@@ -230,6 +240,10 @@
         blockModel.seriesId = itemData.title;
         blockModel.color = itemData.color;
         [infos addObject:blockModel];
+    }
+
+    if (existColors.count > 0) {
+        self.colorManager = [DTColorManager randomManagerExistColors:existColors];
     }
 
     if (self.itemsColorsCompletion) {
@@ -291,6 +305,12 @@
         }
     }];
 
+}
+
+- (void)generateMultiDataColors:(BOOL)needInitial {
+}
+
+- (void)generateSecondMultiDataColors:(BOOL)needInitial {
 }
 
 - (BOOL)drawXAxisLabels {

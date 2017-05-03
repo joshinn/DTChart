@@ -80,8 +80,8 @@
     self.tableChartController.valueSelectable = YES;
     self.tableChartController.headViewHeight = 300;
     self.tableChartController.titleLabelHeight = 80;
-//    self.tableChartController.mainColor = DTRGBColor(0x772F6D, 1);
-//    self.tableChartController.secondColor = DTRGBColor(0x004898, 1);
+    self.tableChartController.mainColor = DTRGBColor(0x772F6D, 1);
+    self.tableChartController.secondColor = DTRGBColor(0x004898, 1);
     [self.tableChartController setChartHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
         DTListCommonData *listCommonData = weakSelf.listLineData[(NSUInteger) row];
         DTCommonData *commonData = listCommonData.commonDatas[(NSUInteger) index];
