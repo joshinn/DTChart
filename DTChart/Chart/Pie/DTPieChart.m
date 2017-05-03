@@ -327,6 +327,10 @@
     }
 }
 
+- (void)drawChart {
+    [super drawChart];
+}
+
 - (void)dismissChart:(BOOL)animation {
     self.multiData = nil;
     self.secondMultiData = nil;

@@ -57,6 +57,8 @@ static NSString *const DateFormatterTime = @"HH:mm";
         _mainYAxisScale = 1;
         _secondYAxisScale = 1;
         _xAxisScale = 1;
+        _mainYAxisNotation = 1;
+        _secondYAxisNotation = 1;
     }
     return self;
 }

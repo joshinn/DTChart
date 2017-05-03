@@ -321,6 +321,7 @@
 - (void)processSecondAxisPieParts:(NSArray<DTListCommonData *> *)listData {
     NSMutableArray<DTChartSingleData *> *parts = [NSMutableArray arrayWithCapacity:listData.count];
 
+    self.secondChart.colorManager = self.mainChart.colorManager.copy;
     for (NSUInteger n = 0; n < listData.count; ++n) {
 
         DTListCommonData *listCommonData = listData[n];
@@ -340,6 +341,7 @@
             DTChartItemData *itemData = [DTChartItemData chartData];
             itemData.itemValue = ChartItemValueMake(i, data.ptValue);
             itemData.title = data.ptName;
+            itemData.color = [self.secondChart.colorManager getColor];
             [part addObject:itemData];
         }
 

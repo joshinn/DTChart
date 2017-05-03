@@ -10,7 +10,6 @@
 #import "DTDistributionBar.h"
 #import "DTChartLabel.h"
 #import "DTChartToastView.h"
-#import "DTColor.h"
 
 
 @interface DTDistributionChart () <DTDistributionBarDelegate>
@@ -166,6 +165,33 @@ static NSString *const kChineseTimeKey = @"chinese";
 
 - (NSDictionary *)formatLargeStyleYLabelTitle:(NSInteger)hour {
     NSInteger endHour = hour + 1;
+
+    if (hour >= 24) {
+        hour -= 24;
+    }
+    if (endHour >= 24) {
+        endHour -= 24;
+    }
+
+    NSString *startTime;
+    NSString *endTime;
+
+    if (hour < 10) {
+        startTime = [NSString stringWithFormat:@"0%@:00", @(hour)];
+    } else {
+        startTime = [NSString stringWithFormat:@"%@:00", @(hour)];
+    }
+    if (endHour < 10) {
+        endTime = [NSString stringWithFormat:@"0%@:59", @(endHour)];
+    } else {
+        endTime = [NSString stringWithFormat:@"%@:59", @(endHour)];
+    }
+
+    return @{kStartTimeKey: startTime, kEndTimeKey: endTime, kChineseTimeKey: [self getChineseTime:hour]};
+}
+
+- (NSDictionary *)formatTime:(NSInteger)hour {
+    NSInteger endHour = hour;
 
     if (hour >= 24) {
         hour -= 24;
@@ -591,19 +617,22 @@ static NSString *const kChineseTimeKey = @"chinese";
     if (self.distributionChartTouchBlock) {
         message = self.distributionChartTouchBlock(singleData, itemData);
     }
-    if (!message) {
+    if (!message && itemData.itemValue.x >= 0) {
         NSMutableString *mutableString = [NSMutableString string];
         [mutableString appendString:singleData.singleName];
         [mutableString appendString:@" "];
-        NSDictionary *dictionary = [self formatLargeStyleYLabelTitle:(NSInteger) itemData.itemValue.y];
+        NSDictionary *dictionary = [self formatTime:(NSInteger) itemData.itemValue.y];
         [mutableString appendString:[NSString stringWithFormat:@"%@-%@", dictionary[kStartTimeKey], dictionary[kEndTimeKey]]];
         [mutableString appendString:@"\n"];
         [mutableString appendString:[NSString stringWithFormat:@"%@", @(itemData.itemValue.x)]];
 
         message = mutableString;
     }
-    [self showTouchMessage:message touchPoint:point];
-
+    if (message.length > 0) {
+        [self showTouchMessage:message touchPoint:point];
+    } else {
+        [self.toastView hide];
+    }
 }
 
 - (void)distributionBarItemEndTouch {

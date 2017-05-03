@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DTColorManager : NSObject
+@interface DTColorManager : NSObject<NSCopying>
 
 /**
  * 颜色管理实例
@@ -31,6 +31,11 @@
 + (instancetype)randomManagerExistColors:(NSArray<UIColor *> *)colors;
 
 + (UIColor *)getLightColor:(UIColor *)color;
+/**
+ * 获取当前的所有颜色队列
+ * @return 颜色队列
+ */
+- (NSArray<UIColor *> *)getColors;
 
 /**
  * 获取主颜色

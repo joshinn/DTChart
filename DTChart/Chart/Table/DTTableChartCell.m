@@ -203,6 +203,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         UIView *container = self.containerViews[i];
 
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
+        label.numberOfLines = 0;
         label.selectable = NO;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -263,6 +264,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         icon.hidden = YES;
 
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
+        label.numberOfLines = 1;
         label.selectable = self.selectable;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;

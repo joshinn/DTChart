@@ -42,6 +42,13 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    DTColorManager *commonData = [[[self class] allocWithZone:zone] init];
+    commonData.colors = self.colors.mutableCopy;
+    return commonData;
+}
+
+
 - (instancetype)initWithRandom {
     if (self = [super init]) {
         NSMutableArray<UIColor *> *tempColors = [DTColorArray mutableCopy];
@@ -73,6 +80,9 @@
     return self;
 }
 
+- (NSArray<UIColor *> *)getColors {
+    return _colors.copy;
+}
 
 - (UIColor *)getColor {
     UIColor *color = self.colors.firstObject;
