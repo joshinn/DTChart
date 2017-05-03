@@ -218,7 +218,9 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     NSUInteger yLabelContentCellCount = (NSUInteger) (self.mainData.listDimensions.firstObject.roots.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
     NSUInteger barContentCellCount = self.xAxisCellCount - yLabelContentCellCount;   ///< 柱状体最大的空间
 
-    barContentCellCount /= 2;
+    if (self.secondData) {
+        barContentCellCount /= 2;
+    }
     if (self.mainNotation.length > 0) {
         self.mainTitleLabel.text = [NSString stringWithFormat:@"%@(%@)", self.mainData.title, self.mainNotation];
     } else {

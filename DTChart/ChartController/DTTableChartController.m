@@ -25,6 +25,7 @@
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _tableChart = [DTTableChart tableChartCustom:widths origin:origin widthCellCount:xCount heightCellCount:yCount];
         _headView = _tableChart.headView;
+        _titleLabelHeight = _tableChart.titleCellHeight;
 
         WEAK_SELF;
         [_tableChart setExpandTouchBlock:^(NSString *seriesId) {
@@ -77,6 +78,12 @@
     _tableChartStyle = tableChartStyle;
 
     _tableChart.tableChartStyle = tableChartStyle;
+}
+
+- (void)setTitleLabelHeight:(CGFloat)titleLabelHeight {
+    _titleLabelHeight = titleLabelHeight;
+
+    _tableChart.titleCellHeight = titleLabelHeight;
 }
 
 

@@ -14,8 +14,6 @@
 @class DTTableChartSingleData;
 @class DTTableChartCell;
 
-extern CGFloat const DTTableChartCellHeight;
-
 
 @protocol DTTableChartCellDelegate <NSObject>
 
@@ -50,6 +48,8 @@ extern CGFloat const DTTableChartCellHeight;
 @property(nonatomic) CGFloat labelLeftOffset;
 
 @property(nonatomic) BOOL selectable;
+
+@property(nonatomic) CGFloat rowHeight;
 
 /**
  * 设置cell风格

@@ -71,6 +71,10 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
  * 触摸提示回调
  */
 @property(nonatomic, copy) NSString *(^chartHintTouchBlock)(NSInteger row, NSInteger index);
+/**
+ * 表格标题行的高度，默认35
+ */
+@property(nonatomic) CGFloat titleLabelHeight;
 
 /**
  * 实例化

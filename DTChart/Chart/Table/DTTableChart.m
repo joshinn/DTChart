@@ -11,7 +11,6 @@
 #import "DTTableChartSingleData.h"
 #import "DTChartToastView.h"
 
-
 @interface DTTableChart () <UITableViewDataSource, UITableViewDelegate, DTTableChartCellDelegate>
 
 @property(nonatomic) UITableView *tableView;
@@ -32,7 +31,7 @@
 @implementation DTTableChart
 
 static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
-
+static CGFloat const DTTableChartCellHeight = 35;
 
 + (NSArray *)presetTableChartCellWidth:(DTTableChartStyle)chartStyle {
     DTLog(@"presetTableChartCellWidth");
@@ -290,6 +289,7 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
 
     _collapseColumn = -1;
     _tableLeftOffset = 0;
+    _titleCellHeight = DTTableChartCellHeight;
 
     self.userInteractionEnabled = YES;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
@@ -305,7 +305,6 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.rowHeight = DTTableChartCellHeight;
 
         _headView = [[UIView alloc] initWithFrame:CGRectZero];
         _tableView.tableHeaderView = _headView;
@@ -350,6 +349,11 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     cell.labelLeftOffset = self.tableLeftOffset;
     cell.delegate = self;
 
+    if (indexPath.section == 0) {
+        cell.rowHeight = self.titleCellHeight;
+    } else {
+        cell.rowHeight = DTTableChartCellHeight;
+    }
     [cell setStyle:self.tableChartStyle widths:self.presetCellWidths];
 
     if (indexPath.section == 0) {
@@ -376,6 +380,14 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     }
 
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return self.titleCellHeight;
+    } else {
+        return DTTableChartCellHeight;
+    }
 }
 
 #pragma mark - private method
@@ -631,7 +643,8 @@ static NSString *const DTTableChartCellReuseIdentifier = @"DTTableChartCellID";
     NSString *message = nil;
     if (self.chartCellHintTouchBlock) {
         message = self.chartCellHintTouchBlock(indexPath.row, index);
-    } else {
+    }
+    if (!message) {
         message = [NSString stringWithFormat:@"%@\n%@", title, text];
     }
     [self showTouchMessage:message touchPoint:p];

@@ -88,6 +88,10 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  */
 @property(nonatomic) CGFloat tableLeftOffset;
 /**
+ * 表格标题行的高度，默认35
+ */
+@property(nonatomic) CGFloat titleCellHeight;
+/**
  * 行展开回调
  */
 @property(nonatomic, copy) DTTableChartExpandTouch expandTouchBlock;

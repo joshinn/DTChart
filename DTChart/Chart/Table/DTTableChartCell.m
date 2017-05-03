@@ -12,8 +12,6 @@
 #import "DTTableLabel.h"
 
 
-CGFloat const DTTableChartCellHeight = 35;
-
 @interface DTTableChartCell () <DTTableLabelDelegate>
 
 @property(nonatomic) NSArray<UIView *> *containerViews;
@@ -133,7 +131,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             CGFloat width = number.floatValue;
 
             UIView *container = [UIView new];
-            container.frame = CGRectMake(x, 0, width, DTTableChartCellHeight);
+            container.frame = CGRectMake(x, 0, width, self.rowHeight);
 
             DTTableLabel *label = [[DTTableLabel alloc] init];
             label.selectable = YES;
@@ -154,7 +152,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
             UIButton *iconView = [[UIButton alloc] init];
             [iconView addTarget:self action:@selector(orderButton:) forControlEvents:UIControlEventTouchUpInside];
-            iconView.frame = CGRectMake(width - DTTableChartCellHeight, 0, DTTableChartCellHeight, DTTableChartCellHeight);
+            iconView.frame = CGRectMake(width - 30, (self.rowHeight - 30) / 2, 30, 30);
             iconView.tag = IconViewTag;
 
             [container addSubview:iconView];

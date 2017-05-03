@@ -79,6 +79,7 @@
     self.tableChartController = [[DTTableChartController alloc] initWithOrigin:CGPointMake(8 * 15, 6 * 15) xAxis:75 yAxis:41];
     self.tableChartController.valueSelectable = YES;
     self.tableChartController.headViewHeight = 300;
+    self.tableChartController.titleLabelHeight = 80;
     [self.tableChartController setChartHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
         DTListCommonData *listCommonData = weakSelf.listLineData[(NSUInteger) row];
         DTCommonData *commonData = listCommonData.commonDatas[(NSUInteger) index];
