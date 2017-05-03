@@ -205,7 +205,6 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
 - (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas {
 
-    CGFloat x = self.labelLeftOffset;
     BOOL hasSecondAxis = secondTitleDatas.count > 0;
 
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
