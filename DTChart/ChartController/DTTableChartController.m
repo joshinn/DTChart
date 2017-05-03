@@ -164,8 +164,8 @@
 
             if (n == 0) {
                 DTTableAxisLabelData *yLabelData = [[DTTableAxisLabelData alloc] initWithTitle:data.ptName value:i];
-                if (self.secondtitleOrderModels.count > i) {
-                    DTTableChartTitleOrderModel *orderModel = self.secondtitleOrderModels[i];
+                if (self.secondTitleOrderModels.count > i) {
+                    DTTableChartTitleOrderModel *orderModel = self.secondTitleOrderModels[i];
                     yLabelData.showOrder = orderModel.isShowOrder;
                     yLabelData.ascending = orderModel.isAscending;
                     yLabelData.highlighted = orderModel.isHighlighted;
@@ -274,6 +274,9 @@
 
 - (void)drawChart {
     [super drawChart];
+
+    self.tableChart.mainColor = self.mainColor;
+    self.tableChart.secondColor = self.secondColor;
 
     [self.tableChart drawChart];
 }

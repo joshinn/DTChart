@@ -80,6 +80,8 @@
     self.tableChartController.valueSelectable = YES;
     self.tableChartController.headViewHeight = 300;
     self.tableChartController.titleLabelHeight = 80;
+//    self.tableChartController.mainColor = DTRGBColor(0x772F6D, 1);
+//    self.tableChartController.secondColor = DTRGBColor(0x004898, 1);
     [self.tableChartController setChartHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
         DTListCommonData *listCommonData = weakSelf.listLineData[(NSUInteger) row];
         DTCommonData *commonData = listCommonData.commonDatas[(NSUInteger) index];
@@ -91,7 +93,7 @@
     [self.tableChartController.headView addSubview:label];
 
     self.listLineData = [self simulateListCommonData:100 pointCount:self.chartTitles.count mainAxis:YES];
-//    [self.listLineData addObjectsFromArray:[self simulateListCommonData:100 pointCount:self.chartTitles.count mainAxis:NO]];
+    [self.listLineData addObjectsFromArray:[self simulateListCommonData:100 pointCount:self.chartTitles.count mainAxis:NO]];
 //    self.listLineData[3].seriesId = self.listLineData[2].seriesId;
 //    self.listLineData[4].seriesId = self.listLineData[2].seriesId;
 //    self.listLineData[10].seriesId = self.listLineData[9].seriesId;
@@ -138,7 +140,7 @@
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     [self.tableChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];
-    self.tableChartController.tableChartStyle = DTTableChartStyleC1C1C5;
+    self.tableChartController.tableChartStyle = DTTableChartStyleT2C1C4;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

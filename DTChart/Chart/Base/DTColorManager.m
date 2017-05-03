@@ -43,7 +43,10 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
     DTColorManager *commonData = [[[self class] allocWithZone:zone] init];
+#pragma clang diagnostic pop
     commonData.colors = self.colors.mutableCopy;
     return commonData;
 }

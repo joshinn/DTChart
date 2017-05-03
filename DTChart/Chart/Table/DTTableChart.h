@@ -92,6 +92,15 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  */
 @property(nonatomic) CGFloat titleCellHeight;
 /**
+ * 主数据的颜色标识，会在标题行的第一列里显示颜色标识
+ */
+@property(nonatomic) UIColor *mainColor;
+/**
+ * 副数据的颜色标识，会在标题行的副表第一列里显示颜色标识
+ */
+@property(nonatomic) UIColor *secondColor;
+
+/**
  * 行展开回调
  */
 @property(nonatomic, copy) DTTableChartExpandTouch expandTouchBlock;

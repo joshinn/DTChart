@@ -29,6 +29,7 @@
 
 static NSInteger const LabelViewTag = 10100;
 static NSInteger const IconViewTag = 10101;
+static NSInteger const FlagViewTag = 10102;
 
 static NSInteger const MainAxisOrderButtonTagPrefix = 1000;
 static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
@@ -150,6 +151,15 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
             [container addSubview:label];
 
+            UIView *flagView = [UIView new];
+            flagView.backgroundColor = [UIColor clearColor];
+            flagView.frame = CGRectMake(2, (self.rowHeight - 14) / 2, 14, 14);
+            flagView.layer.cornerRadius = 7;
+            flagView.layer.masksToBounds = YES;
+            flagView.tag = FlagViewTag;
+            flagView.hidden = YES;
+            [container addSubview:flagView];
+
             UIButton *iconView = [[UIButton alloc] init];
             [iconView addTarget:self action:@selector(orderButton:) forControlEvents:UIControlEventTouchUpInside];
             iconView.frame = CGRectMake(width - 30, (self.rowHeight - 30) / 2, 30, 30);
@@ -195,20 +205,34 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
 - (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas {
 
+    CGFloat x = self.labelLeftOffset;
     BOOL hasSecondAxis = secondTitleDatas.count > 0;
-
 
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
         UIView *container = self.containerViews[i];
+        CGRect frame = container.frame;
+        frame.size.height = self.rowHeight;
+        container.frame = frame;
 
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
+        frame = label.frame;
+        frame.size.height = self.rowHeight;
+        label.frame = frame;
         label.numberOfLines = 0;
         label.selectable = NO;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
 
+        UIView *flagView = [container viewWithTag:FlagViewTag];
+        frame = flagView.frame;
+        frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
+        flagView.frame = frame;
+
         UIButton *icon = [container viewWithTag:IconViewTag];
+        frame = icon.frame;
+        frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
+        icon.frame = frame;
 
         DTTableAxisLabelData *axisLabelData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
@@ -216,11 +240,25 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
             axisLabelData = secondTitleDatas[(NSUInteger) halfViewsCount];
             container.tag = SecondAxisOrderButtonTagPrefix + halfViewsCount;
+            if (i == (self.containerViews.count / 2) && self.secondColor) {
+                flagView.hidden = NO;
+                flagView.backgroundColor = self.mainColor;
+            } else {
+                flagView.hidden = YES;
+                flagView.backgroundColor = [UIColor clearColor];
+            }
 
         } else if (i < titleDatas.count) {
 
             axisLabelData = titleDatas[i];
             container.tag = MainAxisOrderButtonTagPrefix + i;
+            if (i == 0 && self.mainColor) {
+                flagView.hidden = NO;
+                flagView.backgroundColor = self.mainColor;
+            } else {
+                flagView.hidden = YES;
+                flagView.backgroundColor = [UIColor clearColor];
+            }
         }
 
         if (axisLabelData) {
@@ -259,15 +297,30 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
 
         UIView *container = self.containerViews[i];
-
-        UIButton *icon = [container viewWithTag:IconViewTag];
-        icon.hidden = YES;
+        CGRect frame = container.frame;
+        frame.size.height = self.rowHeight;
+        container.frame = frame;
 
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
+        frame = label.frame;
+        frame.size.height = self.rowHeight;
+        label.frame = frame;
         label.numberOfLines = 1;
         label.selectable = self.selectable;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
+
+        UIView *flagView = [container viewWithTag:FlagViewTag];
+        frame = flagView.frame;
+        frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
+        flagView.frame = frame;
+        flagView.hidden = YES;
+
+        UIButton *icon = [container viewWithTag:IconViewTag];
+        frame = icon.frame;
+        frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
+        icon.frame = frame;
+        icon.hidden = YES;
 
         DTChartItemData *itemData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;

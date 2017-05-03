@@ -349,6 +349,7 @@ static CGFloat const DTTableChartCellHeight = 35;
     cell.labelLeftOffset = self.tableLeftOffset;
     cell.delegate = self;
 
+
     if (indexPath.section == 0) {
         cell.rowHeight = self.titleCellHeight;
     } else {
@@ -356,13 +357,15 @@ static CGFloat const DTTableChartCellHeight = 35;
     }
     [cell setStyle:self.tableChartStyle widths:self.presetCellWidths];
 
+    cell.mainColor = self.mainColor;
+    cell.secondColor = self.secondColor;
+
     if (indexPath.section == 0) {
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
         [cell setCellTitle:self.yAxisLabelDatas secondTitles:self.ySecondAxisLabelDatas];
 #pragma clang diagnostic pop
-
     } else {
 
         cell.collapseColumn = self.collapseColumn;

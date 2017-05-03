@@ -51,6 +51,9 @@
 
 @property(nonatomic) CGFloat rowHeight;
 
+@property(nonatomic) UIColor *mainColor;
+@property(nonatomic) UIColor *secondColor;
+
 /**
  * 设置cell风格
  * @param style cell风格

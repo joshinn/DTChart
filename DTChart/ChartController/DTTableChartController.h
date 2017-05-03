@@ -51,7 +51,7 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 /**
  * 设定副表每列的升降序图标
  */
-@property(nonatomic) NSArray<DTTableChartTitleOrderModel *> *secondtitleOrderModels;
+@property(nonatomic) NSArray<DTTableChartTitleOrderModel *> *secondTitleOrderModels;
 
 /**
  * 展开/收起 回调
@@ -75,6 +75,14 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
  * 表格标题行的高度，默认35
  */
 @property(nonatomic) CGFloat titleLabelHeight;
+/**
+ * 主数据的颜色标识，会在标题行的第一列里显示颜色标识
+ */
+@property(nonatomic) UIColor *mainColor;
+/**
+ * 副数据的颜色标识，会在标题行的副表第一列里显示颜色标识
+ */
+@property(nonatomic) UIColor *secondColor;
 
 /**
  * 实例化
