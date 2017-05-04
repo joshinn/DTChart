@@ -215,9 +215,6 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         container.frame = frame;
 
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
-        frame = label.frame;
-        frame.size.height = self.rowHeight;
-        label.frame = frame;
         label.numberOfLines = 0;
         label.selectable = NO;
         label.textColor = NormalLabelTextColor;
@@ -283,7 +280,21 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             icon.hidden = YES;
         }
 
-        label.backgroundColor = EvenRowBackgroundColor;
+        container.backgroundColor = EvenRowBackgroundColor;
+        frame = label.frame;
+        frame.size.height = self.rowHeight;
+        CGFloat leftMargin = 0;
+        CGFloat rightMargin = 0;
+        if (!flagView.hidden) {
+            leftMargin = CGRectGetMaxX(flagView.frame);
+        }
+        if (!icon.hidden) {
+            rightMargin = CGRectGetWidth(container.bounds) - CGRectGetMinX(icon.frame);
+        }
+        CGFloat margin = MAX(leftMargin, rightMargin);
+        frame.size.width = CGRectGetWidth(container.bounds) - margin * 2;
+        frame.origin.x = margin;
+        label.frame = frame;
     }
 }
 
@@ -301,9 +312,6 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         container.frame = frame;
 
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
-        frame = label.frame;
-        frame.size.height = self.rowHeight;
-        label.frame = frame;
         label.numberOfLines = 1;
         label.selectable = self.selectable;
         label.textColor = NormalLabelTextColor;
@@ -371,10 +379,25 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         }
 
         if (isOddRow) {
-            label.backgroundColor = OddRowBackgroundColor;
+            container.backgroundColor = OddRowBackgroundColor;
         } else {
-            label.backgroundColor = EvenRowBackgroundColor;
+            container.backgroundColor = EvenRowBackgroundColor;
         }
+
+        frame = label.frame;
+        frame.size.height = self.rowHeight;
+        CGFloat leftMargin = 0;
+        CGFloat rightMargin = 0;
+        if (!flagView.hidden) {
+            leftMargin = CGRectGetMaxX(flagView.frame);
+        }
+        if (!icon.hidden) {
+            rightMargin = CGRectGetWidth(container.bounds) - CGRectGetMinX(icon.frame);
+        }
+        CGFloat margin = MAX(leftMargin, rightMargin);
+        frame.size.width = CGRectGetWidth(container.bounds) - margin * 2;
+        frame.origin.x = margin;
+        label.frame = frame;
     }
 }
 
