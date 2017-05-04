@@ -283,17 +283,16 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         container.backgroundColor = EvenRowBackgroundColor;
         frame = label.frame;
         frame.size.height = self.rowHeight;
-        CGFloat leftMargin = 0;
-        CGFloat rightMargin = 0;
+        CGFloat leftMargin = 2;
+        CGFloat rightMargin = 2;
         if (!flagView.hidden) {
             leftMargin = CGRectGetMaxX(flagView.frame);
         }
         if (!icon.hidden) {
             rightMargin = CGRectGetWidth(container.bounds) - CGRectGetMinX(icon.frame);
         }
-        CGFloat margin = MAX(leftMargin, rightMargin);
-        frame.size.width = CGRectGetWidth(container.bounds) - margin * 2;
-        frame.origin.x = margin;
+        frame.size.width = CGRectGetWidth(container.bounds) - leftMargin - rightMargin;
+        frame.origin.x = leftMargin;
         label.frame = frame;
     }
 }
@@ -394,9 +393,8 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         if (!icon.hidden) {
             rightMargin = CGRectGetWidth(container.bounds) - CGRectGetMinX(icon.frame);
         }
-        CGFloat margin = MAX(leftMargin, rightMargin);
-        frame.size.width = CGRectGetWidth(container.bounds) - margin * 2;
-        frame.origin.x = margin;
+        frame.size.width = CGRectGetWidth(container.bounds) - leftMargin - rightMargin;
+        frame.origin.x = leftMargin;
         label.frame = frame;
     }
 }

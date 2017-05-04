@@ -77,7 +77,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.rowHeight = 15 * 2;
+        _tableView.rowHeight = 30;
 
         [_tableView registerClass:[DTDimensionBarChartCell class] forCellReuseIdentifier:DTDimensionBarChartCellId];
     }
@@ -284,7 +284,14 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 }
 
 - (void)drawValues {
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        CGFloat delta = CGRectGetHeight(self.tableView.frame) - self.mainData.listDimensions.count * self.tableView.rowHeight;
+        if (delta > 0) {
+            [self.tableView setContentOffset:CGPointMake(0, -delta)];
+            self.tableView.scrollEnabled = NO;
+        }
+    });
 }
 
 - (void)drawChart {
