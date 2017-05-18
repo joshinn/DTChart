@@ -15,7 +15,7 @@
 
 @property (nonatomic) DTBarChartStyle barChartStyle;
 
-@property(nonatomic) NSString *(^dimensionBarChartControllerTouchBlock)(NSUInteger touchIndex);
+@property(nonatomic, copy) NSString *(^touchBurgerSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData);
 
 - (void)setItem:(DTDimensionModel *)dimensionModel;
 @end

@@ -13,12 +13,12 @@
 
 @interface DTDimensionBarChartController : DTChartController
 
-@property (nonatomic) DTDimensionBarStyle chartStyle;
+@property(nonatomic) DTDimensionBarStyle chartStyle;
 
-@property(nonatomic, copy) NSString *_Nullable(^ _Nullable controllerTouchLabelBlock)(NSUInteger row, NSUInteger index);
+@property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchLabelBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *_Nullable data, NSUInteger index);
 
-@property(nonatomic, copy) NSString *_Nullable(^ _Nullable controllerTouchBarBlock)(NSUInteger row, BOOL isMainAxis);
+@property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *_Nullable data, BOOL isMainAxis);
 
+- (void)setMainData:(DTDimension2ListModel *_Nonnull)mainData secondData:(DTDimension2ListModel *_Nullable)secondData;
 
-- (void)setMainData:( DTDimension2ListModel * _Nonnull )mainData secondData:(DTDimension2ListModel * _Nullable)secondData;
 @end

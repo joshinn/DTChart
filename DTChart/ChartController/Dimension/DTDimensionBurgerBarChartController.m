@@ -30,10 +30,15 @@
 
         _chart.barWidth = 2;
 
-        [_chart setBarChartTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
-
-            return @"触摸回调";
+        WEAK_SELF;
+        [_chart setTouchSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+            if(weakSelf.touchBurgerSubBarBlock){
+                return weakSelf.touchBurgerSubBarBlock(allSubData, barAllColor, touchData);
+            } else{
+                return nil;
+            }
         }];
+
     }
     return self;
 }

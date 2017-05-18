@@ -13,12 +13,13 @@
 #import "DTChartToastView.h"
 #import "DTChartLabel.h"
 #import "DTDimensionHeapBar.h"
+#import "DTColor.h"
 
 @interface DTMeasureDimensionBurgerBarChart ()
 
 
-@property(nonatomic) UIView *scrollMainContentView;
-@property(nonatomic) UIView *scrollSecondContentView;
+@property(nonatomic) UIView *mainContentView;
+@property(nonatomic) UIView *secondContentView;
 
 @property(nonatomic) NSMutableArray<DTDimensionBurgerLineModel *> *mainChartLines;
 @property(nonatomic) NSMutableArray<DTDimensionBurgerLineModel *> *secondChartLines;
@@ -31,12 +32,31 @@
 
 @property(nonatomic) UIView *yAxisLine;
 
+/**
+ * 主表触摸时，在subBar上高亮的view
+ */
+@property(nonatomic) UIView *touchMainHighlightedView;
+/**
+ * 副表触摸时，在subBar上高亮的view
+ */
+@property(nonatomic) UIView *touchSecondHighlightedView;
+
+
 @end
 
 @implementation DTMeasureDimensionBurgerBarChart
 
 @synthesize barBorderStyle = _barBorderStyle;
 @synthesize valueSelectable = _valueSelectable;
+
+
+#define Dimension1Color DTColorDarkBlue
+#define Dimension2Color DTColorBlue
+#define Dimension3Color DTColorPurple
+#define Dimension4Color DTColorGray
+
+#define DimensionColors @[Dimension1Color, Dimension2Color, Dimension3Color, Dimension4Color]
+
 
 - (void)initial {
     [super initial];
@@ -51,11 +71,11 @@
 
     ChartEdgeInsets insets = self.coordinateAxisInsets;
 
-    _scrollMainContentView = [[UIView alloc] init];
-    [self.contentView addSubview:_scrollMainContentView];
+    _mainContentView = [[UIView alloc] init];
+    [self.contentView addSubview:_mainContentView];
 
-    _scrollSecondContentView = [[UIView alloc] init];
-    [self.contentView addSubview:_scrollSecondContentView];
+    _secondContentView = [[UIView alloc] init];
+    [self.contentView addSubview:_secondContentView];
 
     _yAxisLine = [UIView new];
     _yAxisLine.backgroundColor = DTRGBColor(0x7b7b7b, 1);
@@ -71,6 +91,14 @@
 
 
     self.colorManager = [DTColorManager randomManager];
+
+    _touchMainHighlightedView = [UIView new];
+    _touchMainHighlightedView.hidden = YES;
+    _touchMainHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+
+    _touchSecondHighlightedView = [UIView new];
+    _touchSecondHighlightedView.hidden = YES;
+    _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
 }
 
 - (NSMutableArray<DTDimensionBurgerLineModel *> *)mainChartLines {
@@ -98,10 +126,11 @@
     _valueSelectable = valueSelectable;
 }
 
+
 #pragma mark - private method
 
-- (void)drawBars:(DTDimensionModel *)data frame:(CGRect)frame {
-    if ([self layoutMainHeapBars:data fromFrame:frame]) {
+- (void)drawBars:(DTDimensionModel *)data frame:(CGRect)frame index:(NSUInteger)index {
+    if ([self layoutMainHeapBars:data fromFrame:frame index:index]) {
         CGRect fromFrame = CGRectZero;
         DTBar *lastBar = self.chartBars.lastObject;
         if (lastBar && [lastBar isKindOfClass:[DTDimensionHeapBar class]]) {
@@ -114,11 +143,12 @@
             fromFrame = subBarFrame;
         }
 
-        [self drawBars:data.ptListValue.firstObject frame:fromFrame];
+        ++index;
+        [self drawBars:data.ptListValue.firstObject frame:fromFrame index:index];
     }
 }
 
-- (BOOL)layoutMainHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame {
+- (BOOL)layoutMainHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame index:(NSUInteger)index {
     CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
 
     BOOL draw = NO;
@@ -127,19 +157,32 @@
     DTAxisLabelData *xMaxData = self.xAxisLabelDatas.lastObject;
     DTAxisLabelData *xMinData = self.xAxisLabelDatas.firstObject;
 
+    UIColor *dimensionColor = nil;
+    if (index >= DimensionColors.count) {
+        dimensionColor = DimensionColors.lastObject;
+    } else {
+        dimensionColor = DimensionColors[index];
+    }
+    CGFloat r, g, b, a, deltaR, deltaG, deltaB;
+    [dimensionColor getRed:&r green:&g blue:&b alpha:&a];
+    deltaR = (1 - r) / data.ptListValue.count;
+    deltaG = (1 - g) / data.ptListValue.count;
+    deltaB = (1 - b) / data.ptListValue.count;
 
     if (data.ptListValue.count > 0) {
         CGFloat sum = data.childrenSumValue;
         DTDimensionHeapBar *heapBar = [DTDimensionHeapBar heapBar:DTBarOrientationRight];
-        heapBar.subBarBorderStyle = DTBarBorderStyleSidesBorder;
-        heapBar.frame = CGRectMake(CGRectGetMinY(self.scrollMainContentView.bounds), self.barY, 0, barWidth);
+
+        heapBar.frame = CGRectMake(CGRectGetMinY(self.mainContentView.bounds), self.barY, 0, barWidth);
 
         for (DTDimensionModel *model in data.ptListValue) {
             CGFloat length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
 
-            UIColor *color = [self.colorManager getColor];
-            UIColor *borderColor = [self.colorManager getLightColor:color];
-            [heapBar appendData:model barLength:length barColor:color barBorderColor:borderColor needLayout:model == data.ptListValue.lastObject];
+            UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1];
+            r += deltaR;
+            g += deltaG;
+            b += deltaB;
+            [heapBar appendData:model barLength:length barColor:color barBorderColor:nil needLayout:model == data.ptListValue.lastObject];
 
         }
 
@@ -156,13 +199,13 @@
             [path addLineToPoint:CGPointMake(CGRectGetMinX(heapBar.frame), CGRectGetMinY(heapBar.frame))];
             lineModel.lowerPath = path;
 
-            [lineModel show:self.scrollMainContentView.layer];
+            [lineModel show:self.mainContentView.layer];
             [self.mainChartLines addObject:lineModel];
         }
 
 
         self.barY += barWidth + self.barGap * self.coordinateAxisCellWidth;
-        [self.scrollMainContentView addSubview:heapBar];
+        [self.mainContentView addSubview:heapBar];
 
         [self.chartBars addObject:heapBar];
 
@@ -177,8 +220,8 @@
     return draw;
 }
 
-- (void)drawSecondBars:(DTDimensionModel *)data frame:(CGRect)frame {
-    if ([self layoutSecondHeapBars:data fromFrame:frame]) {
+- (void)drawSecondBars:(DTDimensionModel *)data frame:(CGRect)frame index:(NSUInteger)index {
+    if ([self layoutSecondHeapBars:data fromFrame:frame index:index]) {
         CGRect fromFrame = CGRectZero;
         DTDimensionHeapBar *lastHeapBar = self.secondChartBars.lastObject;
         if (lastHeapBar) {
@@ -190,11 +233,12 @@
             fromFrame = subBarFrame;
         }
 
-        [self drawSecondBars:data.ptListValue.firstObject frame:fromFrame];
+        index++;
+        [self drawSecondBars:data.ptListValue.firstObject frame:fromFrame index:index];
     }
 }
 
-- (BOOL)layoutSecondHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame {
+- (BOOL)layoutSecondHeapBars:(DTDimensionModel *)data fromFrame:(CGRect)fromFrame index:(NSUInteger)index {
     CGFloat barWidth = self.barWidth * self.coordinateAxisCellWidth;
 
     BOOL draw = NO;
@@ -203,19 +247,32 @@
     DTAxisLabelData *xMaxData = self.xSecondAxisLabelDatas.lastObject;
     DTAxisLabelData *xMinData = self.xSecondAxisLabelDatas.firstObject;
 
+    UIColor *dimensionColor = nil;
+    if (index >= DimensionColors.count) {
+        dimensionColor = DimensionColors.lastObject;
+    } else {
+        dimensionColor = DimensionColors[index];
+    }
+    CGFloat r, g, b, a, deltaR, deltaG, deltaB;
+    [dimensionColor getRed:&r green:&g blue:&b alpha:&a];
+    deltaR = (1 - r) / data.ptListValue.count;
+    deltaG = (1 - g) / data.ptListValue.count;
+    deltaB = (1 - b) / data.ptListValue.count;
 
     if (data.ptListValue.count > 0) {
         CGFloat sum = data.childrenSumValue;
         DTDimensionHeapBar *heapBar = [DTDimensionHeapBar heapBar:DTBarOrientationLeft];
-        heapBar.subBarBorderStyle = DTBarBorderStyleSidesBorder;
-        heapBar.frame = CGRectMake(CGRectGetMaxX(self.scrollSecondContentView.bounds), self.barY, 0, barWidth);
+
+        heapBar.frame = CGRectMake(CGRectGetMaxX(self.secondContentView.bounds), self.barY, 0, barWidth);
 
         for (DTDimensionModel *model in data.ptListValue) {
             CGFloat length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
 
-            UIColor *color = [self.colorManager getColor];
-            UIColor *borderColor = [self.colorManager getLightColor:color];
-            [heapBar appendData:model barLength:length barColor:color barBorderColor:borderColor needLayout:model == data.ptListValue.lastObject];
+            UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1];
+            r += deltaR;
+            g += deltaG;
+            b += deltaB;
+            [heapBar appendData:model barLength:length barColor:color barBorderColor:nil needLayout:model == data.ptListValue.lastObject];
 
         }
 
@@ -232,13 +289,13 @@
             [path addLineToPoint:CGPointMake(CGRectGetMaxX(heapBar.frame), CGRectGetMinY(heapBar.frame))];
             lineModel.lowerPath = path;
 
-            [lineModel show:self.scrollSecondContentView.layer];
+            [lineModel show:self.secondContentView.layer];
             [self.secondChartLines addObject:lineModel];
         }
 
 
         self.barY += barWidth + self.barGap * self.coordinateAxisCellWidth;
-        [self.scrollSecondContentView addSubview:heapBar];
+        [self.secondContentView addSubview:heapBar];
 
         [self.secondChartBars addObject:heapBar];
 
@@ -278,11 +335,33 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
+
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    // 标记触摸的主副表
+    if (CGRectContainsPoint(self.mainContentView.frame, touchPoint)) {
+        self.touchMainHighlightedView.hidden = YES;
+    } else if (CGRectContainsPoint(self.secondContentView.frame, touchPoint)) {
+        self.touchSecondHighlightedView.hidden = YES;
+    }
+
     [self hideTouchMessage];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesCancelled:touches withEvent:event];
+
+    UITouch *touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+
+    // 标记触摸的主副表
+    if (CGRectContainsPoint(self.mainContentView.frame, touchPoint)) {
+        self.touchMainHighlightedView.hidden = YES;
+    } else if (CGRectContainsPoint(self.secondContentView.frame, touchPoint)) {
+        self.touchSecondHighlightedView.hidden = YES;
+    }
+
     [self hideTouchMessage];
 }
 
@@ -292,9 +371,9 @@
 
 
     NSUInteger touchIndex = 0;  // 标记触摸的主副表
-    if (CGRectContainsPoint(self.scrollMainContentView.frame, touchPoint)) {
+    if (CGRectContainsPoint(self.mainContentView.frame, touchPoint)) {
         touchIndex = 1;
-    } else if (CGRectContainsPoint(self.scrollSecondContentView.frame, touchPoint)) {
+    } else if (CGRectContainsPoint(self.secondContentView.frame, touchPoint)) {
         touchIndex = 2;
     }
 
@@ -314,9 +393,12 @@
 
     DTDimensionModel *touchedModel = nil;
     NSArray<DTDimensionModel *> *barAllData = nil;
+    NSArray<UIColor *> *barAllColor = nil;
+
     BOOL containsPoint = NO;
     NSUInteger removeIndex = bars.count;
     CGRect touchedSubBarFrame = CGRectZero;
+    NSUInteger dimensionIndex = 0;
 
     for (NSUInteger i = 0; i < bars.count; ++i) {
         DTBar *bar = bars[i];
@@ -328,8 +410,10 @@
 
         if (touchPoint.y >= CGRectGetMinY(heapBar.frame) && touchPoint.y <= CGRectGetMaxY(bar.frame)) {
             containsPoint = YES;
+            dimensionIndex = i;
 
             barAllData = heapBar.itemDatas;
+            barAllColor = heapBar.barAllColors;
 
             CGPoint point = [touch locationInView:heapBar];
             DTDimensionBar *subBar = [heapBar touchSubBar:point];
@@ -339,6 +423,25 @@
             frame.origin.x += CGRectGetMinX(heapBar.frame);
             frame.origin.y += CGRectGetMinY(heapBar.frame);
             touchedSubBarFrame = frame;
+
+            if (touchIndex == 1) {
+                self.touchMainHighlightedView.frame = frame;
+                if (self.touchMainHighlightedView.superview) {
+                    [self.touchMainHighlightedView.superview bringSubviewToFront:self.touchMainHighlightedView];
+                } else {
+                    [self.mainContentView addSubview:self.touchMainHighlightedView];
+                }
+                self.touchMainHighlightedView.hidden = NO;
+            } else if (touchIndex == 2) {
+                self.touchSecondHighlightedView.frame = frame;
+                if (self.touchSecondHighlightedView.superview) {
+                    [self.touchSecondHighlightedView.superview bringSubviewToFront:self.touchSecondHighlightedView];
+                } else {
+                    [self.secondContentView addSubview:self.touchSecondHighlightedView];
+                }
+                self.touchSecondHighlightedView.hidden = NO;
+            }
+
 
             removeIndex = i;
         }
@@ -360,14 +463,32 @@
         [bars removeObjectsInRange:NSMakeRange(removeIndex + 1, bars.count - 1 - removeIndex)];
         [lines removeObjectsInRange:NSMakeRange(removeIndex, lines.count - removeIndex)];
 
+        // 绘制后面的维度柱状体
         if (touchIndex == 1) {
-            [self drawBars:touchedModel frame:touchedSubBarFrame];
+            [self drawBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
         } else {
-            [self drawSecondBars:touchedModel frame:touchedSubBarFrame];
+            [self drawSecondBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
         }
 
+        NSMutableString *message = nil;
+        barAllData = barAllData.reverseObjectEnumerator.allObjects;
+        barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
 
-        [self generateMessage:barAllData locaion:touchPoint];
+        if (touchIndex == 1) {
+            if (self.touchMainSubBarBlock) {
+                message = self.touchMainSubBarBlock(barAllData, barAllColor, touchedModel).mutableCopy;
+            }
+        } else if (touchIndex == 2) {
+            if (self.touchSecondSubBarBlock) {
+                message = self.touchSecondSubBarBlock(barAllData, barAllColor, touchedModel).mutableCopy;
+            }
+        }
+
+        if (!message) {
+            [self generateMessage:barAllData locaion:touchPoint];
+        } else if (message.length > 0) {
+            [self showTouchMessage:message touchPoint:touchPoint];
+        }
     }
 }
 
@@ -375,7 +496,7 @@
 - (void)generateMessage:(NSArray<DTDimensionModel *> *)allData locaion:(CGPoint)point {
     // 提示文字
     NSMutableString *message = [NSMutableString string];
-    allData = allData.reverseObjectEnumerator.allObjects;
+
     for (DTDimensionModel *obj in allData) {
         [message appendString:obj.ptName];
         if (floorf(obj.childrenSumValue) != obj.childrenSumValue) {   // 有小数
@@ -411,11 +532,11 @@
         return;
     }
 
-    self.scrollSecondContentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.contentView.frame) / 2, CGRectGetHeight(self.contentView.frame));
-    self.scrollMainContentView.frame = CGRectMake(CGRectGetMaxX(self.scrollSecondContentView.frame),
-            CGRectGetMinY(self.scrollSecondContentView.frame),
-            CGRectGetWidth(self.scrollSecondContentView.frame),
-            CGRectGetHeight(self.scrollSecondContentView.frame));
+    self.secondContentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.contentView.frame) / 2, CGRectGetHeight(self.contentView.frame));
+    self.mainContentView.frame = CGRectMake(CGRectGetMaxX(self.secondContentView.frame),
+            CGRectGetMinY(self.secondContentView.frame),
+            CGRectGetWidth(self.secondContentView.frame),
+            CGRectGetHeight(self.secondContentView.frame));
 
     [self bringSubviewToFront:self.yAxisLine];
     self.yAxisLine.frame = CGRectMake(CGRectGetMidX(self.contentView.frame) - 1, CGRectGetMinY(self.contentView.frame), 2, CGRectGetHeight(self.contentView.frame));
@@ -429,10 +550,10 @@
         }
     }];
 
-    [self.scrollMainContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+    [self.mainContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }];
-    [self.scrollSecondContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
+    [self.secondContentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }];
 
@@ -493,7 +614,7 @@
 - (void)drawValues {
     self.barY = self.yOffset * self.coordinateAxisCellWidth;
 
-    [self drawBars:self.mainDimensionModel frame:CGRectZero];
+    [self drawBars:self.mainDimensionModel frame:CGRectZero index:0];
 }
 
 
@@ -545,7 +666,7 @@
 - (void)drawSecondValues {
     self.barY = self.yOffset * self.coordinateAxisCellWidth;
 
-    [self drawSecondBars:self.secondDimensionModel frame:CGRectZero];
+    [self drawSecondBars:self.secondDimensionModel frame:CGRectZero index:0];
 }
 
 - (void)drawChart {

@@ -196,4 +196,16 @@
     NSLog(@"");
 }
 
+
+- (DTDimension2Bar *)touchSubBar:(CGPoint)point {
+    for (UIView *v in self.subviews) {
+        if ([v isKindOfClass:[DTDimension2Bar class]] && CGRectContainsPoint(v.frame, point)) {
+            return (DTDimension2Bar *) v;
+        }
+    }
+
+    return nil;
+}
+
+
 @end

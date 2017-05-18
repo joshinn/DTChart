@@ -12,6 +12,7 @@
 
 @property(nonatomic) DTBarBorderStyle subBarBorderStyle;
 
+@property(nonatomic) NSArray<UIColor *> *barAllColors;
 @property (nonatomic, readonly) NSArray<DTDimensionModel *> *itemDatas;
 
 + (instancetype)heapBar:(DTBarOrientation)orientation;
@@ -21,4 +22,5 @@
 - (void)appendData:(DTDimensionModel *)data barLength:(CGFloat)length barColor:(UIColor *)color barBorderColor:(UIColor *)borderColor needLayout:(BOOL)need;
 
 - (DTDimensionBar *)touchSubBar:(CGPoint)point;
+
 @end

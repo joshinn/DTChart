@@ -8,9 +8,13 @@
 
 #import "DTBar.h"
 
+@class DTDimension2Bar;
+
 @interface DTDimension2HeapBar : DTBar
 
 - (void)resetBar;
 
 - (void)appendData:(id)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need;
+
+- (DTDimension2Bar *)touchSubBar:(CGPoint)point;
 @end

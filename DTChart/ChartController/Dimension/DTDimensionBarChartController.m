@@ -28,17 +28,16 @@
         _chartView = _chart;
 
         WEAK_SELF;
-        [_chart setTouchLabelBlock:^NSString *(NSUInteger row, NSUInteger index) {
+        [_chart setTouchLabelBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *data, NSUInteger index) {
             if (weakSelf.controllerTouchLabelBlock) {
-                return weakSelf.controllerTouchLabelBlock(row, index);
+                return weakSelf.controllerTouchLabelBlock(chartStyle, row, data, index);
             } else {
                 return nil;
             }
         }];
-
-        [_chart setTouchBarBlock:^NSString *(NSUInteger row, BOOL isMainAxis) {
+        [_chart setTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, BOOL isMainAxis) {
             if (weakSelf.controllerTouchBarBlock) {
-                return weakSelf.controllerTouchBarBlock(row, isMainAxis);
+                return weakSelf.controllerTouchBarBlock(chartStyle, row, touchData, isMainAxis);
             } else {
                 return nil;
             }
@@ -68,7 +67,7 @@
 
     if (minValue >= 0) {
 
-        NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:YES];
+        NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:isMainAxis];
         if (isMainAxis) {
             self.chart.xAxisLabelDatas = xLabelDatas;
         } else {
@@ -179,11 +178,15 @@
     if (mainData) {
         self.chart.mainData = mainData;
         [self processXLabelData:4 axisMaxValue:mainData.maxValue axisMinValue:mainData.minValue isMainAxis:YES];
+    } else {
+        self.chart.mainData = nil;
     }
 
     if (secondData) {
         self.chart.secondData = secondData;
         [self processXLabelData:4 axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
+    } else{
+        self.chart.secondData = nil;
     }
 }
 

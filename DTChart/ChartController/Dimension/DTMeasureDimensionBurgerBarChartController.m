@@ -31,6 +31,22 @@
 
         _chart.barWidth = 2;
         _chart.yOffset = 2;
+        WEAK_SELF;
+        [_chart setTouchMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+            if (weakSelf.touchBurgerMainSubBarBlock) {
+                return weakSelf.touchBurgerMainSubBarBlock(allSubData, barAllColor, touchData);
+            } else {
+                return nil;
+            }
+        }];
+
+        [_chart setTouchSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+            if (weakSelf.touchBurgerSecondSubBarBlock) {
+                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, barAllColor, touchData);
+            } else {
+                return nil;
+            }
+        }];
     }
     return self;
 }

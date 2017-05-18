@@ -14,7 +14,7 @@
 @property(nonatomic) NSMutableArray<NSNumber *> *subBarLength;
 @property(nonatomic) NSMutableArray<UIColor *> *subBarColors;
 
-@property(nonatomic) NSArray<DTDimensionModel *> *itemDatas;
+@property(nonatomic, readwrite) NSArray<DTDimensionModel *> *itemDatas;
 
 @end
 
@@ -49,6 +49,14 @@
     }
     return _subBarColors;
 }
+
+-(NSArray<UIColor *> *)barAllColors{
+    if(!_barAllColors){
+        _barAllColors = self.subBarColors.copy;
+    }
+    return _barAllColors;
+}
+
 
 - (NSArray<DTDimensionModel *> *)itemDatas {
     if (!_itemDatas) {
@@ -160,7 +168,7 @@
     if ([v isKindOfClass:[DTDimensionBar class]]) {
         return (DTDimensionBar *) v;
     }
-    
+
     return nil;
 }
 

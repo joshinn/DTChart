@@ -11,18 +11,19 @@
 
 @class DTDimension2Model;
 @class DTDimensionBarChartCell;
+@class DTDimension2Item;
 
-#define MainBarColor DTColorBlue;
-#define MainBarBorderColor DTColorBlueLight;
-#define SecondBarColor DTColorPink;
-#define SecondBarBorderColor DTColorPinkLight;
+#define MainBarColor DTColorBlue
+#define MainBarBorderColor DTColorBlueLight
+#define SecondBarColor DTColorPink
+#define SecondBarBorderColor DTColorPinkLight
 
 @protocol DTDimensionBarChartCellDelegate <NSObject>
 
 @optional
 - (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell labelIndex:(NSUInteger)index touch:(UITouch *)touch;
 
-- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain touch:(UITouch *)touch;
+- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain data:(DTDimension2Item *)touchData touch:(UITouch *)touch;
 
 - (void)chartCellHintTouchEnd;
 

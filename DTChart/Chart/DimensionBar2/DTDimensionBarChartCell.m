@@ -11,6 +11,7 @@
 #import "DTDimensionSectionLine.h"
 #import "DTTableLabel.h"
 #import "DTDimension2HeapBar.h"
+#import "DTDimension2Bar.h"
 
 @interface DTDimensionBarChartCell ()
 
@@ -23,6 +24,14 @@
 @property(nonatomic) DTDimension2Model *secondData;
 
 @property(nonatomic) DTDimensionSectionLine *sectionLine;
+/**
+ * 记录触摸的subBBar对应的数据
+ */
+@property(nonatomic) DTDimension2Item *touchedItemData;
+/**
+ * 触摸时，在subBar上高亮的view
+ */
+@property(nonatomic) UIView *touchHighlightedView;
 
 @end
 
@@ -45,6 +54,11 @@
 
         _sectionLine = [DTDimensionSectionLine layer];
         [self.contentView.layer addSublayer:_sectionLine];
+
+        _touchHighlightedView = [UIView new];
+        _touchHighlightedView.hidden = YES;
+        _touchHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        [self.contentView addSubview:_touchHighlightedView];
     }
     return self;
 }
@@ -156,7 +170,7 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 
-    if(!self.selectable){
+    if (!self.selectable) {
         return;
     }
 
@@ -181,14 +195,114 @@
     } else {
 
         BOOL isMain = YES;
-        if(location.x >= self.mainNegativeLimitX && location.x <= self.mainPositiveLimitX){
+        if (location.x >= self.mainNegativeLimitX && location.x <= self.mainPositiveLimitX) {
             isMain = YES;
-        } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX){
+        } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX) {
             isMain = NO;
         }
+
+        DTDimension2Item *item = nil;
+        if (isMain) {
+            CGPoint touchPoint = [touch locationInView:self.mainBar];
+            touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.mainBar.frame));
+            DTDimension2Bar *subBar = [self.mainBar touchSubBar:touchPoint];
+            item = subBar.data;
+
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(self.mainBar.frame);
+            self.touchHighlightedView.frame = frame;
+
+        } else {
+            CGPoint touchPoint = [touch locationInView:self.secondBar];
+            touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.secondBar.frame));
+            DTDimension2Bar *subBar = [self.secondBar touchSubBar:touchPoint];
+            item = subBar.data;
+
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(self.secondBar.frame);
+            self.touchHighlightedView.frame = frame;
+        }
+
+        self.touchedItemData = item;
+        self.touchHighlightedView.hidden = NO;
+
         id <DTDimensionBarChartCellDelegate> o = self.delegate;
-        if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:touch:)]) {
-            [o chartCellHintTouchBegin:self isMainAxisBar:isMain touch:touch];
+        if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:data:touch:)]) {
+            [o chartCellHintTouchBegin:self isMainAxisBar:isMain data:item touch:touch];
+        }
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
+    [super touchesMoved:touches withEvent:event];
+
+    if (!self.selectable) {
+        return;
+    }
+
+    UITouch *touch = touches.anyObject;
+    CGPoint location = [touch locationInView:self];
+
+    if (location.x < self.mainNegativeLimitX) {
+        __block NSInteger index = -1;
+        [self.labels enumerateObjectsUsingBlock:^(DTChartLabel *label, NSUInteger idx, BOOL *stop) {
+            if (CGRectGetMinX(label.frame) <= location.x && location.x <= CGRectGetMaxX(label.frame)) {
+                index = idx;
+                *stop = YES;
+            }
+        }];
+
+        if (index >= 0) {
+            id <DTDimensionBarChartCellDelegate> o = self.delegate;
+            if ([o respondsToSelector:@selector(chartCellHintTouchBegin:labelIndex:touch:)]) {
+                [o chartCellHintTouchBegin:self labelIndex:(NSUInteger) index touch:touch];
+            }
+        }
+    } else {
+
+        BOOL isMain = YES;
+        if (location.x >= self.mainNegativeLimitX && location.x <= self.mainPositiveLimitX) {
+            isMain = YES;
+        } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX) {
+            isMain = NO;
+        }
+
+        DTDimension2Item *item = nil;
+        CGRect frame = CGRectZero;
+
+        if (isMain) {
+            CGPoint touchPoint = [touch locationInView:self.mainBar];
+            touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.mainBar.frame));
+            DTDimension2Bar *subBar = [self.mainBar touchSubBar:touchPoint];
+            item = subBar.data;
+
+            if (item && self.touchedItemData != item) {
+                frame = subBar.frame;
+                frame.origin.x += CGRectGetMinX(self.mainBar.frame);
+            }
+
+        } else {
+            CGPoint touchPoint = [touch locationInView:self.secondBar];
+            touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.secondBar.frame));
+            DTDimension2Bar *subBar = [self.secondBar touchSubBar:touchPoint];
+            item = subBar.data;
+
+            if (item && self.touchedItemData != item) {
+                frame = subBar.frame;
+                frame.origin.x += CGRectGetMinX(self.secondBar.frame);
+            }
+        }
+
+        if (item && self.touchedItemData != item) {
+            self.touchHighlightedView.frame = frame;
+            self.touchHighlightedView.hidden = NO;
+
+            self.touchedItemData = item;
+
+            id <DTDimensionBarChartCellDelegate> o = self.delegate;
+            if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:data:touch:)]) {
+                [o chartCellHintTouchBegin:self isMainAxisBar:isMain data:item touch:touch];
+            }
         }
     }
 }
@@ -196,9 +310,12 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
 
-    if(!self.selectable){
+    if (!self.selectable) {
         return;
     }
+
+    self.touchedItemData = nil;
+    self.touchHighlightedView.hidden = YES;
 
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
     if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {
@@ -209,9 +326,12 @@
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
     [super touchesCancelled:touches withEvent:event];
 
-    if(!self.selectable){
+    if (!self.selectable) {
         return;
     }
+
+    self.touchedItemData = nil;
+    self.touchHighlightedView.hidden = YES;
 
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
     if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {

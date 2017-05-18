@@ -256,6 +256,16 @@
         chartController.valueSelectable = YES;
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
+        
+        [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, BOOL isMainAxis) {
+            NSMutableString *message = [NSMutableString string];
+
+            if(touchData){
+                [message appendString:[NSString stringWithFormat:@"蛤蛤%@: %.2f", touchData.name, touchData.value]];
+            }
+
+            return message;
+        }];
 
 
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -294,10 +304,10 @@
                     break;
                 }
             }
-            
-            if(exist){
+
+            if (exist) {
                 existModel.ptValue += value1;
-            }else{
+            } else {
                 DTDimensionModel *newModel = [DTDimensionModel new];
                 newModel.ptName = name;
                 newModel.ptValue = value1;
@@ -309,7 +319,7 @@
         }
 
     }
-    
+
     NSLog(@"");
 }
 

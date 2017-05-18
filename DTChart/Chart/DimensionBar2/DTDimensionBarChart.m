@@ -175,13 +175,25 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 #pragma mark - private method
 
 - (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
+
     [self.touchSelectedLine removeFromSuperlayer];
     [self.contentView.layer addSublayer:self.touchSelectedLine];
     self.touchSelectedLine.hidden = NO;
 
+    CGFloat x = 0;
+    CGFloat width = 0;
+    if (point.x <= self.mainPositiveLimitX && point.x >= self.mainNegativeLimitX) {
+        x = self.mainNegativeLimitX;
+        width = self.mainPositiveLimitX - self.mainNegativeLimitX;
+    } else if (point.x <= self.secondPositiveLimitX && point.x >= self.secondNegativeLimitX) {
+        x = self.secondNegativeLimitX;
+        width = self.secondPositiveLimitX - self.secondNegativeLimitX;
+    }
+
     [CATransaction begin];
+
     [CATransaction setDisableActions:YES];
-    self.touchSelectedLine.frame = CGRectMake(0, point.y, CGRectGetWidth(self.contentView.bounds), 1);
+    self.touchSelectedLine.frame = CGRectMake(x, point.y, width, 1);
     [CATransaction commit];
 
     [self.toastView show:message location:point];
@@ -290,6 +302,9 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         if (delta > 0) {
             [self.tableView setContentOffset:CGPointMake(0, -delta)];
             self.tableView.scrollEnabled = NO;
+        } else {
+            [self.tableView setContentOffset:CGPointMake(0, 0)];
+            self.tableView.scrollEnabled = YES;
         }
     });
 }
@@ -401,7 +416,8 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     NSString *message = nil;
     if (self.touchLabelBlock) {
-        message = self.touchLabelBlock((NSUInteger) indexPath.row, index);
+        DTDimension2Model *data = self.mainData.listDimensions[(NSUInteger) indexPath.row];
+        message = self.touchLabelBlock(self.chartStyle, (NSUInteger) indexPath.row, data, index);
     }
 
     if (message.length == 0) {
@@ -416,30 +432,45 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     [self showTouchMessage:message touchPoint:location];
 }
 
-- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain touch:(UITouch *)touch {
+- (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain data:(DTDimension2Item *)touchData touch:(UITouch *)touch {
+
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSMutableString *message = [NSMutableString string];
 
     if (self.touchBarBlock) {
-        NSString *string = self.touchBarBlock((NSUInteger) indexPath.row, isMain);
+        if (self.chartStyle == DTDimensionBarStyleStartLine && !touchData) {    // 该模式下，不需要准确的触摸到Bar的frame里，返回该bar对应的数据
+            if (isMain) {
+                touchData = self.mainData.listDimensions[(NSUInteger) indexPath.row].items.firstObject;
+            } else {
+                touchData = self.secondData.listDimensions[(NSUInteger) indexPath.row].items.firstObject;
+            }
+        }
+
+        NSString *string = self.touchBarBlock(self.chartStyle, (NSUInteger) indexPath.row, touchData, isMain);
+
         if (string.length > 0) {
             [message appendString:string];
         }
     }
 
     if (message.length == 0) {
-        NSArray<DTDimension2Item *> *items = nil;
-        if (isMain) {
-            items = self.mainData.listDimensions[(NSUInteger) indexPath.row].items;
-        } else {
-            items = self.secondData.listDimensions[(NSUInteger) indexPath.row].items;
-        }
-
-        for (DTDimension2Item *item in items) {
-            [message appendString:[NSString stringWithFormat:@"%@: %@", item.name, @(item.value)]];
-            if (item != items.lastObject) {
-                [message appendString:@"\n"];
+        if (self.chartStyle == DTDimensionBarStyleStartLine) {  // 该模式下，不需要准确的触摸到Bar的frame里
+            NSArray<DTDimension2Item *> *items = nil;
+            if (isMain) {
+                items = self.mainData.listDimensions[(NSUInteger) indexPath.row].items;
+            } else {
+                items = self.secondData.listDimensions[(NSUInteger) indexPath.row].items;
             }
+
+            for (DTDimension2Item *item in items) {
+                [message appendString:[NSString stringWithFormat:@"%@: %@", item.name, @(item.value)]];
+                if (item != items.lastObject) {
+                    [message appendString:@"\n"];
+                }
+            }
+
+        } else if (touchData) {
+            [message appendString:[NSString stringWithFormat:@"%@: %@", touchData.name, @(touchData.value)]];
         }
     }
 
@@ -448,7 +479,9 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     CGPoint location = [touch locationInView:self.tableView];
     location.y = location.y - self.tableView.contentOffset.y + deltaY;
 
-    [self showTouchMessage:message touchPoint:location];
+    if (message.length > 0) {
+        [self showTouchMessage:message touchPoint:location];
+    }
 }
 
 - (void)chartCellHintTouchEnd {

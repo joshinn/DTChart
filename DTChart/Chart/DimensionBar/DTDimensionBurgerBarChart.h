@@ -23,6 +23,8 @@
 /**
  * 柱状体之间的距离，默认2个单元格
  */
-@property (nonatomic) CGFloat barGap;
+@property(nonatomic) CGFloat barGap;
+
+@property(nonatomic, copy) NSString *(^touchSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData);
 
 @end

@@ -61,13 +61,16 @@
     self.frame = CGRectMake(x, y, width, height);
 
     self.titleLabel.frame = CGRectMake(15, 15, width - 30, height - 30);
+    DTLog(@"message: %@", message);
     self.titleLabel.text = message;
 
     self.hidden = NO;
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.alpha = 1;
-    }                completion:^(BOOL finished) {
-    }];
+    if (self.alpha < 1) {
+        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            self.alpha = 1;
+        }                completion:^(BOOL finished) {
+        }];
+    }
 }
 
 - (void)hide {

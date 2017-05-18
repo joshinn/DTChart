@@ -23,6 +23,8 @@
 
 @property(nonatomic) DTMeasureDimensionHorizontalBarChartController *chartController;
 
+@property (nonatomic) DTMeasureDimensionBurgerBarChartController *burgerBarChartController;
+
 @end
 
 @implementation MultiMeasureDimensionPresentationViewController
@@ -129,6 +131,13 @@
     DTMeasureDimensionBurgerBarChartController *controller = [[DTMeasureDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75 + 32 * 15) xAxis:55 yAxis:31];
     [self.view addSubview:controller.chartView];
 
+    [controller setTouchBurgerMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+        return [NSString stringWithFormat:@"蛤蛤%.2f", touchData.childrenSumValue];
+    }];
+    [controller setTouchBurgerSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+        return [NSString stringWithFormat:@"蛤蛤%.4f", touchData.childrenSumValue];
+    }];
+
     controller.chartMode = DTChartModeThumb;
     controller.valueSelectable = YES;
     controller.showCoordinateAxisGrid = YES;
@@ -136,6 +145,8 @@
     controller.axisBackgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     [controller setMainItem:model1 secondItem:model2];
     [controller drawChart];
+
+    self.burgerBarChartController = controller;
 }
 
 - (void)chartDraw {
