@@ -203,7 +203,7 @@ static CGFloat const DTTableChartCellHeight = 35;
             break;
         case DTTableChartStyleC1C1C31: {
             widths = @[
-                    @{@"label": @31}, @{@"gap": @2},
+                    @{@"label": @35}, @{@"gap": @2},
                     @{@"label": @39}, @{@"gap": @2},
                     @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
                     @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},

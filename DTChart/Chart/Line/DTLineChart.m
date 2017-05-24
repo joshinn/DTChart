@@ -140,10 +140,8 @@ static CGFloat const TouchOffsetMaxDistance = 15;
     }
 
     UITouch *touch = [touches anyObject];
-    CGPoint touchPoint = [touch locationInView:self];
-    touchPoint = CGPointMake(touchPoint.x - self.coordinateAxisInsets.left * self.coordinateAxisCellWidth,
-            touchPoint.y - self.coordinateAxisInsets.top * self.coordinateAxisCellWidth);
-
+    CGPoint touchPoint = [touch locationInView:self.contentView];
+    
     CGFloat minDistance = -100;
     NSInteger n1 = -1;
     NSInteger n2 = -1;
@@ -169,14 +167,14 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 
             CGFloat distance = ABS(touchPoint.x - itemData.position.x);
             if (distance < TouchOffsetMaxDistance) {
-                selectedItemData = itemData;
-
+                
                 if (minDistance == -100) {
-
+                    selectedItemData = itemData;
                     minDistance = distance;
                     n1 = i;
                     n2 = n;
                 } else if (distance < minDistance) {
+                    selectedItemData = itemData;
                     minDistance = distance;
                     n1 = i;
                     n2 = n;
