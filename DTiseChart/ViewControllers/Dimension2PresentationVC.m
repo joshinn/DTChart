@@ -174,14 +174,14 @@
         NSMutableArray<DTDimension2Model *> *listSecondP2 = [NSMutableArray array];
 
         for (NSDictionary *dictionary in list) {
-            [listMainPt addObject:[[DTDimension2Model alloc] initStartLineWithDictionary:dictionary measureIndex:1]];
-            if (p1Max1Value < listMainPt.lastObject.itemsMaxValue) {
-                p1Max1Value = listMainPt.lastObject.itemsMaxValue;
+            DTDimension2Model *p1Model = [[DTDimension2Model alloc] initStartLineWithDictionary:dictionary measureIndex:1];
+            [listMainPt addObject:p1Model];
+            if (p1Max1Value < p1Model.itemsMaxValue) {
+                p1Max1Value = p1Model.itemsMaxValue;
             }
-            if (p1Min1Value > listMainPt.lastObject.itemsMinValue) {
-                p1Min1Value = listMainPt.lastObject.itemsMinValue;
+            if (p1Min1Value > p1Model.itemsMinValue) {
+                p1Min1Value = p1Model.itemsMinValue;
             }
-
 
             DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:1 prevModel:listMainP2.lastObject];
             if (listMainP2.lastObject != p2Model) {
@@ -256,11 +256,11 @@
         chartController.valueSelectable = YES;
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
-        
+
         [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, BOOL isMainAxis) {
             NSMutableString *message = [NSMutableString string];
 
-            if(touchData){
+            if (touchData) {
                 [message appendString:[NSString stringWithFormat:@"蛤蛤%@: %.2f", touchData.name, touchData.value]];
             }
 

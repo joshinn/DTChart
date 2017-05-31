@@ -177,7 +177,7 @@
     UITouch *touch = touches.anyObject;
     CGPoint location = [touch locationInView:self];
 
-    if (location.x < self.mainNegativeLimitX) {
+    if ((location.x < self.mainNegativeLimitX && self.mainNegativeLimitValue < 0) || (self.mainNegativeLimitValue == 0 && location.x < self.mainZeroX)) {
         __block NSInteger index = -1;
         [self.labels enumerateObjectsUsingBlock:^(DTChartLabel *label, NSUInteger idx, BOOL *stop) {
             if (CGRectGetMinX(label.frame) <= location.x && location.x <= CGRectGetMaxX(label.frame)) {
