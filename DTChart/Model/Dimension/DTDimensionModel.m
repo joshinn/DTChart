@@ -52,7 +52,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _childrenSumValue = -1;
+        _childrenSumValue = NAN;
         _objectId = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, CFUUIDCreate(NULL)));
     }
     return self;
@@ -61,17 +61,17 @@
 - (void)setPtValue:(CGFloat)ptValue {
     _ptValue = ptValue;
 
-    _childrenSumValue = -1;
+    _childrenSumValue = NAN;
 }
 
 - (void)setPtListValue:(NSArray<DTDimensionModel *> *)ptListValue {
     _ptListValue = ptListValue;
 
-    _childrenSumValue = -1;
+    _childrenSumValue = NAN;
 }
 
 - (CGFloat)childrenSumValue {
-    if (_childrenSumValue == -1) {
+    if (isnan(_childrenSumValue)) {
         _childrenSumValue = [self childrenSum:self];
     }
     return _childrenSumValue;

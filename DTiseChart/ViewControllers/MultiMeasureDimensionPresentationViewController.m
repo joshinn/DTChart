@@ -23,7 +23,7 @@
 
 @property(nonatomic) DTMeasureDimensionHorizontalBarChartController *chartController;
 
-@property (nonatomic) DTMeasureDimensionBurgerBarChartController *burgerBarChartController;
+@property(nonatomic) DTMeasureDimensionBurgerBarChartController *burgerBarChartController;
 
 @end
 
@@ -41,7 +41,6 @@
     [changeBtn setTitle:@"改模式" forState:UIControlStateNormal];
     [changeBtn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:changeBtn];
-
 
 
 }
@@ -131,11 +130,76 @@
     DTMeasureDimensionBurgerBarChartController *controller = [[DTMeasureDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75 + 32 * 15) xAxis:55 yAxis:31];
     [self.view addSubview:controller.chartView];
 
-    [controller setTouchBurgerMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
-        return [NSString stringWithFormat:@"蛤蛤%.2f", touchData.childrenSumValue];
+    controller.dimensionNames = @[@"星球", @"地区", @"区域", @"型号", @"意向"];
+    controller.mainMeasureName = @"价格";
+    controller.secondMeasureName = @"人数";
+    [controller setTouchBurgerMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName) {
+
+        NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
+        NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
+        CGFloat sum = 0;
+        for (DTDimensionModel *item in allSubData) {
+            sum += item.childrenSumValue;
+        }
+        CGFloat percent = 0;
+        if (sum != 0) {
+            percent = touchData.childrenSumValue / sum;
+        }
+        NSString *percentString = [NSString stringWithFormat:@"%@%%", [NSString stringWithFormat:format, percent * 100]];
+
+
+        NSMutableString *message = [NSMutableString string];
+
+        if (dimensionName) {
+            [message appendString:dimensionName];   ///< 维度
+            [message appendString:@" : "];
+            [message appendString:touchData.ptName];
+            [message appendString:@"\n"];
+        }
+        if (measureName) {
+            [message appendString:measureName];     ///< 度量
+            [message appendString:@" : "];
+        }
+        [message appendString:valueString];
+        [message appendString:@"("];
+        [message appendString:percentString];
+        [message appendString:@")"];
+
+        return message;
+
     }];
-    [controller setTouchBurgerSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
-        return [NSString stringWithFormat:@"蛤蛤%.4f", touchData.childrenSumValue];
+    [controller setTouchBurgerSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName) {
+        NSString *format = [NSString stringWithFormat:@"%%.%@f", @(0)];
+        NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
+        CGFloat sum = 0;
+        for (DTDimensionModel *item in allSubData) {
+            sum += item.childrenSumValue;
+        }
+        CGFloat percent = 0;
+        if (sum != 0) {
+            percent = touchData.childrenSumValue / sum;
+        }
+        NSString *percentString = [NSString stringWithFormat:@"%@%%", [NSString stringWithFormat:format, percent * 100]];
+
+
+        NSMutableString *message = [NSMutableString string];
+
+        if (dimensionName) {
+            [message appendString:dimensionName];   ///< 维度
+            [message appendString:@" : "];
+            [message appendString:touchData.ptName];
+            [message appendString:@"\n"];
+        }
+        if (measureName) {
+            [message appendString:measureName];     ///< 度量
+            [message appendString:@" : "];
+        }
+        [message appendString:valueString];
+        [message appendString:@"("];
+        [message appendString:percentString];
+        [message appendString:@")"];
+
+        return message;
     }];
 
     controller.chartMode = DTChartModeThumb;

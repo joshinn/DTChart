@@ -99,6 +99,9 @@
     _touchSecondHighlightedView = [UIView new];
     _touchSecondHighlightedView.hidden = YES;
     _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+
+    [self.toastView removeFromSuperview];
+    [self addSubview:self.toastView];
 }
 
 - (NSMutableArray<DTDimensionBurgerLineModel *> *)mainChartLines {
@@ -312,6 +315,8 @@
 
 - (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
     if (self.isValueSelectable) {
+        point.x += self.coordinateAxisInsets.left * self.coordinateAxisCellWidth;
+        point.y += self.coordinateAxisInsets.top * self.coordinateAxisCellWidth;
         [self.toastView show:message location:point];
     }
 }
@@ -476,11 +481,11 @@
 
         if (touchIndex == 1) {
             if (self.touchMainSubBarBlock) {
-                message = self.touchMainSubBarBlock(barAllData, barAllColor, touchedModel).mutableCopy;
+                message = self.touchMainSubBarBlock(barAllData, barAllColor, touchedModel, dimensionIndex).mutableCopy;
             }
         } else if (touchIndex == 2) {
             if (self.touchSecondSubBarBlock) {
-                message = self.touchSecondSubBarBlock(barAllData, barAllColor, touchedModel).mutableCopy;
+                message = self.touchSecondSubBarBlock(barAllData, barAllColor, touchedModel, dimensionIndex).mutableCopy;
             }
         }
 

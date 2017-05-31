@@ -35,9 +35,10 @@
                 return nil;
             }
         }];
-        [_chart setTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, BOOL isMainAxis) {
+
+        [_chart setTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSString *measureName, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis) {
             if (weakSelf.controllerTouchBarBlock) {
-                return weakSelf.controllerTouchBarBlock(chartStyle, row, touchData, isMainAxis);
+                return weakSelf.controllerTouchBarBlock(chartStyle, row, touchData, measureName, allSubData, isMainAxis);
             } else {
                 return nil;
             }
@@ -185,7 +186,7 @@
     if (secondData) {
         self.chart.secondData = secondData;
         [self processXLabelData:4 axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
-    } else{
+    } else {
         self.chart.secondData = nil;
     }
 }

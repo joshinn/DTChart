@@ -55,8 +55,8 @@
  */
 @property(nonatomic) NSMutableArray<DTDimensionHeapBar *> *secondChartBars;
 
-@property(nonatomic, copy) NSString *(^touchMainSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData);
+@property(nonatomic, copy) NSString *(^touchMainSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex);
 
-@property(nonatomic, copy) NSString *(^touchSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData);
+@property(nonatomic, copy) NSString *(^touchSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex);
 
 @end

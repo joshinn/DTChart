@@ -32,17 +32,25 @@
         _chart.barWidth = 2;
         _chart.yOffset = 2;
         WEAK_SELF;
-        [_chart setTouchMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+        [_chart setTouchMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerMainSubBarBlock) {
-                return weakSelf.touchBurgerMainSubBarBlock(allSubData, barAllColor, touchData);
+                NSString *dimensionName = nil;
+                if (dimensionIndex < weakSelf.dimensionNames.count) {
+                    dimensionName = weakSelf.dimensionNames[dimensionIndex];
+                }
+                return weakSelf.touchBurgerMainSubBarBlock(allSubData, barAllColor, touchData, dimensionName, weakSelf.mainMeasureName);
             } else {
                 return nil;
             }
         }];
 
-        [_chart setTouchSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
+        [_chart setTouchSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerSecondSubBarBlock) {
-                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, barAllColor, touchData);
+                NSString *dimensionName = nil;
+                if (dimensionIndex < weakSelf.dimensionNames.count) {
+                    dimensionName = weakSelf.dimensionNames[dimensionIndex];
+                }
+                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, barAllColor, touchData, dimensionName, weakSelf.secondMeasureName);
             } else {
                 return nil;
             }

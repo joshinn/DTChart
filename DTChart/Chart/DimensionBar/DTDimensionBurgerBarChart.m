@@ -222,7 +222,7 @@
     BOOL containsPoint = NO;
     NSUInteger removeIndex = self.chartBars.count;
     CGRect touchedSubBarFrame = CGRectZero;
-    NSUInteger dimensionIndex = 0;
+    NSUInteger dimensionIndex = 0;  ///< 维度序号
 
     for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
         DTBar *bar = self.chartBars[i];
@@ -281,7 +281,7 @@
             barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
 
             if (self.touchSubBarBlock) {
-                message = self.touchSubBarBlock(barAllData, barAllColor, touchedModel).mutableCopy;
+                message = self.touchSubBarBlock(barAllData, barAllColor, touchedModel, dimensionIndex).mutableCopy;
             }
 
             if (!message) {

@@ -31,10 +31,14 @@
         _chart.barWidth = 2;
 
         WEAK_SELF;
-        [_chart setTouchSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
-            if(weakSelf.touchBurgerSubBarBlock){
-                return weakSelf.touchBurgerSubBarBlock(allSubData, barAllColor, touchData);
-            } else{
+        [_chart setTouchSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
+            if (weakSelf.touchBurgerSubBarBlock) {
+                NSString *dimensionName = nil;
+                if (dimensionIndex < weakSelf.dimensionNames.count) {
+                    dimensionName = weakSelf.dimensionNames[dimensionIndex];
+                }
+                return weakSelf.touchBurgerSubBarBlock(allSubData, barAllColor, touchData, dimensionName, weakSelf.measureName);
+            } else {
                 return nil;
             }
         }];

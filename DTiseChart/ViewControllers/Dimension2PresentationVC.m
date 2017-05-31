@@ -257,11 +257,43 @@
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
 
-        [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, BOOL isMainAxis) {
+
+        [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSString *measureName, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis) {
+
             NSMutableString *message = [NSMutableString string];
 
             if (touchData) {
-                [message appendString:[NSString stringWithFormat:@"蛤蛤%@: %.2f", touchData.name, touchData.value]];
+
+                NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
+                NSString *valueString = [NSString stringWithFormat:format, touchData.value];
+                CGFloat sum = 0;
+                for (DTDimension2Item *item in allSubData) {
+                    sum += item.value;
+                }
+                NSString *sumString = [NSString stringWithFormat:format, sum];
+
+
+                if (chartStyle == DTBarChartStyleHeap) {
+                    [message appendString:@"价格"];
+                    [message appendString:@" : "];
+                    [message appendString:touchData.name];
+                    [message appendString:@"\n"];
+                    [message appendString:measureName];
+                    [message appendString:@" : "];
+                    [message appendString:valueString];
+                    [message appendString:@"\n"];
+                    [message appendString:@"总计"];
+                    [message appendString:@" : "];
+                    [message appendString:sumString];
+                } else {
+                    [message appendString:@"价格"];
+                    [message appendString:@" : "];
+                    [message appendString:touchData.name];
+                    [message appendString:@"\n"];
+                    [message appendString:measureName];
+                    [message appendString:@" : "];
+                    [message appendString:valueString];
+                }
             }
 
             return message;

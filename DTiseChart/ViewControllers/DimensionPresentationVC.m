@@ -304,13 +304,47 @@
     burgerController.chartMode = DTChartModePresentation;
     burgerController.showCoordinateAxisGrid = YES;
     burgerController.valueSelectable = YES;
-    [burgerController setTouchBurgerSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData) {
-        return [NSString stringWithFormat:@"蛤蛤%.2f", touchData.childrenSumValue];
+
+    burgerController.dimensionNames = @[@"星球", @"地区", @"区域", @"型号", @"意向"];
+    burgerController.measureName = @"价格";
+    [burgerController setTouchBurgerSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName) {
+        NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
+        NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
+        CGFloat sum = 0;
+        for (DTDimensionModel *item in allSubData) {
+            sum += item.childrenSumValue;
+        }
+        CGFloat percent = 0;
+        if (sum != 0) {
+            percent = touchData.childrenSumValue / sum;
+        }
+        NSString *percentString = [NSString stringWithFormat:@"%@%%", [NSString stringWithFormat:format, percent * 100]];
+
+
+        NSMutableString *message = [NSMutableString string];
+
+        if (dimensionName) {
+            [message appendString:dimensionName];   ///< 维度
+            [message appendString:@" : "];
+            [message appendString:touchData.ptName];
+            [message appendString:@"\n"];
+        }
+        if (measureName) {
+            [message appendString:measureName];     ///< 度量
+            [message appendString:@" : "];
+        }
+        [message appendString:valueString];
+        [message appendString:@"("];
+        [message appendString:percentString];
+        [message appendString:@")"];
+
+        return message;
     }];
+
     [self.scrollView addSubview:burgerController.chartView];
 
     self.burgerBarChartController = burgerController;
-    
+
     NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
     NSString *path = [bundle pathForResource:@"data2" ofType:@"json"];
