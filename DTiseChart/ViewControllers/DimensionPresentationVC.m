@@ -305,9 +305,8 @@
     burgerController.showCoordinateAxisGrid = YES;
     burgerController.valueSelectable = YES;
 
-    burgerController.dimensionNames = @[@"星球", @"地区", @"区域", @"型号", @"意向"];
-    burgerController.measureName = @"价格";
-    [burgerController setTouchBurgerSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName) {
+    
+    [burgerController setTouchBurgerSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
         NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
         NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
         CGFloat sum = 0;
@@ -323,14 +322,14 @@
 
         NSMutableString *message = [NSMutableString string];
 
-        if (dimensionName) {
-            [message appendString:dimensionName];   ///< 维度
+        if (dimensionData) {
+//            [message appendString:dimensionData.name];   ///< 维度
             [message appendString:@" : "];
             [message appendString:touchData.ptName];
             [message appendString:@"\n"];
         }
-        if (measureName) {
-            [message appendString:measureName];     ///< 度量
+        if (measureData) {
+//            [message appendString:measureData.name];     ///< 度量
             [message appendString:@" : "];
         }
         [message appendString:valueString];

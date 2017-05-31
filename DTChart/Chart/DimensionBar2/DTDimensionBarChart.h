@@ -36,6 +36,6 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 
 @property(nonatomic, copy) NSString *(^touchLabelBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *data, NSUInteger index);
 
-@property(nonatomic, copy) NSString *(^touchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSString *measureName, NSArray<DTDimension2Item *> *allSubData,BOOL isMainAxis);
+@property(nonatomic, copy) NSString *(^touchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis);
 
 @end

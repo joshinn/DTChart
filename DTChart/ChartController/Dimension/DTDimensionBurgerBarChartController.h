@@ -16,16 +16,18 @@
 @property(nonatomic) DTBarChartStyle barChartStyle;
 
 /**
- * 所有维度名称，用于触摸提示用
+ * 所有维度数据，用于触摸提示用
+ * @note 数据格式自定义
  */
-@property(nonatomic) NSArray<NSString *> *dimensionNames;
+@property(nonatomic) NSArray *dimensionDatas;
 
 /**
- * 度量名称，用于触摸提示用
+ * 度量数据，用于触摸提示用
+ * @note 数据格式自定义
  */
-@property(nonatomic) NSString *measureName;
+@property(nonatomic) id measureData;
 
-@property(nonatomic, copy) NSString *(^touchBurgerSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName);
+@property(nonatomic, copy) NSString *(^touchBurgerSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, id dimensionData, id measureData);
 
 - (void)setItem:(DTDimensionModel *)dimensionModel;
 @end

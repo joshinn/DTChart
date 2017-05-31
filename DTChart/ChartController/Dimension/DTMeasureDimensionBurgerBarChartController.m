@@ -34,11 +34,11 @@
         WEAK_SELF;
         [_chart setTouchMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerMainSubBarBlock) {
-                NSString *dimensionName = nil;
-                if (dimensionIndex < weakSelf.dimensionNames.count) {
-                    dimensionName = weakSelf.dimensionNames[dimensionIndex];
+                id dimensionData = nil;
+                if (dimensionIndex < weakSelf.dimensionDatas.count) {
+                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
                 }
-                return weakSelf.touchBurgerMainSubBarBlock(allSubData, barAllColor, touchData, dimensionName, weakSelf.mainMeasureName);
+                return weakSelf.touchBurgerMainSubBarBlock(allSubData, barAllColor, touchData, dimensionData, weakSelf.mainMeasureData);
             } else {
                 return nil;
             }
@@ -46,11 +46,11 @@
 
         [_chart setTouchSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerSecondSubBarBlock) {
-                NSString *dimensionName = nil;
-                if (dimensionIndex < weakSelf.dimensionNames.count) {
-                    dimensionName = weakSelf.dimensionNames[dimensionIndex];
+                id dimensionData = nil;
+                if (dimensionIndex < weakSelf.dimensionDatas.count) {
+                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
                 }
-                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, barAllColor, touchData, dimensionName, weakSelf.secondMeasureName);
+                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, barAllColor, touchData, dimensionData, weakSelf.secondMeasureData);
             } else {
                 return nil;
             }

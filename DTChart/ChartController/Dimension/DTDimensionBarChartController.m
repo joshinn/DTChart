@@ -36,9 +36,11 @@
             }
         }];
 
-        [_chart setTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSString *measureName, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis) {
+        [_chart setTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis) {
             if (weakSelf.controllerTouchBarBlock) {
-                return weakSelf.controllerTouchBarBlock(chartStyle, row, touchData, measureName, allSubData, isMainAxis);
+                id dimensionData = weakSelf.dimensionDatas.lastObject;
+                id measureData = isMainAxis ? weakSelf.mainMeasureData : weakSelf.secondMeasureData;
+                return weakSelf.controllerTouchBarBlock(chartStyle, row, touchData, allSubData, dimensionData, measureData, isMainAxis);
             } else {
                 return nil;
             }

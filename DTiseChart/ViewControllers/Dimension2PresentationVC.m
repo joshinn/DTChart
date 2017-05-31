@@ -257,9 +257,7 @@
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
 
-
-        [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSString *measureName, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis) {
-
+        [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSArray<DTDimension2Item *> *allSubData, id dimensionData, id measureData, BOOL isMainAxis) {
             NSMutableString *message = [NSMutableString string];
 
             if (touchData) {
@@ -274,24 +272,32 @@
 
 
                 if (chartStyle == DTBarChartStyleHeap) {
-                    [message appendString:@"价格"];
-                    [message appendString:@" : "];
-                    [message appendString:touchData.name];
-                    [message appendString:@"\n"];
-                    [message appendString:measureName];
-                    [message appendString:@" : "];
+                    if (dimensionData) {
+//                        [message appendString:dimensionData.name];
+                        [message appendString:@" : "];
+                        [message appendString:touchData.name];
+                        [message appendString:@"\n"];
+                    }
+                    if (measureData) {
+//                        [message appendString:measureData.name];
+                        [message appendString:@" : "];
+                    }
                     [message appendString:valueString];
                     [message appendString:@"\n"];
                     [message appendString:@"总计"];
                     [message appendString:@" : "];
                     [message appendString:sumString];
                 } else {
-                    [message appendString:@"价格"];
-                    [message appendString:@" : "];
-                    [message appendString:touchData.name];
-                    [message appendString:@"\n"];
-                    [message appendString:measureName];
-                    [message appendString:@" : "];
+                    if (dimensionData) {
+//                        [message appendString:dimensionData.name];
+                        [message appendString:@" : "];
+                        [message appendString:touchData.name];
+                        [message appendString:@"\n"];
+                    }
+                    if (measureData) {
+//                        [message appendString:measureData.name];
+                        [message appendString:@" : "];
+                    }
                     [message appendString:valueString];
                 }
             }

@@ -14,27 +14,30 @@
 @interface DTMeasureDimensionBurgerBarChartController : DTChartController
 
 /**
- * 所有维度名称，用于触摸提示用
+ * 所有维度数据，用于触摸提示用
+ * @note 数据格式自定义
  */
-@property(nonatomic) NSArray<NSString *> *dimensionNames;
+@property(nonatomic) NSArray *dimensionDatas;
 
 /**
- * 第一度量名称，用于触摸提示用
+ * 第一度量数据，用于触摸提示用
+ * @note 数据格式自定义
  */
-@property(nonatomic) NSString *mainMeasureName;
+@property(nonatomic) id mainMeasureData;
 
 /**
- * 第二度量名称，用于触摸提示用
+ * 第二度量数据，用于触摸提示用
+ * @note 数据格式自定义
  */
-@property(nonatomic) NSString *secondMeasureName;
+@property(nonatomic) id secondMeasureData;
 
 
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((unavailable("DTMeasureDimensionHorizontalBarChartController use -setMainItem:secondItem: replace")));
 
 - (void)setMainItem:(DTDimensionModel *)mainItem secondItem:(DTDimensionModel *)secondItem;
 
-@property(nonatomic, copy) NSString *(^touchBurgerMainSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName);
+@property(nonatomic, copy) NSString *(^touchBurgerMainSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, id dimensionData, id measureData);
 
-@property(nonatomic, copy) NSString *(^touchBurgerSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionName, NSString *measureName);
+@property(nonatomic, copy) NSString *(^touchBurgerSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, id dimensionData, id measureData);
 
 @end

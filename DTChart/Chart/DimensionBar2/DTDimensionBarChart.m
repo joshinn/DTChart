@@ -453,17 +453,15 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
             }
         }
 
-        NSString *measureName = nil;
+
         NSArray<DTDimension2Item *> *allSubData = nil;
         if (isMain) {
-            measureName = self.mainData.title;
             allSubData = self.mainData.listDimensions[(NSUInteger) indexPath.row].items;
         } else {
-            measureName = self.secondData.title;
             allSubData = self.secondData.listDimensions[(NSUInteger) indexPath.row].items;
         }
 
-        NSString *string = self.touchBarBlock(self.chartStyle, (NSUInteger) indexPath.row, touchData, measureName, allSubData, isMain);
+        NSString *string = self.touchBarBlock(self.chartStyle, (NSUInteger) indexPath.row, touchData, allSubData, isMain);
 
         if (string.length > 0) {
             [message appendString:string];

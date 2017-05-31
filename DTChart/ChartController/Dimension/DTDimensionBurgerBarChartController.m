@@ -33,11 +33,11 @@
         WEAK_SELF;
         [_chart setTouchSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerSubBarBlock) {
-                NSString *dimensionName = nil;
-                if (dimensionIndex < weakSelf.dimensionNames.count) {
-                    dimensionName = weakSelf.dimensionNames[dimensionIndex];
+                id dimensionData = nil;
+                if (dimensionIndex < weakSelf.dimensionDatas.count) {
+                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
                 }
-                return weakSelf.touchBurgerSubBarBlock(allSubData, barAllColor, touchData, dimensionName, weakSelf.measureName);
+                return weakSelf.touchBurgerSubBarBlock(allSubData, barAllColor, touchData, dimensionData, weakSelf.measureData);
             } else {
                 return nil;
             }
