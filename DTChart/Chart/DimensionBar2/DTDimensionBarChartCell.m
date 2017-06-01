@@ -102,18 +102,33 @@
     }
 
     BOOL align = NO;
+    NSMutableString *mutablePrevName = [NSMutableString string];
+    NSMutableString *mutableName = [NSMutableString string];
+    NSMutableString *mutableNextName = [NSMutableString string];
+
     for (NSUInteger i = 0; i < mainData.roots.count; ++i) {
         NSString *prevName = prevData.roots[i].name;
         NSString *name = mainData.roots[i].name;
         NSString *nextName = nextData.roots[i].name;
-        if ([prevName isEqualToString:name]) {
+
+        if (prevName) {
+            [mutablePrevName appendString:prevName];
+        }
+        if (name) {
+            [mutableName appendString:name];
+        }
+        if (nextName) {
+            [mutableNextName appendString:nextName];
+        }
+
+        if ([mutablePrevName isEqualToString:mutableName]) {
             self.labels[i].text = nil;
         } else {
             self.labels[i].text = name;
         }
 
         self.sectionLine.hidden = nextName == nil;
-        if (!align && ![name isEqualToString:nextName]) {
+        if (!align && ![mutableName isEqualToString:mutableNextName]) {
             align = YES;
 
             self.sectionLine.hidden = (i == mainData.roots.count - 1);
