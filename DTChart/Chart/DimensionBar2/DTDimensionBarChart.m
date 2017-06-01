@@ -328,7 +328,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         self.secondTitleLabel.hidden = NO;
         [self drawSecondChart];
     } else {
-        self.mainTitleLabel.hidden = YES;
+        self.mainTitleLabel.hidden = NO;
         self.mainTitleLabel.textColor = [UIColor whiteColor];
 
         self.secondTitleLabel.hidden = YES;
