@@ -179,7 +179,10 @@
         heapBar.frame = CGRectMake(CGRectGetMinY(self.mainContentView.bounds), self.barY, 0, barWidth);
 
         for (DTDimensionModel *model in data.ptListValue) {
-            CGFloat length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+            CGFloat length = 0;
+            if (sum > 0) {
+                length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
+            }
 
             UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1];
             r += deltaR;
@@ -269,7 +272,10 @@
         heapBar.frame = CGRectMake(CGRectGetMaxX(self.secondContentView.bounds), self.barY, 0, barWidth);
 
         for (DTDimensionModel *model in data.ptListValue) {
-            CGFloat length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
+            CGFloat length = 0;
+            if (sum > 0) {
+                length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMinData.axisPosition - xMaxData.axisPosition);
+            }
 
             UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1];
             r += deltaR;
