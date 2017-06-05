@@ -268,7 +268,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
             return [NSString stringWithFormat:@"×\n10⁹\n%@", unit];
         }
     } else {
-        return nil;
+        return unit;
     }
 }
 

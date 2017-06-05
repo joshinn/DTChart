@@ -122,4 +122,11 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
 - (NSString *)getSecondYAxisLabelTitle:(NSString *)string orValue:(CGFloat)value;
 
 - (NSString *)getXAxisLabelTitle:(NSString *)string orValue:(CGFloat)value;
+
+/**
+ * 获取坐标轴倍数文字
+ * @param isMain 是否主轴
+ * @return 文字
+ */
+- (NSString *)getNotationLabelText:(BOOL)isMain;
 @end

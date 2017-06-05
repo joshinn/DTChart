@@ -129,34 +129,12 @@
     }
 
     if (isMainAxis) {
-        self.chart.mainNotation = [self getNotationLabelText:YES];
+        self.chart.mainNotation = [self.axisFormatter getNotationLabelText:YES];
     } else {
-        self.chart.secondNotation = [self getNotationLabelText:NO];
+        self.chart.secondNotation = [self.axisFormatter getNotationLabelText:NO];
     }
 }
 
-/**
- * 获取y轴对应的倍数文字
- * @param isMain 是否是主轴
- * @return 文字
- */
-- (NSString *)getNotationLabelText:(BOOL)isMain {
-    NSInteger notation = isMain ? self.axisFormatter.mainYAxisNotation : self.axisFormatter.secondYAxisNotation;
-    NSString *unit = isMain ? self.axisFormatter.mainYAxisUnit : self.axisFormatter.secondYAxisUnit;
-    if (!unit) {
-        unit = @"";
-    }
-
-    if (notation == 1000) {
-        return [NSString stringWithFormat:@"×10³%@", unit];
-    } else if (notation == 1000000) {
-        return [NSString stringWithFormat:@"×10⁶%@", unit];
-    } else if (notation == 1000000000) {
-        return [NSString stringWithFormat:@"×10⁹%@", unit];
-    } else {
-        return nil;
-    }
-}
 
 #pragma mark - override
 

@@ -182,4 +182,23 @@ static NSString *const DateFormatterTime = @"HH:mm";
 }
 
 
+- (NSString *)getNotationLabelText:(BOOL)isMain {
+    NSInteger notation = isMain ? self.mainYAxisNotation : self.secondYAxisNotation;
+    NSString *unit = isMain ? self.mainYAxisUnit : self.secondYAxisUnit;
+    if (!unit) {
+        unit = @"";
+    }
+
+    if (notation == 1000) {
+        return [NSString stringWithFormat:@"×10³%@", unit];
+    } else if (notation == 1000000) {
+        return [NSString stringWithFormat:@"×10⁶%@", unit];
+    } else if (notation == 1000000000) {
+        return [NSString stringWithFormat:@"×10⁹%@", unit];
+    } else {
+        return unit;
+    }
+
+}
+
 @end

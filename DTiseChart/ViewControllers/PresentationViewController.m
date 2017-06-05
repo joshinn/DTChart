@@ -66,6 +66,7 @@
     formatter.mainYAxisScale = 100;
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;
     formatter.secondYAxisType = DTAxisFormatterTypeNumber;
+    formatter.secondYAxisUnit = @"蛤";
     formatter.xAxisType = DTAxisFormatterTypeDate;
     formatter.xAxisDateSubType = DTAxisFormatterDateSubTypeMonth | DTAxisFormatterDateSubTypeDay;
     [self.lineChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];

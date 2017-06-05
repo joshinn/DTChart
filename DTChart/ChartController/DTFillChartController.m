@@ -185,30 +185,9 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
     // y轴label data
     self.chart.yAxisLabelDatas = [super generateYAxisLabelData:maxYAxisCount yAxisMaxValue:maxY isMainAxis:YES];
 
-    self.chart.mainNotationLabel.text = [self getNotationLabelText];
+    self.chart.mainNotationLabel.text = [self.axisFormatter getNotationLabelText:YES];
 }
 
-/**
- * 获取y轴对应的倍数文字
- * @return 文字
- */
-- (NSString *)getNotationLabelText {
-    NSInteger notation = self.axisFormatter.mainYAxisNotation;
-    NSString *unit = self.axisFormatter.mainYAxisUnit;
-    if (!unit) {
-        unit = @"";
-    }
-
-    if (notation == 1000) {
-        return [NSString stringWithFormat:@"×10³%@", unit];
-    } else if (notation == 1000000) {
-        return [NSString stringWithFormat:@"×10⁶%@", unit];
-    } else if (notation == 1000000000) {
-        return [NSString stringWithFormat:@"×10⁹%@", unit];
-    } else {
-        return nil;
-    }
-}
 
 #pragma mark - override
 
