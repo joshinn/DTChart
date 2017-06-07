@@ -76,6 +76,7 @@
     label.textColor = [UIColor whiteColor];
     label.adjustsFontSizeToFitWidth = NO;
     label.numberOfLines = 1;
+    label.textAlignment = NSTextAlignmentRight;
     return label;
 }
 

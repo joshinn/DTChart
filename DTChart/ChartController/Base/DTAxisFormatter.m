@@ -31,16 +31,26 @@ static NSString *const DateFormatterTime = @"HH:mm";
 + (instancetype)axisFormatterExClone:(DTAxisFormatter *)origin {
     DTAxisFormatter *axisFormatter = [[DTAxisFormatter alloc] init];
 
-    axisFormatter.mainYAxisType = origin.xAxisType;
-    axisFormatter.mainYAxisDateSubType = origin.xAxisDateSubType;
-    axisFormatter.mainYAxisFormat = origin.xAxisFormat;
-    axisFormatter.mainYAxisScale = origin.xAxisScale;
-
-    axisFormatter.xAxisType = origin.mainYAxisType;
-    axisFormatter.xAxisDateSubType = origin.mainYAxisDateSubType;
-    axisFormatter.xAxisFormat = origin.mainYAxisFormat;
-    axisFormatter.xAxisScale = origin.mainYAxisScale;
-
+    axisFormatter.mainYAxisType = origin.mainYAxisType;
+    axisFormatter.mainYAxisDateSubType = origin.mainYAxisDateSubType;
+    axisFormatter.mainYAxisFormat = origin.mainYAxisFormat;
+    axisFormatter.mainYAxisUnit = origin.mainYAxisUnit;
+    axisFormatter.mainYAxisNotation = origin.mainYAxisNotation;
+    axisFormatter.mainYAxisScale = origin.mainYAxisScale;
+    
+    axisFormatter.secondYAxisType = origin.secondYAxisType;
+    axisFormatter.secondYAxisDateSubType = origin.secondYAxisDateSubType;
+    axisFormatter.secondYAxisFormat = origin.secondYAxisFormat;
+    axisFormatter.secondYAxisUnit = origin.secondYAxisUnit;
+    axisFormatter.secondYAxisNotation = origin.secondYAxisNotation;
+    axisFormatter.secondYAxisScale = origin.secondYAxisScale;
+    
+    axisFormatter.xAxisType = origin.xAxisType;
+    axisFormatter.xAxisDateSubType = origin.xAxisDateSubType;
+    axisFormatter.xAxisFormat = origin.xAxisFormat;
+    axisFormatter.xAxisUnit = origin.xAxisUnit;
+    axisFormatter.xAxisScale = origin.xAxisScale;
+    
     return axisFormatter;
 }
 
@@ -160,6 +170,9 @@ static NSString *const DateFormatterTime = @"HH:mm";
     if (type == DTAxisFormatterTypeText) {
         return string;
     } else if (type == DTAxisFormatterTypeNumber) {
+        if(!format) {
+            format = @"%.0f";
+        }
         return [NSString stringWithFormat:format, value * scale];
     } else if (type == DTAxisFormatterTypeDate) {
         return [self handleDate:string dateSubType:dateSubType];
