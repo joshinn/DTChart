@@ -183,7 +183,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
             }
 
             if (n == 0) {   // y轴label data，只需要取第一个柱状体数据计算就可以
-                DTAxisLabelData *yLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getXAxisLabelTitle:data.ptName orValue:0] value:i];
+                DTAxisLabelData *yLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getMainYAxisLabelTitle:data.ptName orValue:0] value:i];
                 if (values.count > maxXAxisCount) {
 
                     yLabelData.hidden = i % divide != 0;
