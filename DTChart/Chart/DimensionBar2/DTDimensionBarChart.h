@@ -24,8 +24,8 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 @property(nonatomic) DTDimension2ListModel *mainData;
 @property(nonatomic) DTDimension2ListModel *secondData;
 
-@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelMainBarModels;
-@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelSecondBarModels;
+@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelBarModels;
+
 /**
  * 第二个度量x轴标签数组
  */

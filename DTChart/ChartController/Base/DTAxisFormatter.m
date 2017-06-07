@@ -48,6 +48,7 @@ static NSString *const DateFormatterTime = @"HH:mm";
     axisFormatter.xAxisType = origin.xAxisType;
     axisFormatter.xAxisDateSubType = origin.xAxisDateSubType;
     axisFormatter.xAxisFormat = origin.xAxisFormat;
+    axisFormatter.xAxisNotation = origin.xAxisNotation;
     axisFormatter.xAxisUnit = origin.xAxisUnit;
     axisFormatter.xAxisScale = origin.xAxisScale;
     
@@ -86,6 +87,14 @@ static NSString *const DateFormatterTime = @"HH:mm";
     }
     return _secondYAxisFormat;
 }
+
+-(NSString *)xAxisFormat{
+    if (!_xAxisFormat) {
+        _xAxisFormat = @"%.0f";
+    }
+    return _xAxisFormat;
+}
+
 
 #pragma mark - private method
 

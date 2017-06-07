@@ -104,18 +104,11 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     return _secondTitleLabel;
 }
 
-- (NSMutableArray<DTDimensionBarModel *> *)levelMainBarModels {
-    if (!_levelMainBarModels) {
-        _levelMainBarModels = [NSMutableArray array];
+- (NSMutableArray<DTDimensionBarModel *> *)levelBarModels {
+    if (!_levelBarModels) {
+        _levelBarModels = [NSMutableArray array];
     }
-    return _levelMainBarModels;
-}
-
-- (NSMutableArray<DTDimensionBarModel *> *)levelSecondBarModels {
-    if (!_levelSecondBarModels) {
-        _levelSecondBarModels = [NSMutableArray array];
-    }
-    return _levelSecondBarModels;
+    return _levelBarModels;
 }
 
 - (void)setValueSelectable:(BOOL)valueSelectable {
@@ -217,8 +210,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 - (void)clearChartContent {
     [super clearChartContent];
 
-    [self.levelMainBarModels removeAllObjects];
-    [self.levelSecondBarModels removeAllObjects];
+    [self.levelBarModels removeAllObjects];
 
     [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[DTChartLabel class]]) {
@@ -527,11 +519,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
         BOOL exist = NO;
         NSMutableArray<DTDimensionBarModel *> *list = nil;
-        if (isMain) {
-            list = self.levelMainBarModels;
-        } else {
-            list = self.levelSecondBarModels;
-        }
+        list = self.levelBarModels;
 
         for (DTDimensionBarModel *model in list) {
             if ([model.title isEqualToString:item.name]) {

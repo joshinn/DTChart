@@ -226,7 +226,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     }
 
     // x轴label data
-    self.barChart.xAxisLabelDatas = [super generateYAxisLabelData:maxXAxisCount yAxisMaxValue:maxX isMainAxis:YES];
+    self.barChart.xAxisLabelDatas = [self generateXAxisLabelData:maxXAxisCount xAxisMaxValue:maxX];
 
     self.barChart.mainNotationLabel.text = [self getNotationLabelText];
 
@@ -241,13 +241,126 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     self.barChart.mainNotationLabel.frame = frame;
 }
 
+- (NSMutableArray<DTAxisLabelData *> *)generateXAxisLabelData:(NSUInteger)maxYAxisCount xAxisMaxValue:(CGFloat)maxY {
+    if (maxY == 0) {    // 最大值是0，只显示0标签
+        maxY = 1;
+
+        NSMutableArray < DTAxisLabelData * > *xAxisLabelDatas = [NSMutableArray array];
+
+        for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
+            CGFloat y = maxY * 1.0f / maxYAxisCount * i;
+
+            NSString *title = [self.axisFormatter getXAxisLabelTitle:nil orValue:y];
+            [xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
+
+            xAxisLabelDatas.lastObject.hidden = i != 0;
+        }
+
+        return xAxisLabelDatas;
+    }
+
+
+    BOOL yScaled = NO;  // 需要缩放时，记录缩放行为
+    CGFloat scale = self.axisFormatter.xAxisScale;
+    CGFloat maxLimit = self.xAxisMaxValueLimit;
+    maxLimit *= scale;
+
+    // 确定坐标轴最大值
+    if ([self.axisFormatter.xAxisFormat containsString:@"%.0f"]) {
+
+        maxY *= scale;
+        yScaled = YES;
+
+        if (maxY <= maxYAxisCount && maxYAxisCount < 10) {  // 10以内，从0，1，2...maxYAxisCount
+            maxY = maxYAxisCount;
+
+        } else if (maxY <= 10) {   // 10以内
+            NSUInteger y = 10;
+            while (y % maxYAxisCount != 0) {
+                ++y;
+            }
+            maxY = y;
+        } else if (maxY <= 100) {    // 100以内
+            NSUInteger y = maxYAxisCount * 5;
+            while (y < maxY) {
+                y += maxYAxisCount * 5;
+            }
+            maxY = y;
+        } else {    // 大于2位数
+            NSUInteger limit = 100;
+            while (maxY >= limit) {
+                limit *= 10;
+            }
+            limit /= 1000;
+
+            NSUInteger y = maxYAxisCount * 10 * limit;
+            while (y < maxY) {
+                y += maxYAxisCount * 10 * limit;
+            }
+
+            maxY = y;
+        }
+
+        if (maxY > maxLimit && maxLimit > 0) {
+            maxY = maxLimit;
+
+            while (maxYAxisCount >= 1 && maxLimit / maxYAxisCount != (NSInteger) (maxY / maxYAxisCount)) {
+                --maxYAxisCount;
+            }
+        }
+    }
+
+
+    NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas = [NSMutableArray array];
+    NSInteger unitScale = 1;
+
+    for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
+        CGFloat y = maxY / maxYAxisCount * i;
+
+        if (i == 1) {
+            NSInteger intY = (NSInteger) y;
+
+            NSInteger notation = 1000000000;
+            while (notation >= 1000) {
+                if (intY % notation == 0) {
+                    unitScale = notation;
+
+                    self.axisFormatter.xAxisNotation = notation;
+
+                    break;
+                } else {
+                    notation /= 1000;
+                }
+            }
+
+        }
+
+        if (yScaled) {
+            y /= scale;
+        }
+
+        NSString *title;
+        DTAxisFormatterType axisType = self.axisFormatter.xAxisType;
+        if (axisType == DTAxisFormatterTypeText || axisType == DTAxisFormatterTypeDate) {
+            title = [self.axisFormatter getXAxisLabelTitle:[NSString stringWithFormat:@"%@", @(y)] orValue:0];
+
+        } else if (axisType == DTAxisFormatterTypeNumber) {
+            title = [self.axisFormatter getXAxisLabelTitle:nil orValue:y / unitScale];
+        }
+
+        [xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
+    }
+
+    return xAxisLabelDatas;
+}
+
 /**
  * 获取x轴对应的倍数文字
  * @return 文字
  */
 - (NSString *)getNotationLabelText {
-    NSInteger notation = self.axisFormatter.mainYAxisNotation;
-    NSString *unit = self.axisFormatter.mainYAxisUnit;
+    NSInteger notation = self.axisFormatter.xAxisNotation;
+    NSString *unit = self.axisFormatter.xAxisUnit;
 
     if (notation == 1000) {
         if (unit.length == 0) {

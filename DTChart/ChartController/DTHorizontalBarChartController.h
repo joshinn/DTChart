@@ -15,6 +15,12 @@
  */
 @property(nonatomic) CGFloat barWidth;
 
+
+/**
+ * 主X轴取值的最大限制，0表示无限制，默认0
+ */
+@property(nonatomic) CGFloat xAxisMaxValueLimit;
+
 /**
  * 柱状图触摸回调
  * @return 触摸提示内容

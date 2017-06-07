@@ -114,9 +114,10 @@ typedef void(^SecondAxisColorsCompletionBlock)(NSArray<DTChartBlockModel *> *inf
  * @param origin 等同于frame.origin
  * @param xCount frame.size.width 换算成单元格数
  * @param yCount frame.size.height 换算成单元格数
- * @return instancet
+ * @return instance
  */
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount;
+
 
 /**
  * 构造y轴数据

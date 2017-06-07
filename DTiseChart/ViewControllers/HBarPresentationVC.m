@@ -47,7 +47,7 @@
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
     formatter.mainYAxisType = DTAxisFormatterTypeText;
     formatter.xAxisType = DTAxisFormatterTypeNumber;
-    formatter.mainYAxisUnit = @"秒";
+    formatter.xAxisUnit = @"秒";
     [self.tBarChartController setItems:self.chartId listData:[self simulateListCommonData:1 pointCount:5 mainAxis:YES] axisFormat:formatter];
 
     self.pBarChartController = [[DTHorizontalBarChartController alloc] initWithOrigin:CGPointMake(8 * 15, 20 * 15) xAxis:75 yAxis:41];

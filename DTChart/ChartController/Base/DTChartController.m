@@ -114,7 +114,12 @@
         for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
             CGFloat y = maxY * 1.0f / maxYAxisCount * i;
 
-            NSString *title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];
+            NSString *title = nil;
+            if (isMainAxis) {
+                title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y];
+            } else {
+                title = [self.axisFormatter getSecondYAxisLabelTitle:nil orValue:y];
+            }
             [yAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
 
             yAxisLabelDatas.lastObject.hidden = i != 0;
@@ -209,13 +214,14 @@
         }
 
         NSString *title;
-        if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeText || self.axisFormatter.mainYAxisType == DTAxisFormatterTypeDate) {
+        DTAxisFormatterType axisType = isMainAxis ? self.axisFormatter.mainYAxisType : self.axisFormatter.secondYAxisType;
+        if (axisType == DTAxisFormatterTypeText || axisType == DTAxisFormatterTypeDate) {
             if (isMainAxis) {
                 title = [self.axisFormatter getMainYAxisLabelTitle:[NSString stringWithFormat:@"%@", @(y)] orValue:0];
             } else {
                 title = [self.axisFormatter getSecondYAxisLabelTitle:[NSString stringWithFormat:@"%@", @(y)] orValue:0];
             }
-        } else if (self.axisFormatter.mainYAxisType == DTAxisFormatterTypeNumber) {
+        } else if (axisType == DTAxisFormatterTypeNumber) {
             if (isMainAxis) {
                 title = [self.axisFormatter getMainYAxisLabelTitle:nil orValue:y / unitScale];
             } else {

@@ -97,6 +97,11 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 @property(nonatomic) NSString *xAxisFormat;
 /**
+ * x轴作为度量轴时，DTAxisFormatterTypeNumber下，x轴的数值的倍数，默认1
+ * @note 一般是10的3次方，6次方，9次方
+ */
+@property(nonatomic) NSInteger xAxisNotation;
+/**
  * DTAxisFormatterTypeNumber下，x轴的单位，默认nil
  */
 @property(nonatomic) NSString *xAxisUnit;
@@ -127,6 +132,7 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  * 获取坐标轴倍数文字
  * @param isMain 是否主轴
  * @return 文字
+ * @note y轴是度量时
  */
 - (NSString *)getNotationLabelText:(BOOL)isMain;
 @end
