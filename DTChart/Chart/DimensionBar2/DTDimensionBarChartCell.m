@@ -210,15 +210,17 @@
         }
     } else {
 
-        BOOL isMain = YES;
+        NSInteger inSection = 0;  ///< 1：主表区域     2：副表区域      0：没有区域
         if (location.x >= self.mainNegativeLimitX && location.x <= self.mainPositiveLimitX) {
-            isMain = YES;
+            inSection = 1;
         } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX) {
-            isMain = NO;
+            inSection = 2;
         }
+        
+        DTLog(@"inSection = %@", @(inSection));
 
         DTDimension2Item *item = nil;
-        if (isMain) {
+        if (inSection == 1) {
             CGPoint touchPoint = [touch locationInView:self.mainBar];
             touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.mainBar.frame));
             DTDimension2Bar *subBar = [self.mainBar touchSubBar:touchPoint];
@@ -227,8 +229,9 @@
             CGRect frame = subBar.frame;
             frame.origin.x += CGRectGetMinX(self.mainBar.frame);
             self.touchHighlightedView.frame = frame;
+            self.touchHighlightedView.hidden = NO;
 
-        } else {
+        } else if(inSection == 2) {
             CGPoint touchPoint = [touch locationInView:self.secondBar];
             touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.secondBar.frame));
             DTDimension2Bar *subBar = [self.secondBar touchSubBar:touchPoint];
@@ -237,14 +240,14 @@
             CGRect frame = subBar.frame;
             frame.origin.x += CGRectGetMinX(self.secondBar.frame);
             self.touchHighlightedView.frame = frame;
+            self.touchHighlightedView.hidden = NO;
         }
 
         self.touchedItemData = item;
-        self.touchHighlightedView.hidden = NO;
 
         id <DTDimensionBarChartCellDelegate> o = self.delegate;
-        if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:data:touch:)]) {
-            [o chartCellHintTouchBegin:self isMainAxisBar:isMain data:item touch:touch];
+        if (inSection > 0 && [o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:data:touch:)]) {
+            [o chartCellHintTouchBegin:self isMainAxisBar:(inSection == 1) data:item touch:touch];
         }
     }
 }

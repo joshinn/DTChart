@@ -184,10 +184,10 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     } else if (self.mainNegativeLimitValue >= 0 && point.x <= self.mainPositiveLimitX && point.x >= self.mainZeroX) {
         x = self.mainZeroX;
         width = self.mainPositiveLimitX - self.mainZeroX;
-    } else if (self.secondNegativeLimitX < 0 && point.x <= self.secondPositiveLimitX && point.x >= self.secondNegativeLimitX) {
+    } else if (self.secondNegativeLimitValue < 0 && point.x <= self.secondPositiveLimitX && point.x >= self.secondNegativeLimitX) {
         x = self.secondNegativeLimitX;
         width = self.secondPositiveLimitX - self.secondNegativeLimitX;
-    } else if (self.secondNegativeLimitX >= 0 && point.x <= self.secondPositiveLimitX && point.x >= self.secondZeroX) {
+    } else if (self.secondNegativeLimitValue >= 0 && point.x <= self.secondPositiveLimitX && point.x >= self.secondZeroX) {
         x = self.secondZeroX;
         width = self.secondPositiveLimitX - self.secondZeroX;
     }

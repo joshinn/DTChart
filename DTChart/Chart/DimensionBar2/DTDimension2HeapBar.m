@@ -198,10 +198,23 @@
 
 - (DTDimension2Bar *)touchSubBar:(CGPoint)point {
     for (UIView *v in self.subviews) {
-        if ([v isKindOfClass:[DTDimension2Bar class]] && CGRectContainsPoint(v.frame, point)) {
-            return (DTDimension2Bar *) v;
+        if ([v isKindOfClass:[DTDimension2Bar class]]) {
+
+            if (CGRectContainsPoint(v.frame, point)) {
+                return (DTDimension2Bar *) v;
+            }
+
+            if (point.x <= CGRectGetMinX(self.bounds) && fabs(CGRectGetMinX(v.frame)) < 0.5f) {
+                return (DTDimension2Bar *) v;
+            }
+
+            if (point.x >= CGRectGetMaxX(self.bounds) && fabs(CGRectGetMaxX(v.frame) - CGRectGetMaxX(self.bounds)) < 0.5f) {
+                return (DTDimension2Bar *) v;
+            }
         }
+
     }
+
 
     return nil;
 }

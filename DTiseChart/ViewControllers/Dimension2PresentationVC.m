@@ -195,7 +195,7 @@
         chartController.chartStyle = DTDimensionBarStyleStartLine;
         chartController.showCoordinateAxisGrid = YES;
         chartController.valueSelectable = YES;
-        chartController.preProcessBarInfo = NO;
+        chartController.preProcessBarInfo = YES;
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
 
