@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimension2HeapBar.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimension2HeapBar.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimensionBarChart.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimensionBarChart.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimensionBarChartCell.m" afterPath="$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimensionBarChartCell.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DTiseChart/ViewControllers/Dimension2PresentationVC.m" afterPath="$PROJECT_DIR$/DTiseChart/ViewControllers/Dimension2PresentationVC.m" />
-    </list>
+    <list default="true" id="690f1f94-ae56-4cd7-98ca-c5c9cf443c96" name="Default" comment="" />
     <ignored path="DTiseChart.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +24,7 @@
         <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/Dimension2PresentationVC.m">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="411">
-              <caret line="197" column="34" lean-forward="true" selection-start-line="197" selection-start-column="34" selection-end-line="197" selection-end-column="34" />
+              <caret line="197" column="34" lean-forward="false" selection-start-line="197" selection-start-column="34" selection-end-line="197" selection-end-column="34" />
               <folding>
                 <element signature="e#151#187#0" expanded="true" />
               </folding>
@@ -42,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/d3.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
-              <caret line="182" column="6" lean-forward="true" selection-start-line="182" selection-start-column="6" selection-end-line="182" selection-end-column="6" />
+              <caret line="182" column="6" lean-forward="false" selection-start-line="182" selection-start-column="6" selection-end-line="182" selection-end-column="6" />
               <folding>
                 <element signature="e#37#156#0" expanded="false" />
                 <element signature="e#53#104#0" expanded="false" />
@@ -686,7 +680,7 @@
         <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/d4.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -696,7 +690,7 @@
         <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/d2.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+              <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -706,7 +700,7 @@
         <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data4-1.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -750,7 +744,7 @@
         <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimensionBarChartCell.m">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="610">
-              <caret line="295" column="31" lean-forward="true" selection-start-line="295" selection-start-column="31" selection-end-line="295" selection-end-column="31" />
+              <caret line="295" column="31" lean-forward="false" selection-start-line="295" selection-start-column="31" selection-end-line="295" selection-end-column="31" />
               <folding>
                 <marker date="1496907475000" expanded="true" signature="6751:9551" ph="{...}" />
                 <marker date="1496907475000" expanded="true" signature="9638:12333" ph="{...}" />
@@ -765,7 +759,7 @@
         <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimension2HeapBar.m">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="584">
-              <caret line="204" column="13" lean-forward="true" selection-start-line="204" selection-start-column="13" selection-end-line="204" selection-end-column="13" />
+              <caret line="204" column="13" lean-forward="false" selection-start-line="204" selection-start-column="13" selection-end-line="204" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -1154,12 +1148,12 @@
       <workItem from="1496884742798" duration="5000" />
       <workItem from="1496886310683" duration="152000" />
       <workItem from="1496886468936" duration="3807000" />
-      <workItem from="1496900716122" duration="5254000" />
+      <workItem from="1496900716122" duration="5456000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1091096000" />
+    <option name="totallyTimeSpent" value="1091298000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1755,7 +1749,7 @@
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimension2HeapBar.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="584">
-          <caret line="204" column="13" lean-forward="true" selection-start-line="204" selection-start-column="13" selection-end-line="204" selection-end-column="13" />
+          <caret line="204" column="13" lean-forward="false" selection-start-line="204" selection-start-column="13" selection-end-line="204" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1763,7 +1757,7 @@
     <entry file="file://$PROJECT_DIR$/DTChart/Chart/DimensionBar2/DTDimensionBarChartCell.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="610">
-          <caret line="295" column="31" lean-forward="true" selection-start-line="295" selection-start-column="31" selection-end-line="295" selection-end-column="31" />
+          <caret line="295" column="31" lean-forward="false" selection-start-line="295" selection-start-column="31" selection-end-line="295" selection-end-column="31" />
           <folding>
             <marker date="1496907475000" expanded="true" signature="6751:9551" ph="{...}" />
             <marker date="1496907475000" expanded="true" signature="9638:12333" ph="{...}" />
@@ -1776,7 +1770,7 @@
     <entry file="file://$PROJECT_DIR$/DTiseChart/ViewControllers/Dimension2PresentationVC.m">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="411">
-          <caret line="197" column="34" lean-forward="true" selection-start-line="197" selection-start-column="34" selection-end-line="197" selection-end-column="34" />
+          <caret line="197" column="34" lean-forward="false" selection-start-line="197" selection-start-column="34" selection-end-line="197" selection-end-column="34" />
           <folding>
             <element signature="e#151#187#0" expanded="true" />
           </folding>
@@ -1786,7 +1780,7 @@
     <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/d3.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="182" column="6" lean-forward="true" selection-start-line="182" selection-start-column="6" selection-end-line="182" selection-end-column="6" />
+          <caret line="182" column="6" lean-forward="false" selection-start-line="182" selection-start-column="6" selection-end-line="182" selection-end-column="6" />
           <folding>
             <element signature="e#37#156#0" expanded="false" />
             <element signature="e#53#104#0" expanded="false" />
@@ -2428,7 +2422,7 @@
     <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/d4.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -2436,7 +2430,7 @@
     <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/d2.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+          <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -2444,7 +2438,7 @@
     <entry file="file://$PROJECT_DIR$/DTChart/resources.bundle/data4-1.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding />
         </state>
       </provider>

@@ -568,6 +568,14 @@
         [obj removeFromSuperview];
     }];
 
+    [self.mainChartLines enumerateObjectsUsingBlock:^(DTDimensionBurgerLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj hide];
+    }];
+    [self.secondChartLines enumerateObjectsUsingBlock:^(DTDimensionBurgerLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj hide];
+    }];
+    [self.mainChartLines removeAllObjects];
+    [self.secondChartLines removeAllObjects];
 
     [self.chartBars removeAllObjects];
     [self.secondChartBars removeAllObjects];
