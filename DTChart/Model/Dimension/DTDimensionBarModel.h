@@ -14,4 +14,9 @@
 @property(nonatomic) UIColor *color;
 @property(nonatomic) UIColor *secondColor;
 
+/**
+ * 筛选多余项使用，与数据无关
+ */
+@property(nonatomic) BOOL selected;
+
 @end

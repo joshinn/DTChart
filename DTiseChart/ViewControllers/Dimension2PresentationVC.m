@@ -10,8 +10,9 @@
 #import "DTDimensionBarChart.h"
 #import "DTDimensionBarChartController.h"
 #import "DTDimensionModel.h"
+#import "DTDimensionBarModel.h"
 
-@interface Dimension2PresentationVC ()
+@interface Dimension2PresentationVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property(nonatomic) DTDimensionBarChartController *chartController;
 
@@ -20,6 +21,10 @@
 
 @property(nonatomic) DTDimension2ListModel *p2MainData;
 @property(nonatomic) DTDimension2ListModel *p2SecondData;
+
+@property(nonatomic) UITableView *tableView;
+
+@property(nonatomic) NSArray<DTDimensionBarModel *> *listBarInfos;
 
 @end
 
@@ -30,6 +35,8 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = DTRGBColor(0x2f2f2f, 1);
     self.automaticallyAdjustsScrollViewInsets = NO;
+
+    [self.view addSubview:self.tableView];
 
     UIButton *changeBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 80, 60, 48)];
     [changeBtn setTitle:@"模式" forState:UIControlStateNormal];
@@ -47,6 +54,18 @@
     [self loadChartController];
 }
 
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(20, 300, 200, 450)];
+        _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.rowHeight = 15;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return _tableView;
+}
+
 - (void)changeChartMode {
     if (self.chartController.chartStyle == DTDimensionBarStyleStartLine) {
         self.chartController.chartStyle = DTDimensionBarStyleHeap;
@@ -62,84 +81,6 @@
     }
 }
 
-//- (void)loadChart {
-//
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//
-//        NSString *resourcesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"resources.bundle"];
-//        NSBundle *bundle = [NSBundle bundleWithPath:resourcesPath];
-//        NSString *path = [bundle pathForResource:@"d2" ofType:@"json"];
-//        NSData *data = [NSData dataWithContentsOfFile:path];
-//        NSError *error = nil;
-//        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-//        NSArray *array = json[@"data"];
-//        NSInteger measureNum = [json[@"measureNum"] integerValue];
-//        CGFloat max1Value = (CGFloat) [json[@"max1"] doubleValue];
-//        CGFloat min1Value = (CGFloat) [json[@"min1"] doubleValue];
-//        CGFloat max2Value = (CGFloat) [json[@"max2"] doubleValue];
-//        CGFloat min2Value = (CGFloat) [json[@"min2"] doubleValue];
-//
-//        NSMutableArray<DTDimension2Model *> *listMainPt = [NSMutableArray arrayWithCapacity:array.count];
-//        NSMutableArray<DTDimension2Model *> *listSecondPt = [NSMutableArray arrayWithCapacity:array.count];
-//
-//        for (NSDictionary *dictionary in array) {
-//            [listMainPt addObject:[[DTDimension2Model alloc] initStartLineWithDictionary:dictionary measureIndex:1]];
-//        }
-//        if (measureNum == 2) {
-//            for (NSDictionary *dictionary in array) {
-//                [listSecondPt addObject:[[DTDimension2Model alloc] initStartLineWithDictionary:dictionary measureIndex:2]];
-//            }
-//        }
-//
-//        DTDimension2ListModel *listMainModel = [[DTDimension2ListModel alloc] init];
-//        listMainModel.title = @"价格%税收";
-//        listMainModel.listDimensions = listMainPt;
-//        listMainModel.maxValue = max1Value;
-//        listMainModel.minValue = min1Value;
-//        self.p1MainData = listMainModel;
-//
-//        DTDimension2ListModel *listSecondModel = [[DTDimension2ListModel alloc] init];
-//        listSecondModel.title = @"气温X雨水量";
-//        listSecondModel.listDimensions = listSecondPt;
-//        listSecondModel.maxValue = max2Value;
-//        listSecondModel.minValue = min2Value;
-//        self.p1SecondData = listSecondModel;
-//
-//
-//        NSMutableArray<DTAxisLabelData *> *xLabels = [NSMutableArray array];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"-100" value:-100]];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"0" value:0]];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"100" value:100]];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"200" value:200]];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"300" value:300]];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"400" value:400]];
-//        [xLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"500" value:500]];
-//
-//        NSMutableArray<DTAxisLabelData *> *xSecondLabels = [NSMutableArray array];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"-100" value:-100]];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"0" value:0]];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"100" value:100]];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"200" value:200]];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"300" value:300]];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"400" value:400]];
-//        [xSecondLabels addObject:[[DTAxisLabelData alloc] initWithTitle:@"500" value:500]];
-//
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//            DTDimensionBarChart *chart = [[DTDimensionBarChart alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 262 + 15 * 7) xAxis:55 yAxis:31];
-//            chart.xAxisLabelDatas = xLabels;
-//            chart.xSecondAxisLabelDatas = xSecondLabels;
-//            chart.valueSelectable = YES;
-//            chart.showCoordinateAxisGrid = YES;
-//            [self.view addSubview:chart];
-//            chart.mainData = listMainModel;
-//            chart.secondData = listSecondModel;
-//            [chart drawChart];
-//
-//        });
-//    });
-//
-//}
 
 - (void)loadChartController {
 
@@ -254,59 +195,67 @@
         chartController.chartStyle = DTDimensionBarStyleStartLine;
         chartController.showCoordinateAxisGrid = YES;
         chartController.valueSelectable = YES;
+        chartController.preProcessBarInfo = NO;
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
 
-        [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSArray<DTDimension2Item *> *allSubData, id dimensionData, id measureData, BOOL isMainAxis) {
-            NSMutableString *message = [NSMutableString string];
-
-            if (touchData) {
-
-                NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
-                NSString *valueString = [NSString stringWithFormat:format, touchData.value];
-                CGFloat sum = 0;
-                for (DTDimension2Item *item in allSubData) {
-                    sum += item.value;
-                }
-                NSString *sumString = [NSString stringWithFormat:format, sum];
-
-
-                if (chartStyle == DTBarChartStyleHeap) {
-                    if (dimensionData) {
-//                        [message appendString:dimensionData.name];
-                        [message appendString:@" : "];
-                        [message appendString:touchData.name];
-                        [message appendString:@"\n"];
-                    }
-                    if (measureData) {
-//                        [message appendString:measureData.name];
-                        [message appendString:@" : "];
-                    }
-                    [message appendString:valueString];
-                    [message appendString:@"\n"];
-                    [message appendString:@"总计"];
-                    [message appendString:@" : "];
-                    [message appendString:sumString];
-                } else {
-                    if (dimensionData) {
-//                        [message appendString:dimensionData.name];
-                        [message appendString:@" : "];
-                        [message appendString:touchData.name];
-                        [message appendString:@"\n"];
-                    }
-                    if (measureData) {
-//                        [message appendString:measureData.name];
-                        [message appendString:@" : "];
-                    }
-                    [message appendString:valueString];
-                }
-            }
-
-            return message;
-        }];
-
 
         dispatch_async(dispatch_get_main_queue(), ^{
+
+            [chartController setControllerTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSArray<DTDimension2Item *> *allSubData, id dimensionData, id measureData, BOOL isMainAxis) {
+                NSMutableString *message = [NSMutableString string];
+
+                if (touchData) {
+
+                    NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
+                    NSString *valueString = [NSString stringWithFormat:format, touchData.value];
+                    CGFloat sum = 0;
+                    for (DTDimension2Item *item in allSubData) {
+                        sum += item.value;
+                    }
+                    NSString *sumString = [NSString stringWithFormat:format, sum];
+
+
+                    if (chartStyle == DTBarChartStyleHeap) {
+                        if (dimensionData) {
+//                        [message appendString:dimensionData.name];
+                            [message appendString:@" : "];
+                            [message appendString:touchData.name];
+                            [message appendString:@"\n"];
+                        }
+                        if (measureData) {
+//                        [message appendString:measureData.name];
+                            [message appendString:@" : "];
+                        }
+                        [message appendString:valueString];
+                        [message appendString:@"\n"];
+                        [message appendString:@"总计"];
+                        [message appendString:@" : "];
+                        [message appendString:sumString];
+                    } else {
+                        if (dimensionData) {
+//                        [message appendString:dimensionData.name];
+                            [message appendString:@" : "];
+                            [message appendString:touchData.name];
+                            [message appendString:@"\n"];
+                        }
+                        if (measureData) {
+//                        [message appendString:measureData.name];
+                            [message appendString:@" : "];
+                        }
+                        [message appendString:valueString];
+                    }
+                }
+
+                return message;
+            }];
+
+            WEAK_SELF;
+            [chartController setControllerBarInfoBlock:^(NSArray<DTDimensionBarModel *> *listBarInfos) {
+                weakSelf.listBarInfos = listBarInfos;
+                [weakSelf.tableView reloadData];
+            }];
+
             [self.view addSubview:chartController.chartView];
             [chartController drawChart];
 
@@ -358,11 +307,33 @@
 
     }
 
-    NSLog(@"");
 }
 
 - (void)processDimensionModel:(NSArray<NSString *> *)array {
 
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.listBarInfos.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellId = @"cellId";
+    UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!tableViewCell) {
+        tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        tableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        tableViewCell.textLabel.font = [UIFont systemFontOfSize:8];
+        tableViewCell.textLabel.textColor = [UIColor whiteColor];
+    }
+
+    DTDimensionBarModel *barModel = self.listBarInfos[(NSUInteger) indexPath.row];
+
+    tableViewCell.textLabel.text = barModel.title;
+    tableViewCell.backgroundColor = barModel.color;
+
+    return tableViewCell;
+}
+
 
 @end

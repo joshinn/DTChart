@@ -193,7 +193,6 @@
     if (need) {
         [self relayoutSubBars];
     }
-    NSLog(@"");
 }
 
 

@@ -39,6 +39,9 @@ CGFloat const DimensionLabelGap = 5;
 @property(nonatomic) CGFloat secondNegativeLimitValue;
 @property(nonatomic) CGFloat secondNegativeLimitX;
 
+
+@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelBarModels;
+
 @end
 
 @implementation DTDimensionBarChart
@@ -309,7 +312,50 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
 - (void)drawChart {
 
+}
+
+- (void)drawChart:(NSArray<DTDimensionBarModel *> *)itemBarInfos {
+
     [self clearChartContent];
+
+    if (itemBarInfos.count > 0) {
+        [self.levelBarModels addObjectsFromArray:itemBarInfos];
+    }
+
+    if (self.preProcessBarInfo && self.chartStyle == DTDimensionBarStyleHeap) {
+
+        [self.levelBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
+            obj.selected = NO;
+        }];
+
+        if (self.mainData) {
+            for (DTDimension2Model *items in self.mainData.listDimensions) {
+                for (DTDimension2Item *item in items.items) {
+                    [self chartCellRequestItemColor:item isMainAxis:YES];
+                }
+            }
+        }
+        if (self.secondData) {
+            for (DTDimension2Model *items in self.secondData.listDimensions) {
+                for (DTDimension2Item *item in items.items) {
+                    [self chartCellRequestItemColor:item isMainAxis:NO];
+                }
+            }
+        }
+
+        // 移除当前数据没有的item
+        for (NSInteger i = self.levelBarModels.count - 1; i >= 0; --i) {
+            DTDimensionBarModel *barModel = self.levelBarModels[(NSUInteger) i];
+            if (!barModel.selected) {
+                [self.levelBarModels removeObject:barModel];
+            }
+        }
+
+        if (self.itemColorBlock) {
+            self.itemColorBlock(self.levelBarModels.copy);
+        }
+    }
+
 
     self.prepare = YES;
 
@@ -504,7 +550,6 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     UIColor *color = nil;
     if (self.chartStyle == DTDimensionBarStyleStartLine) {  ///< 模式1
         if (isMain) {
-
             color = MainBarColor;
         } else {
             color = SecondBarColor;
@@ -518,14 +563,13 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         DTDimension2Item *item = data;
 
         BOOL exist = NO;
-        NSMutableArray<DTDimensionBarModel *> *list = nil;
-        list = self.levelBarModels;
 
-        for (DTDimensionBarModel *model in list) {
+        for (DTDimensionBarModel *model in self.levelBarModels) {
             if ([model.title isEqualToString:item.name]) {
 
                 color = model.color;
                 exist = YES;
+                model.selected = YES;
                 break;
             }
         }
@@ -535,7 +579,12 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
             DTDimensionBarModel *model = [[DTDimensionBarModel alloc] init];
             model.color = color;
             model.title = item.name;
-            [list addObject:model];
+            model.selected = YES;
+            [self.levelBarModels addObject:model];
+
+            if (!self.preProcessBarInfo && self.itemColorBlock) {
+                self.itemColorBlock(@[model]);
+            }
         }
     }
     return color;

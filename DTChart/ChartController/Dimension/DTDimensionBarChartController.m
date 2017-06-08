@@ -8,10 +8,14 @@
 
 #import "DTDimensionBarChartController.h"
 #import "DTDimensionBarChart.h"
+#import "DTDataManager.h"
+#import "DTDimensionBarModel.h"
 
 @interface DTDimensionBarChartController ()
 
 @property(nonatomic) DTDimensionBarChart *chart;
+
+@property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelBarModels;
 
 @end
 
@@ -45,6 +49,11 @@
                 return nil;
             }
         }];
+
+        [_chart setItemColorBlock:^(NSArray<DTDimensionBarModel *> *barModels) {
+            [weakSelf cacheMultiData:barModels];
+        }];
+
     }
     return self;
 }
@@ -53,6 +62,13 @@
     _chartStyle = chartStyle;
 
     self.chart.chartStyle = chartStyle;
+}
+
+- (NSMutableArray<DTDimensionBarModel *> *)levelBarModels {
+    if (!_levelBarModels) {
+        _levelBarModels = [NSMutableArray array];
+    }
+    return _levelBarModels;
 }
 
 
@@ -64,6 +80,12 @@
  */
 - (void)setChartId:(NSString *)chartId {
     _chartId = [@"Dim2Bar-" stringByAppendingString:chartId];
+}
+
+- (void)setPreProcessBarInfo:(BOOL)preProcessBarInfo {
+    _preProcessBarInfo = preProcessBarInfo;
+
+    _chart.preProcessBarInfo = preProcessBarInfo;
 }
 
 - (void)processXLabelData:(NSUInteger)axisCount axisMaxValue:(CGFloat)maxValue axisMinValue:(CGFloat)minValue isMainAxis:(BOOL)isMainAxis {
@@ -135,13 +157,76 @@
     }
 }
 
+/**
+ * 把柱状体的颜色信息缓存起来
+ */
+- (void)cacheMultiData:(NSArray<DTDimensionBarModel *> *)barInfos {
+
+    BOOL changed = NO;
+
+    for (DTDimensionBarModel *barInfo in barInfos) {
+        BOOL exist = NO;
+        for (DTDimensionBarModel *barModel in self.levelBarModels) {
+            if ([barModel.title isEqualToString:barInfo.title]) {
+                exist = YES;
+                break;
+            }
+        }
+
+        if (!exist) {
+            [self.levelBarModels addObject:barInfo];
+            changed = YES;
+        }
+    }
+
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    if (self.levelBarModels.count > 0) {
+        dataDic[@"items"] = self.levelBarModels.copy;
+        [DTManager addChart:self.chartId object:@{@"data": dataDic}];
+    }
+
+    if (changed && self.controllerBarInfoBlock) {
+        DTLog(@"cache data controllerBarInfoBlock");
+        self.controllerBarInfoBlock(self.levelBarModels.copy);
+    }
+
+}
+
 
 #pragma mark - override
 
 - (void)drawChart {
     [super drawChart];
 
-    [self.chart drawChart];
+
+    if (self.chartStyle == DTDimensionBarStyleHeap) {
+
+        [self.levelBarModels removeAllObjects];
+
+        if (![DTManager checkExistByChartId:self.chartId]) {
+
+            [self.chart drawChart:nil];
+
+        } else {
+
+            // 加载保存的数据信息（颜色等）
+            NSDictionary *chartDic = [DTManager queryByChartId:self.chartId];
+            NSDictionary *dataDic = chartDic[@"data"];
+            NSArray *items = dataDic[@"items"];
+
+            [self.levelBarModels addObjectsFromArray:items];
+
+            if (self.controllerBarInfoBlock) {
+                DTLog(@"draw chart controllerBarInfoBlock");
+                self.controllerBarInfoBlock(self.levelBarModels.copy);
+            }
+
+            [self.chart drawChart:items];
+        }
+
+    } else {
+        [self.chart drawChart:nil];
+    }
 }
 
 #pragma mark - public method
