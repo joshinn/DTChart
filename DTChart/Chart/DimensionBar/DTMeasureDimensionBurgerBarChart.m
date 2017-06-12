@@ -72,9 +72,11 @@
     ChartEdgeInsets insets = self.coordinateAxisInsets;
 
     _mainContentView = [[UIView alloc] init];
+    _mainContentView.userInteractionEnabled = NO;
     [self.contentView addSubview:_mainContentView];
 
     _secondContentView = [[UIView alloc] init];
+    _secondContentView.userInteractionEnabled = NO;
     [self.contentView addSubview:_secondContentView];
 
     _yAxisLine = [UIView new];
@@ -337,25 +339,22 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 
-    [self touchKeyPoint:touches];
+    [self touchKeyPoint:touches drawNextBars:NO];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesMoved:touches withEvent:event];
+
+    [self touchKeyPoint:touches drawNextBars:NO];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
 
-    UITouch *touch = [touches anyObject];
-    CGPoint touchPoint = [touch locationInView:self.contentView];
+    [self touchKeyPoint:touches drawNextBars:YES];
 
-    // 标记触摸的主副表
-    if (CGRectContainsPoint(self.mainContentView.frame, touchPoint)) {
-        self.touchMainHighlightedView.hidden = YES;
-    } else if (CGRectContainsPoint(self.secondContentView.frame, touchPoint)) {
-        self.touchSecondHighlightedView.hidden = YES;
-    }
+    self.touchMainHighlightedView.hidden = YES;
+    self.touchSecondHighlightedView.hidden = YES;
 
     [self hideTouchMessage];
 }
@@ -363,20 +362,18 @@
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesCancelled:touches withEvent:event];
 
-    UITouch *touch = [touches anyObject];
-    CGPoint touchPoint = [touch locationInView:self.contentView];
-
-    // 标记触摸的主副表
-    if (CGRectContainsPoint(self.mainContentView.frame, touchPoint)) {
-        self.touchMainHighlightedView.hidden = YES;
-    } else if (CGRectContainsPoint(self.secondContentView.frame, touchPoint)) {
-        self.touchSecondHighlightedView.hidden = YES;
-    }
+    self.touchMainHighlightedView.hidden = YES;
+    self.touchSecondHighlightedView.hidden = YES;
 
     [self hideTouchMessage];
 }
 
-- (void)touchKeyPoint:(NSSet *)touches {
+/**
+ * 处理触摸事件
+ * @param touches 触摸事件对象
+ * @param draw 是否绘制后面维度的柱状体
+ */
+- (void)touchKeyPoint:(NSSet *)touches drawNextBars:(BOOL)draw {
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.contentView];
 
@@ -384,8 +381,10 @@
     NSUInteger touchIndex = 0;  // 标记触摸的主副表
     if (CGRectContainsPoint(self.mainContentView.frame, touchPoint)) {
         touchIndex = 1;
+        self.touchSecondHighlightedView.hidden = YES;
     } else if (CGRectContainsPoint(self.secondContentView.frame, touchPoint)) {
         touchIndex = 2;
+        self.touchMainHighlightedView.hidden = YES;
     }
 
     if (touchIndex == 0) {
@@ -458,8 +457,10 @@
         }
 
         if (i > removeIndex) {
-            [heapBar removeFromSuperview];
-            [lines[i - 1] hide];
+            if (draw) {
+                [heapBar removeFromSuperview];
+                [lines[i - 1] hide];
+            }
 
         } else {
             self.barY = CGRectGetMaxY(heapBar.frame) + self.barGap * self.coordinateAxisCellWidth;
@@ -471,14 +472,16 @@
         [self hideTouchMessage];
     } else {
 
-        [bars removeObjectsInRange:NSMakeRange(removeIndex + 1, bars.count - 1 - removeIndex)];
-        [lines removeObjectsInRange:NSMakeRange(removeIndex, lines.count - removeIndex)];
+        if (draw) {
+            [bars removeObjectsInRange:NSMakeRange(removeIndex + 1, bars.count - 1 - removeIndex)];
+            [lines removeObjectsInRange:NSMakeRange(removeIndex, lines.count - removeIndex)];
 
-        // 绘制后面的维度柱状体
-        if (touchIndex == 1) {
-            [self drawBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
-        } else {
-            [self drawSecondBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
+            // 绘制后面的维度柱状体
+            if (touchIndex == 1) {
+                [self drawBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
+            } else {
+                [self drawSecondBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
+            }
         }
 
         NSMutableString *message = nil;
@@ -568,10 +571,10 @@
         [obj removeFromSuperview];
     }];
 
-    [self.mainChartLines enumerateObjectsUsingBlock:^(DTDimensionBurgerLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.mainChartLines enumerateObjectsUsingBlock:^(DTDimensionBurgerLineModel *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
         [obj hide];
     }];
-    [self.secondChartLines enumerateObjectsUsingBlock:^(DTDimensionBurgerLineModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.secondChartLines enumerateObjectsUsingBlock:^(DTDimensionBurgerLineModel *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
         [obj hide];
     }];
     [self.mainChartLines removeAllObjects];

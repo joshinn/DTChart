@@ -190,15 +190,19 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 
-    [self touchKeyPoint:touches];
+    [self touchKeyPoint:touches drawNextBars:NO];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesMoved:touches withEvent:event];
+
+    [self touchKeyPoint:touches drawNextBars:NO];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
+
+    [self touchKeyPoint:touches drawNextBars:YES];
 
     self.touchHighlightedView.hidden = YES;
     [self hideTouchMessage];
@@ -211,7 +215,12 @@
     [self hideTouchMessage];
 }
 
-- (void)touchKeyPoint:(NSSet *)touches {
+/**
+ * 处理触摸事件
+ * @param touches 触摸事件对象
+ * @param draw 是否绘制后面维度的柱状体
+ */
+- (void)touchKeyPoint:(NSSet *)touches drawNextBars:(BOOL)draw {
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.contentView];
 
@@ -256,8 +265,11 @@
         }
 
         if (i > removeIndex) {
-            [heapBar removeFromSuperview];
-            [self.chartLines[i - 1] hide];
+
+            if (draw) {
+                [heapBar removeFromSuperview];
+                [self.chartLines[i - 1] hide];
+            }
 
         } else {
             self.barX = CGRectGetMaxX(heapBar.frame) + self.barGap * self.coordinateAxisCellWidth;
@@ -269,11 +281,12 @@
         [self hideTouchMessage];
     } else {
 
-        [self.chartBars removeObjectsInRange:NSMakeRange(removeIndex + 1, self.chartBars.count - 1 - removeIndex)];
-        [self.chartLines removeObjectsInRange:NSMakeRange(removeIndex, self.chartLines.count - removeIndex)];
+        if (draw) { // 绘制后面的维度柱状体
+            [self.chartBars removeObjectsInRange:NSMakeRange(removeIndex + 1, self.chartBars.count - 1 - removeIndex)];
+            [self.chartLines removeObjectsInRange:NSMakeRange(removeIndex, self.chartLines.count - removeIndex)];
 
-        // 绘制后面的维度柱状体
-        [self drawBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
+            [self drawBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
+        }
 
         {   // 提示文字
             NSMutableString *message = nil;
