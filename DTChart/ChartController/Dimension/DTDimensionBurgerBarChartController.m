@@ -31,15 +31,21 @@
         _chart.barWidth = 2;
 
         WEAK_SELF;
-        [_chart setTouchSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
+        [_chart setTouchSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerSubBarBlock) {
                 id dimensionData = nil;
                 if (dimensionIndex < weakSelf.dimensionDatas.count) {
                     dimensionData = weakSelf.dimensionDatas[dimensionIndex];
                 }
-                return weakSelf.touchBurgerSubBarBlock(allSubData, barAllColor, touchData, dimensionData, weakSelf.measureData);
+                return weakSelf.touchBurgerSubBarBlock(allSubData, touchData, dimensionData, weakSelf.measureData);
             } else {
                 return nil;
+            }
+        }];
+
+        [_chart setSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+            if (weakSelf.burgerSubBarInfoBlock) {
+                weakSelf.burgerSubBarInfoBlock(allSubData, barAllColor, dimensionIndex);
             }
         }];
 

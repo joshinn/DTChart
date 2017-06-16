@@ -305,8 +305,8 @@
     burgerController.showCoordinateAxisGrid = YES;
     burgerController.valueSelectable = YES;
 
-    
-    [burgerController setTouchBurgerSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
+
+    [burgerController setTouchBurgerSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
         NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
         NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
         CGFloat sum = 0;
@@ -338,6 +338,11 @@
         [message appendString:@")"];
 
         return message;
+    }];
+    [burgerController setBurgerSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+//        for (DTDimensionModel *model3 in allSubData) {
+//            DTLog(@"name = %@", model3.ptName);
+//        }
     }];
 
     [self.scrollView addSubview:burgerController.chartView];

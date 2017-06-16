@@ -130,8 +130,8 @@
     DTMeasureDimensionBurgerBarChartController *controller = [[DTMeasureDimensionBurgerBarChartController alloc] initWithOrigin:CGPointMake(120 + 15 * 17, 75 + 32 * 15) xAxis:55 yAxis:31];
     [self.view addSubview:controller.chartView];
 
-    
-    [controller setTouchBurgerMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
+
+    [controller setTouchBurgerMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
 
         NSString *format = [NSString stringWithFormat:@"%%.%@f", @(3)];
         NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
@@ -166,7 +166,7 @@
         return message;
 
     }];
-    [controller setTouchBurgerSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
+    [controller setTouchBurgerSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSString *dimensionData, NSString *measureData) {
         NSString *format = [NSString stringWithFormat:@"%%.%@f", @(0)];
         NSString *valueString = [NSString stringWithFormat:format, touchData.childrenSumValue];
         CGFloat sum = 0;
@@ -199,6 +199,18 @@
 
         return message;
     }];
+
+    [controller setBurgerMainSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+//        for (DTDimensionModel *model3 in allSubData) {
+//            DTLog(@"name = %@", model3.ptName);
+//        }
+    }];
+    [controller setBurgerSecondSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+//        for (DTDimensionModel *model3 in allSubData) {
+//            DTLog(@"name = %@", model3.ptName);
+//        }
+    }];
+
 
     controller.chartMode = DTChartModeThumb;
     controller.valueSelectable = YES;

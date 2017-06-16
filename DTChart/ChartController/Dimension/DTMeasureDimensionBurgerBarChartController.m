@@ -32,27 +32,39 @@
         _chart.barWidth = 2;
         _chart.yOffset = 2;
         WEAK_SELF;
-        [_chart setTouchMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
+        [_chart setTouchMainSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerMainSubBarBlock) {
                 id dimensionData = nil;
                 if (dimensionIndex < weakSelf.dimensionDatas.count) {
                     dimensionData = weakSelf.dimensionDatas[dimensionIndex];
                 }
-                return weakSelf.touchBurgerMainSubBarBlock(allSubData, barAllColor, touchData, dimensionData, weakSelf.mainMeasureData);
+                return weakSelf.touchBurgerMainSubBarBlock(allSubData, touchData, dimensionData, weakSelf.mainMeasureData);
             } else {
                 return nil;
             }
         }];
 
-        [_chart setTouchSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
+        [_chart setTouchSecondSubBarBlock:^NSString *(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSUInteger dimensionIndex) {
             if (weakSelf.touchBurgerSecondSubBarBlock) {
                 id dimensionData = nil;
                 if (dimensionIndex < weakSelf.dimensionDatas.count) {
                     dimensionData = weakSelf.dimensionDatas[dimensionIndex];
                 }
-                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, barAllColor, touchData, dimensionData, weakSelf.secondMeasureData);
+                return weakSelf.touchBurgerSecondSubBarBlock(allSubData, touchData, dimensionData, weakSelf.secondMeasureData);
             } else {
                 return nil;
+            }
+        }];
+
+        [_chart setMainSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+            if (weakSelf.burgerMainSubBarInfoBlock) {
+                weakSelf.burgerMainSubBarInfoBlock(allSubData, barAllColor, dimensionIndex);
+            }
+        }];
+
+        [_chart setSecondSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+            if (weakSelf.burgerSecondSubBarInfoBlock) {
+                weakSelf.burgerSecondSubBarInfoBlock(allSubData, barAllColor, dimensionIndex);
             }
         }];
     }

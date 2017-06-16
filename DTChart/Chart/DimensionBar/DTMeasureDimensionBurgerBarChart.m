@@ -334,6 +334,32 @@
     self.touchSelectedLine.hidden = YES;
 }
 
+/**
+ * 回调第一个维度柱状体的信息，包括所有子柱状体的数据和颜色
+ */
+- (void)processFirstDimensionBarInfo {
+    NSArray<DTDimensionModel *> *barAllData = nil;
+    NSArray<UIColor *> *barAllColor = nil;
+    NSUInteger dimensionIndex = 0;  ///< 维度序号
+
+    DTBar *bar = self.chartBars[dimensionIndex];
+    if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+        return;
+    }
+
+    DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+    barAllData = heapBar.itemDatas;
+    barAllColor = heapBar.barAllColors;
+
+    barAllData = barAllData.reverseObjectEnumerator.allObjects;
+    barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
+
+    if (self.mainSubBarInfoBlock) {
+        self.mainSubBarInfoBlock(barAllData, barAllColor, dimensionIndex);
+    }
+}
+
+
 #pragma mark - touch event
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -490,11 +516,17 @@
 
         if (touchIndex == 1) {
             if (self.touchMainSubBarBlock) {
-                message = self.touchMainSubBarBlock(barAllData, barAllColor, touchedModel, dimensionIndex).mutableCopy;
+                message = self.touchMainSubBarBlock(barAllData, touchedModel, dimensionIndex).mutableCopy;
+            }
+            if (draw && self.mainSubBarInfoBlock) {
+                self.mainSubBarInfoBlock(barAllData, barAllColor, dimensionIndex);
             }
         } else if (touchIndex == 2) {
             if (self.touchSecondSubBarBlock) {
-                message = self.touchSecondSubBarBlock(barAllData, barAllColor, touchedModel, dimensionIndex).mutableCopy;
+                message = self.touchSecondSubBarBlock(barAllData, touchedModel, dimensionIndex).mutableCopy;
+            }
+            if (draw && self.secondSubBarInfoBlock) {
+                self.secondSubBarInfoBlock(barAllData, barAllColor, dimensionIndex);
             }
         }
 
@@ -695,6 +727,8 @@
     [super drawChart];
 
     [self drawSecondChart];
+
+    [self processFirstDimensionBarInfo];
 }
 
 - (void)drawSecondChart {

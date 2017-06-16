@@ -25,6 +25,8 @@
  */
 @property(nonatomic) CGFloat barGap;
 
-@property(nonatomic, copy) NSString *(^touchSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, DTDimensionModel *touchData, NSUInteger dimensionIndex);
+@property(nonatomic, copy) NSString *(^touchSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSUInteger dimensionIndex);
+
+@property(nonatomic, copy) void (^subBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
 
 @end

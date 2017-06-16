@@ -204,11 +204,11 @@
                 return (DTDimension2Bar *) v;
             }
 
-            if (point.x <= CGRectGetMinX(self.bounds) && fabs(CGRectGetMinX(v.frame)) < 0.5f) {
+            if (point.x <= CGRectGetMinX(self.bounds) && fabs(CGRectGetMinX(v.frame)) <= 0) {
                 return (DTDimension2Bar *) v;
             }
 
-            if (point.x >= CGRectGetMaxX(self.bounds) && fabs(CGRectGetMaxX(v.frame) - CGRectGetMaxX(self.bounds)) < 0.5f) {
+            if (point.x >= CGRectGetMaxX(self.bounds) && fabs(CGRectGetMaxX(v.frame) - CGRectGetMaxX(self.bounds)) <= 0) {
                 return (DTDimension2Bar *) v;
             }
         }

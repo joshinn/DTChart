@@ -77,6 +77,31 @@
 
 #pragma mark - private method
 
+/**
+ * 回调第一个维度柱状体的信息，包括所有子柱状体的数据和颜色
+ */
+- (void)processFirstDimensionBarInfo {
+    NSArray<DTDimensionModel *> *barAllData = nil;
+    NSArray<UIColor *> *barAllColor = nil;
+    NSUInteger dimensionIndex = 0;  ///< 维度序号
+
+    DTBar *bar = self.chartBars[dimensionIndex];
+    if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+        return;
+    }
+
+    DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+    barAllData = heapBar.itemDatas;
+    barAllColor = heapBar.barAllColors;
+
+    barAllData = barAllData.reverseObjectEnumerator.allObjects;
+    barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
+
+    if (self.subBarInfoBlock) {
+        self.subBarInfoBlock(barAllData, barAllColor, dimensionIndex);
+    }
+}
+
 - (void)showTouchMessage:(NSString *)message touchPoint:(CGPoint)point {
     if (self.isValueSelectable) {
         [self.toastView show:message location:point];
@@ -294,7 +319,10 @@
             barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
 
             if (self.touchSubBarBlock) {
-                message = self.touchSubBarBlock(barAllData, barAllColor, touchedModel, dimensionIndex).mutableCopy;
+                message = self.touchSubBarBlock(barAllData, touchedModel, dimensionIndex).mutableCopy;
+            }
+            if (draw && self.subBarInfoBlock) {
+                self.subBarInfoBlock(barAllData, barAllColor, dimensionIndex);
             }
 
             if (!message) {
@@ -393,6 +421,7 @@
 
     [super drawChart];
 
+    [self processFirstDimensionBarInfo];
 }
 
 
