@@ -57,7 +57,7 @@
 
         _touchHighlightedView = [UIView new];
         _touchHighlightedView.hidden = YES;
-        _touchHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        _touchHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         [self.contentView addSubview:_touchHighlightedView];
     }
     return self;

@@ -69,8 +69,6 @@
     _yOffset = 0;
     _barGap = 2;
 
-    ChartEdgeInsets insets = self.coordinateAxisInsets;
-
     _mainContentView = [[UIView alloc] init];
     _mainContentView.userInteractionEnabled = NO;
     [self.contentView addSubview:_mainContentView];
@@ -84,7 +82,8 @@
     [self addSubview:_yAxisLine];
 
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 1);
-
+    ChartEdgeInsets insets = self.coordinateAxisInsets;
+    
     if (self.xAxisCellCount % 2 == 1) {
         self.coordinateAxisInsets = ChartEdgeInsetsMake(insets.left, insets.top, insets.right + 1, insets.bottom);
     } else {
@@ -96,11 +95,11 @@
 
     _touchMainHighlightedView = [UIView new];
     _touchMainHighlightedView.hidden = YES;
-    _touchMainHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+    _touchMainHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
 
     _touchSecondHighlightedView = [UIView new];
     _touchSecondHighlightedView.hidden = YES;
-    _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+    _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
 
     [self.toastView removeFromSuperview];
     [self addSubview:self.toastView];

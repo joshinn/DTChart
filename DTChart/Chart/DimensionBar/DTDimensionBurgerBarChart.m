@@ -60,7 +60,7 @@
 
     _touchHighlightedView = [UIView new];
     _touchHighlightedView.hidden = YES;
-    _touchHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+    _touchHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
     [self.contentView addSubview:_touchHighlightedView];
 }
 
@@ -281,6 +281,10 @@
             frame.origin.x += CGRectGetMinX(heapBar.frame);
             frame.origin.y += CGRectGetMinY(heapBar.frame);
             touchedSubBarFrame = frame;
+            if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
+                frame.origin.y -= (1 - frame.size.height) / 2;
+                frame.size.height = 1;
+            }
 
             self.touchHighlightedView.frame = frame;
             [self.touchHighlightedView.superview bringSubviewToFront:self.touchHighlightedView];

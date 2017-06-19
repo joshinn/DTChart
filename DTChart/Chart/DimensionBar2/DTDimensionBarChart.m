@@ -298,16 +298,18 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
 - (void)drawValues {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        CGFloat delta = CGRectGetHeight(self.tableView.frame) - self.mainData.listDimensions.count * self.tableView.rowHeight;
+
+        CGFloat delta = CGRectGetHeight(self.contentView.bounds) - self.mainData.listDimensions.count * self.tableView.rowHeight;
         if (delta > 0) {
-            [self.tableView setContentOffset:CGPointMake(0, -delta)];
+            self.tableView.frame = CGRectMake(0, delta, CGRectGetWidth(self.contentView.bounds), CGRectGetHeight(self.contentView.bounds) - delta);
             self.tableView.scrollEnabled = NO;
         } else {
-            [self.tableView setContentOffset:CGPointMake(0, 0)];
+            self.tableView.frame = self.contentView.bounds;
             self.tableView.scrollEnabled = YES;
         }
+        [self.tableView reloadData];
     });
+
 }
 
 - (void)drawChart {
@@ -534,7 +536,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     CGPoint cellTouchPoint = [touch locationInView:cell];
     CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
     CGPoint location = [touch locationInView:self.tableView];
-    location.y = location.y - self.tableView.contentOffset.y + deltaY;
+    location.y = location.y + self.tableView.frame.origin.y + deltaY;
 
     if (message.length > 0) {
         [self showTouchMessage:message touchPoint:location];
