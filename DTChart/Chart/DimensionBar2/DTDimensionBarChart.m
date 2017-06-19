@@ -480,7 +480,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     CGPoint cellTouchPoint = [touch locationInView:cell];
     CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
     CGPoint location = [touch locationInView:self.tableView];
-    location.y = location.y - self.tableView.contentOffset.y + deltaY;
+    location.y = location.y + self.tableView.frame.origin.y  - self.tableView.contentOffset.y + deltaY;
 
     [self showTouchMessage:message touchPoint:location];
 }
@@ -539,7 +539,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     CGPoint cellTouchPoint = [touch locationInView:cell];
     CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
     CGPoint location = [touch locationInView:self.tableView];
-    location.y = location.y + self.tableView.frame.origin.y + deltaY;
+    location.y = location.y + self.tableView.frame.origin.y  - self.tableView.contentOffset.y + deltaY;
 
     if (message.length > 0) {
         [self showTouchMessage:message touchPoint:location];
