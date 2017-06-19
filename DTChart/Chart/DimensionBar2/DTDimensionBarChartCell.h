@@ -59,5 +59,12 @@
 @property(nonatomic) CGFloat secondNegativeLimitX;
 
 
+#pragma mark - common
+
+/**
+ * 高亮的sub bar标题
+ */
+@property(nonatomic) NSString *highlightTitle;
+
 - (void)setCellData:(DTDimension2Model *)data second:(DTDimension2Model *)secondData prev:(DTDimension2Model *)prevData next:(DTDimension2Model *)nextData;
 @end

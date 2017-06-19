@@ -42,4 +42,10 @@
 @property(nonatomic, copy) NSString *(^touchBurgerSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, id dimensionData, id measureData);
 @property(nonatomic, copy) void (^burgerSecondSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
 
+/**
+ * 要高亮的子柱状体对应的标题
+ */
+@property(nonatomic) NSString *highlightTitle;
+
+
 @end

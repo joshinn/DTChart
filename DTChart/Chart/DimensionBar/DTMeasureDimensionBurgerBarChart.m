@@ -83,7 +83,7 @@
 
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 1);
     ChartEdgeInsets insets = self.coordinateAxisInsets;
-    
+
     if (self.xAxisCellCount % 2 == 1) {
         self.coordinateAxisInsets = ChartEdgeInsetsMake(insets.left, insets.top, insets.right + 1, insets.bottom);
     } else {
@@ -128,6 +128,77 @@
 
 - (void)setValueSelectable:(BOOL)valueSelectable {
     _valueSelectable = valueSelectable;
+}
+
+- (void)setHighlightTitle:(NSString *)highlightTitle {
+    _highlightTitle = highlightTitle;
+
+    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+        DTBar *bar = self.chartBars[i];
+        if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+            self.touchMainHighlightedView.hidden = YES;
+            return;
+        }
+
+        DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+        DTDimensionBar *subBar = [heapBar subBarFromTitle:highlightTitle];
+        if (subBar) {
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(heapBar.frame);
+            frame.origin.y += CGRectGetMinY(heapBar.frame);
+            if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
+                frame.origin.y -= (1 - frame.size.height) / 2;
+                frame.size.height = 1;
+            }
+
+            self.touchMainHighlightedView.frame = frame;
+            if (self.touchMainHighlightedView.superview) {
+                [self.touchMainHighlightedView.superview bringSubviewToFront:self.touchMainHighlightedView];
+            } else {
+                [self.mainContentView addSubview:self.touchMainHighlightedView];
+            }
+            self.touchMainHighlightedView.hidden = NO;
+
+            break;
+
+        } else {
+            self.touchMainHighlightedView.hidden = YES;
+        }
+    }
+    for (NSUInteger i = 0; i < self.secondChartBars.count; ++i) {
+        DTBar *bar = self.secondChartBars[i];
+        if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+            self.touchSecondHighlightedView.hidden = YES;
+            return;
+        }
+
+        DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+        DTDimensionBar *subBar = [heapBar subBarFromTitle:highlightTitle];
+        if (subBar) {
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(heapBar.frame);
+            frame.origin.y += CGRectGetMinY(heapBar.frame);
+            if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
+                frame.origin.y -= (1 - frame.size.height) / 2;
+                frame.size.height = 1;
+            }
+
+            self.touchSecondHighlightedView.frame = frame;
+            if (self.touchSecondHighlightedView.superview) {
+                [self.touchSecondHighlightedView.superview bringSubviewToFront:self.touchSecondHighlightedView];
+            } else {
+                [self.secondContentView addSubview:self.touchSecondHighlightedView];
+            }
+            self.touchSecondHighlightedView.hidden = NO;
+
+            break;
+
+        } else {
+            self.touchSecondHighlightedView.hidden = YES;
+        }
+    }
 }
 
 
@@ -458,6 +529,11 @@
             frame.origin.x += CGRectGetMinX(heapBar.frame);
             frame.origin.y += CGRectGetMinY(heapBar.frame);
             touchedSubBarFrame = frame;
+
+            if (frame.size.width < 1) {    // 如果高亮的view高度太小，固定为1
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
+            }
 
             if (touchIndex == 1) {
                 self.touchMainHighlightedView.frame = frame;

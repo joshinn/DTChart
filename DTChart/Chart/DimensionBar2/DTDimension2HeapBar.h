@@ -17,4 +17,11 @@
 - (void)appendData:(id)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need;
 
 - (DTDimension2Bar *)touchSubBar:(CGPoint)point;
+
+/**
+ * 根据名称查找对应的子柱状体
+ * @param title 名称
+ * @return 子柱状体
+ */
+- (DTDimension2Bar *)subBarFromTitle:(NSString *)title;
 @end

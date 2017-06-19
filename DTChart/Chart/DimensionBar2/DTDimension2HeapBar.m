@@ -8,6 +8,7 @@
 
 #import "DTDimension2HeapBar.h"
 #import "DTDimension2Bar.h"
+#import "DTDimension2Model.h"
 
 @interface DTDimension2HeapBar ()
 
@@ -216,6 +217,23 @@
     }
 
 
+    return nil;
+}
+
+- (DTDimension2Bar *)subBarFromTitle:(NSString *)title {
+    for (UIView *v in self.subviews) {
+        if ([v isKindOfClass:[DTDimension2Bar class]]) {
+            DTDimension2Bar *subBar = (DTDimension2Bar *) v;
+
+            if ([subBar.data isKindOfClass:[DTDimension2Item class]]) {
+                DTDimension2Item *item = subBar.data;
+
+                if ([item.name isEqualToString:title]) {
+                    return subBar;
+                }
+            }
+        }
+    }
     return nil;
 }
 

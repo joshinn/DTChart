@@ -71,6 +71,12 @@
     return _levelBarModels;
 }
 
+- (void)setHighlightTitle:(NSString *)highlightTitle {
+    _highlightTitle = highlightTitle;
+
+    _chart.highlightTitle = highlightTitle;
+    [self drawChart];
+}
 
 #pragma mark - private method
 

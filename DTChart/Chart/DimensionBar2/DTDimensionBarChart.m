@@ -149,6 +149,8 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     barChartCell.secondNegativeLimitValue = self.secondNegativeLimitValue;
     barChartCell.secondNegativeLimitX = self.secondNegativeLimitX;
 
+    barChartCell.highlightTitle = self.highlightTitle;
+
     NSUInteger index = (NSUInteger) indexPath.row;
     DTDimension2Model *data = self.mainData.listDimensions[index];
     DTDimension2Model *secondData = self.secondData.listDimensions[index];
@@ -163,6 +165,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     }
 
     [barChartCell setCellData:data second:secondData prev:prev next:next];
+
 
     return barChartCell;
 }

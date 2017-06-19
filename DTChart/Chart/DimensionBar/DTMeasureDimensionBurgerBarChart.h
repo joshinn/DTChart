@@ -61,4 +61,6 @@
 @property(nonatomic, copy) NSString *(^touchSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSUInteger dimensionIndex);
 @property(nonatomic, copy) void (^secondSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
 
+@property(nonatomic) NSString *highlightTitle;
+
 @end

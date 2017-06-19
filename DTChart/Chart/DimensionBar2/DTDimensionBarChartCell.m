@@ -29,9 +29,13 @@
  */
 @property(nonatomic) DTDimension2Item *touchedItemData;
 /**
- * 触摸时，在subBar上高亮的view
+ * 触摸时，在第一度量subBar上高亮的view
  */
-@property(nonatomic) UIView *touchHighlightedView;
+@property(nonatomic) UIView *touchMainHighlightedView;
+/**
+ * 触摸时，在第二度量subBar上高亮的view
+ */
+@property(nonatomic) UIView *touchSecondHighlightedView;
 
 @end
 
@@ -55,10 +59,15 @@
         _sectionLine = [DTDimensionSectionLine layer];
         [self.contentView.layer addSublayer:_sectionLine];
 
-        _touchHighlightedView = [UIView new];
-        _touchHighlightedView.hidden = YES;
-        _touchHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
-        [self.contentView addSubview:_touchHighlightedView];
+        _touchMainHighlightedView = [UIView new];
+        _touchMainHighlightedView.hidden = YES;
+        _touchMainHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+        [self.contentView addSubview:_touchMainHighlightedView];
+
+        _touchSecondHighlightedView = [UIView new];
+        _touchSecondHighlightedView.hidden = YES;
+        _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+        [self.contentView addSubview:_touchSecondHighlightedView];
     }
     return self;
 }
@@ -157,6 +166,24 @@
         [self.mainBar appendData:item barLength:barWidth barColor:color needLayout:item == mainData.items.lastObject];
     }
 
+    // 处理第一度量自动高亮
+    {
+        DTDimension2Bar *subBar = [self.mainBar subBarFromTitle:self.highlightTitle];
+        if (subBar) {
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(self.mainBar.frame);
+            if (frame.size.width < 1) {
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
+            }
+
+            self.touchMainHighlightedView.frame = frame;
+            self.touchMainHighlightedView.hidden = NO;
+        } else {
+            self.touchMainHighlightedView.hidden = YES;
+        }
+    }
+
 
     if (secondData) {
         [self.secondBar resetBar];
@@ -179,6 +206,25 @@
     } else {
         self.secondBar.hidden = YES;
     }
+
+    // 处理第二度量自动高亮
+    if (!self.secondBar.hidden) {
+        DTDimension2Bar *subBar = [self.secondBar subBarFromTitle:self.highlightTitle];
+        if (subBar) {
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(self.secondBar.frame);
+            if (frame.size.width < 1) {
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
+            }
+
+            self.touchSecondHighlightedView.frame = frame;
+            self.touchSecondHighlightedView.hidden = NO;
+        } else {
+            self.touchSecondHighlightedView.hidden = YES;
+        }
+    }
+
 }
 
 #pragma mark - touch
@@ -216,7 +262,7 @@
         } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX) {
             inSection = 2;
         }
-        
+
         DTLog(@"inSection = %@", @(inSection));
 
         DTDimension2Item *item = nil;
@@ -228,10 +274,15 @@
 
             CGRect frame = subBar.frame;
             frame.origin.x += CGRectGetMinX(self.mainBar.frame);
-            self.touchHighlightedView.frame = frame;
-            self.touchHighlightedView.hidden = NO;
+            if (frame.size.width < 1) {
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
+            }
+            self.touchMainHighlightedView.frame = frame;
+            self.touchMainHighlightedView.hidden = NO;
+            self.touchSecondHighlightedView.hidden = YES;
 
-        } else if(inSection == 2) {
+        } else if (inSection == 2) {
             CGPoint touchPoint = [touch locationInView:self.secondBar];
             touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.secondBar.frame));
             DTDimension2Bar *subBar = [self.secondBar touchSubBar:touchPoint];
@@ -239,8 +290,16 @@
 
             CGRect frame = subBar.frame;
             frame.origin.x += CGRectGetMinX(self.secondBar.frame);
-            self.touchHighlightedView.frame = frame;
-            self.touchHighlightedView.hidden = NO;
+            if (frame.size.width < 1) {
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
+            }
+            self.touchSecondHighlightedView.frame = frame;
+            self.touchSecondHighlightedView.hidden = NO;
+            self.touchMainHighlightedView.hidden = YES;
+        } else {
+            self.touchMainHighlightedView.hidden = YES;
+            self.touchSecondHighlightedView.hidden = YES;
         }
 
         self.touchedItemData = item;
@@ -313,8 +372,16 @@
         }
 
         if (item && self.touchedItemData != item) {
-            self.touchHighlightedView.frame = frame;
-            self.touchHighlightedView.hidden = NO;
+            if(isMain){
+                self.touchMainHighlightedView.frame = frame;
+                self.touchMainHighlightedView.hidden = NO;
+                self.touchSecondHighlightedView.hidden = YES;
+            } else{
+                self.touchSecondHighlightedView.frame = frame;
+                self.touchSecondHighlightedView.hidden = NO;
+                self.touchMainHighlightedView.hidden = YES;
+            }
+
 
             self.touchedItemData = item;
 
@@ -334,7 +401,8 @@
     }
 
     self.touchedItemData = nil;
-    self.touchHighlightedView.hidden = YES;
+    self.touchMainHighlightedView.hidden = YES;
+    self.touchSecondHighlightedView.hidden = YES;
 
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
     if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {
@@ -350,7 +418,9 @@
     }
 
     self.touchedItemData = nil;
-    self.touchHighlightedView.hidden = YES;
+    self.touchMainHighlightedView.hidden = YES;
+    self.touchSecondHighlightedView.hidden = YES;
+
 
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
     if ([o respondsToSelector:@selector(chartCellHintTouchEnd)]) {

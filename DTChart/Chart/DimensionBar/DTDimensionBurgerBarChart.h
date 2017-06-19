@@ -29,4 +29,6 @@
 
 @property(nonatomic, copy) void (^subBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
 
+@property(nonatomic) NSString * highlightTitle;
+
 @end

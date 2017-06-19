@@ -93,6 +93,15 @@
     }
 }
 
+- (void)setHighlightTitle:(NSString *)highlightTitle {
+    _highlightTitle = highlightTitle;
+
+    _chart.highlightTitle = highlightTitle;
+}
+
+
+#pragma mark - private method
+
 /**
  * 把柱状图图的柱状体信息缓存起来
  */

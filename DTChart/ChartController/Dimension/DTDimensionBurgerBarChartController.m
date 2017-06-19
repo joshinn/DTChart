@@ -84,6 +84,12 @@
     }
 }
 
+- (void)setHighlightTitle:(NSString *)highlightTitle {
+    _highlightTitle = highlightTitle;
+
+    _chart.highlightTitle = highlightTitle;
+}
+
 #pragma mark - override
 
 

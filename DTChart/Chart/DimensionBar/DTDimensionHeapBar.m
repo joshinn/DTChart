@@ -7,6 +7,7 @@
 //
 
 #import "DTDimensionHeapBar.h"
+#import "DTDimensionModel.h"
 
 @interface DTDimensionHeapBar ()
 
@@ -50,8 +51,8 @@
     return _subBarColors;
 }
 
--(NSArray<UIColor *> *)barAllColors{
-    if(!_barAllColors){
+- (NSArray<UIColor *> *)barAllColors {
+    if (!_barAllColors) {
         _barAllColors = self.subBarColors.copy;
     }
     return _barAllColors;
@@ -169,6 +170,19 @@
         return (DTDimensionBar *) v;
     }
 
+    return nil;
+}
+
+- (DTDimensionBar *)subBarFromTitle:(NSString *)title {
+    for (UIView *v in self.subviews) {
+        if ([v isKindOfClass:[DTDimensionBar class]]) {
+            DTDimensionBar *subBar = (DTDimensionBar *) v;
+
+            if ([subBar.dimensionModels.firstObject.ptName isEqualToString:title]) {
+                return subBar;
+            }
+        }
+    }
     return nil;
 }
 

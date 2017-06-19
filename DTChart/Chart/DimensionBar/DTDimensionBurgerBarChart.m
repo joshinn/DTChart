@@ -75,6 +75,39 @@
     _valueSelectable = valueSelectable;
 }
 
+- (void)setHighlightTitle:(NSString *)highlightTitle {
+    _highlightTitle = highlightTitle;
+
+    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+        DTBar *bar = self.chartBars[i];
+        if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+            self.touchHighlightedView.hidden = YES;
+            return;
+        }
+
+        DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+        DTDimensionBar *subBar = [heapBar subBarFromTitle:highlightTitle];
+        if (subBar) {
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(heapBar.frame);
+            frame.origin.y += CGRectGetMinY(heapBar.frame);
+            if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
+                frame.origin.y -= (1 - frame.size.height) / 2;
+                frame.size.height = 1;
+            }
+
+            self.touchHighlightedView.frame = frame;
+            [self.touchHighlightedView.superview bringSubviewToFront:self.touchHighlightedView];
+            self.touchHighlightedView.hidden = NO;
+
+            break;
+        } else {
+            self.touchHighlightedView.hidden = YES;
+        }
+    }
+}
+
 #pragma mark - private method
 
 /**

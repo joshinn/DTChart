@@ -39,6 +39,12 @@
  */
 @property(nonatomic) BOOL preProcessBarInfo;
 
+/**
+ * 要高亮的子柱状体对应的标题
+ * @note 会使图表内所有对应该标题的柱状体高亮
+ */
+@property(nonatomic) NSString *_Nullable highlightTitle;
+
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchLabelBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *_Nullable data, NSUInteger index);
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *_Nullable touchData, NSArray<DTDimension2Item *> *_Nullable allSubData, id _Nullable dimensionData, id _Nullable measureData, BOOL isMainAxis);

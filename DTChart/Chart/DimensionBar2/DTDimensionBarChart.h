@@ -43,6 +43,11 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 
 @property(nonatomic, copy) void (^itemColorBlock)(NSArray<DTDimensionBarModel *> *barModels);
 
+/**
+ * 高亮的sub bar标题
+ */
+@property(nonatomic) NSString *highlightTitle;
+
 - (void)drawChart __attribute__((unavailable("use drawChart: replace")));
 
 - (void)drawChart:(NSArray<DTDimensionBarModel *> *)itemBarInfos;
