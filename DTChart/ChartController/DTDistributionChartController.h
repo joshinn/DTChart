@@ -25,21 +25,25 @@
  * @note 范围 (-∞, 0)
  */
 @property(nonatomic) CGFloat nullLevel;
+
 /**
  * 最弱的上限值，默认100
  * @note 范围 [0, 100)
  */
 @property(nonatomic) CGFloat lowLevel;
+
 /**
  * 中等的上限值，默认500
  * @note 范围 [100, 500)
  */
 @property(nonatomic) CGFloat middleLevel;
+
 /**
  * 强的上限值，默认1000
  * @note 范围 [500, 1000)
  */
 @property(nonatomic) CGFloat highLevel;
+
 /**
  * 空值的标识文字，默认 "空"
  */
@@ -61,6 +65,11 @@
  */
 @property(nonatomic) NSString *supremeLevelTitle;
 
+@property(nonatomic) UIColor *nullLevelColor;
+@property(nonatomic) UIColor *lowLevelColor;
+@property(nonatomic) UIColor *middleLevelColor;
+@property(nonatomic) UIColor *highLevelColor;
+@property(nonatomic) UIColor *supremeLevelColor;
 
 @property(nonatomic, copy) NSString *(^mainDistributionControllerTouchBlock)(NSString *seriesId, NSInteger time);
 /**
@@ -104,6 +113,13 @@
  * 副表 最强的标识文字，默认 ">=1000"
  */
 @property(nonatomic) NSString *secondSupremeLevelTitle;
+
+@property(nonatomic) UIColor *secondNullLevelColor;
+@property(nonatomic) UIColor *secondLowLevelColor;
+@property(nonatomic) UIColor *secondMiddleLevelColor;
+@property(nonatomic) UIColor *secondHighLevelColor;
+@property(nonatomic) UIColor *secondSupremeLevelColor;
+
 
 @property(nonatomic, copy) NSString *(^secondDistributionControllerTouchBlock)(NSString *seriesId, NSInteger time);
 @end

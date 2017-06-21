@@ -28,6 +28,7 @@
 
 @synthesize chartView = _chartView;
 @synthesize chartId = _chartId;
+@synthesize valueSelectable = _valueSelectable;
 
 
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount {
@@ -147,10 +148,7 @@
 }
 
 - (void)setValueSelectable:(BOOL)valueSelectable {
-    [super setValueSelectable:valueSelectable];
-
-    self.mainDistributionChart.valueSelectable = valueSelectable;
-    self.secondDistributionChart.valueSelectable = valueSelectable;
+    _valueSelectable = valueSelectable;
 }
 
 - (NSString *)nullLevelTitle {
@@ -243,8 +241,6 @@
         self.mainTitleLabel.hidden = NO;
     }
 
-    self.mainDistributionChart.startHour = self.startHour;
-    self.mainDistributionChart.valueSelectable = self.valueSelectable;
     WEAK_SELF;
     [self.mainDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
         if (weakSelf.mainDistributionControllerTouchBlock) {
@@ -289,13 +285,6 @@
     self.secondDistributionChart = [[DTDistributionChart alloc]
             initWithOrigin:CGPointMake(CGRectGetMaxX(self.mainDistributionChart.frame) + self.mainDistributionChart.coordinateAxisCellWidth, CGRectGetMinY(self.mainDistributionChart.frame)) xAxis:35 yAxis:29];
     self.secondDistributionChart.chartYAxisStyle = DTDistributionChartYAxisStyleLarge;
-    self.secondDistributionChart.startHour = self.startHour;
-    self.secondDistributionChart.nullLevelColor = DTDistributionNullLevelColor;
-    self.secondDistributionChart.lowLevelColor = DTDistributionLowLevelColor;
-    self.secondDistributionChart.middleLevelColor = DTRGBColor(0x014898, 1);
-    self.secondDistributionChart.highLevelColor = DTRGBColor(0x018E75, 1);
-    self.secondDistributionChart.supremeLevelColor = DTRGBColor(0xAAC901, 1);
-    self.secondDistributionChart.valueSelectable = self.valueSelectable;
 
     WEAK_SELF;
     [self.secondDistributionChart setDistributionChartTouchBlock:^NSString *(DTChartSingleData *singleData, DTChartItemData *itemData) {
@@ -325,6 +314,9 @@
                 CGRectGetWidth(self.mainDistributionChart.frame) - 4 * self.mainDistributionChart.coordinateAxisCellWidth / 10,
                 self.mainDistributionChart.coordinateAxisCellWidth * 2);
 
+        self.mainDistributionChart.startHour = self.startHour;
+        self.mainDistributionChart.valueSelectable = self.valueSelectable;
+
         colors = @[self.mainDistributionChart.nullLevelColor,
                 self.mainDistributionChart.lowLevelColor,
                 self.mainDistributionChart.middleLevelColor,
@@ -340,6 +332,9 @@
 
         frame = self.mainLevelColorIndicator.frame;
         frame.origin.x = CGRectGetMaxX(self.secondDistributionChart.frame) - CGRectGetWidth(self.secondDistributionChart.contentView.bounds);
+
+        self.secondDistributionChart.startHour = self.startHour;
+        self.secondDistributionChart.valueSelectable = self.valueSelectable;
 
         colors = @[self.secondDistributionChart.nullLevelColor,
                 self.secondDistributionChart.lowLevelColor,
@@ -481,6 +476,12 @@
 
     }
 
+    self.mainDistributionChart.nullLevelColor = self.nullLevelColor ? self.nullLevelColor : DTDistributionNullLevelColor;
+    self.mainDistributionChart.lowLevelColor = self.lowLevelColor ? self.lowLevelColor : DTDistributionLowLevelColor;
+    self.mainDistributionChart.middleLevelColor = self.middleLevelColor ? self.middleLevelColor : DTDistributionMiddleLevelColor;
+    self.mainDistributionChart.highLevelColor = self.highLevelColor ? self.highLevelColor : DTDistributionHighLevelColor;
+    self.mainDistributionChart.supremeLevelColor = self.supremeLevelColor ? self.supremeLevelColor : DTDistributionSupremeLevelColor;
+
     self.mainDistributionChart.xAxisLabelDatas = xAxisLabelDatas;
     self.mainDistributionChart.multiData = bars;
 
@@ -499,6 +500,12 @@
         [self processBarAndXLabel:listCommonData xLabels:xAxisLabelDatas index:n bars:bars];
 
     }
+
+    self.secondDistributionChart.nullLevelColor = self.secondNullLevelColor ? self.secondNullLevelColor : DTDistributionNullLevelColor;
+    self.secondDistributionChart.lowLevelColor = self.secondLowLevelColor ? self.secondLowLevelColor : DTDistributionLowLevelColor;
+    self.secondDistributionChart.middleLevelColor = self.secondMiddleLevelColor ? self.secondMiddleLevelColor : DTDistributionMiddleLevelColor;
+    self.secondDistributionChart.highLevelColor = self.secondHighLevelColor ? self.secondHighLevelColor : DTRGBColor(0x018E75, 1);
+    self.secondDistributionChart.supremeLevelColor = self.secondSupremeLevelColor ? self.secondSupremeLevelColor : DTRGBColor(0xAAC901, 1);
 
     self.secondDistributionChart.xAxisLabelDatas = xAxisLabelDatas;
     self.secondDistributionChart.multiData = bars;

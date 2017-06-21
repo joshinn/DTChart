@@ -42,9 +42,10 @@
     self.presentChart.chartMode = DTChartModePresentation;
     self.presentChart.mainTitle = @"手机";
     self.presentChart.secondTitle = @"平板22";
-//    self.presentChart.startHour = 10;
+    self.presentChart.startHour = 10;
     self.presentChart.valueSelectable = YES;
     self.presentChart.secondNullLevelTitle = @"呵呵哒";
+    self.presentChart.nullLevelColor = [UIColor redColor];
     WEAK_SELF;
     [self.presentChart setMainDistributionControllerTouchBlock:^NSString *(NSString *seriesId, NSInteger time) {
         NSString *message = nil;
