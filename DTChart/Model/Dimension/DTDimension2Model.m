@@ -71,14 +71,30 @@
             }
             
             for (NSUInteger i = 0; i < count; ++i) {
-                NSString *name = names[i];
-                [roots addObject:[DTDimension2Item initWithName:name value:0]];
+                NSDictionary *nameDic = names[i];
+                NSString *name = nameDic[@"name"];
+                NSString *fullName = nameDic[@"fullName"];
+                if (!fullName) {
+                    fullName = name;
+                }
+                DTDimension2Item *item = [DTDimension2Item initWithName:name value:0];
+                item.fullName = fullName;
+                [roots addObject:item];
             }
             _roots = roots;
         }
         
         NSMutableArray<DTDimension2Item *> *items = [NSMutableArray array];
-        [items addObject:[DTDimension2Item initWithName:names.lastObject value:value]];
+        NSDictionary *nameDic = names.lastObject;
+        NSString *name = nameDic[@"name"];
+        NSString *fullName = nameDic[@"fullName"];
+        if (!fullName) {
+            fullName = name;
+        }
+        
+        DTDimension2Item *item = [DTDimension2Item initWithName:name value:value];
+        item.fullName = fullName;
+        [items addObject:item];
         _items = items;
     }
     return self;

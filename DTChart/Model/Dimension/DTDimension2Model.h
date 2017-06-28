@@ -19,6 +19,8 @@ typedef NS_ENUM(NSInteger, DTDimensionBarStyle) {
 
 @property(nonatomic) NSString *name;
 
+@property(nonatomic) NSString *fullName;
+
 @property(nonatomic) CGFloat value;
 
 + (instancetype)initWithName:(NSString *)name value:(CGFloat)value;

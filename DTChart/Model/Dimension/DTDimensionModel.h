@@ -13,6 +13,8 @@
 
 @property(nonatomic) NSString *ptName;
 
+@property(nonatomic) NSString *ptFullName;
+
 @property(nonatomic) NSArray<DTDimensionModel *> *ptListValue;
 
 @property(nonatomic) CGFloat ptValue;

@@ -357,6 +357,10 @@
             if (item && self.touchedItemData != item) {
                 frame = subBar.frame;
                 frame.origin.x += CGRectGetMinX(self.mainBar.frame);
+                if (frame.size.width < 1) {
+                    frame.origin.x -= (1 - frame.size.width) / 2;
+                    frame.size.width = 1;
+                }
             }
 
         } else {
@@ -368,6 +372,10 @@
             if (item && self.touchedItemData != item) {
                 frame = subBar.frame;
                 frame.origin.x += CGRectGetMinX(self.secondBar.frame);
+                if (frame.size.width < 1) {
+                    frame.origin.x -= (1 - frame.size.width) / 2;
+                    frame.size.width = 1;
+                }
             }
         }
 
