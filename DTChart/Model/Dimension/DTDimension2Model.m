@@ -28,22 +28,22 @@
 
 - (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index prevModel:(DTDimension2Model *)prevModel {
     DTDimension2Model *model = [self initFromJson:dictionary valueName:[NSString stringWithFormat:@"value%@", @(index)] style:DTDimensionBarStyleHeap];
-    
+
     if (!prevModel || model.roots.count != prevModel.roots.count) {
         return model;
     }
-    
+
     BOOL isDifferent = NO;
     for (NSUInteger i = 0; i < model.roots.count; ++i) {
         DTDimension2Item *item1 = model.roots[i];
         DTDimension2Item *item2 = prevModel.roots[i];
-        
+
         if (![item1.name isEqualToString:item2.name]) {
             isDifferent = YES;
             break;
         }
     }
-    
+
     if (!isDifferent) { // 相同的根节点，合并
         NSMutableArray *items = prevModel.items.mutableCopy;
         [items addObjectsFromArray:model.items];
@@ -59,39 +59,65 @@
     if (self = [super init]) {
         NSArray *names = json[@"name"];
         CGFloat value = (CGFloat) [json[valueName] doubleValue];
-        
+
         if (names.count > 0) {
             NSMutableArray<DTDimension2Item *> *roots = [NSMutableArray arrayWithCapacity:names.count - 1];
-            
+
             NSUInteger count = 0;
             if (style == DTDimensionBarStyleStartLine) {
                 count = names.count;
             } else if (style == DTDimensionBarStyleHeap) {
                 count = names.count - 1;
             }
-            
+
             for (NSUInteger i = 0; i < count; ++i) {
-                NSDictionary *nameDic = names[i];
-                NSString *name = nameDic[@"name"];
-                NSString *fullName = nameDic[@"fullName"];
-                if (!fullName) {
-                    fullName = name;
+                id obj = names[i];
+                NSString *name = nil;
+                NSString *fullName = nil;
+                if ([obj isKindOfClass:[NSString class]]) {
+                    name = obj;
+                    fullName = obj;
+                } else if ([obj isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *nameDic = obj;
+                    name = nameDic[@"name"];
+                    if (!name) {
+                        name = @"";
+                    }
+                    fullName = nameDic[@"fullName"];
+                    if (!fullName) {
+                        fullName = name;
+                    }
                 }
+
+
                 DTDimension2Item *item = [DTDimension2Item initWithName:name value:0];
                 item.fullName = fullName;
                 [roots addObject:item];
             }
             _roots = roots;
         }
-        
+
         NSMutableArray<DTDimension2Item *> *items = [NSMutableArray array];
-        NSDictionary *nameDic = names.lastObject;
-        NSString *name = nameDic[@"name"];
-        NSString *fullName = nameDic[@"fullName"];
-        if (!fullName) {
-            fullName = name;
+
+
+        id obj = names.lastObject;
+        NSString *name = nil;
+        NSString *fullName = nil;
+        if ([obj isKindOfClass:[NSString class]]) {
+            name = obj;
+            fullName = obj;
+        } else if ([obj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *nameDic = obj;
+            name = nameDic[@"name"];
+            if (!name) {
+                name = @"";
+            }
+            fullName = nameDic[@"fullName"];
+            if (!fullName) {
+                fullName = name;
+            }
         }
-        
+
         DTDimension2Item *item = [DTDimension2Item initWithName:name value:value];
         item.fullName = fullName;
         [items addObject:item];
