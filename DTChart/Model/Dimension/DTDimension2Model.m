@@ -58,7 +58,20 @@
 - (instancetype)initFromJson:(NSDictionary *)json valueName:(NSString *)valueName style:(DTDimensionBarStyle)style {
     if (self = [super init]) {
         NSArray *names = json[@"name"];
-        CGFloat value = (CGFloat) [json[valueName] doubleValue];
+        CGFloat value = 0;
+        BOOL valueIsNull = NO;
+        id valueObj = json[valueName];
+        if([valueObj isKindOfClass:[NSString class]]){
+            NSString *valueString = valueObj;
+            if([valueString isEqualToString:@"null"]){
+                valueIsNull = YES;
+            }else {
+                value = valueString.doubleValue;
+            }
+        }else if ([valueObj isKindOfClass:[NSNumber class]]){
+            NSNumber *valueNumber = valueObj;
+            value = valueNumber.doubleValue;
+        }
 
         if (names.count > 0) {
             NSMutableArray<DTDimension2Item *> *roots = [NSMutableArray arrayWithCapacity:names.count - 1];
@@ -89,7 +102,6 @@
                     }
                 }
 
-
                 DTDimension2Item *item = [DTDimension2Item initWithName:name value:0];
                 item.fullName = fullName;
                 [roots addObject:item];
@@ -98,7 +110,6 @@
         }
 
         NSMutableArray<DTDimension2Item *> *items = [NSMutableArray array];
-
 
         id obj = names.lastObject;
         NSString *name = nil;
@@ -119,6 +130,7 @@
         }
 
         DTDimension2Item *item = [DTDimension2Item initWithName:name value:value];
+        item.valueIsNull = valueIsNull;
         item.fullName = fullName;
         [items addObject:item];
         _items = items;

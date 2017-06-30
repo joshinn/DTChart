@@ -380,11 +380,11 @@
         }
 
         if (item && self.touchedItemData != item) {
-            if(isMain){
+            if (isMain) {
                 self.touchMainHighlightedView.frame = frame;
                 self.touchMainHighlightedView.hidden = NO;
                 self.touchSecondHighlightedView.hidden = YES;
-            } else{
+            } else {
                 self.touchSecondHighlightedView.frame = frame;
                 self.touchSecondHighlightedView.hidden = NO;
                 self.touchMainHighlightedView.hidden = YES;

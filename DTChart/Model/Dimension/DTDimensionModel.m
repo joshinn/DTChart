@@ -72,18 +72,35 @@
 
 - (CGFloat)childrenSumValue {
     if (isnan(_childrenSumValue)) {
-        _childrenSumValue = [self childrenSum:self];
+        BOOL childSumIsNull = YES;
+        _childrenSumValue = [self childrenSum:self isNull:&childSumIsNull];
+        _ptValueIsNull = childSumIsNull;
     }
     return _childrenSumValue;
 }
 
-- (CGFloat)childrenSum:(DTDimensionModel *)model {
+- (CGFloat)childrenSum:(DTDimensionModel *)model isNull:(BOOL *)isNull {
     CGFloat sum = 0;
     if (model.ptListValue.count > 0) {
+        BOOL childSumIsNull = YES;
         for (DTDimensionModel *item in model.ptListValue) {
-            sum += [self childrenSum:item];
+            BOOL itemChildSumIsNull = YES;
+            CGFloat childSum = [self childrenSum:item isNull:&itemChildSumIsNull];
+            if (!itemChildSumIsNull) {
+                childSumIsNull = NO;
+                sum += childSum;
+            }
         }
+
+        *isNull = childSumIsNull;
+
+        model.childrenSumValue = sum;
+        model.ptValueIsNull = childSumIsNull;
+
     } else {
+
+        *isNull = model.ptValueIsNull;
+
         sum += model.ptValue;
     }
 

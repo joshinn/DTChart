@@ -150,6 +150,7 @@
     if ([self layoutHeapBars:data fromFrame:frame index:index]) {
         CGRect fromFrame = CGRectZero;
         DTBar *lastBar = self.chartBars.lastObject;
+        DTDimensionModel *firstItem = nil;
         if (lastBar && [lastBar isKindOfClass:[DTDimensionHeapBar class]]) {
             DTDimensionHeapBar *lastHeapBar = (DTDimensionHeapBar *) lastBar;
             DTDimensionBar *subBar = [lastHeapBar touchSubBar:CGPointZero];
@@ -158,10 +159,15 @@
             subBarFrame.origin.y += CGRectGetMinY(lastHeapBar.frame);
 
             fromFrame = subBarFrame;
+
+            firstItem = subBar.dimensionModels.firstObject;
         }
 
         ++index;
-        [self drawBars:data.ptListValue.firstObject frame:fromFrame index:index];
+
+        if(firstItem){
+            [self drawBars:data.ptListValue.firstObject frame:fromFrame index:index];
+        }
     }
 }
 

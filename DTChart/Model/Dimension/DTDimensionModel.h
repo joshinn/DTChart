@@ -17,7 +17,14 @@
 
 @property(nonatomic) NSArray<DTDimensionModel *> *ptListValue;
 
+/**
+ * ptValue是null时，计算按照0处理
+ */
 @property(nonatomic) CGFloat ptValue;
+/**
+ * 标记ptValue是否是null
+ */
+@property(nonatomic) BOOL ptValueIsNull;
 
 @property(nonatomic) CGFloat childrenSumValue;
 

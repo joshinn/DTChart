@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, DTDimensionBarStyle) {
 
 @property(nonatomic) CGFloat value;
 
+@property(nonatomic) BOOL valueIsNull;
+
 + (instancetype)initWithName:(NSString *)name value:(CGFloat)value;
 
 @end

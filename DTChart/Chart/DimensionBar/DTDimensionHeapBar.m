@@ -143,15 +143,20 @@
 }
 
 - (void)appendData:(DTDimensionModel *)data barLength:(CGFloat)length barColor:(UIColor *)color barBorderColor:(UIColor *)borderColor needLayout:(BOOL)need {
-    [self.heapData addObject:data];
-    [self.subBarLength addObject:@(length)];
-    [self.subBarColors addObject:color];
 
-    DTDimensionBar *bar = [DTDimensionBar bar:self.barOrientation style:self.subBarBorderStyle];
-    bar.dimensionModels = @[data];
-    bar.barColor = color;
-    bar.barBorderColor = borderColor;
-    [self addSubview:bar];
+    if (!data.ptValueIsNull) {
+
+        [self.heapData addObject:data];
+        [self.subBarLength addObject:@(length)];
+        [self.subBarColors addObject:color];
+
+        DTDimensionBar *bar = [DTDimensionBar bar:self.barOrientation style:self.subBarBorderStyle];
+        bar.dimensionModels = @[data];
+        bar.barColor = color;
+        bar.barBorderColor = borderColor;
+        [self addSubview:bar];
+
+    }
 
     if (need) {
         [self relayoutSubBars];

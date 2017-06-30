@@ -174,22 +174,24 @@
     [self.subBars removeAllObjects];
 }
 
-- (void)appendData:(id)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need {
+- (void)appendData:(DTDimension2Item *)data barLength:(CGFloat)length barColor:(UIColor *)color needLayout:(BOOL)need {
 
-    [self.heapData addObject:data];
-    [self.subBarLength addObject:@(length)];
+    if (!data.valueIsNull) {
 
-    DTBarOrientation subBarOrientation = self.barOrientation;
-    if (length < 0) {
-        subBarOrientation = NegativeOrientation(self.barOrientation);
+        [self.heapData addObject:data];
+        [self.subBarLength addObject:@(length)];
+
+        DTBarOrientation subBarOrientation = self.barOrientation;
+        if (length < 0) {
+            subBarOrientation = NegativeOrientation(self.barOrientation);
+        }
+
+        DTDimension2Bar *bar = [DTDimension2Bar bar:subBarOrientation style:self.barBorderStyle];
+        bar.data = data;
+        bar.barColor = color;
+        [self.subBars addObject:bar];
+        [self addSubview:bar];
     }
-
-    DTDimension2Bar *bar = [DTDimension2Bar bar:subBarOrientation style:self.barBorderStyle];
-    bar.data = data;
-    bar.barColor = color;
-    [self.subBars addObject:bar];
-    [self addSubview:bar];
-
 
     if (need) {
         [self relayoutSubBars];
@@ -198,39 +200,30 @@
 
 
 - (DTDimension2Bar *)touchSubBar:(CGPoint)point {
-    for (UIView *v in self.subviews) {
-        if ([v isKindOfClass:[DTDimension2Bar class]]) {
+    if(point.x <= CGRectGetMinX(self.bounds)){
+        return self.subBars.firstObject;
+    }else if (point.x >= CGRectGetMaxX(self.bounds)){
+        return self.subBars.lastObject;
+    }else {
 
-            if (CGRectContainsPoint(v.frame, point)) {
-                return (DTDimension2Bar *) v;
-            }
-
-            if (point.x <= CGRectGetMinX(self.bounds) && fabs(CGRectGetMinX(v.frame)) <= 0) {
-                return (DTDimension2Bar *) v;
-            }
-
-            if (point.x >= CGRectGetMaxX(self.bounds) && fabs(CGRectGetMaxX(v.frame) - CGRectGetMaxX(self.bounds)) <= 0) {
-                return (DTDimension2Bar *) v;
+        for (DTDimension2Bar *subBar in self.subBars) {
+            if (CGRectContainsPoint(subBar.frame, point)) {
+                return subBar;
             }
         }
-
     }
-
 
     return nil;
 }
 
 - (DTDimension2Bar *)subBarFromTitle:(NSString *)title {
-    for (UIView *v in self.subviews) {
-        if ([v isKindOfClass:[DTDimension2Bar class]]) {
-            DTDimension2Bar *subBar = (DTDimension2Bar *) v;
+    for (DTDimension2Bar *subBar in self.subBars) {
 
-            if ([subBar.data isKindOfClass:[DTDimension2Item class]]) {
-                DTDimension2Item *item = subBar.data;
+        if ([subBar.data isKindOfClass:[DTDimension2Item class]]) {
+            DTDimension2Item *item = subBar.data;
 
-                if ([item.name isEqualToString:title]) {
-                    return subBar;
-                }
+            if ([item.name isEqualToString:title]) {
+                return subBar;
             }
         }
     }

@@ -251,6 +251,7 @@
         heapBar.frame = CGRectMake(CGRectGetMinY(self.mainContentView.bounds), self.barY, 0, barWidth);
 
         for (DTDimensionModel *model in data.ptListValue) {
+
             CGFloat length = 0;
             if (sum > 0) {
                 length = self.coordinateAxisCellWidth * ((model.childrenSumValue / sum - xMinData.value) / (xMaxData.value - xMinData.value)) * (xMaxData.axisPosition - xMinData.axisPosition);
@@ -302,6 +303,7 @@
     if ([self layoutSecondHeapBars:data fromFrame:frame index:index]) {
         CGRect fromFrame = CGRectZero;
         DTDimensionHeapBar *lastHeapBar = self.secondChartBars.lastObject;
+        DTDimensionModel *firstItem = nil;
         if (lastHeapBar) {
             DTDimensionBar *subBar = [lastHeapBar touchSubBar:CGPointZero];
             CGRect subBarFrame = subBar.frame;
@@ -309,10 +311,13 @@
             subBarFrame.origin.y += CGRectGetMinY(lastHeapBar.frame);
 
             fromFrame = subBarFrame;
+            firstItem = subBar.dimensionModels.firstObject;
         }
 
         index++;
-        [self drawSecondBars:data.ptListValue.firstObject frame:fromFrame index:index];
+        if (firstItem) {
+            [self drawSecondBars:firstItem frame:fromFrame index:index];
+        }
     }
 }
 
