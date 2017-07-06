@@ -8,8 +8,10 @@
 
 #import "DTBar.h"
 
+@class DTDimension2Item;
+
 @interface DTDimension2Bar : DTBar
 
-@property(nonatomic) id data;
+@property(nonatomic) DTDimension2Item * data;
 
 @end

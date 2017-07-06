@@ -646,11 +646,13 @@ static CGFloat const DTTableChartCellHeight = 35;
     NSString *message = nil;
     if (self.chartCellHintTouchBlock) {
         message = self.chartCellHintTouchBlock(indexPath.row, index);
-    }
-    if (!message) {
+        if (message) {
+            [self showTouchMessage:message touchPoint:p];
+        }
+    } else {
         message = [NSString stringWithFormat:@"%@\n%@", title, text];
+        [self showTouchMessage:message touchPoint:p];
     }
-    [self showTouchMessage:message touchPoint:p];
 }
 
 - (void)chartCellHintTouchEnd {

@@ -200,11 +200,33 @@
 
 
 - (DTDimension2Bar *)touchSubBar:(CGPoint)point {
-    if(point.x <= CGRectGetMinX(self.bounds)){
-        return self.subBars.firstObject;
-    }else if (point.x >= CGRectGetMaxX(self.bounds)){
-        return self.subBars.lastObject;
-    }else {
+    if (point.x <= CGRectGetMinX(self.bounds)) {
+        DTDimension2Bar *negativeSubBar = nil;
+        for (DTDimension2Bar *subBar in self.subBars) {
+            if (subBar.data.value < 0) {    // 有负值的，返回最左边的负值柱子
+                negativeSubBar = subBar;
+            }
+        }
+        if (negativeSubBar) {
+            return negativeSubBar;
+        } else {
+            return self.subBars.firstObject;
+        }
+    } else if (point.x >= CGRectGetMaxX(self.bounds)) {
+
+        DTDimension2Bar *positiveSubBar = nil;
+        for (DTDimension2Bar *subBar in self.subBars) {
+            if (subBar.data.value > 0) {    // 有正值的，返回最右边的正值柱子
+                positiveSubBar = subBar;
+            }
+        }
+        if (positiveSubBar) {
+            return positiveSubBar;
+        } else {
+            return self.subBars.firstObject;    ///< 没有正值的柱子，返回负值柱子最右边一个
+        }
+
+    } else {
 
         for (DTDimension2Bar *subBar in self.subBars) {
             if (CGRectContainsPoint(subBar.frame, point)) {

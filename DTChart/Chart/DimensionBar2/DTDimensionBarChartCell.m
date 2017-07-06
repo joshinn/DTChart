@@ -321,7 +321,7 @@
     UITouch *touch = touches.anyObject;
     CGPoint location = [touch locationInView:self];
 
-    if (location.x < self.mainNegativeLimitX) {
+    if ((location.x < self.mainNegativeLimitX && self.mainNegativeLimitValue < 0) || (self.mainNegativeLimitValue == 0 && location.x < self.mainZeroX)) {
         __block NSInteger index = -1;
         [self.labels enumerateObjectsUsingBlock:^(DTChartLabel *label, NSUInteger idx, BOOL *stop) {
             if (CGRectGetMinX(label.frame) <= location.x && location.x <= CGRectGetMaxX(label.frame)) {
@@ -338,65 +338,55 @@
         }
     } else {
 
-        BOOL isMain = YES;
+        NSInteger inSection = 0;  ///< 1：主表区域     2：副表区域      0：没有区域
         if (location.x >= self.mainNegativeLimitX && location.x <= self.mainPositiveLimitX) {
-            isMain = YES;
+            inSection = 1;
         } else if (location.x >= self.secondNegativeLimitX && location.x <= self.secondPositiveLimitX) {
-            isMain = NO;
+            inSection = 2;
         }
 
         DTDimension2Item *item = nil;
-        CGRect frame = CGRectZero;
-
-        if (isMain) {
+        if (inSection == 1) {
             CGPoint touchPoint = [touch locationInView:self.mainBar];
             touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.mainBar.frame));
             DTDimension2Bar *subBar = [self.mainBar touchSubBar:touchPoint];
             item = subBar.data;
 
-            if (item && self.touchedItemData != item) {
-                frame = subBar.frame;
-                frame.origin.x += CGRectGetMinX(self.mainBar.frame);
-                if (frame.size.width < 1) {
-                    frame.origin.x -= (1 - frame.size.width) / 2;
-                    frame.size.width = 1;
-                }
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(self.mainBar.frame);
+            if (frame.size.width < 1) {
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
             }
+            self.touchMainHighlightedView.frame = frame;
+            self.touchMainHighlightedView.hidden = NO;
+            self.touchSecondHighlightedView.hidden = YES;
 
-        } else {
+        } else if (inSection == 2) {
             CGPoint touchPoint = [touch locationInView:self.secondBar];
             touchPoint = CGPointMake(touchPoint.x, CGRectGetMidY(self.secondBar.frame));
             DTDimension2Bar *subBar = [self.secondBar touchSubBar:touchPoint];
             item = subBar.data;
 
-            if (item && self.touchedItemData != item) {
-                frame = subBar.frame;
-                frame.origin.x += CGRectGetMinX(self.secondBar.frame);
-                if (frame.size.width < 1) {
-                    frame.origin.x -= (1 - frame.size.width) / 2;
-                    frame.size.width = 1;
-                }
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(self.secondBar.frame);
+            if (frame.size.width < 1) {
+                frame.origin.x -= (1 - frame.size.width) / 2;
+                frame.size.width = 1;
             }
+            self.touchSecondHighlightedView.frame = frame;
+            self.touchSecondHighlightedView.hidden = NO;
+            self.touchMainHighlightedView.hidden = YES;
+        } else {
+            self.touchMainHighlightedView.hidden = YES;
+            self.touchSecondHighlightedView.hidden = YES;
         }
 
-        if (item && self.touchedItemData != item) {
-            if (isMain) {
-                self.touchMainHighlightedView.frame = frame;
-                self.touchMainHighlightedView.hidden = NO;
-                self.touchSecondHighlightedView.hidden = YES;
-            } else {
-                self.touchSecondHighlightedView.frame = frame;
-                self.touchSecondHighlightedView.hidden = NO;
-                self.touchMainHighlightedView.hidden = YES;
-            }
+        self.touchedItemData = item;
 
-
-            self.touchedItemData = item;
-
-            id <DTDimensionBarChartCellDelegate> o = self.delegate;
-            if ([o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:data:touch:)]) {
-                [o chartCellHintTouchBegin:self isMainAxisBar:isMain data:item touch:touch];
-            }
+        id <DTDimensionBarChartCellDelegate> o = self.delegate;
+        if (inSection > 0 && [o respondsToSelector:@selector(chartCellHintTouchBegin:isMainAxisBar:data:touch:)]) {
+            [o chartCellHintTouchBegin:self isMainAxisBar:(inSection == 1) data:item touch:touch];
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 #import "DTDimension2Bar.h"
+#import "DTDimension2Model.h"
 
 @implementation DTDimension2Bar
 
