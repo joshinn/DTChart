@@ -84,12 +84,6 @@
     }
 }
 
-- (void)setHighlightTitle:(NSString *)highlightTitle {
-    _highlightTitle = highlightTitle;
-
-    _chart.highlightTitle = highlightTitle;
-}
-
 #pragma mark - override
 
 
@@ -118,6 +112,11 @@
         [yLabelDatas addObject:labelData];
     }
     self.chart.yAxisLabelDatas = yLabelDatas;
+}
+
+
+- (void)setHighlightTitle:(NSString *)highlightTitle dimensionIndex:(NSUInteger)dimensionIndex {
+    [self.chart setHighlightTitle:highlightTitle dimensionIndex:dimensionIndex];
 }
 
 

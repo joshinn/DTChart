@@ -93,13 +93,6 @@
     }
 }
 
-- (void)setHighlightTitle:(NSString *)highlightTitle {
-    _highlightTitle = highlightTitle;
-
-    _chart.highlightTitle = highlightTitle;
-}
-
-
 #pragma mark - private method
 
 /**
@@ -198,6 +191,10 @@
     // y轴label data
     self.chart.xAxisLabelDatas = xLabelDatas;
     self.chart.xSecondAxisLabelDatas = xSecondLabelDatas;
+}
+
+- (void)setHighlightTitle:(NSString *)highlightTitle dimensionIndex:(NSUInteger)dimensionIndex {
+    [self.chart setHighlightTitle:highlightTitle dimensionIndex:dimensionIndex];
 }
 
 

@@ -75,39 +75,6 @@
     _valueSelectable = valueSelectable;
 }
 
-- (void)setHighlightTitle:(NSString *)highlightTitle {
-    _highlightTitle = highlightTitle;
-
-    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
-        DTBar *bar = self.chartBars[i];
-        if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
-            self.touchHighlightedView.hidden = YES;
-            return;
-        }
-
-        DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
-
-        DTDimensionBar *subBar = [heapBar subBarFromTitle:highlightTitle];
-        if (subBar) {
-            CGRect frame = subBar.frame;
-            frame.origin.x += CGRectGetMinX(heapBar.frame);
-            frame.origin.y += CGRectGetMinY(heapBar.frame);
-            if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
-                frame.origin.y -= (1 - frame.size.height) / 2;
-                frame.size.height = 1;
-            }
-
-            self.touchHighlightedView.frame = frame;
-            [self.touchHighlightedView.superview bringSubviewToFront:self.touchHighlightedView];
-            self.touchHighlightedView.hidden = NO;
-
-            break;
-        } else {
-            self.touchHighlightedView.hidden = YES;
-        }
-    }
-}
-
 #pragma mark - private method
 
 /**
@@ -165,7 +132,7 @@
 
         ++index;
 
-        if(firstItem){
+        if (firstItem) {
             [self drawBars:data.ptListValue.firstObject frame:fromFrame index:index];
         }
     }
@@ -248,6 +215,41 @@
     return draw;
 }
 
+#pragma mark - public method
+
+- (void)setHighlightTitle:(NSString *)highlightTitle dimensionIndex:(NSUInteger)dimensionIndex {
+
+    if (self.chartBars.count <= dimensionIndex) {
+        return;
+    }
+
+    DTBar *bar = self.chartBars[dimensionIndex];
+    if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+        self.touchHighlightedView.hidden = YES;
+        return;
+    }
+
+    DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+    DTDimensionBar *subBar = [heapBar subBarFromTitle:highlightTitle];
+    if (subBar) {
+        CGRect frame = subBar.frame;
+        frame.origin.x += CGRectGetMinX(heapBar.frame);
+        frame.origin.y += CGRectGetMinY(heapBar.frame);
+        if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
+            frame.origin.y -= (1 - frame.size.height) / 2;
+            frame.size.height = 1;
+        }
+
+        self.touchHighlightedView.frame = frame;
+        [self.touchHighlightedView.superview bringSubviewToFront:self.touchHighlightedView];
+        self.touchHighlightedView.hidden = NO;
+
+    } else {
+        self.touchHighlightedView.hidden = YES;
+    }
+
+}
 
 #pragma mark - touch event
 

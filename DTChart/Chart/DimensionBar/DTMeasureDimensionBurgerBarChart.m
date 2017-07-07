@@ -130,11 +130,12 @@
     _valueSelectable = valueSelectable;
 }
 
-- (void)setHighlightTitle:(NSString *)highlightTitle {
-    _highlightTitle = highlightTitle;
+#pragma mark - public method
 
-    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
-        DTBar *bar = self.chartBars[i];
+- (void)setHighlightTitle:(NSString *)highlightTitle dimensionIndex:(NSUInteger)dimensionIndex {
+
+    if (self.chartBars.count > dimensionIndex) {
+        DTBar *bar = self.chartBars[dimensionIndex];
         if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
             self.touchMainHighlightedView.hidden = YES;
             return;
@@ -160,14 +161,13 @@
             }
             self.touchMainHighlightedView.hidden = NO;
 
-            break;
-
         } else {
             self.touchMainHighlightedView.hidden = YES;
         }
     }
-    for (NSUInteger i = 0; i < self.secondChartBars.count; ++i) {
-        DTBar *bar = self.secondChartBars[i];
+
+    if (self.secondChartBars.count > dimensionIndex) {
+        DTBar *bar = self.secondChartBars[dimensionIndex];
         if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
             self.touchSecondHighlightedView.hidden = YES;
             return;
@@ -192,8 +192,6 @@
                 [self.secondContentView addSubview:self.touchSecondHighlightedView];
             }
             self.touchSecondHighlightedView.hidden = NO;
-
-            break;
 
         } else {
             self.touchSecondHighlightedView.hidden = YES;

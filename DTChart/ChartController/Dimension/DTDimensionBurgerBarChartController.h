@@ -30,10 +30,14 @@
 @property(nonatomic, copy) NSString *(^touchBurgerSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, id dimensionData, id measureData);
 
 @property(nonatomic, copy) void (^burgerSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
-/**
- * 要高亮的子柱状体对应的标题
- */
-@property(nonatomic) NSString *highlightTitle;
 
 - (void)setItem:(DTDimensionModel *)dimensionModel;
+
+/**
+ * 设置高亮的柱状体
+ * @param highlightTitle 柱状体对应的标题
+ * @param dimensionIndex 该柱状体所在的维度序号
+ */
+- (void)setHighlightTitle:(NSString *)highlightTitle dimensionIndex:(NSUInteger)dimensionIndex;
+
 @end
