@@ -29,20 +29,16 @@
 
         WEAK_SELF;
         [_tableChart setExpandTouchBlock:^(NSString *seriesId) {
-            if (weakSelf.tableChartExpandTouchBlock) {
-                weakSelf.tableChartExpandTouchBlock(seriesId);
+            STRONG_SELF;
+            if (strongSelf.tableChartExpandTouchBlock) {
+                strongSelf.tableChartExpandTouchBlock(seriesId);
             }
         }];
         [_tableChart setOrderTouchBlock:^(BOOL isMainAxis, NSUInteger column) {
-            if (weakSelf.tableChartOrderTouchBlock) {
-                weakSelf.tableChartOrderTouchBlock(isMainAxis, column);
+            STRONG_SELF;
+            if (strongSelf.tableChartOrderTouchBlock) {
+                strongSelf.tableChartOrderTouchBlock(isMainAxis, column);
             }
-        }];
-        [_tableChart setChartCellHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
-            if (weakSelf.chartHintTouchBlock) {
-                return weakSelf.chartHintTouchBlock(row, index);
-            }
-            return nil;
         }];
 
         _chartView = _tableChart;
@@ -86,6 +82,17 @@
     _tableChart.titleCellHeight = titleLabelHeight;
 }
 
+- (void)setChartHintTouchBlock:(NSString *(^)(NSInteger, NSInteger))chartHintTouchBlock {
+    _chartHintTouchBlock = chartHintTouchBlock;
+
+    if (chartHintTouchBlock) {
+        WEAK_SELF;
+        [_tableChart setChartCellHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
+            STRONG_SELF;
+            return strongSelf.chartHintTouchBlock(row, index);
+        }];
+    }
+}
 
 #pragma mark - private method
 

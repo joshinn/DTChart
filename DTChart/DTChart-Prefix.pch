@@ -19,4 +19,6 @@
 // 弱引用
 #define WEAK_SELF __weak typeof(self) weakSelf = self
 
+#define STRONG_SELF __strong typeof(weakSelf) strongSelf = weakSelf
+
 #endif /* DTChart_prefix_pch */
