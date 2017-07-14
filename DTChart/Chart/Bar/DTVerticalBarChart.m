@@ -343,10 +343,14 @@
         }
         xLabel.textAlignment = NSTextAlignmentCenter;
         xLabel.text = data.title;
-
+        xLabel.numberOfLines = 1;
+        xLabel.adjustsFontSizeToFitWidth = NO;
 
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
-
+        if(sectionCellCount > 0){
+            size.width = MIN(size.width, sectionCellCount * self.coordinateAxisCellWidth);
+        }
+        
         CGFloat x = (self.coordinateAxisInsets.left + data.axisPosition + 0.5f) * self.coordinateAxisCellWidth;
         x -= size.width / 2;
         CGFloat y = CGRectGetMaxY(self.contentView.frame);

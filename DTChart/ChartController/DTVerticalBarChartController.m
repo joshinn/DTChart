@@ -153,6 +153,18 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
 - (void)processMainAxisLabelDataAndBars:(NSArray<DTListCommonData *> *)listData remainData:(BOOL)remain {
     NSArray<DTCommonData *> *values = listData.firstObject.commonDatas;
 
+    NSUInteger maxCount = 0;
+    NSUInteger maxCountIdx = 0;
+    for (NSUInteger n = 0; n < listData.count; ++n){
+
+        DTListCommonData *listCommonData = listData[n];
+        if (maxCount < listCommonData.commonDatas.count) {
+            maxCount = listCommonData.commonDatas.count;
+            values = listCommonData.commonDatas;
+            maxCountIdx = n;
+        }
+    }
+
     NSUInteger maxXAxisCount = [self mMaxXAxisCount:values.count];
     NSUInteger maxYAxisCount = self.mMaxYAxisCount;
 
@@ -202,7 +214,7 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
                 maxY = data.ptValue;
             }
 
-            if (n == 0) {   // x轴label data，只需要取第一个柱状体数据计算就可以
+            if (n == maxCountIdx) {   // x轴label data，取点最多的折线数据计算
                 DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[self.axisFormatter getXAxisLabelTitle:data.ptName orValue:0] value:i];
                 if (values.count > maxXAxisCount) {
 
@@ -221,8 +233,8 @@ static NSUInteger const ChartModePresentationXAxisMaxCount = 18;
             [bar addObject:itemData];
         }
 
-        if (n == 0) {
-            // 赋值x轴数据，只需要取第一个柱状体数据计算就可以
+        if (n == maxCountIdx) {
+            // 赋值x轴数据，取点最多的折线数据计算
             self.barChart.xAxisLabelDatas = xAxisLabelDatas;
         }
 

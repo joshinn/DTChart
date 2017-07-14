@@ -304,6 +304,8 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
         CGFloat delta = CGRectGetHeight(self.contentView.bounds) - self.mainData.listDimensions.count * self.tableView.rowHeight;
         if (delta > 0) {
+            NSUInteger cellNum = (NSUInteger) (delta / self.coordinateAxisCellWidth);
+            delta = self.coordinateAxisCellWidth * cellNum;
             self.tableView.frame = CGRectMake(0, delta, CGRectGetWidth(self.contentView.bounds), CGRectGetHeight(self.contentView.bounds) - delta);
             self.tableView.scrollEnabled = NO;
         } else {
