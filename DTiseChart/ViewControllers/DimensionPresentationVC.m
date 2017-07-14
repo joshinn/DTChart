@@ -339,7 +339,7 @@
 
         return message;
     }];
-    [burgerController setBurgerSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+    [burgerController setBurgerSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, id dimensionData, NSUInteger dimensionIndex) {
 //        for (DTDimensionModel *model3 in allSubData) {
 //            DTLog(@"name = %@", model3.ptName);
 //        }

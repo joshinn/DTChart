@@ -200,12 +200,12 @@
         return message;
     }];
 
-    [controller setBurgerMainSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+    [controller setBurgerMainSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, id dimensionData, NSUInteger dimensionIndex) {
 //        for (DTDimensionModel *model3 in allSubData) {
 //            DTLog(@"name = %@", model3.ptName);
 //        }
     }];
-    [controller setBurgerSecondSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
+    [controller setBurgerSecondSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, id dimensionData, NSUInteger dimensionIndex) {
 //        for (DTDimensionModel *model3 in allSubData) {
 //            DTLog(@"name = %@", model3.ptName);
 //        }

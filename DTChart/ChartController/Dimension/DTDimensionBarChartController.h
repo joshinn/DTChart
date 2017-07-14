@@ -49,7 +49,7 @@
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *_Nullable touchData, NSArray<DTDimension2Item *> *_Nullable allSubData, id _Nullable dimensionData, id _Nullable measureData, BOOL isMainAxis);
 
-@property(nonatomic, copy) void (^ _Nullable controllerBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Nullable listBarInfos);
+@property(nonatomic, copy) void (^ _Nullable controllerBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Nullable listBarInfos, id _Nullable dimensionData);
 
 - (void)setMainData:(DTDimension2ListModel *_Nonnull)mainData secondData:(DTDimension2ListModel *_Nullable)secondData;
 

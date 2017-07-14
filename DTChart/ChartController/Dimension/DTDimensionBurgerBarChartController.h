@@ -29,7 +29,7 @@
 
 @property(nonatomic, copy) NSString *(^touchBurgerSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, id dimensionData, id measureData);
 
-@property(nonatomic, copy) void (^burgerSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
+@property(nonatomic, copy) void (^burgerSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, id dimensionData, NSUInteger dimensionIndex);
 
 - (void)setItem:(DTDimensionModel *)dimensionModel;
 

@@ -58,13 +58,21 @@
 
         [_chart setMainSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
             if (weakSelf.burgerMainSubBarInfoBlock) {
-                weakSelf.burgerMainSubBarInfoBlock(allSubData, barAllColor, dimensionIndex);
+                id dimensionData = nil;
+                if (dimensionIndex < weakSelf.dimensionDatas.count) {
+                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
+                }
+                weakSelf.burgerMainSubBarInfoBlock(allSubData, barAllColor, dimensionData, dimensionIndex);
             }
         }];
 
         [_chart setSecondSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
             if (weakSelf.burgerSecondSubBarInfoBlock) {
-                weakSelf.burgerSecondSubBarInfoBlock(allSubData, barAllColor, dimensionIndex);
+                id dimensionData = nil;
+                if (dimensionIndex < weakSelf.dimensionDatas.count) {
+                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
+                }
+                weakSelf.burgerSecondSubBarInfoBlock(allSubData, barAllColor, dimensionData, dimensionIndex);
             }
         }];
     }

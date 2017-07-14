@@ -251,7 +251,7 @@
             }];
 
             WEAK_SELF;
-            [chartController setControllerBarInfoBlock:^(NSArray<DTDimensionBarModel *> *listBarInfos) {
+            [chartController setControllerBarInfoBlock:^(NSArray<DTDimensionBarModel *> *listBarInfos, id dimensionData) {
                 weakSelf.listBarInfos = listBarInfos;
                 [weakSelf.tableView reloadData];
             }];

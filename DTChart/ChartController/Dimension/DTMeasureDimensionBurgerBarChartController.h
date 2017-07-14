@@ -32,10 +32,10 @@
 @property(nonatomic) id secondMeasureData;
 
 @property(nonatomic, copy) NSString *(^touchBurgerMainSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, id dimensionData, id measureData);
-@property(nonatomic, copy) void (^burgerMainSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
+@property(nonatomic, copy) void (^burgerMainSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, id dimensionData, NSUInteger dimensionIndex);
 
 @property(nonatomic, copy) NSString *(^touchBurgerSecondSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, id dimensionData, id measureData);
-@property(nonatomic, copy) void (^burgerSecondSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
+@property(nonatomic, copy) void (^burgerSecondSubBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, id dimensionData, NSUInteger dimensionIndex);
 
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat __attribute__((unavailable("DTMeasureDimensionHorizontalBarChartController use -setMainItem:secondItem: replace")));
 

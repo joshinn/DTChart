@@ -203,7 +203,8 @@
 
     if (changed && self.controllerBarInfoBlock) {
         DTLog(@"cache data controllerBarInfoBlock");
-        self.controllerBarInfoBlock(self.levelBarModels.copy);
+        id dimensionData = self.dimensionDatas.lastObject;
+        self.controllerBarInfoBlock(self.levelBarModels.copy, dimensionData);
     }
 
 }
@@ -234,7 +235,8 @@
 
             if (self.controllerBarInfoBlock) {
                 DTLog(@"draw chart controllerBarInfoBlock");
-                self.controllerBarInfoBlock(self.levelBarModels.copy);
+                id dimensionData = self.dimensionDatas.lastObject;
+                self.controllerBarInfoBlock(self.levelBarModels.copy, dimensionData);
             }
 
             [self.chart drawChart:items];

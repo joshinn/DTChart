@@ -45,7 +45,11 @@
 
         [_chart setSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
             if (weakSelf.burgerSubBarInfoBlock) {
-                weakSelf.burgerSubBarInfoBlock(allSubData, barAllColor, dimensionIndex);
+                id dimensionData = nil;
+                if (dimensionIndex < weakSelf.dimensionDatas.count) {
+                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
+                }
+                weakSelf.burgerSubBarInfoBlock(allSubData, barAllColor, dimensionData, dimensionIndex);
             }
         }];
 
