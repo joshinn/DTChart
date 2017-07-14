@@ -7,11 +7,11 @@
 //
 
 #import "DTDimensionBarChartCell.h"
-#import "DTDimension2Model.h"
 #import "DTDimensionSectionLine.h"
 #import "DTTableLabel.h"
 #import "DTDimension2HeapBar.h"
 #import "DTDimension2Bar.h"
+#import "DTBarChart.h"
 
 @interface DTDimensionBarChartCell ()
 
@@ -19,9 +19,6 @@
 @property(nonatomic) DTDimension2HeapBar *secondBar;
 
 @property(nonatomic) NSMutableArray<DTChartLabel *> *labels;
-
-@property(nonatomic) DTDimension2Model *mainData;
-@property(nonatomic) DTDimension2Model *secondData;
 
 @property(nonatomic) DTDimensionSectionLine *sectionLine;
 /**
@@ -93,9 +90,17 @@
 #pragma mark - public method
 
 - (void)setCellData:(DTDimension2Model *)mainData second:(DTDimension2Model *)secondData prev:(DTDimension2Model *)prevData next:(DTDimension2Model *)nextData {
-    _mainData = mainData;
-    _secondData = secondData;
 
+    BOOL isSingleDimension = NO;    ///< 是单维度，单维度下，默认每个维度名称都不一致，无需隐藏
+    if (self.chartStyle == DTBarChartStyleStartingLine) {
+        if (mainData.roots.count == 1) {
+            isSingleDimension = YES;
+        }
+    } else if (self.chartStyle == DTBarChartStyleHeap) {
+        if (mainData.roots.count == 0) {
+            isSingleDimension = YES;
+        }
+    }
 
     if (self.labels.count != mainData.roots.count) {
         [self.labels enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
@@ -131,7 +136,7 @@
             [mutableNextName appendString:nextName];
         }
 
-        if ([mutablePrevName isEqualToString:mutableName]) {
+        if ([mutablePrevName isEqualToString:mutableName] && !isSingleDimension) {
             self.labels[i].text = nil;
         } else {
             self.labels[i].text = name;
@@ -147,6 +152,10 @@
             [CATransaction setDisableActions:YES];
             self.sectionLine.frame = CGRectMake(CGRectGetMinX(self.labels[i].frame), 22, self.cellSize.width, 2);
             [CATransaction commit];
+        }
+
+        if (isSingleDimension) {
+            self.sectionLine.hidden = YES;
         }
     }
 

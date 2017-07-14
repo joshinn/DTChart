@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DTColor.h"
+#import "DTDimension2Model.h"
 
 @class DTDimension2Model;
 @class DTDimensionBarChartCell;
@@ -60,6 +61,8 @@
 
 
 #pragma mark - common
+
+@property(nonatomic) DTDimensionBarStyle chartStyle;
 
 /**
  * 高亮的sub bar标题

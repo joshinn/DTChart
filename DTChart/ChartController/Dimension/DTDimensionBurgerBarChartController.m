@@ -79,8 +79,8 @@
 
     if (chartMode == DTChartModeThumb) {
         _chart.barWidth = 1;
-        _chart.barGap = 2;
-        _chart.xOffset = 2;
+        _chart.barGap = 4;
+        _chart.xOffset = 3;
     } else if (chartMode == DTChartModePresentation) {
         _chart.barWidth = 2;
         _chart.barGap = 6;

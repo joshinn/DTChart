@@ -132,6 +132,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     DTDimensionBarChartCell *barChartCell = [tableView dequeueReusableCellWithIdentifier:DTDimensionBarChartCellId];
 
     barChartCell.delegate = self;
+    barChartCell.chartStyle = self.chartStyle;
     barChartCell.cellSize = CGSizeMake(CGRectGetWidth(tableView.bounds), tableView.rowHeight);
     barChartCell.titleWidth = DimensionLabelWidth;
     barChartCell.titleGap = DimensionLabelGap;
