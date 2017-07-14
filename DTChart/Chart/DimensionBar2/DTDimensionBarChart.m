@@ -302,7 +302,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 - (void)drawValues {
     dispatch_async(dispatch_get_main_queue(), ^{
 
-        CGFloat delta = CGRectGetHeight(self.contentView.bounds) - self.mainData.listDimensions.count * self.tableView.rowHeight;
+        CGFloat delta = (CGRectGetHeight(self.contentView.bounds) - self.mainData.listDimensions.count * self.tableView.rowHeight) / 2;
         if (delta > 0) {
             NSUInteger cellNum = (NSUInteger) (delta / self.coordinateAxisCellWidth);
             delta = self.coordinateAxisCellWidth * cellNum;

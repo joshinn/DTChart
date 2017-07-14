@@ -139,7 +139,17 @@
 
                     for (DTAxisLabelData *labelData in reverseLabelDatas) {
                         labelData.value = labelData.value == 0 ? labelData.value : -labelData.value;
-                        labelData.title = [NSString stringWithFormat:@"%@", @(labelData.value)];
+                        NSMutableString *mutableString = [[NSMutableString alloc] initWithString:labelData.title];
+                        if (labelData.value < 0) {
+                            if (![mutableString hasPrefix:@"-"]) {
+                                [mutableString insertString:@"-" atIndex:0];
+                            }
+                        } else {
+                            if ([mutableString hasPrefix:@"-"]) {
+                                [mutableString deleteCharactersInRange:NSMakeRange(0, 1)];
+                            }
+                        }
+                        labelData.title = mutableString.copy;
                         [xLabelDatas insertObject:labelData atIndex:0];
                     }
                 }
