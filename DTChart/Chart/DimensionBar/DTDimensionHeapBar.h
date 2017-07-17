@@ -8,6 +8,12 @@
 
 #import "DTDimensionBar.h"
 
+CG_INLINE CGFloat CGPointGetDistance(CGPoint point1, CGPoint point2) {
+    CGFloat fx = (point2.x - point1.x);
+    CGFloat fy = (point2.y - point1.y);
+    return sqrtf((fx * fx + fy * fy));
+}
+
 @interface DTDimensionHeapBar : DTDimensionBar
 
 @property(nonatomic) DTBarBorderStyle subBarBorderStyle;

@@ -164,15 +164,29 @@
 }
 
 - (DTDimensionBar *)touchSubBar:(CGPoint)point {
-    for (UIView *v in self.subviews) {
-        if ([v isKindOfClass:[DTDimensionBar class]] && CGRectContainsPoint(v.frame, point)) {
-            return (DTDimensionBar *) v;
-        }
-    }
 
-    UIView *v = self.subviews.lastObject;
-    if ([v isKindOfClass:[DTDimensionBar class]]) {
-        return (DTDimensionBar *) v;
+    if (CGRectContainsPoint(self.bounds, point)) {
+        for (UIView *v in self.subviews) {
+            if ([v isKindOfClass:[DTDimensionBar class]] && CGRectContainsPoint(v.frame, point)) {
+                return (DTDimensionBar *) v;
+            }
+        }
+
+    } else {
+        // 获取最接近point的子view
+        UIView *nearestSubview = nil;
+        CGFloat nearestDistance = CGFLOAT_MAX;
+        for (UIView *v in self.subviews) {
+            CGFloat distance = CGPointGetDistance(v.center, point);
+            if (nearestDistance > distance) {
+                nearestDistance = distance;
+                nearestSubview = v;
+            }
+        }
+
+        if (nearestSubview) {
+            return (DTDimensionBar *) nearestSubview;
+        }
     }
 
     return nil;

@@ -268,13 +268,23 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         if (size.height < self.coordinateAxisCellWidth) {
             y += (self.coordinateAxisCellWidth - size.height) / 2;
 
+            if (i == 0) {
+                if (data.value < 0) {
+                    self.mainNegativeLimitX = x;
+                    self.mainNegativeLimitValue = data.value;
+                } else {
+                    self.mainNegativeLimitX = 0;
+                    self.mainNegativeLimitValue = 0;
+                }
+            }
+
             if (data.value == 0) {
                 self.mainZeroX = x;
+                if (self.mainNegativeLimitValue == 0) {
+                    self.mainNegativeLimitX = self.mainZeroX;
+                }
             }
-            if (i == 0 && data.value < 0) {
-                self.mainNegativeLimitX = x;
-                self.mainNegativeLimitValue = data.value;
-            }
+
             if (i == self.xAxisLabelDatas.count - 1) {
                 self.mainPositiveLimitX = x;
                 self.mainPositiveLimitValue = data.value;
@@ -424,13 +434,23 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         if (size.height < self.coordinateAxisCellWidth) {
             y += (self.coordinateAxisCellWidth - size.height) / 2;
 
+            if (i == 0) {
+                if (data.value < 0) {
+                    self.secondNegativeLimitX = x;
+                    self.secondNegativeLimitValue = data.value;
+                } else {
+                    self.secondNegativeLimitX = 0;
+                    self.secondNegativeLimitValue = 0;
+                }
+            }
+
             if (data.value == 0) {
                 self.secondZeroX = x;
+                if (self.secondNegativeLimitValue == 0) {
+                    self.secondNegativeLimitX = self.secondZeroX;
+                }
             }
-            if (i == 0 && data.value < 0) {
-                self.secondNegativeLimitX = x;
-                self.secondNegativeLimitValue = data.value;
-            }
+
             if (i == self.xSecondAxisLabelDatas.count - 1) {
                 self.secondPositiveLimitX = x;
                 self.secondPositiveLimitValue = data.value;
@@ -483,7 +503,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     CGPoint cellTouchPoint = [touch locationInView:cell];
     CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
     CGPoint location = [touch locationInView:self.tableView];
-    location.y = location.y + self.tableView.frame.origin.y  - self.tableView.contentOffset.y + deltaY;
+    location.y = location.y + self.tableView.frame.origin.y - self.tableView.contentOffset.y + deltaY;
 
     [self showTouchMessage:message touchPoint:location];
 }
@@ -542,7 +562,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     CGPoint cellTouchPoint = [touch locationInView:cell];
     CGFloat deltaY = CGRectGetMidY(cell.bounds) / 2 - cellTouchPoint.y;
     CGPoint location = [touch locationInView:self.tableView];
-    location.y = location.y + self.tableView.frame.origin.y  - self.tableView.contentOffset.y + deltaY;
+    location.y = location.y + self.tableView.frame.origin.y - self.tableView.contentOffset.y + deltaY;
 
     if (message.length > 0) {
         [self showTouchMessage:message touchPoint:location];
