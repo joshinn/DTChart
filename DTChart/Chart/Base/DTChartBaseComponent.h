@@ -118,6 +118,11 @@ typedef void(^SecondAxisColorsCompletion)(NSArray<DTChartBlockModel *> *infos);
  */
 @property(nonatomic, copy) SecondAxisColorsCompletion secondAxisColorsCompletionBlock;
 
+/**
+ * 限制x轴label的最大宽度，为柱状体所占的最大宽度（柱状体加间距）
+ */
+@property(nonatomic) BOOL xLabelLimitWidth;
+
 #pragma mark - ####### protect property #######
 
 /**

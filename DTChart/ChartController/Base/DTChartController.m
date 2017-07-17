@@ -98,6 +98,13 @@
     }
 }
 
+- (void)setXLabelLimitWidth:(BOOL)xLabelLimitWidth {
+    if ([self.chartView isKindOfClass:[DTChartBaseComponent class]]) {
+        _xLabelLimitWidth = xLabelLimitWidth;
+        ((DTChartBaseComponent *) self.chartView).xLabelLimitWidth = xLabelLimitWidth;
+    }
+}
+
 
 #pragma mark - private method
 

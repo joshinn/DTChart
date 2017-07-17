@@ -141,7 +141,7 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self.contentView];
-    
+
     CGFloat minDistance = -100;
     NSInteger n1 = -1;
     NSInteger n2 = -1;
@@ -167,7 +167,7 @@ static CGFloat const TouchOffsetMaxDistance = 15;
 
             CGFloat distance = ABS(touchPoint.x - itemData.position.x);
             if (distance < TouchOffsetMaxDistance) {
-                
+
                 if (minDistance == -100) {
                     selectedItemData = itemData;
                     minDistance = distance;
@@ -396,7 +396,7 @@ static CGFloat const TouchOffsetMaxDistance = 15;
         xLabel.adjustsFontSizeToFitWidth = NO;
 
         CGSize size = [data.title sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
-        if(sectionCellCount > 0){
+        if (self.xLabelLimitWidth && sectionCellCount > 0) {
             size.width = MIN(size.width, sectionCellCount * self.coordinateAxisCellWidth);
         }
 
