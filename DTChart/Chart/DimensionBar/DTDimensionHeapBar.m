@@ -8,6 +8,7 @@
 
 #import "DTDimensionHeapBar.h"
 #import "DTDimensionModel.h"
+#import "DTChartBaseComponent.h"
 
 @interface DTDimensionHeapBar ()
 
