@@ -23,6 +23,9 @@ typedef NS_ENUM(NSInteger, DTDimensionBarStyle) {
 
 @property(nonatomic) CGFloat value;
 
+/**
+ * 值是否是空值
+ */
 @property(nonatomic) BOOL valueIsNull;
 
 + (instancetype)initWithName:(NSString *)name value:(CGFloat)value;

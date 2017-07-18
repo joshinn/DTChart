@@ -414,7 +414,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
     }];
 
     BOOL isMainAxis = YES;
-    if (self.style >= DTTableChartStyleT2C1C2) {
+    if (self.style >= 20000) {
         NSUInteger count = self.containerViews.count / 2;
 
         if (index >= count) {

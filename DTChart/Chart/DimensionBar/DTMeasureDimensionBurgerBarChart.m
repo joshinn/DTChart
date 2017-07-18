@@ -563,7 +563,9 @@
         if (i > removeIndex) {
             if (draw) {
                 [heapBar removeFromSuperview];
-                [lines[i - 1] hide];
+                if (i - 1 < lines.count) {
+                    [lines[i - 1] hide];
+                }
             }
 
         } else {
