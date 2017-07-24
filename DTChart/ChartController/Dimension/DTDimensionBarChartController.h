@@ -12,6 +12,8 @@
 @class DTDimension2ListModel;
 @class DTDimensionBarModel;
 
+typedef void(^ControllerChartBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Nullable listBarInfos, id _Nullable dimensionData);
+
 @interface DTDimensionBarChartController : DTChartController
 
 @property(nonatomic) DTDimensionBarStyle chartStyle;
@@ -49,7 +51,7 @@
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *_Nullable touchData, NSArray<DTDimension2Item *> *_Nullable allSubData, id _Nullable dimensionData, id _Nullable measureData, BOOL isMainAxis);
 
-@property(nonatomic, copy) void (^ _Nullable controllerBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Nullable listBarInfos, id _Nullable dimensionData);
+@property(nonatomic, copy) ControllerChartBarInfoBlock _Nullable controllerBarInfoBlock;
 
 - (void)setMainData:(DTDimension2ListModel *_Nonnull)mainData secondData:(DTDimension2ListModel *_Nullable)secondData;
 

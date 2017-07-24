@@ -75,7 +75,10 @@
     _highlightTitle = highlightTitle;
 
     _chart.highlightTitle = highlightTitle;
+    ControllerChartBarInfoBlock tempBlock = self.controllerBarInfoBlock;
+    self.controllerBarInfoBlock = nil;
     [self drawChart];
+    self.controllerBarInfoBlock = tempBlock;
 }
 
 #pragma mark - private method
@@ -179,6 +182,10 @@
 - (void)cacheMultiData:(NSArray<DTDimensionBarModel *> *)barInfos {
 
     BOOL changed = NO;
+
+    if (self.preProcessBarInfo) {
+        [self.levelBarModels removeAllObjects];
+    }
 
     for (DTDimensionBarModel *barInfo in barInfos) {
         BOOL exist = NO;
