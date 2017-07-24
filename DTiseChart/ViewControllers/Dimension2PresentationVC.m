@@ -124,7 +124,10 @@
                 p1Min1Value = p1Model.itemsMinValue;
             }
 
-            DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:1 prevModel:listMainP2.lastObject];
+            
+            DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:1];
+            p2Model = [[DTDimension2Model alloc] processHeap:p2Model prevModel:listMainP2.lastObject];
+            
             if (listMainP2.lastObject != p2Model) {
                 [listMainP2 addObject:p2Model];
             }
@@ -147,7 +150,9 @@
                 }
 
 
-                DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:2 prevModel:listSecondP2.lastObject];
+                DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:2];
+                p2Model = [[DTDimension2Model alloc] processHeap:p2Model prevModel:listSecondP2.lastObject];
+                
                 if (listSecondP2.lastObject != p2Model) {
                     [listSecondP2 addObject:p2Model];
                 }

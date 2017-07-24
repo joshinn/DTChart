@@ -44,7 +44,16 @@ typedef NS_ENUM(NSInteger, DTDimensionBarStyle) {
 
 - (instancetype)initStartLineWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index;
 
-- (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index prevModel:(DTDimension2Model *)prevModel;
+- (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index;
+
+/**
+ * 处理heap模式柱状体
+ * @param model 当前柱状体数据
+ * @param prevModel 上一个柱状体数据
+ * @return 如果model和prevModel的root数组里有重复的值，则返回合并后的prevModel，反之返回model
+ */
+- (instancetype)processHeap:(DTDimension2Model *)model prevModel:(DTDimension2Model *)prevModel;
+
 @end
 
 

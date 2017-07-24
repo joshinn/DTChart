@@ -26,8 +26,11 @@
     return [self initFromJson:dictionary valueName:[NSString stringWithFormat:@"value%@", @(index)] style:DTDimensionBarStyleStartLine];
 }
 
-- (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index prevModel:(DTDimension2Model *)prevModel {
-    DTDimension2Model *model = [self initFromJson:dictionary valueName:[NSString stringWithFormat:@"value%@", @(index)] style:DTDimensionBarStyleHeap];
+- (instancetype)initHeapWithDictionary:(NSDictionary *)dictionary measureIndex:(NSInteger)index {
+    return [self initFromJson:dictionary valueName:[NSString stringWithFormat:@"value%@", @(index)] style:DTDimensionBarStyleHeap];
+}
+
+- (instancetype)processHeap:(DTDimension2Model *)model prevModel:(DTDimension2Model *)prevModel {
 
     if (!prevModel || model.roots.count != prevModel.roots.count) {
         return model;
@@ -61,14 +64,14 @@
         CGFloat value = 0;
         BOOL valueIsNull = NO;
         id valueObj = json[valueName];
-        if([valueObj isKindOfClass:[NSString class]]){
+        if ([valueObj isKindOfClass:[NSString class]]) {
             NSString *valueString = valueObj;
-            if([valueString isEqualToString:@"null"]){
+            if ([valueString isEqualToString:@"null"]) {
                 valueIsNull = YES;
-            }else {
+            } else {
                 value = valueString.doubleValue;
             }
-        }else if ([valueObj isKindOfClass:[NSNumber class]]){
+        } else if ([valueObj isKindOfClass:[NSNumber class]]) {
             NSNumber *valueNumber = valueObj;
             value = valueNumber.doubleValue;
         }
