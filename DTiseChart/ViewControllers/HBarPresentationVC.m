@@ -57,7 +57,7 @@
     self.pBarChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
 
     NSMutableArray<DTListCommonData *> *listBarData = [self simulateListCommonData:1 pointCount:10 mainAxis:YES];
-    
+
     [self.pBarChartController setBarChartControllerTouchBlock:^NSString *(NSUInteger dataIndex, NSUInteger barIndex) {
         NSMutableString *mutableString = [NSMutableString string];
         DTCommonData *commonData = listBarData[dataIndex].commonDatas[barIndex];
@@ -104,7 +104,7 @@
     NSMutableArray<DTCommonData *> *list = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i) {
         NSString *title = [NSString stringWithFormat:@"www.google/from/%@", [self dayString:i + 1]];
-        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(160) * 10];
+        DTCommonData *data = [DTCommonData commonData:title value:baseValue + arc4random_uniform(150) / 50.f];
         [list addObject:data];
     }
 
@@ -112,7 +112,7 @@
 }
 
 - (NSMutableArray<DTCommonData *> *)simulateCommonData:(NSUInteger)count {
-    return [self simulateCommonData:count baseValue:30000];
+    return [self simulateCommonData:count baseValue:0];
 }
 
 

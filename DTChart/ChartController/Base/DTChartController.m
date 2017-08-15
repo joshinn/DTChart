@@ -151,16 +151,10 @@
 
         if (maxY <= 3) {    // 最大值在不大于3时，Y轴会取小数
 
-            CGFloat divide;
-            if (maxYAxisCount >= 7) {
-                divide = 0.7;
-            } else {
-                divide = 0.3;
-            }
-
+            CGFloat divide = 0.1f * maxYAxisCount;
             CGFloat y = 0;
             while (y < maxY) {
-                y += divide * maxYAxisCount;
+                y += divide;
             }
 
             maxY = y;

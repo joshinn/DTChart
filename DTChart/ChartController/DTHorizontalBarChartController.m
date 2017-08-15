@@ -241,14 +241,14 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     self.barChart.mainNotationLabel.frame = frame;
 }
 
-- (NSMutableArray<DTAxisLabelData *> *)generateXAxisLabelData:(NSUInteger)maxYAxisCount xAxisMaxValue:(CGFloat)maxY {
-    if (maxY == 0) {    // 最大值是0，只显示0标签
-        maxY = 1;
+- (NSMutableArray<DTAxisLabelData *> *)generateXAxisLabelData:(NSUInteger)maxXAxisCount xAxisMaxValue:(CGFloat)maxX {
+    if (maxX == 0) {    // 最大值是0，只显示0标签
+        maxX = 1;
 
         NSMutableArray < DTAxisLabelData * > *xAxisLabelDatas = [NSMutableArray array];
 
-        for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
-            CGFloat y = maxY * 1.0f / maxYAxisCount * i;
+        for (NSUInteger i = 0; i <= maxXAxisCount; ++i) {
+            CGFloat y = maxX * 1.0f / maxXAxisCount * i;
 
             NSString *title = [self.axisFormatter getXAxisLabelTitle:nil orValue:y];
             [xAxisLabelDatas addObject:[[DTAxisLabelData alloc] initWithTitle:title value:y]];
@@ -268,44 +268,57 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     // 确定坐标轴最大值
     if ([self.axisFormatter.xAxisFormat containsString:@"%.0f"]) {
 
-        maxY *= scale;
+        maxX *= scale;
         yScaled = YES;
 
-        if (maxY <= maxYAxisCount && maxYAxisCount < 10) {  // 10以内，从0，1，2...maxYAxisCount
-            maxY = maxYAxisCount;
 
-        } else if (maxY <= 10) {   // 10以内
+        if (maxX <= 3) {    // 最大值在不大于3时，X轴会取小数
+
+            CGFloat divide = 0.1f * maxXAxisCount;
+            CGFloat y = 0;
+            while (y < maxX) {
+                y += divide;
+            }
+
+            maxX = y;
+
+            self.axisFormatter.xAxisFormat = @"%.1f";
+
+        } else if (maxX <= maxXAxisCount && maxXAxisCount < 10) {  // 10以内，从0，1，2...maxXAxisCount
+            maxX = maxXAxisCount;
+
+        } else if (maxX <= 10) {   // 10以内
             NSUInteger y = 10;
-            while (y % maxYAxisCount != 0) {
+            while (y % maxXAxisCount != 0) {
                 ++y;
             }
-            maxY = y;
-        } else if (maxY <= 100) {    // 100以内
-            NSUInteger y = maxYAxisCount * 5;
-            while (y < maxY) {
-                y += maxYAxisCount * 5;
+            maxX = y;
+        } else if (maxX <= 100) {    // 100以内
+            NSUInteger y = maxXAxisCount * 5;
+            while (y < maxX) {
+                y += maxXAxisCount * 5;
             }
-            maxY = y;
+            maxX = y;
         } else {    // 大于2位数
             NSUInteger limit = 100;
-            while (maxY >= limit) {
+            while (maxX >= limit) {
                 limit *= 10;
             }
             limit /= 1000;
 
-            NSUInteger y = maxYAxisCount * 10 * limit;
-            while (y < maxY) {
-                y += maxYAxisCount * 10 * limit;
+            NSUInteger y = maxXAxisCount * 10 * limit;
+            while (y < maxX) {
+                y += maxXAxisCount * 10 * limit;
             }
 
-            maxY = y;
+            maxX = y;
         }
 
-        if (maxY > maxLimit && maxLimit > 0) {
-            maxY = maxLimit;
+        if (maxX > maxLimit && maxLimit > 0) {
+            maxX = maxLimit;
 
-            while (maxYAxisCount >= 1 && maxLimit / maxYAxisCount != (NSInteger) (maxY / maxYAxisCount)) {
-                --maxYAxisCount;
+            while (maxXAxisCount >= 1 && maxLimit / maxXAxisCount != (NSInteger) (maxX / maxXAxisCount)) {
+                --maxXAxisCount;
             }
         }
     }
@@ -314,14 +327,14 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
     NSMutableArray<DTAxisLabelData *> *xAxisLabelDatas = [NSMutableArray array];
     NSInteger unitScale = 1;
 
-    for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
-        CGFloat y = maxY / maxYAxisCount * i;
+    for (NSUInteger i = 0; i <= maxXAxisCount; ++i) {
+        CGFloat y = maxX / maxXAxisCount * i;
 
         if (i == 1) {
             NSInteger intY = (NSInteger) y;
 
             NSInteger notation = 1000000000;
-            while (notation >= 1000) {
+            while (intY != 0 && notation >= 1000) {
                 if (intY % notation == 0) {
                     unitScale = notation;
 
