@@ -25,6 +25,8 @@
 
     self.view.backgroundColor = DTRGBColor(0x303030, 1);
 
+    self.listLineData = [[self simulateData] mutableCopy];
+
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, 1366, 800)];
     scrollView.contentSize = CGSizeMake(1366, 1600);
     [self.view addSubview:scrollView];
@@ -34,7 +36,8 @@
     self.lineChartController.valueSelectable = YES;
     self.lineChartController.axisBackgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
     self.lineChartController.chartView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.1];
-    self.lineChartController.mainYAxisMaxValueLimit = 1;
+//    self.lineChartController.mainYAxisMaxValueLimit = 3;
+    self.lineChartController.showCoordinateAxisGrid = YES;
 
     WEAK_SELF;
     [self.lineChartController setLineChartTouchBlock:^NSString *(NSString *seriesId, NSUInteger pointIndex) {
@@ -61,14 +64,14 @@
     [scrollView addSubview:self.lineChartController.chartView];
 
     DTAxisFormatter *formatter = [DTAxisFormatter axisFormatter];
-    formatter.mainYAxisFormat = @"%.0f%%";
+//    formatter.mainYAxisFormat = @"%.0f%%";
     formatter.mainYAxisUnit = @"人";
-    formatter.mainYAxisScale = 100;
+//    formatter.mainYAxisScale = 100;
     formatter.mainYAxisType = DTAxisFormatterTypeNumber;
     formatter.secondYAxisType = DTAxisFormatterTypeNumber;
     formatter.secondYAxisUnit = @"蛤";
-    formatter.xAxisType = DTAxisFormatterTypeDate;
-    formatter.xAxisDateSubType = DTAxisFormatterDateSubTypeMonth | DTAxisFormatterDateSubTypeDay;
+//    formatter.xAxisType = DTAxisFormatterTypeDate;
+//    formatter.xAxisDateSubType = DTAxisFormatterDateSubTypeMonth | DTAxisFormatterDateSubTypeDay;
     [self.lineChartController setItems:self.chartId listData:self.listLineData axisFormat:formatter];
 
 }
@@ -85,5 +88,18 @@
 //
 //    [self.lineChartController destroyChart];
 //}
+
+- (NSArray<DTListCommonData *> *)simulateData {
+    NSMutableArray<DTCommonData *> *list = [NSMutableArray array];
+
+    for (NSUInteger i = 0; i < 10; ++i) {
+        DTCommonData *commonData = [DTCommonData commonData:[NSString stringWithFormat:@"%@", @(i)] value:arc4random_uniform(150) / 50.0f];
+        [list addObject:commonData];
+    }
+
+    DTListCommonData *listCommonData = [DTListCommonData listCommonData:@"0905" seriesName:@"Piu" arrayData:list mainAxis:YES];
+
+    return @[listCommonData];
+}
 
 @end

@@ -116,7 +116,7 @@
     if (maxY == 0) {    // 最大值是0，只显示0标签
         maxY = 1;
 
-        NSMutableArray < DTAxisLabelData * > *yAxisLabelDatas = [NSMutableArray array];
+        NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
 
         for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
             CGFloat y = maxY * 1.0f / maxYAxisCount * i;
@@ -149,7 +149,29 @@
         maxY *= scale;
         yScaled = YES;
 
-        if (maxY <= maxYAxisCount && maxYAxisCount < 10) {  // 10以内，从0，1，2...maxYAxisCount
+        if (maxY <= 3) {    // 最大值在不大于3时，Y轴会取小数
+
+            CGFloat divide;
+            if (maxYAxisCount >= 7) {
+                divide = 0.7;
+            } else {
+                divide = 0.3;
+            }
+
+            CGFloat y = 0;
+            while (y < maxY) {
+                y += divide * maxYAxisCount;
+            }
+
+            maxY = y;
+
+            if (isMainAxis) {
+                self.axisFormatter.mainYAxisFormat = @"%.1f";
+            } else {
+                self.axisFormatter.secondYAxisFormat = @"%.1f";
+            }
+
+        } else if (maxY <= maxYAxisCount && maxYAxisCount < 10) {  // 10以内，从0，1，2...maxYAxisCount
             maxY = maxYAxisCount;
 
         } else if (maxY <= 10) {   // 10以内
@@ -200,7 +222,7 @@
 
             NSInteger notation = 1000000000;
             while (notation >= 1000) {
-                if (intY % notation == 0) {
+                if (intY != 0 && intY % notation == 0) {
                     unitScale = notation;
                     if (isMainAxis) {
                         self.axisFormatter.mainYAxisNotation = notation;
@@ -213,7 +235,6 @@
                     notation /= 1000;
                 }
             }
-
         }
 
         if (yScaled) {
