@@ -282,7 +282,8 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
 
             maxX = y;
 
-            self.axisFormatter.xAxisFormat = @"%.1f";
+            NSMutableString *st = [NSMutableString stringWithString:self.axisFormatter.xAxisFormat];
+            self.axisFormatter.xAxisFormat = [st stringByReplacingOccurrencesOfString:@"%.0f" withString:@"%.1f"];
 
         } else if (maxX <= maxXAxisCount && maxXAxisCount < 10) {  // 10以内，从0，1，2...maxXAxisCount
             maxX = maxXAxisCount;

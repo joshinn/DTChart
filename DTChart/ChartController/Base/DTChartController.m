@@ -160,9 +160,11 @@
             maxY = y;
 
             if (isMainAxis) {
-                self.axisFormatter.mainYAxisFormat = @"%.1f";
+                NSMutableString *st = [NSMutableString stringWithString:self.axisFormatter.mainYAxisFormat];
+                self.axisFormatter.mainYAxisFormat = [st stringByReplacingOccurrencesOfString:@"%.0f" withString:@"%.1f"];
             } else {
-                self.axisFormatter.secondYAxisFormat = @"%.1f";
+                NSMutableString *st = [NSMutableString stringWithString:self.axisFormatter.secondYAxisFormat];
+                self.axisFormatter.secondYAxisFormat = [st stringByReplacingOccurrencesOfString:@"%.0f" withString:@"%.1f"];
             }
 
         } else if (maxY <= maxYAxisCount && maxYAxisCount < 10) {  // 10以内，从0，1，2...maxYAxisCount
