@@ -78,7 +78,7 @@
 
 - (DTChartLabel *)labelFactory {
     DTChartLabel *label = [DTChartLabel chartLabel];
-    label.font = [UIFont systemFontOfSize:10];
+    label.font = [UIFont systemFontOfSize:TitleLabelFontSize];
     label.textColor = [UIColor whiteColor];
     label.adjustsFontSizeToFitWidth = NO;
     label.numberOfLines = 1;
@@ -108,9 +108,13 @@
         }];
         [self.labels removeAllObjects];
 
+        CGFloat x = 0;
         for (NSUInteger i = 0; i < mainData.roots.count; ++i) {
             DTChartLabel *label = [self labelFactory];
-            label.frame = CGRectMake(i * (self.titleWidth + self.titleGap), 0, self.titleWidth, 15);
+            CGFloat width = self.titleWidths[i].floatValue;
+            label.frame = CGRectMake(x, 0, width, 15);
+            x += width + self.titleGap;
+
             [self.labels addObject:label];
             [self.contentView addSubview:label];
         }

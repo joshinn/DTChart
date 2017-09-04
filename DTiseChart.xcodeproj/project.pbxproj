@@ -232,7 +232,7 @@
 		65BDBB971E2CD38C00EB85F4 /* DTTableChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTableChartController.h; sourceTree = "<group>"; };
 		65BDBB991E2CDDD000EB85F4 /* VBarPresentationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBarPresentationVC.h; sourceTree = "<group>"; };
 		65BDBB9A1E2CDDD000EB85F4 /* VBarPresentationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBarPresentationVC.m; sourceTree = "<group>"; };
-		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
+		65C027E91E139E7A001EB1C7 /* DTChart.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DTChart.podspec; sourceTree = "<group>"; };
 		65C027EF1E15F1B1001EB1C7 /* DistributionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistributionViewController.h; sourceTree = "<group>"; };
 		65C027F01E15F1B1001EB1C7 /* DistributionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistributionViewController.m; sourceTree = "<group>"; };
 		65C2919A1E67AD8B00867366 /* DTMeasureDimensionHorizontalBarChartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTMeasureDimensionHorizontalBarChartController.h; sourceTree = "<group>"; };

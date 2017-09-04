@@ -19,6 +19,8 @@
 #define SecondBarColor DTColorPink
 #define SecondBarBorderColor DTColorPinkLight
 
+static CGFloat const TitleLabelFontSize = 10;   ///< 标题label的的字体大小
+
 @protocol DTDimensionBarChartCellDelegate <NSObject>
 
 @optional
@@ -40,7 +42,7 @@
 @property(nonatomic, getter=isSelectable) BOOL selectable;
 
 @property(nonatomic) CGSize cellSize;
-@property(nonatomic) CGFloat titleWidth;
+@property(nonatomic) NSArray<NSNumber *> *titleWidths;
 @property(nonatomic) CGFloat titleGap;
 
 #pragma mark - ##############第一度量##############

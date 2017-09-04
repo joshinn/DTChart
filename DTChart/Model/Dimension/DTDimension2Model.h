@@ -17,9 +17,9 @@ typedef NS_ENUM(NSInteger, DTDimensionBarStyle) {
 
 @interface DTDimension2Item : NSObject
 
-@property(nonatomic) NSString *name;
+@property(nonatomic) NSString *name;    ///< 显示坐标系里的名称
 
-@property(nonatomic) NSString *fullName;
+@property(nonatomic) NSString *fullName;    ///< 触摸显示的全名
 
 @property(nonatomic) CGFloat value;
 

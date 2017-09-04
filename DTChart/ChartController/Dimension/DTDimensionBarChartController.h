@@ -38,6 +38,7 @@ typedef void(^ControllerChartBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Null
 
 /**
  * 是否drawChart前先遍历所有的数据，确定柱状体的颜色，默认NO
+ * @note 2017-09-04 update: YES时，会自动修正左侧维度标题的宽度  NO时: 左侧维度标题的宽度为固定值
  */
 @property(nonatomic) BOOL preProcessBarInfo;
 

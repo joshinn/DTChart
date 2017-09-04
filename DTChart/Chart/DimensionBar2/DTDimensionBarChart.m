@@ -21,6 +21,8 @@ CGFloat const DimensionLabelGap = 5;
 
 @property(nonatomic, getter=isPrepare) BOOL prepare;
 
+@property(nonatomic) NSMutableArray<NSNumber *> *titleWidths;   ///< 计算出的每个维度标题应该显示的宽度
+
 #pragma mark - ##############第一度量##############
 
 @property(nonatomic) UILabel *mainTitleLabel;                ///< 第一度量标题
@@ -134,7 +136,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     barChartCell.delegate = self;
     barChartCell.chartStyle = self.chartStyle;
     barChartCell.cellSize = CGSizeMake(CGRectGetWidth(tableView.bounds), tableView.rowHeight);
-    barChartCell.titleWidth = DimensionLabelWidth;
+    barChartCell.titleWidths = self.titleWidths;
     barChartCell.titleGap = DimensionLabelGap;
     barChartCell.selectable = self.valueSelectable;
 
@@ -232,7 +234,12 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         return NO;
     }
 
-    NSUInteger yLabelContentCellCount = (NSUInteger) (self.mainData.listDimensions.firstObject.roots.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
+    CGFloat titleTotalWidth = 0;
+    for (NSNumber *width in self.titleWidths) {
+        titleTotalWidth += width.floatValue + DimensionLabelGap;
+    }
+
+    NSUInteger yLabelContentCellCount = (NSUInteger) (titleTotalWidth / self.coordinateAxisCellWidth);
     NSUInteger barContentCellCount = self.xAxisCellCount - yLabelContentCellCount;   ///< 柱状体最大的空间
 
     if (self.secondData) {
@@ -340,37 +347,86 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         [self.levelBarModels addObjectsFromArray:itemBarInfos];
     }
 
-    if (self.preProcessBarInfo && self.chartStyle == DTDimensionBarStyleHeap) {
+    if (self.preProcessBarInfo) {
 
         [self.levelBarModels enumerateObjectsUsingBlock:^(DTDimensionBarModel *obj, NSUInteger idx, BOOL *stop) {
             obj.selected = NO;
         }];
 
         if (self.mainData) {
+            NSArray *roots = self.mainData.listDimensions.firstObject.roots;
+            if (self.titleWidths.count < roots.count) {
+                self.titleWidths = [NSMutableArray arrayWithCapacity:roots.count];
+                for (NSUInteger idx = 0; idx < roots.count; ++idx) {
+                    [self.titleWidths addObject:@0];
+                }
+            }
+
             for (DTDimension2Model *items in self.mainData.listDimensions) {
-                for (DTDimension2Item *item in items.items) {
-                    [self chartCellRequestItemColor:item isMainAxis:YES];
+                for (NSUInteger idx = 0; idx < items.roots.count; ++idx) {
+                    DTDimension2Item *rootItem = items.roots[idx];
+
+                    CGRect bounding = [rootItem.name boundingRectWithSize:CGSizeMake(0, self.coordinateAxisCellWidth)
+                                                                  options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                               attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TitleLabelFontSize]}
+                                                                  context:nil];
+
+                    if (CGRectGetWidth(bounding) > self.titleWidths[idx].floatValue) {
+                        self.titleWidths[idx] = @(MIN(DimensionLabelWidth, CGRectGetWidth(bounding)));  // 和上限值比较
+                    }
+                }
+
+                if (self.chartStyle == DTDimensionBarStyleHeap) {
+                    for (DTDimension2Item *item in items.items) {
+                        [self chartCellRequestItemColor:item isMainAxis:YES];
+                    }
                 }
             }
         }
         if (self.secondData) {
             for (DTDimension2Model *items in self.secondData.listDimensions) {
-                for (DTDimension2Item *item in items.items) {
-                    [self chartCellRequestItemColor:item isMainAxis:NO];
+
+                if (self.chartStyle == DTDimensionBarStyleHeap) {
+                    for (DTDimension2Item *item in items.items) {
+                        [self chartCellRequestItemColor:item isMainAxis:NO];
+                    }
                 }
             }
         }
 
-        // 移除当前数据没有的item
-        for (NSInteger i = self.levelBarModels.count - 1; i >= 0; --i) {
-            DTDimensionBarModel *barModel = self.levelBarModels[(NSUInteger) i];
-            if (!barModel.selected) {
-                [self.levelBarModels removeObject:barModel];
+        // 修正titleWidth
+        for (NSUInteger idx = 0; idx < self.titleWidths.count; ++idx) {
+            CGFloat width = self.titleWidths[idx].floatValue + DimensionLabelGap;
+            NSInteger mod = (NSInteger) (width / self.coordinateAxisCellWidth);
+            if (mod * self.coordinateAxisCellWidth < width) {
+                mod++;
+            }
+
+            self.titleWidths[idx] = @(mod * self.coordinateAxisCellWidth - DimensionLabelGap);
+        }
+
+
+        if (self.chartStyle == DTDimensionBarStyleHeap) {
+            // 移除当前数据没有的item
+            for (NSInteger i = self.levelBarModels.count - 1; i >= 0; --i) {
+                DTDimensionBarModel *barModel = self.levelBarModels[(NSUInteger) i];
+                if (!barModel.selected) {
+                    [self.levelBarModels removeObject:barModel];
+                }
+            }
+
+            if (self.itemColorBlock) {
+                self.itemColorBlock(self.levelBarModels.copy);
             }
         }
 
-        if (self.itemColorBlock) {
-            self.itemColorBlock(self.levelBarModels.copy);
+    } else {
+        NSArray *roots = self.mainData.listDimensions.firstObject.roots;
+        if (self.titleWidths.count < roots.count) {
+            self.titleWidths = [NSMutableArray arrayWithCapacity:roots.count];
+            for (NSUInteger idx = 0; idx < roots.count; ++idx) {
+                [self.titleWidths addObject:@(DimensionLabelWidth)];
+            }
         }
     }
 
@@ -401,7 +457,12 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         return NO;
     }
 
-    NSUInteger yLabelContentCellCount = (NSUInteger) (self.secondData.listDimensions.firstObject.roots.count * (DimensionLabelWidth + DimensionLabelGap) / self.coordinateAxisCellWidth);
+    CGFloat titleTotalWidth = 0;
+    for (NSNumber *width in self.titleWidths) {
+        titleTotalWidth += width.floatValue + DimensionLabelGap;
+    }
+
+    NSUInteger yLabelContentCellCount = (NSUInteger) (titleTotalWidth / self.coordinateAxisCellWidth);
     NSUInteger barContentCellCount = self.xAxisCellCount - yLabelContentCellCount;   ///< 柱状体最大的空间
 
     barContentCellCount /= 2;
