@@ -28,6 +28,11 @@
  */
 @property(nonatomic) UIView *touchHighlightedView;
 
+/**
+ * 记录所有维度touch的数据
+ */
+@property(nonatomic) NSMutableArray<DTDimensionModel *> *touchDatas;
+
 @end
 
 @implementation DTDimensionBurgerBarChart
@@ -71,6 +76,13 @@
     return _chartLines;
 }
 
+- (NSMutableArray<DTDimensionModel *> *)touchDatas {
+    if (!_touchDatas) {
+        _touchDatas = [NSMutableArray array];
+    }
+    return _touchDatas;
+}
+
 - (void)setValueSelectable:(BOOL)valueSelectable {
     _valueSelectable = valueSelectable;
 }
@@ -78,27 +90,29 @@
 #pragma mark - private method
 
 /**
- * 回调第一个维度柱状体的信息，包括所有子柱状体的数据和颜色
+ * 回调所有维度柱状体的信息，包括所有子柱状体的数据和颜色
  */
 - (void)processFirstDimensionBarInfo {
-    NSArray<DTDimensionModel *> *barAllData = nil;
-    NSArray<UIColor *> *barAllColor = nil;
-    NSUInteger dimensionIndex = 0;  ///< 维度序号
+    NSMutableArray<NSArray<DTDimensionModel *> *> *barAllData = [NSMutableArray array];
+    NSMutableArray<NSArray<UIColor *> *> *barAllColor = [NSMutableArray array];
 
-    DTBar *bar = self.chartBars[dimensionIndex];
-    if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
-        return;
+    [self.touchDatas removeAllObjects];
+
+    for (DTBar *bar in self.chartBars) {
+        if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+            return;
+        }
+        DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+        NSArray *itemDatas = heapBar.itemDatas.reverseObjectEnumerator.allObjects;
+        NSArray *allColor = heapBar.barAllColors.reverseObjectEnumerator.allObjects;
+        [barAllData addObject:itemDatas];
+        [barAllColor addObject:allColor];
+
+        [self.touchDatas addObject:itemDatas.firstObject];
     }
 
-    DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
-    barAllData = heapBar.itemDatas;
-    barAllColor = heapBar.barAllColors;
-
-    barAllData = barAllData.reverseObjectEnumerator.allObjects;
-    barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
-
-    if (self.subBarInfoBlock) {
-        self.subBarInfoBlock(barAllData, barAllColor, dimensionIndex);
+    if (self.allSubBarInfoBlock) {
+        self.allSubBarInfoBlock(barAllData.copy, barAllColor.copy, self.touchDatas.copy);
     }
 }
 
@@ -292,7 +306,6 @@
 
     DTDimensionModel *touchedModel = nil;
     NSArray<DTDimensionModel *> *barAllData = nil;
-    NSArray<UIColor *> *barAllColor = nil;
 
     BOOL containsPoint = NO;
     NSUInteger removeIndex = self.chartBars.count;
@@ -312,7 +325,6 @@
             dimensionIndex = i;
 
             barAllData = heapBar.itemDatas;
-            barAllColor = heapBar.barAllColors;
 
             CGPoint point = [touch locationInView:heapBar];
             DTDimensionBar *subBar = [heapBar touchSubBar:point];
@@ -361,13 +373,32 @@
         {   // 提示文字
             NSMutableString *message = nil;
             barAllData = barAllData.reverseObjectEnumerator.allObjects;
-            barAllColor = barAllColor.reverseObjectEnumerator.allObjects;
 
             if (self.touchSubBarBlock) {
                 message = self.touchSubBarBlock(barAllData, touchedModel, dimensionIndex).mutableCopy;
             }
-            if (draw && self.subBarInfoBlock) {
-                self.subBarInfoBlock(barAllData, barAllColor, dimensionIndex);
+
+            if (draw && self.allSubBarInfoBlock) {
+                NSMutableArray<NSArray<DTDimensionModel *> *> *allBarAllData = [NSMutableArray array];
+                NSMutableArray<NSArray<UIColor *> *> *allBarAllColor = [NSMutableArray array];
+
+                for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+                    DTBar *bar = self.chartBars[i];
+                    if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+                        return;
+                    }
+
+                    DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+                    NSArray *itemDatas = heapBar.itemDatas.reverseObjectEnumerator.allObjects;
+                    NSArray *allColor = heapBar.barAllColors.reverseObjectEnumerator.allObjects;
+                    [allBarAllData addObject:itemDatas];
+                    [allBarAllColor addObject:allColor];
+                }
+
+                self.touchDatas[dimensionIndex] = touchedModel;
+
+                self.allSubBarInfoBlock(allBarAllData.copy, allBarAllColor.copy, self.touchDatas.copy);
             }
 
             if (!message) {

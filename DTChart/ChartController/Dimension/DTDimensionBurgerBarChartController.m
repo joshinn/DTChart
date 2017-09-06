@@ -43,13 +43,9 @@
             }
         }];
 
-        [_chart setSubBarInfoBlock:^(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex) {
-            if (weakSelf.burgerSubBarInfoBlock) {
-                id dimensionData = nil;
-                if (dimensionIndex < weakSelf.dimensionDatas.count) {
-                    dimensionData = weakSelf.dimensionDatas[dimensionIndex];
-                }
-                weakSelf.burgerSubBarInfoBlock(allSubData, barAllColor, dimensionData, dimensionIndex);
+        [_chart setAllSubBarInfoBlock:^(NSArray<NSArray<DTDimensionModel *> *> *allSubData, NSArray<NSArray<UIColor *> *> *barAllColor, NSArray<DTDimensionModel *> *touchDatas) {
+            if (weakSelf.burgerAllSubBarInfoBlock) {
+                weakSelf.burgerAllSubBarInfoBlock(allSubData, barAllColor, touchDatas, weakSelf.dimensionDatas);
             }
         }];
 

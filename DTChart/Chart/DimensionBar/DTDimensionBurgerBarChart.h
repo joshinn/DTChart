@@ -27,7 +27,7 @@
 
 @property(nonatomic, copy) NSString *(^touchSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, NSUInteger dimensionIndex);
 
-@property(nonatomic, copy) void (^subBarInfoBlock)(NSArray<DTDimensionModel *> *allSubData, NSArray<UIColor *> *barAllColor, NSUInteger dimensionIndex);
+@property(nonatomic, copy) void (^allSubBarInfoBlock)(NSArray<NSArray<DTDimensionModel *> *> *allSubData, NSArray<NSArray<UIColor *> *> *barAllColor, NSArray<DTDimensionModel *> *touchDatas);
 
 /**
  * 设置高亮的柱状体

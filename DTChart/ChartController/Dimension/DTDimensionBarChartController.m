@@ -240,7 +240,7 @@
 
             [self.levelBarModels addObjectsFromArray:items];
 
-            if (self.controllerBarInfoBlock) {
+            if (!self.preProcessBarInfo && self.controllerBarInfoBlock) {
                 DTLog(@"draw chart controllerBarInfoBlock");
                 id dimensionData = self.dimensionDatas.lastObject;
                 self.controllerBarInfoBlock(self.levelBarModels.copy, dimensionData);
