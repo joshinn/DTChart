@@ -7,6 +7,10 @@
 //
 
 #import "DTChartController.h"
+#import "DTPieChart.h"
+
+static CGFloat const DefaultThumbChartRadius = 4.5;
+static CGFloat const DefaultPresentationChartRadius = 12;
 
 typedef void(^DTPieChartTouchBlock)(NSString *partName, NSInteger partIndex);
 
@@ -30,7 +34,23 @@ typedef void(^SecondChartItemsColorsCompletion)(NSArray<DTChartBlockModel *> *in
 
 @property(nonatomic, copy) SecondChartItemsColorsCompletion secondChartItemsColorsCompletionBlock;
 
+@property(nonatomic, copy) NSString *(^pieControllerTouchOneCompleteBlock)(NSUInteger partIndex, NSString *partTitle, CGFloat partValue, CGFloat sum);
+
+/**
+ * 要高亮的部分对应的标题
+ * @note 会使图表内所有对应该标题的部分高亮
+ */
+@property(nonatomic) NSString *highlightTitle;
+
+@property(nonatomic) DTPieChartTouchMode touchMode;
+
 - (void)dismissSecondPieChart;
+
+/**
+ * 自定义pieRadius后，自动修改图表的size
+ * @note Presentation模式下只调整主表的大小
+ */
+- (void)fitPieRadius;
 
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation __attribute__((unavailable("DTPieChartController can not add items")));
 
