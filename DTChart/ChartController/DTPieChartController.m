@@ -133,17 +133,17 @@
     switch (chartMode) {
         case DTChartModeThumb: {
             self.chartRadius = 4.5;
+            [self fitPieRadius];
             [self removeSecondPieChart];
         }
             break;
         case DTChartModePresentation: {
             self.chartRadius = 12;
+            [self fitPieRadius];
             [self loadSecondPieChart];
         }
             break;
     }
-    
-    [self fitPieRadius];
 }
 
 #pragma mark - private method
