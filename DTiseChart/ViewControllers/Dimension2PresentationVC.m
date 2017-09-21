@@ -124,10 +124,10 @@
                 p1Min1Value = p1Model.itemsMinValue;
             }
 
-            
+
             DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:1];
             p2Model = [[DTDimension2Model alloc] processHeap:p2Model prevModel:listMainP2.lastObject];
-            
+
             if (listMainP2.lastObject != p2Model) {
                 [listMainP2 addObject:p2Model];
             }
@@ -152,7 +152,7 @@
 
                 DTDimension2Model *p2Model = [[DTDimension2Model alloc] initHeapWithDictionary:dictionary measureIndex:2];
                 p2Model = [[DTDimension2Model alloc] processHeap:p2Model prevModel:listSecondP2.lastObject];
-                
+
                 if (listSecondP2.lastObject != p2Model) {
                     [listSecondP2 addObject:p2Model];
                 }
@@ -201,6 +201,14 @@
         chartController.showCoordinateAxisGrid = YES;
         chartController.valueSelectable = YES;
         chartController.preProcessBarInfo = YES;
+        chartController.chartBarCanSwipe = YES;
+        [chartController setChartBarSwipeBlock:^(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles) {
+            if (isLeft) {
+                DTLog(@"swipe left title = %@", title);
+            } else {
+                DTLog(@"swipe right title = %@", title);
+            }
+        }];
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
 

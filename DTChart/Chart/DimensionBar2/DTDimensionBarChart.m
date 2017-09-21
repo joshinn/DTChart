@@ -355,11 +355,9 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
         if (self.mainData) {
             NSArray *roots = self.mainData.listDimensions.firstObject.roots;
-            if (self.titleWidths.count < roots.count) {
-                self.titleWidths = [NSMutableArray arrayWithCapacity:roots.count];
-                for (NSUInteger idx = 0; idx < roots.count; ++idx) {
-                    [self.titleWidths addObject:@0];
-                }
+            self.titleWidths = [NSMutableArray arrayWithCapacity:roots.count];
+            for (NSUInteger idx = 0; idx < roots.count; ++idx) {
+                [self.titleWidths addObject:@0];
             }
 
             for (DTDimension2Model *items in self.mainData.listDimensions) {
@@ -633,6 +631,64 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 - (void)chartCellHintTouchEnd {
 
     [self hideTouchMessage];
+}
+
+- (BOOL)chartCellCanLeftSwipe:(DTDimensionBarChartCell *)cell {
+    return self.chartCellCanSwipe;
+}
+
+- (BOOL)chartCellCanRightSwipe:(DTDimensionBarChartCell *)cell {
+    return self.chartCellCanSwipe;
+}
+
+- (void)chartCellLeftSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data {
+
+    NSString *title = data.roots.lastObject.name;
+    NSMutableArray<NSString *> *others = [NSMutableArray array];
+    for (DTDimension2Model *model in self.mainData.listDimensions) {
+        NSString *name = model.roots.lastObject.name;
+        if (![model.roots.lastObject.name isEqualToString:title]) {
+            BOOL exist = NO;
+            for (NSString *existName in others) {
+                if ([existName isEqualToString:name]) {
+                    exist = YES;
+                    break;
+                }
+            }
+            if (!exist) {
+                [others addObject:model.roots.lastObject.name];
+            }
+        }
+    }
+
+    if (self.chartCellSwipeBlock) {
+        self.chartCellSwipeBlock(YES, title, others);
+    }
+}
+
+- (void)chartCellRightSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data {
+
+    NSString *title = data.roots.lastObject.name;
+    NSMutableArray<NSString *> *others = [NSMutableArray array];
+    for (DTDimension2Model *model in self.mainData.listDimensions) {
+        NSString *name = model.roots.lastObject.name;
+        if (![model.roots.lastObject.name isEqualToString:title]) {
+            BOOL exist = NO;
+            for (NSString *existName in others) {
+                if ([existName isEqualToString:name]) {
+                    exist = YES;
+                    break;
+                }
+            }
+            if (!exist) {
+                [others addObject:model.roots.lastObject.name];
+            }
+        }
+    }
+
+    if (self.chartCellSwipeBlock) {
+        self.chartCellSwipeBlock(NO, title, others);
+    }
 }
 
 - (UIColor *)chartCellRequestItemColor:(id)data isMainAxis:(BOOL)isMain {

@@ -49,6 +49,13 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
  */
 @property(nonatomic) NSString *highlightTitle;
 
+/**
+ * 柱状体可以左右滑动触发事件
+ */
+@property(nonatomic) BOOL chartCellCanSwipe;
+
+@property(nonatomic, copy) void (^chartCellSwipeBlock)(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles);
+
 - (void)drawChart __attribute__((unavailable("use drawChart: replace")));
 
 - (void)drawChart:(NSArray<DTDimensionBarModel *> *)itemBarInfos;

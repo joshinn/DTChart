@@ -48,6 +48,19 @@ typedef void(^ControllerChartBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Null
  */
 @property(nonatomic) NSString *_Nullable highlightTitle;
 
+/**
+ * 柱状体可以左右滑动触发事件
+ */
+@property(nonatomic) BOOL chartBarCanSwipe;
+
+/**
+ * 柱状体左右滑动回调
+ * @param isLeft 滑动方向，YES:向左  NO:向右
+ * @param title 滑动的柱状体最后一个维度名称
+ * @param otherTitles 除了title之外，所有柱状体最后一个维度名称的集合
+ */
+@property(nonatomic, copy) void (^chartBarSwipeBlock)(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles);
+
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchLabelBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *_Nullable data, NSUInteger index);
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *_Nullable touchData, NSArray<DTDimension2Item *> *_Nullable allSubData, id _Nullable dimensionData, id _Nullable measureData, BOOL isMainAxis);

@@ -54,6 +54,11 @@
             [weakSelf cacheMultiData:barModels];
         }];
 
+        [_chart setChartCellSwipeBlock:^(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles) {
+            if (weakSelf.chartBarSwipeBlock) {
+                weakSelf.chartBarSwipeBlock(isLeft, title, otherTitles);
+            }
+        }];
     }
     return self;
 }
@@ -79,6 +84,12 @@
     self.controllerBarInfoBlock = nil;
     [self drawChart];
     self.controllerBarInfoBlock = tempBlock;
+}
+
+- (void)setChartBarCanSwipe:(BOOL)chartBarCanSwipe {
+    _chartBarCanSwipe = chartBarCanSwipe;
+
+    _chart.chartCellCanSwipe = chartBarCanSwipe;
 }
 
 #pragma mark - private method

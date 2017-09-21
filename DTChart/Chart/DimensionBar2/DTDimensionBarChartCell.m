@@ -34,6 +34,8 @@
  */
 @property(nonatomic) UIView *touchSecondHighlightedView;
 
+@property(nonatomic) DTDimension2Model *mainData;
+
 @end
 
 @implementation DTDimensionBarChartCell
@@ -65,6 +67,14 @@
         _touchSecondHighlightedView.hidden = YES;
         _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         [self.contentView addSubview:_touchSecondHighlightedView];
+
+        UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+        swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+        [self addGestureRecognizer:swipeLeft];
+
+        UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+        swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer:swipeRight];
     }
     return self;
 }
@@ -86,10 +96,84 @@
     return label;
 }
 
+- (void)swipeLeft:(UISwipeGestureRecognizer *)sender {
+
+    id <DTDimensionBarChartCellDelegate> delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(chartCellCanLeftSwipe:)]) {
+        if (![delegate chartCellCanLeftSwipe:self]) {
+            return;
+        }
+    } else {
+        return;
+    }
+
+    NSLog(@"swipe left");
+
+    [UIView animateKeyframesWithDuration:0.55 delay:0 options:UIViewKeyframeAnimationOptionBeginFromCurrentState animations:^{
+
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(-20, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.2 relativeDuration:0.55 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(15, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.55 relativeDuration:0.8 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(-10, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.8 relativeDuration:0.95 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(5, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.95 relativeDuration:1 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(0, 0);
+        }];
+    }                         completion:nil];
+
+    id <DTDimensionBarChartCellDelegate> o = self.delegate;
+    if ([o respondsToSelector:@selector(chartCellLeftSwipe:data:)]) {
+        [o chartCellLeftSwipe:self data:self.mainData];
+    }
+}
+
+- (void)swipeRight:(UISwipeGestureRecognizer *)sender {
+    id <DTDimensionBarChartCellDelegate> delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(chartCellCanRightSwipe:)]) {
+        if (![delegate chartCellCanRightSwipe:self]) {
+            return;
+        }
+    } else {
+        return;
+    }
+
+    NSLog(@"swipe right");
+    [UIView animateKeyframesWithDuration:0.55 delay:0 options:UIViewKeyframeAnimationOptionBeginFromCurrentState animations:^{
+
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(20, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.2 relativeDuration:0.55 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(-15, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.55 relativeDuration:0.8 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(10, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.8 relativeDuration:0.95 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(-5, 0);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.95 relativeDuration:1 animations:^{
+            self.transform = CGAffineTransformMakeTranslation(0, 0);
+        }];
+    }                         completion:nil];
+
+    id <DTDimensionBarChartCellDelegate> o = self.delegate;
+    if ([o respondsToSelector:@selector(chartCellRightSwipe:data:)]) {
+        [o chartCellRightSwipe:self data:self.mainData];
+    }
+}
 
 #pragma mark - public method
 
 - (void)setCellData:(DTDimension2Model *)mainData second:(DTDimension2Model *)secondData prev:(DTDimension2Model *)prevData next:(DTDimension2Model *)nextData {
+    _mainData = mainData;
 
     BOOL isSingleDimension = NO;    ///< 是单维度，单维度下，默认每个维度名称都不一致，无需隐藏
     if (self.chartStyle == DTBarChartStyleStartingLine) {
@@ -117,6 +201,14 @@
 
             [self.labels addObject:label];
             [self.contentView addSubview:label];
+        }
+    } else {
+        CGFloat x = 0;
+        for (NSUInteger i = 0; i < mainData.roots.count; ++i) {
+            DTChartLabel *label = self.labels[i];
+            CGFloat width = self.titleWidths[i].floatValue;
+            label.frame = CGRectMake(x, 0, width, 15);
+            x += width + self.titleGap;
         }
     }
 
