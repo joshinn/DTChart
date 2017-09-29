@@ -59,7 +59,7 @@ typedef void(^ControllerChartBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Null
  * @param title 滑动的柱状体最后一个维度名称
  * @param otherTitles 除了title之外，所有柱状体最后一个维度名称的集合
  */
-@property(nonatomic, copy) void (^ _Nullable chartBarSwipeBlock)(BOOL isLeft, NSString *_Nonnull title, NSArray<NSString *> *_Nullable otherTitles);
+@property(nonatomic, copy) void (^ _Nullable chartBarSwipeBlock)(BOOL isLeft, NSString *_Nonnull title, NSUInteger dimensionIndex);
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchLabelBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *_Nullable data, NSUInteger index);
 

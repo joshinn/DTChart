@@ -13,6 +13,6 @@
 @property(nonatomic, getter=isSelectable) BOOL selectable;
 
 @property(nonatomic, copy) void (^scrollViewTouchBegin)(CGPoint touchPoint);
-@property(nonatomic, copy) void (^scrollViewTouchEnd)();
+@property(nonatomic, copy) void (^scrollViewTouchEnd)(void);
 
 @end

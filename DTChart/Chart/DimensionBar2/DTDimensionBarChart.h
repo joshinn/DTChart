@@ -54,7 +54,7 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
  */
 @property(nonatomic) BOOL chartCellCanSwipe;
 
-@property(nonatomic, copy) void (^chartCellSwipeBlock)(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles);
+@property(nonatomic, copy) void (^chartCellSwipeBlock)(BOOL isLeft, NSString *title, NSUInteger dimensionIndex);
 
 - (void)drawChart __attribute__((unavailable("use drawChart: replace")));
 

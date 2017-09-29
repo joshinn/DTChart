@@ -34,9 +34,9 @@ static CGFloat const TitleLabelFontSize = 10;   ///< 标题label的的字体大�
 
 - (BOOL)chartCellCanRightSwipe:(DTDimensionBarChartCell *)cell;
 
-- (void)chartCellLeftSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data;
+- (void)chartCellLeftSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data dimensionIndex:(NSInteger)index;
 
-- (void)chartCellRightSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data;
+- (void)chartCellRightSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data dimensionIndex:(NSInteger)index;
 
 @required
 - (UIColor *)chartCellRequestItemColor:(id)data isMainAxis:(BOOL)isMain;

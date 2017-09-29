@@ -202,13 +202,14 @@
         chartController.valueSelectable = YES;
         chartController.preProcessBarInfo = YES;
         chartController.chartBarCanSwipe = YES;
-        [chartController setChartBarSwipeBlock:^(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles) {
+        [chartController setChartBarSwipeBlock:^(BOOL isLeft, NSString *title, NSUInteger dimensionIndex) {
             if (isLeft) {
                 DTLog(@"swipe left title = %@", title);
             } else {
                 DTLog(@"swipe right title = %@", title);
             }
         }];
+
         [chartController setMainData:listMainModel secondData:listSecondModel];
         self.chartController = chartController;
 

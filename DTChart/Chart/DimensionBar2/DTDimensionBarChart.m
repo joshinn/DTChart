@@ -641,53 +641,29 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     return self.chartCellCanSwipe;
 }
 
-- (void)chartCellLeftSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data {
+- (void)chartCellLeftSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data dimensionIndex:(NSInteger)index {
 
-    NSString *title = data.roots.lastObject.name;
-    NSMutableArray<NSString *> *others = [NSMutableArray array];
-    for (DTDimension2Model *model in self.mainData.listDimensions) {
-        NSString *name = model.roots.lastObject.name;
-        if (![model.roots.lastObject.name isEqualToString:title]) {
-            BOOL exist = NO;
-            for (NSString *existName in others) {
-                if ([existName isEqualToString:name]) {
-                    exist = YES;
-                    break;
-                }
-            }
-            if (!exist) {
-                [others addObject:model.roots.lastObject.name];
-            }
-        }
+    if (index < 0 || index >= data.roots.count) {
+        return;
     }
 
+    NSString *title = data.roots[(NSUInteger) index].name;
+
     if (self.chartCellSwipeBlock) {
-        self.chartCellSwipeBlock(YES, title, others);
+        self.chartCellSwipeBlock(YES, title, (NSUInteger) index);
     }
 }
 
-- (void)chartCellRightSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data {
+- (void)chartCellRightSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data dimensionIndex:(NSInteger)index {
 
-    NSString *title = data.roots.lastObject.name;
-    NSMutableArray<NSString *> *others = [NSMutableArray array];
-    for (DTDimension2Model *model in self.mainData.listDimensions) {
-        NSString *name = model.roots.lastObject.name;
-        if (![model.roots.lastObject.name isEqualToString:title]) {
-            BOOL exist = NO;
-            for (NSString *existName in others) {
-                if ([existName isEqualToString:name]) {
-                    exist = YES;
-                    break;
-                }
-            }
-            if (!exist) {
-                [others addObject:model.roots.lastObject.name];
-            }
-        }
+    if (index < 0 || index >= data.roots.count) {
+        return;
     }
 
+    NSString *title = data.roots[(NSUInteger) index].name;
+
     if (self.chartCellSwipeBlock) {
-        self.chartCellSwipeBlock(NO, title, others);
+        self.chartCellSwipeBlock(NO, title, (NSUInteger) index);
     }
 }
 

@@ -54,9 +54,9 @@
             [weakSelf cacheMultiData:barModels];
         }];
 
-        [_chart setChartCellSwipeBlock:^(BOOL isLeft, NSString *title, NSArray<NSString *> *otherTitles) {
+        [_chart setChartCellSwipeBlock:^(BOOL isLeft, NSString *title, NSUInteger dimensionIndex) {
             if (weakSelf.chartBarSwipeBlock) {
-                weakSelf.chartBarSwipeBlock(isLeft, title, otherTitles);
+                weakSelf.chartBarSwipeBlock(isLeft, title, dimensionIndex);
             }
         }];
     }

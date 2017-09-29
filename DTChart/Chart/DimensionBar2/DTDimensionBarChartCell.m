@@ -68,13 +68,6 @@
         _touchSecondHighlightedView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         [self.contentView addSubview:_touchSecondHighlightedView];
 
-        UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-        swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-        [self addGestureRecognizer:swipeLeft];
-
-        UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
-        swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
-        [self addGestureRecognizer:swipeRight];
     }
     return self;
 }
@@ -93,6 +86,15 @@
     label.adjustsFontSizeToFitWidth = NO;
     label.numberOfLines = 1;
     label.textAlignment = NSTextAlignmentRight;
+
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [label addGestureRecognizer:swipeLeft];
+
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+    [label addGestureRecognizer:swipeRight];
+
     return label;
 }
 
@@ -108,29 +110,40 @@
     }
 
     NSLog(@"swipe left");
+    UILabel *label = (UILabel *) sender.view;
 
     [UIView animateKeyframesWithDuration:0.55 delay:0 options:UIViewKeyframeAnimationOptionBeginFromCurrentState animations:^{
 
         [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(-20, 0);
+            label.transform = CGAffineTransformMakeTranslation(-20, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.2 relativeDuration:0.55 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(15, 0);
+            label.transform = CGAffineTransformMakeTranslation(15, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.55 relativeDuration:0.8 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(-10, 0);
+            label.transform = CGAffineTransformMakeTranslation(-10, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.8 relativeDuration:0.95 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(5, 0);
+            label.transform = CGAffineTransformMakeTranslation(5, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.95 relativeDuration:1 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(0, 0);
+            label.transform = CGAffineTransformMakeTranslation(0, 0);
         }];
     }                         completion:nil];
 
+    NSString *name = label.text;
+    NSInteger dimensionIndex = -1;
+    for (NSUInteger idx = 0; idx < self.mainData.roots.count; ++idx) {
+        DTDimension2Item *item = self.mainData.roots[idx];
+        if ([name isEqualToString:item.name]) {
+            dimensionIndex = idx;
+            break;
+        }
+    }
+
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
-    if ([o respondsToSelector:@selector(chartCellLeftSwipe:data:)]) {
-        [o chartCellLeftSwipe:self data:self.mainData];
+    if ([o respondsToSelector:@selector(chartCellLeftSwipe:data:dimensionIndex:)]) {
+        [o chartCellLeftSwipe:self data:self.mainData dimensionIndex:dimensionIndex];
     }
 }
 
@@ -145,28 +158,38 @@
     }
 
     NSLog(@"swipe right");
+    UILabel *label = (UILabel *) sender.view;
     [UIView animateKeyframesWithDuration:0.55 delay:0 options:UIViewKeyframeAnimationOptionBeginFromCurrentState animations:^{
 
         [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(20, 0);
+            label.transform = CGAffineTransformMakeTranslation(20, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.2 relativeDuration:0.55 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(-15, 0);
+            label.transform = CGAffineTransformMakeTranslation(-15, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.55 relativeDuration:0.8 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(10, 0);
+            label.transform = CGAffineTransformMakeTranslation(10, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.8 relativeDuration:0.95 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(-5, 0);
+            label.transform = CGAffineTransformMakeTranslation(-5, 0);
         }];
         [UIView addKeyframeWithRelativeStartTime:0.95 relativeDuration:1 animations:^{
-            self.transform = CGAffineTransformMakeTranslation(0, 0);
+            label.transform = CGAffineTransformMakeTranslation(0, 0);
         }];
     }                         completion:nil];
 
+    NSString *name = label.text;
+    NSInteger dimensionIndex = -1;
+    for (NSUInteger idx = 0; idx < self.mainData.roots.count; ++idx) {
+        DTDimension2Item *item = self.mainData.roots[idx];
+        if ([name isEqualToString:item.name]) {
+            dimensionIndex = idx;
+            break;
+        }
+    }
     id <DTDimensionBarChartCellDelegate> o = self.delegate;
-    if ([o respondsToSelector:@selector(chartCellRightSwipe:data:)]) {
-        [o chartCellRightSwipe:self data:self.mainData];
+    if ([o respondsToSelector:@selector(chartCellRightSwipe:data:dimensionIndex:)]) {
+        [o chartCellRightSwipe:self data:self.mainData dimensionIndex:dimensionIndex];
     }
 }
 
