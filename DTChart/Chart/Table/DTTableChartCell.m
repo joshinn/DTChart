@@ -43,9 +43,9 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-
+        
         _style = DTTableChartStyleCustom;
-
+        
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
@@ -123,17 +123,17 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
  * @return 子view数组
  */
 - (NSMutableArray<UIView *> *)layoutSubviewsWithWidths:(NSArray *)widths {
-
+    
     CGFloat x = self.labelLeftOffset;
     NSMutableArray<UIView *> *list = [NSMutableArray array];
     for (NSDictionary *dictionary in widths) {
         if (dictionary[@"label"]) {
             NSNumber *number = dictionary[@"label"];
             CGFloat width = number.floatValue;
-
+            
             UIView *container = [UIView new];
             container.frame = CGRectMake(x, 0, width, self.rowHeight);
-
+            
             DTTableLabel *label = [[DTTableLabel alloc] init];
             label.selectable = YES;
             label.delegate = self;
@@ -148,9 +148,9 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             }
             label.frame = container.bounds;
             label.textAlignment = NSTextAlignmentCenter;
-
+            
             [container addSubview:label];
-
+            
             UIView *flagView = [UIView new];
             flagView.backgroundColor = [UIColor clearColor];
             flagView.frame = CGRectMake(2, (self.rowHeight - 14) / 2, 14, 14);
@@ -159,19 +159,19 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             flagView.tag = FlagViewTag;
             flagView.hidden = YES;
             [container addSubview:flagView];
-
+            
             UIButton *iconView = [[UIButton alloc] init];
             [iconView addTarget:self action:@selector(orderButton:) forControlEvents:UIControlEventTouchUpInside];
             iconView.frame = CGRectMake(width - 30, (self.rowHeight - 30) / 2, 30, 30);
             iconView.tag = IconViewTag;
-
+            
             [container addSubview:iconView];
-
+            
             [self.contentView addSubview:container];
-
+            
             [list addObject:container];
             x += width;
-
+            
         } else if (dictionary[@"gap"]) {
             NSNumber *number = dictionary[@"gap"];
             x += number.floatValue;
@@ -183,57 +183,57 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 #pragma mark - public method
 
 - (void)setStyle:(DTTableChartStyle)style widths:(NSArray *)widths {
-
-    if (_style != style) {
-
+    
+    if (style == DTTableChartStyleCustom || _style != style) {
+        
         [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
             [obj removeFromSuperview];
         }];
-
+        
         _style = style;
         _containerViews = [self layoutSubviewsWithWidths:widths];
-
+        
     } else if (style == DTTableChartStyleNone) {
         [self.contentView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
             [obj removeFromSuperview];
         }];
         _style = style;
-
+        
     }
-
+    
 }
 
 - (void)setCellTitle:(NSArray<DTTableAxisLabelData *> *)titleDatas secondTitles:(NSArray<DTTableAxisLabelData *> *)secondTitleDatas {
-
+    
     BOOL hasSecondAxis = secondTitleDatas.count > 0;
-
+    
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
-
+        
         UIView *container = self.containerViews[i];
         CGRect frame = container.frame;
         frame.size.height = self.rowHeight;
         container.frame = frame;
-
+        
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
         label.numberOfLines = 0;
         label.selectable = NO;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
-
+        
         UIView *flagView = [container viewWithTag:FlagViewTag];
         frame = flagView.frame;
         frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
         flagView.frame = frame;
-
+        
         UIButton *icon = [container viewWithTag:IconViewTag];
         frame = icon.frame;
         frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
         icon.frame = frame;
-
+        
         DTTableAxisLabelData *axisLabelData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
         if ((halfViewsCount >= 0) && hasSecondAxis && halfViewsCount < secondTitleDatas.count) {
-
+            
             axisLabelData = secondTitleDatas[(NSUInteger) halfViewsCount];
             container.tag = SecondAxisOrderButtonTagPrefix + halfViewsCount;
             if (i == (self.containerViews.count / 2) && self.secondColor) {
@@ -243,9 +243,9 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 flagView.hidden = YES;
                 flagView.backgroundColor = [UIColor clearColor];
             }
-
+            
         } else if (i < titleDatas.count) {
-
+            
             axisLabelData = titleDatas[i];
             container.tag = MainAxisOrderButtonTagPrefix + i;
             if (i == 0 && self.mainColor) {
@@ -256,7 +256,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 flagView.backgroundColor = [UIColor clearColor];
             }
         }
-
+        
         if (axisLabelData) {
             label.text = axisLabelData.title;
             icon.hidden = !axisLabelData.isShowOrder;
@@ -273,13 +273,13 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                     [icon setImage:self.descendImg forState:UIControlStateNormal];
                 }
             }
-
-
+            
+            
         } else {
             label.text = @"";
             icon.hidden = YES;
         }
-
+        
         container.backgroundColor = EvenRowBackgroundColor;
         frame = label.frame;
         frame.size.height = self.rowHeight;
@@ -299,35 +299,35 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 
 - (void)setCellData:(DTTableChartSingleData *)singleData second:(DTTableChartSingleData *)secondSingleData indexPath:(NSIndexPath *)indexPath {
     self.cellData = singleData;
-
+    
     BOOL isOddRow = indexPath.row % 2 == 0;
     BOOL hasSecondAxis = secondSingleData != nil;
-
+    
     for (NSUInteger i = 0; i < self.containerViews.count; ++i) {
-
+        
         UIView *container = self.containerViews[i];
         CGRect frame = container.frame;
         frame.size.height = self.rowHeight;
         container.frame = frame;
-
+        
         DTTableLabel *label = [container viewWithTag:LabelViewTag];
         label.numberOfLines = 1;
         label.selectable = self.selectable;
         label.textColor = NormalLabelTextColor;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
-
+        
         UIView *flagView = [container viewWithTag:FlagViewTag];
         frame = flagView.frame;
         frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
         flagView.frame = frame;
         flagView.hidden = YES;
-
+        
         UIButton *icon = [container viewWithTag:IconViewTag];
         frame = icon.frame;
         frame.origin.y = (self.rowHeight - CGRectGetHeight(frame)) / 2;
         icon.frame = frame;
         icon.hidden = YES;
-
+        
         DTChartItemData *itemData = nil;
         NSInteger halfViewsCount = i - self.containerViews.count / 2;
         if ((halfViewsCount >= 0) && hasSecondAxis && halfViewsCount < secondSingleData.itemValues.count) {
@@ -335,13 +335,13 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
         } else if (i < singleData.itemValues.count) {
             itemData = singleData.itemValues[i];
         }
-
+        
         if (itemData) {
             label.text = itemData.title;
         } else {
             label.text = @"";
         }
-
+        
         // 展开/收起处理
         if (self.collapseColumn == i) {
             if ((halfViewsCount >= 0) && hasSecondAxis && !secondSingleData.isHeaderRow) {
@@ -350,7 +350,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 label.text = @"";
             }
         }
-
+        
         if (self.collapseColumn >= 0 && self.collapseColumn == i - 1) {
             if ((halfViewsCount >= 0) && hasSecondAxis && secondSingleData.isHeaderRow) {
                 if (secondSingleData.expandType == DTTableChartCellDidExpand) {
@@ -361,7 +361,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchEvent:)];
                 [label addGestureRecognizer:tap];
                 label.selectable = NO;
-
+                
                 label.textColor = ExpandLabelTextColor;
             } else if (singleData.isHeaderRow) {
                 if (singleData.expandType == DTTableChartCellDidExpand) {
@@ -372,17 +372,17 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchEvent:)];
                 [label addGestureRecognizer:tap];
                 label.selectable = NO;
-
+                
                 label.textColor = ExpandLabelTextColor;
             }
         }
-
+        
         if (isOddRow) {
             container.backgroundColor = OddRowBackgroundColor;
         } else {
             container.backgroundColor = EvenRowBackgroundColor;
         }
-
+        
         frame = label.frame;
         frame.size.height = self.rowHeight;
         CGFloat leftMargin = 0;
@@ -403,7 +403,7 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 #pragma mark - DTTableLabelDelegate
 
 - (void)tableLabelTouchBegin:(DTTableLabel *)label touch:(UITouch *)touch {
-
+    
     UIView *view = label.superview;
     __block NSUInteger index = 0;
     [self.containerViews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
@@ -412,17 +412,17 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
             *stop = YES;
         }
     }];
-
+    
     BOOL isMainAxis = YES;
     if (self.style >= 20000) {
         NSUInteger count = self.containerViews.count / 2;
-
+        
         if (index >= count) {
             isMainAxis = NO;
             index -= count;
         }
     }
-
+    
     [self.delegate chartCellHintTouchBegin:self text:label.text index:index isMainAxis:isMainAxis touch:touch];
 }
 
@@ -431,3 +431,4 @@ static NSInteger const SecondAxisOrderButtonTagPrefix = 2000;
 }
 
 @end
+

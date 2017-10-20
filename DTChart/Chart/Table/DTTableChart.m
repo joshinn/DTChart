@@ -45,7 +45,7 @@ static CGFloat const DTTableChartCellHeight = 35;
             widths = @[@{@"label": @90}, @{@"gap": @10}, @{@"label": @480}, @{@"gap": @5}, @{@"label": @480}];
         }
             break;
-
+            
         case DTTableChartStyleC1C2B1: {
             widths = @[@{@"label": @120}, @{@"gap": @10}, @{@"label": @465}, @{@"gap": @5}, @{@"label": @465}];
         }
@@ -80,182 +80,182 @@ static CGFloat const DTTableChartCellHeight = 35;
             break;
         case DTTableChartStyleC1C4: {
             widths = @[
-                    @{@"label": @190}, @{@"gap": @5},
-                    @{@"label": @210}, @{@"gap": @5}, @{@"label": @210}, @{@"gap": @5},
-                    @{@"label": @210}, @{@"gap": @5}, @{@"label": @210}];
+                       @{@"label": @190}, @{@"gap": @5},
+                       @{@"label": @210}, @{@"gap": @5}, @{@"label": @210}, @{@"gap": @5},
+                       @{@"label": @210}, @{@"gap": @5}, @{@"label": @210}];
         }
             break;
         case DTTableChartStyleC1C4B1: {
             widths = @[
-                    @{@"label": @105}, @{@"gap": @5},
-                    @{@"label": @235}, @{@"gap": @5}, @{@"label": @235}, @{@"gap": @5},
-                    @{@"label": @235}, @{@"gap": @5}, @{@"label": @235}];
+                       @{@"label": @105}, @{@"gap": @5},
+                       @{@"label": @235}, @{@"gap": @5}, @{@"label": @235}, @{@"gap": @5},
+                       @{@"label": @235}, @{@"gap": @5}, @{@"label": @235}];
         }
             break;
         case DTTableChartStyleC1C5: {
             widths = @[
-                    @{@"label": @85}, @{@"gap": @5},
-                    @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}, @{@"gap": @5},
-                    @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}];
+                       @{@"label": @85}, @{@"gap": @5},
+                       @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}, @{@"gap": @5},
+                       @{@"label": @190}, @{@"gap": @5}, @{@"label": @190}];
         }
             break;
         case DTTableChartStyleC1C5B1: {
             widths = @[
-                    @{@"label": @495}, @{@"gap": @5},
-                    @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5},
-                    @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}];
+                       @{@"label": @495}, @{@"gap": @5},
+                       @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5},
+                       @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}];
         }
             break;
         case DTTableChartStyleC1C5B2: {
             widths = @[
-                    @{@"label": @120}, @{@"gap": @10},
-                    @{@"label": @183}, @{@"gap": @5}, @{@"label": @183}, @{@"gap": @5}, @{@"label": @183}, @{@"gap": @5},
-                    @{@"label": @183}, @{@"gap": @5}, @{@"label": @183}];
+                       @{@"label": @120}, @{@"gap": @10},
+                       @{@"label": @183}, @{@"gap": @5}, @{@"label": @183}, @{@"gap": @5}, @{@"label": @183}, @{@"gap": @5},
+                       @{@"label": @183}, @{@"gap": @5}, @{@"label": @183}];
         }
             break;
         case DTTableChartStyleC1C5B3: {
             widths = @[
-                    @{@"label": @180}, @{@"gap": @5},
-                    @{@"label": @172}, @{@"gap": @5}, @{@"label": @172}, @{@"gap": @5}, @{@"label": @172}, @{@"gap": @5},
-                    @{@"label": @172}, @{@"gap": @5}, @{@"label": @172}];
+                       @{@"label": @180}, @{@"gap": @5},
+                       @{@"label": @172}, @{@"gap": @5}, @{@"label": @172}, @{@"gap": @5}, @{@"label": @172}, @{@"gap": @5},
+                       @{@"label": @172}, @{@"gap": @5}, @{@"label": @172}];
         }
             break;
         case DTTableChartStyleC1C5B4: {
             widths = @[
-                    @{@"label": @495}, @{@"gap": @5},
-                    @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5},
-                    @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}];
+                       @{@"label": @495}, @{@"gap": @5},
+                       @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}, @{@"gap": @5},
+                       @{@"label": @109}, @{@"gap": @5}, @{@"label": @109}];
         }
             break;
         case DTTableChartStyleC1C6: {
             widths = @[
-                    @{@"label": @170}, @{@"gap": @10},
-                    @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}, @{@"gap": @30},
-                    @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}];
+                       @{@"label": @170}, @{@"gap": @10},
+                       @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}, @{@"gap": @30},
+                       @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}, @{@"gap": @30}, @{@"label": @300}];
         }
             break;
         case DTTableChartStyleC1C7: {
             widths = @[
-                    @{@"label": @85}, @{@"gap": @5},
-                    @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5},
-                    @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5},
-                    @{@"label": @135}];
+                       @{@"label": @85}, @{@"gap": @5},
+                       @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5},
+                       @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5},
+                       @{@"label": @135}];
         }
             break;
-
+            
         case DTTableChartStyleC1C8: {
             widths = @[
-                    @{@"label": @85}, @{@"gap": @5},
-                    @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5},
-                    @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5},
-                    @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}];
+                       @{@"label": @85}, @{@"gap": @5},
+                       @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5},
+                       @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}, @{@"gap": @5},
+                       @{@"label": @115}, @{@"gap": @5}, @{@"label": @115}];
         }
             break;
         case DTTableChartStyleC1C9: {
             widths = @[@{@"label": @85}, @{@"gap": @5},
-                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
-                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
-                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}];
+                       @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
+                       @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
+                       @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}];
         }
             break;
         case DTTableChartStyleC1C1C5: {
             widths = @[
-                    @{@"label": @70}, @{@"gap": @5},
-                    @{@"label": @465}, @{@"gap": @5},
-                    @{@"label": @124}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5},
-                    @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}];
+                       @{@"label": @70}, @{@"gap": @5},
+                       @{@"label": @465}, @{@"gap": @5},
+                       @{@"label": @124}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}, @{@"gap": @5},
+                       @{@"label": @94}, @{@"gap": @5}, @{@"label": @94}];
         }
             break;
         case DTTableChartStyleC1C1C6: {
             widths = @[
-                    @{@"label": @215}, @{@"gap": @5},
-                    @{@"label": @215}, @{@"gap": @5},
-                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
-                    @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}];
+                       @{@"label": @215}, @{@"gap": @5},
+                       @{@"label": @215}, @{@"gap": @5},
+                       @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5},
+                       @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}, @{@"gap": @5}, @{@"label": @100}];
         }
             break;
         case DTTableChartStyleC1C1C8: {
             widths = @[
-                    @{@"label": @190}, @{@"gap": @5},
-                    @{@"label": @190}, @{@"gap": @5},
-                    @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5},
-                    @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}];
+                       @{@"label": @190}, @{@"gap": @5},
+                       @{@"label": @190}, @{@"gap": @5},
+                       @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5},
+                       @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}, @{@"gap": @5}, @{@"label": @80}];
         }
             break;
         case DTTableChartStyleC1C1C9: {
             widths = @[
-                    @{@"label": @190}, @{@"gap": @5},
-                    @{@"label": @135}, @{@"gap": @5},
-                    @{@"label": @75}, @{@"gap": @5},
-                    @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5},
-                    @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}];
+                       @{@"label": @190}, @{@"gap": @5},
+                       @{@"label": @135}, @{@"gap": @5},
+                       @{@"label": @75}, @{@"gap": @5},
+                       @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5},
+                       @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}, @{@"gap": @5}, @{@"label": @75}];
         }
             break;
         case DTTableChartStyleC1C1C14: {
             widths = @[
-                    @{@"label": @105}, @{@"gap": @5},
-                    @{@"label": @105}, @{@"gap": @5},
-                    @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5},
-                    @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5},
-                    @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5},
-                    @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}];
+                       @{@"label": @105}, @{@"gap": @5},
+                       @{@"label": @105}, @{@"gap": @5},
+                       @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5},
+                       @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5},
+                       @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}, @{@"gap": @5},
+                       @{@"label": @50}, @{@"gap": @5}, @{@"label": @50}];
         }
             break;
         case DTTableChartStyleC1C1C31: {
             widths = @[
-                    @{@"label": @35}, @{@"gap": @2},
-                    @{@"label": @39}, @{@"gap": @2},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
-                    @{@"label": @31}];
+                       @{@"label": @35}, @{@"gap": @2},
+                       @{@"label": @39}, @{@"gap": @2},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1}, @{@"label": @31}, @{@"gap": @1},
+                       @{@"label": @31}];
         }
             break;
         case DTTableChartStyleT2C1C1: {
             widths = @[@{@"label": @105}, @{@"gap": @5}, @{@"label": @415}, @{@"gap": @15},
-                    @{@"label": @105}, @{@"gap": @5}, @{@"label": @415}];
+                       @{@"label": @105}, @{@"gap": @5}, @{@"label": @415}];
         }
             break;
         case DTTableChartStyleT2C1C2: {
             widths = @[
-                    @{@"label": @90}, @{@"gap": @20}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
-                    @{@"gap": @15},
-                    @{@"label": @90}, @{@"gap": @20}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
+                       @{@"label": @90}, @{@"gap": @20}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
+                       @{@"gap": @15},
+                       @{@"label": @90}, @{@"gap": @20}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
         }
             break;
         case DTTableChartStyleT2C1C2B1: {
             widths = @[
-                    @{@"label": @120}, @{@"gap": @5}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
-                    @{@"gap": @15},
-                    @{@"label": @120}, @{@"gap": @5}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
+                       @{@"label": @120}, @{@"gap": @5}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205},
+                       @{@"gap": @15},
+                       @{@"label": @120}, @{@"gap": @5}, @{@"label": @205}, @{@"gap": @5}, @{@"label": @205}];
         }
             break;
         case DTTableChartStyleT2C1C3: {
             widths = @[
-                    @{@"label": @90}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135},
-                    @{@"gap": @20},
-                    @{@"label": @90}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}];
+                       @{@"label": @90}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135},
+                       @{@"gap": @20},
+                       @{@"label": @90}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}, @{@"gap": @10}, @{@"label": @135}];
         }
             break;
         case DTTableChartStyleT2C1C3B1: {
             widths = @[
-                    @{@"label": @105}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135},
-                    @{@"gap": @30},
-                    @{@"label": @105}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}];
+                       @{@"label": @105}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135},
+                       @{@"gap": @30},
+                       @{@"label": @105}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}, @{@"gap": @5}, @{@"label": @135}];
         }
             break;
         case DTTableChartStyleT2C1C4: {
             widths = @[
-                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105},
-                    @{@"gap": @15},
-                    @{@"label": @85}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}];
+                       @{@"label": @85}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105},
+                       @{@"gap": @15},
+                       @{@"label": @85}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}, @{@"gap": @5}, @{@"label": @105}];
         }
             break;
         default: {
@@ -268,16 +268,16 @@ static CGFloat const DTTableChartCellHeight = 35;
 
 
 + (instancetype)tableChart:(DTTableChartStyle)chartStyle origin:(CGPoint)origin widthCellCount:(NSUInteger)width heightCellCount:(NSUInteger)height {
-
+    
     NSArray *widths = [self presetTableChartCellWidth:chartStyle];
-
+    
     DTTableChart *tableChart = [DTTableChart tableChartCustom:widths origin:origin widthCellCount:width heightCellCount:height];
     tableChart.tableChartStyle = chartStyle;
     return tableChart;
 }
 
 + (instancetype)tableChartCustom:(NSArray *)widths origin:(CGPoint)origin widthCellCount:(NSUInteger)width heightCellCount:(NSUInteger)height {
-
+    
     DTTableChart *tableChart = [[DTTableChart alloc] initWithOrigin:origin xAxis:width yAxis:height];
     tableChart.tableChartStyle = DTTableChartStyleCustom;
     tableChart.presetCellWidths = widths;
@@ -286,16 +286,16 @@ static CGFloat const DTTableChartCellHeight = 35;
 
 - (void)initial {
     [super initial];
-
+    
     _collapseColumn = -1;
     _tableLeftOffset = 0;
     _titleCellHeight = DTTableChartCellHeight;
-
+    
     self.userInteractionEnabled = YES;
     self.coordinateAxisInsets = ChartEdgeInsetsMake(0, 0, 0, 0);
     self.tableView.frame = self.contentView.bounds;
     [self.contentView addSubview:self.tableView];
-
+    
 }
 
 - (UITableView *)tableView {
@@ -305,10 +305,10 @@ static CGFloat const DTTableChartCellHeight = 35;
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+        
         _headView = [[UIView alloc] initWithFrame:CGRectZero];
         _tableView.tableHeaderView = _headView;
-
+        
         [_tableView registerClass:[DTTableChartCell class] forCellReuseIdentifier:DTTableChartCellReuseIdentifier];
     }
     return _tableView;
@@ -316,14 +316,14 @@ static CGFloat const DTTableChartCellHeight = 35;
 
 - (void)setHeadViewHeight:(CGFloat)headViewHeight {
     _headViewHeight = headViewHeight;
-
+    
     self.headView.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), _headViewHeight);
 }
 
 
 - (void)setTableChartStyle:(DTTableChartStyle)tableChartStyle {
     _tableChartStyle = tableChartStyle;
-
+    
     _presetCellWidths = [DTTableChart presetTableChartCellWidth:_tableChartStyle];
 }
 
@@ -348,31 +348,31 @@ static CGFloat const DTTableChartCellHeight = 35;
     cell.selectable = self.valueSelectable;
     cell.labelLeftOffset = self.tableLeftOffset;
     cell.delegate = self;
-
-
+    
+    
     if (indexPath.section == 0) {
         cell.rowHeight = self.titleCellHeight;
     } else {
         cell.rowHeight = DTTableChartCellHeight;
     }
     [cell setStyle:self.tableChartStyle widths:self.presetCellWidths];
-
+    
     cell.mainColor = self.mainColor;
     cell.secondColor = self.secondColor;
-
+    
     if (indexPath.section == 0) {
-
+        
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
         [cell setCellTitle:self.yAxisLabelDatas secondTitles:self.ySecondAxisLabelDatas];
 #pragma clang diagnostic pop
     } else {
-
+        
         cell.collapseColumn = self.collapseColumn;
-
+        
         DTTableChartSingleData *mainTableRowData = nil;
         DTTableChartSingleData *secondTableRowData = nil;
-
+        
         if (self.multiData.count > indexPath.row) {
             mainTableRowData = (DTTableChartSingleData *) self.multiData[(NSUInteger) indexPath.row];
         }
@@ -381,7 +381,7 @@ static CGFloat const DTTableChartCellHeight = 35;
         }
         [cell setCellData:mainTableRowData second:secondTableRowData indexPath:indexPath];
     }
-
+    
     return cell;
 }
 
@@ -403,20 +403,20 @@ static CGFloat const DTTableChartCellHeight = 35;
  */
 - (NSArray<DTChartSingleData *> *)processRowData:(NSArray<DTChartSingleData *> *)originData {
     NSMutableArray<DTChartSingleData *> *copyData = [originData mutableCopy];
-
+    
     NSMutableArray<NSString *> *seriesIds = [NSMutableArray array];
-
+    
     DTTableChartSingleData *headerSingleData = nil;
     NSMutableArray<DTTableChartSingleData *> *detailRows = [NSMutableArray array];
-
+    
     for (DTChartSingleData *sData in originData) {
         DTTableChartSingleData *tableChartSingleData = (DTTableChartSingleData *) sData;
-
+        
         BOOL exist = NO;
         for (NSUInteger i = seriesIds.count; i > 0; --i) {
             NSString *sId = seriesIds[i - 1];
             if ([sId isEqualToString:sData.singleId]) {
-
+                
                 tableChartSingleData.headerRow = NO;
                 [detailRows addObject:tableChartSingleData];
                 [copyData removeObject:tableChartSingleData];
@@ -424,7 +424,7 @@ static CGFloat const DTTableChartCellHeight = 35;
                 break;
             }
         }
-
+        
         if (!exist) {
             headerSingleData = tableChartSingleData;
             detailRows = [NSMutableArray array];
@@ -436,9 +436,9 @@ static CGFloat const DTTableChartCellHeight = 35;
                 headerSingleData.collapseRows = nil;
             }
         }
-
+        
     }
-
+    
     return copyData;
 }
 
@@ -460,7 +460,7 @@ static CGFloat const DTTableChartCellHeight = 35;
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds {
     NSMutableArray *temp = [self.multiData mutableCopy];
     NSMutableArray *tempSeriesId = [seriesIds mutableCopy];
-
+    
     for (NSString *sId in seriesIds) {
         [self.multiData enumerateObjectsUsingBlock:^(DTChartSingleData *obj, NSUInteger idx, BOOL *stop) {
             if ([obj.singleId isEqualToString:sId]) {
@@ -470,7 +470,7 @@ static CGFloat const DTTableChartCellHeight = 35;
         }];
     }
     self.multiData = temp;
-
+    
     temp = [self.secondMultiData mutableCopy];
     for (NSString *sId in tempSeriesId) {
         [self.secondMultiData enumerateObjectsUsingBlock:^(DTChartSingleData *obj, NSUInteger idx, BOOL *stop) {
@@ -480,33 +480,33 @@ static CGFloat const DTTableChartCellHeight = 35;
         }];
     }
     self.secondMultiData = temp;
-
+    
     [self.tableView reloadData];
 }
 
 - (void)addExpandItems:(NSArray<DTTableChartSingleData *> *)mainData {
-
+    
     NSString *toExpandSeriesId = mainData.firstObject.singleId;
-
+    
     for (NSUInteger i = 0; i < self.multiData.count; ++i) {
         DTTableChartSingleData *rowData = (DTTableChartSingleData *) self.multiData[i];
-
+        
         if ([toExpandSeriesId isEqualToString:rowData.singleId]) {
-
+            
             if (rowData.collapseRows) {
                 NSMutableArray *temp = [rowData.collapseRows mutableCopy];
                 [temp addObjectsFromArray:mainData];
                 rowData.collapseRows = temp;
-
+                
             } else {
                 rowData.collapseRows = mainData;
             }
-
+            
             break;
         }
-
+        
     }
-
+    
     [self chartCellToExpandTouched:toExpandSeriesId];
 }
 
@@ -536,7 +536,7 @@ static CGFloat const DTTableChartCellHeight = 35;
 
 - (void)drawChart {
     [super drawChart];
-
+    
     [self drawSecondChart];
 }
 
@@ -559,7 +559,7 @@ static CGFloat const DTTableChartCellHeight = 35;
  */
 - (void)drawSecondChart {
     [super drawSecondChart];
-
+    
     [self.tableView reloadData];
 }
 
@@ -567,11 +567,11 @@ static CGFloat const DTTableChartCellHeight = 35;
 #pragma mark - DTTableChartCellDelegate
 
 - (void)chartCellToExpandTouched:(NSString *)seriesId {
-
+    
     for (NSUInteger i = 0; i < self.multiData.count; ++i) {
         DTTableChartSingleData *rowData = (DTTableChartSingleData *) self.multiData[i];
         if ([seriesId isEqualToString:rowData.singleId] && rowData.isHeaderRow) {
-
+            
             if (!rowData.collapseRows) {
                 rowData.expandType = DTTableChartCellExpanding;
                 if (self.expandTouchBlock) {
@@ -579,30 +579,30 @@ static CGFloat const DTTableChartCellHeight = 35;
                 }
                 break;
             }
-
+            
             rowData.expandType = DTTableChartCellDidExpand;
-
+            
             NSMutableArray<DTChartSingleData *> *copyData = [self.multiData mutableCopy];
             [self.multiData enumerateObjectsUsingBlock:^(DTChartSingleData *obj, NSUInteger idx, BOOL *stop) {
                 if ([obj.singleId isEqualToString:seriesId] && obj != rowData) {
                     [copyData removeObject:obj];
                 }
             }];
-
+            
             NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
             for (NSUInteger j = 0; j < rowData.collapseRows.count; ++j) {
                 [indexSet addIndex:i + j + 1];
             }
-
+            
             if (indexSet.count > 0) {
                 [copyData insertObjects:rowData.collapseRows atIndexes:indexSet];
             }
-
+            
             self.multiData = copyData;
             break;
         }
     }
-
+    
     [self.tableView reloadData];
 }
 
@@ -611,23 +611,23 @@ static CGFloat const DTTableChartCellHeight = 35;
         DTTableChartSingleData *rowData = (DTTableChartSingleData *) self.multiData[i];
         if ([seriesId isEqualToString:rowData.singleId]) {
             rowData.expandType = DTTableChartCellWillExpand;
-
+            
             NSMutableArray *copyData = [self.multiData mutableCopy];
-
+            
             NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
             for (NSUInteger j = 0; j < rowData.collapseRows.count; ++j) {
                 [indexSet addIndex:i + j + 1];
             }
-
+            
             if (indexSet.count > 0) {
                 [copyData removeObjectsAtIndexes:indexSet];
             }
-
+            
             self.multiData = copyData;
             break;
         }
     }
-
+    
     [self.tableView reloadData];
 }
 
@@ -640,14 +640,14 @@ static CGFloat const DTTableChartCellHeight = 35;
 - (void)chartCellHintTouchBegin:(DTTableChartCell *)cell text:(NSString *)text index:(NSUInteger)index isMainAxis:(BOOL)isMainAxis touch:(UITouch *)touch {
     CGPoint p = [touch locationInView:self.contentView];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-
+    
     NSString *title;
     if (isMainAxis) {
         title = self.yAxisLabelDatas[index].title;
     } else {
         title = self.ySecondAxisLabelDatas[index].title;
     }
-
+    
     NSString *message = nil;
     if (self.chartCellHintTouchBlock) {
         message = self.chartCellHintTouchBlock(indexPath.row, index);
@@ -665,3 +665,4 @@ static CGFloat const DTTableChartCellHeight = 35;
 }
 
 @end
+
