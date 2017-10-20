@@ -452,6 +452,11 @@ static CGFloat const DTTableChartCellHeight = 35;
 
 #pragma mark - public method
 
+- (void)setCustomCellWidths:(NSArray *)widths {
+    _presetCellWidths = widths;
+    _tableChartStyle = DTTableChartStyleCustom;
+}
+
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds {
     NSMutableArray *temp = [self.multiData mutableCopy];
     NSMutableArray *tempSeriesId = [seriesIds mutableCopy];

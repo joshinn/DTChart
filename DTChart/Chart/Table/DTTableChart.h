@@ -143,6 +143,12 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  */
 + (instancetype)tableChartCustom:(NSArray *)widths origin:(CGPoint)origin widthCellCount:(NSUInteger)width heightCellCount:(NSUInteger)height;
 
+/**
+ * 设置自定义的列宽，赋值后，tableChartStyle变为DTTableChartStyleCustom
+ * @param widths 列宽数据
+ */
+- (void)setCustomCellWidths:(NSArray *)widths;
+
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds;
 
 /**

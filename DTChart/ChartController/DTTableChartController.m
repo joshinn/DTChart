@@ -233,6 +233,10 @@
 
 #pragma mark - public method
 
+- (void)setCustomCellWidths:(NSArray *)widths {
+    [_tableChart setCustomCellWidths:widths];
+}
+
 - (void)addExpandItems:(NSArray<DTListCommonData *> *)listData {
 
     NSMutableArray<DTTableChartSingleData *> *mainRows = [NSMutableArray array];

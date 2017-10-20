@@ -96,6 +96,12 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
 - (instancetype)initWithOrigin:(CGPoint)origin xAxis:(NSUInteger)xCount yAxis:(NSUInteger)yCount custom:(NSArray *)widths;
 
 /**
+ * 设置自定义的列宽，赋值后，tableChartStyle变为DTTableChartStyleCustom
+ * @param widths 列宽数据
+ */
+- (void)setCustomCellWidths:(NSArray *)widths;
+
+/**
  * 增加展开行的详细项
  * @param listData 详细项
  */
