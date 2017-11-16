@@ -142,6 +142,16 @@
     CGFloat maxLimit = isMainAxis ? self.mainYAxisMaxValueLimit : self.secondYAxisMaxValueLimit;
     maxLimit *= scale;
 
+
+    NSUInteger bigValueLimit = 1;
+    NSUInteger temp = NSUIntegerMax;
+    while (temp >= 1000) {
+        temp /= 1000;
+        bigValueLimit *= 1000;
+    }
+
+    NSInteger notation = 0;
+
     // 确定坐标轴最大值
     if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
             || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
@@ -182,7 +192,7 @@
                 y += maxYAxisCount * 5;
             }
             maxY = y;
-        } else {    // 大于2位数
+        } else if (maxY <= bigValueLimit) {    // 大于2位数
             NSUInteger limit = 100;
             while (maxY >= limit) {
                 limit *= 10;
@@ -195,6 +205,66 @@
             }
 
             maxY = y;
+
+            NSUInteger intY = y / maxYAxisCount;
+
+            NSUInteger nn = bigValueLimit;
+            while (nn >= 1000) {
+                if (intY != 0 && intY % nn == 0) {
+                    NSString *notationStr = [NSString stringWithFormat:@"%@", @(nn)];
+                    notation = notationStr.length - 1;
+                    break;
+                } else {
+                    nn /= 1000;
+                }
+            }
+
+        } else {
+
+            NSString *str = [NSString stringWithFormat:@"%@", @(maxY)];
+            NSArray<NSString *> *subs = [str componentsSeparatedByString:@"e"];
+            if (subs.count > 1) {
+                notation = subs.lastObject.integerValue;
+            }
+            CGFloat leftValue = subs.firstObject.doubleValue;
+            NSInteger leftScale = notation % 3;
+
+            notation -= leftScale;
+
+            NSUInteger y = 0;
+            if (leftScale == 0) {
+                y = 10;
+                while (y % maxYAxisCount != 0) {
+                    ++y;
+                }
+                maxY = y;
+            } else if (leftScale == 1) {
+                leftValue *= 10;
+
+                y = maxYAxisCount * 5;
+                while (y < leftValue) {
+                    y += maxYAxisCount * 5;
+                }
+                maxY = y;
+
+            } else if (leftScale == 2) {
+                leftValue *= 100;
+
+                NSUInteger limit = 100;
+                while (leftValue >= limit) {
+                    limit *= 10;
+                }
+                limit /= 1000;
+
+                y = maxYAxisCount * 10 * limit;
+                while (y < leftValue) {
+                    y += maxYAxisCount * 10 * limit;
+                }
+            }
+
+            NSString *tempValueStr = [NSString stringWithFormat:@"%@e%@", @(y), @(notation)];
+            maxY = tempValueStr.doubleValue;
+
         }
 
         if (maxY > maxLimit && maxLimit > 0) {
@@ -206,32 +276,18 @@
         }
     }
 
+    if (isMainAxis) {
+        self.axisFormatter.mainYAxisNotation = notation;
+    } else {
+        self.axisFormatter.secondYAxisNotation = notation;
+    }
 
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
-    NSInteger unitScale = 1;
+    NSString *tempValueStr = [NSString stringWithFormat:@"1e%@", @(notation)];
+    CGFloat unitScale = tempValueStr.doubleValue;
 
     for (NSUInteger i = 0; i <= maxYAxisCount; ++i) {
         CGFloat y = maxY / maxYAxisCount * i;
-
-        if (i == 1) {
-            NSInteger intY = (NSInteger) y;
-
-            NSInteger notation = 1000000000;
-            while (notation >= 1000) {
-                if (intY != 0 && intY % notation == 0) {
-                    unitScale = notation;
-                    if (isMainAxis) {
-                        self.axisFormatter.mainYAxisNotation = notation;
-                    } else {
-                        self.axisFormatter.secondYAxisNotation = notation;
-                    }
-
-                    break;
-                } else {
-                    notation /= 1000;
-                }
-            }
-        }
 
         if (yScaled) {
             y /= scale;

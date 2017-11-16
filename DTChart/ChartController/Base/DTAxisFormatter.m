@@ -8,6 +8,7 @@
 
 #import "DTAxisFormatter.h"
 
+
 @interface DTAxisFormatter ()
 
 @property(nonatomic) NSDateFormatter *dateFormatter;
@@ -37,21 +38,21 @@ static NSString *const DateFormatterTime = @"HH:mm";
     axisFormatter.mainYAxisUnit = origin.mainYAxisUnit;
     axisFormatter.mainYAxisNotation = origin.mainYAxisNotation;
     axisFormatter.mainYAxisScale = origin.mainYAxisScale;
-    
+
     axisFormatter.secondYAxisType = origin.secondYAxisType;
     axisFormatter.secondYAxisDateSubType = origin.secondYAxisDateSubType;
     axisFormatter.secondYAxisFormat = origin.secondYAxisFormat;
     axisFormatter.secondYAxisUnit = origin.secondYAxisUnit;
     axisFormatter.secondYAxisNotation = origin.secondYAxisNotation;
     axisFormatter.secondYAxisScale = origin.secondYAxisScale;
-    
+
     axisFormatter.xAxisType = origin.xAxisType;
     axisFormatter.xAxisDateSubType = origin.xAxisDateSubType;
     axisFormatter.xAxisFormat = origin.xAxisFormat;
     axisFormatter.xAxisNotation = origin.xAxisNotation;
     axisFormatter.xAxisUnit = origin.xAxisUnit;
     axisFormatter.xAxisScale = origin.xAxisScale;
-    
+
     return axisFormatter;
 }
 
@@ -68,8 +69,8 @@ static NSString *const DateFormatterTime = @"HH:mm";
         _mainYAxisScale = 1;
         _secondYAxisScale = 1;
         _xAxisScale = 1;
-        _mainYAxisNotation = 1;
-        _secondYAxisNotation = 1;
+        _mainYAxisNotation = 0;
+        _secondYAxisNotation = 0;
     }
     return self;
 }
@@ -88,7 +89,7 @@ static NSString *const DateFormatterTime = @"HH:mm";
     return _secondYAxisFormat;
 }
 
--(NSString *)xAxisFormat{
+- (NSString *)xAxisFormat {
     if (!_xAxisFormat) {
         _xAxisFormat = @"%.0f";
     }
@@ -179,7 +180,7 @@ static NSString *const DateFormatterTime = @"HH:mm";
     if (type == DTAxisFormatterTypeText) {
         return string;
     } else if (type == DTAxisFormatterTypeNumber) {
-        if(!format) {
+        if (!format) {
             format = @"%.0f";
         }
         return [NSString stringWithFormat:format, value * scale];
@@ -211,16 +212,24 @@ static NSString *const DateFormatterTime = @"HH:mm";
         unit = @"";
     }
 
-    if (notation == 1000) {
-        return [NSString stringWithFormat:@"×10³%@", unit];
-    } else if (notation == 1000000) {
-        return [NSString stringWithFormat:@"×10⁶%@", unit];
-    } else if (notation == 1000000000) {
-        return [NSString stringWithFormat:@"×10⁹%@", unit];
+    if (notation > 0) {
+        NSMutableString *mutableString = [NSMutableString string];
+        [mutableString appendString:@"×10"];
+
+        NSString *notationStr = [NSString stringWithFormat:@"%@", @(notation)];
+        for (NSUInteger idx = 0; idx < notationStr.length; ++idx) {
+            NSString *sub = [notationStr substringWithRange:NSMakeRange(idx, 1)];
+            NSInteger index = sub.integerValue;
+            NSString *p = Powers[(NSUInteger) index];
+            [mutableString appendString:p];
+        }
+
+        [mutableString appendString:unit];
+
+        return mutableString;
     } else {
         return unit;
     }
-
 }
 
 @end

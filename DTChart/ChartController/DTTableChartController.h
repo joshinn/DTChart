@@ -61,6 +61,11 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
  * 排序回调
  */
 @property(nonatomic, copy) DTTableChartOrderTouchBlock tableChartOrderTouchBlock;
+
+/**
+ * Table chart滚动距离回调
+ */
+@property(nonatomic, copy) void (^tableChartDidScrollBlock)(CGFloat value);
 /**
  * 表格的左偏移，默认0
  * 为了能让表格与某些东西对齐
@@ -107,5 +112,10 @@ typedef void(^DTTableChartOrderTouchBlock)(BOOL isMainAXis, NSUInteger column);
  */
 - (void)addExpandItems:(NSArray<DTListCommonData *> *)listData;
 
+/**
+ * 返回table chart的偏移值
+ * @return 偏移值
+ */
+- (CGPoint)getTableChartOffset;
 @end
 

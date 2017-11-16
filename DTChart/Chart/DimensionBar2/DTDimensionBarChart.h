@@ -54,7 +54,16 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
  */
 @property(nonatomic) BOOL chartCellCanSwipe;
 
-@property(nonatomic, copy) void (^chartCellSwipeBlock)(BOOL isLeft, NSString *title, NSUInteger dimensionIndex);
+/**
+ * 指定图表内的文字大小，默认10
+ */
+@property(nonatomic) CGFloat fontSize;
+
+/**
+ * @return (l, r) l:方向左，r:方向右，0:NO，1:YES
+ */
+@property(nonatomic, copy) CGPoint (^chartCellLongPressBeginBlock)(UIView *fakeView, NSString *title, NSUInteger dimensionIndex);
+@property(nonatomic, copy) void (^chartCellLongPressEndBlock)(UIView *fakeView, BOOL isSwipe, BOOL isLeft, NSString *title, NSUInteger dimensionIndex);
 
 - (void)drawChart __attribute__((unavailable("use drawChart: replace")));
 

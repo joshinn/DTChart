@@ -30,6 +30,7 @@
     if (self = [super initWithOrigin:origin xAxis:xCount yAxis:yCount]) {
         _chart = [[DTDimensionBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _chart;
+        self.chartMode = DTChartModePresentation;
 
         WEAK_SELF;
         [_chart setTouchLabelBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *data, NSUInteger index) {
@@ -54,9 +55,15 @@
             [weakSelf cacheMultiData:barModels];
         }];
 
-        [_chart setChartCellSwipeBlock:^(BOOL isLeft, NSString *title, NSUInteger dimensionIndex) {
-            if (weakSelf.chartBarSwipeBlock) {
-                weakSelf.chartBarSwipeBlock(isLeft, title, dimensionIndex);
+        [_chart setChartCellLongPressBeginBlock:^(UIView *fakeView, NSString *title, NSUInteger dimensionIndex) {
+            if (weakSelf.controllerLongPressBeginBlock) {
+                return weakSelf.controllerLongPressBeginBlock(fakeView, title, dimensionIndex);
+            }
+            return CGPointZero;
+        }];
+        [_chart setChartCellLongPressEndBlock:^(UIView *fakeView, BOOL isSwipe, BOOL isLeft, NSString *title, NSUInteger dimensionIndex) {
+            if (weakSelf.controllerLongPressEndBlock) {
+                weakSelf.controllerLongPressEndBlock(fakeView, isSwipe, isLeft, title, dimensionIndex);
             }
         }];
     }
@@ -67,6 +74,16 @@
     _chartStyle = chartStyle;
 
     self.chart.chartStyle = chartStyle;
+}
+
+- (void)setChartMode:(DTChartMode)chartMode {
+    [super setChartMode:chartMode];
+
+    if (chartMode == DTChartModeThumb) {
+        _chart.fontSize = 14;
+    } else if (chartMode == DTChartModePresentation) {
+        _chart.fontSize = 10;
+    }
 }
 
 - (NSMutableArray<DTDimensionBarModel *> *)levelBarModels {
@@ -140,8 +157,14 @@
                 NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
                 NSInteger notation = isMainAxis ? self.axisFormatter.mainYAxisNotation : self.axisFormatter.secondYAxisNotation;
 
+                CGFloat scale = 1;
+                for (NSUInteger idx = 0; idx < notation; ++idx) {
+                    scale *= 10;
+                }
+
                 for (NSUInteger j = 0; j < i; ++j) {
-                    DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@", @(-xLabelDatas[j + 1].value / notation)] value:-xLabelDatas[j + 1].value];
+
+                    DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@", @(-xLabelDatas[j + 1].value / scale)] value:-xLabelDatas[j + 1].value];
                     [negativeLabelDatas insertObject:xLabelData atIndex:0];
                     [indexSet addIndex:j];
                 }

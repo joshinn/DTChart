@@ -114,6 +114,11 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
 @property(nonatomic, copy) NSString *(^chartCellHintTouchBlock)(NSInteger row, NSInteger index);
 
 /**
+ * table chart的偏移值回调
+ */
+@property(nonatomic, copy) void (^chartDidScrollBlock)(CGFloat value);
+
+/**
  * 获取表格一行所有label和间隙的宽度
  * @param chartStyle 预设表格风格
  * @return 宽度
@@ -158,4 +163,9 @@ typedef void(^DTTableChartOrderTouch)(BOOL isMainAxis, NSUInteger column);
  */
 - (void)addExpandItems:(NSArray<DTTableChartSingleData *> *)mainData;
 
+/**
+ * 返回table chart的偏移值
+ * @return 偏移值
+ */
+- (CGPoint)getTableChartOffset;
 @end

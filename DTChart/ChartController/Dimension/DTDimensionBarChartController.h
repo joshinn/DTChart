@@ -59,13 +59,32 @@ typedef void(^ControllerChartBarInfoBlock)(NSArray<DTDimensionBarModel *> *_Null
  * @param title 滑动的柱状体最后一个维度名称
  * @param otherTitles 除了title之外，所有柱状体最后一个维度名称的集合
  */
-@property(nonatomic, copy) void (^ _Nullable chartBarSwipeBlock)(BOOL isLeft, NSString *_Nonnull title, NSUInteger dimensionIndex);
+
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchLabelBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *_Nullable data, NSUInteger index);
 
 @property(nonatomic, copy) NSString *_Nullable (^ _Nullable controllerTouchBarBlock)(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *_Nullable touchData, NSArray<DTDimension2Item *> *_Nullable allSubData, id _Nullable dimensionData, id _Nullable measureData, BOOL isMainAxis);
 
 @property(nonatomic, copy) ControllerChartBarInfoBlock _Nullable controllerBarInfoBlock;
+
+/**
+ * 柱状体维度标题开始长按回调
+ * @param fakeView 长按产生的可以拖动的view
+ * @param title 长按的维度标题
+ * @param dimensionIndex 长按的维度序号
+ * @return (l, r) 是否可以左右滑动 l:方向左，r:方向右，0:NO，1:YES
+ */
+@property(nonatomic, copy) CGPoint (^ _Nullable controllerLongPressBeginBlock)(UIView *_Nonnull fakeView, NSString *_Nullable title, NSUInteger dimensionIndex);
+
+/**
+ * 柱状体维度标题开始长按回调
+ * @param fakeView 长按产生的可以拖动的view
+ * @param isSwipe 是否产生滑动
+ * @param isLeft 滑动方向，在isSwipe为YES时生效
+ * @param title 长按的维度标题
+ * @param dimensionIndex 长按的维度序号
+ */
+@property(nonatomic, copy) void (^ _Nullable controllerLongPressEndBlock)(UIView *_Nonnull fakeView, BOOL isSwipe, BOOL isLeft, NSString *_Nullable title, NSUInteger dimensionIndex);
 
 - (void)setMainData:(DTDimension2ListModel *_Nonnull)mainData secondData:(DTDimension2ListModel *_Nullable)secondData;
 

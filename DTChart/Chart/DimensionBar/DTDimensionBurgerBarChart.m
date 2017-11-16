@@ -33,6 +33,8 @@
  */
 @property(nonatomic) NSMutableArray<DTDimensionModel *> *touchDatas;
 
+@property(nonatomic) NSString *highlightTitle;
+
 @end
 
 @implementation DTDimensionBurgerBarChart
@@ -47,11 +49,13 @@
 
 #define DimensionColors @[Dimension1Color, Dimension2Color, Dimension3Color, Dimension4Color]
 
+static NSInteger const XLabelTagPrefix = 12309050;
+
 - (void)initial {
     [super initial];
 
     self.userInteractionEnabled = YES;
-    self.coordinateAxisInsets = ChartEdgeInsetsMake(1, 0, 0, 0);
+    self.coordinateAxisInsets = ChartEdgeInsetsMake(1, 0, 0, 1);
 
     _barGap = 2;
 
@@ -147,7 +151,7 @@
         ++index;
 
         if (firstItem) {
-            [self drawBars:data.ptListValue.firstObject frame:fromFrame index:index];
+            [self drawBars:data.ptListValue.lastObject frame:fromFrame index:index];
         }
     }
 }
@@ -212,7 +216,6 @@
             [self.chartLines addObject:lineModel];
         }
 
-
         self.barX += barWidth + self.barGap * self.coordinateAxisCellWidth;
         [self.contentView addSubview:heapBar];
 
@@ -222,11 +225,116 @@
             [heapBar startAppearAnimation];
         }
 
+        if (self.xAxisLabelDatas.count > index) {   // x axis label
+            DTAxisLabelData *xAxisLabelData = self.xAxisLabelDatas[index];
+            DTChartLabel *xLabel = [self viewWithTag:XLabelTagPrefix + index];
+            if (!xLabel) {
+                xLabel = [DTChartLabel chartLabel];
+            }
+            if (self.xAxisLabelColor) {
+                xLabel.textColor = self.xAxisLabelColor;
+            }
+            xLabel.textAlignment = NSTextAlignmentCenter;
+            xLabel.text = xAxisLabelData.title;
+            xLabel.numberOfLines = 1;
+            xLabel.adjustsFontSizeToFitWidth = NO;
+            xLabel.tag = XLabelTagPrefix + index;
+
+            CGSize size = [xLabel.text sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
+
+            CGFloat x = CGRectGetMidX(heapBar.frame) - size.width / 2 + self.coordinateAxisInsets.left * self.coordinateAxisCellWidth;
+            CGFloat y = CGRectGetMaxY(self.contentView.frame);
+            if (size.height < self.coordinateAxisCellWidth) {
+                y += (self.coordinateAxisCellWidth - size.height) / 2;
+            }
+            xLabel.frame = (CGRect) {CGPointMake(x, y), size};
+
+            [self addSubview:xLabel];
+
+        }
+
         draw = YES;
     }
 
 
     return draw;
+}
+
+/**
+ * 根据指定的柱状体里的sub bar，绘制对应的后面的柱状体
+ * @param subBar 指定的sub bar
+ * @param dimensionIndex 该sub bar所在的维度序号
+ */
+- (void)processDrawBySubBar:(DTDimensionBar *)subBar dimensionIndex:(NSUInteger)dimensionIndex {
+
+    DTDimensionModel *touchedModel = nil;
+
+    NSUInteger removeIndex = self.chartBars.count;
+    CGRect touchedSubBarFrame = CGRectZero;
+
+    for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+
+        DTBar *bar = self.chartBars[i];
+        if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+            return;
+        }
+
+        DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+        if (dimensionIndex == i) {
+
+            touchedModel = subBar.dimensionModels.firstObject;
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(heapBar.frame);
+            frame.origin.y += CGRectGetMinY(heapBar.frame);
+            touchedSubBarFrame = frame;
+
+            removeIndex = i;
+        }
+
+        if (i > removeIndex) {
+
+            [heapBar removeFromSuperview];
+            [self.chartLines[i - 1] hide];
+
+        } else {
+            self.barX = CGRectGetMaxX(heapBar.frame) + self.barGap * self.coordinateAxisCellWidth;
+        }
+    }
+
+
+    [self.chartBars removeObjectsInRange:NSMakeRange(removeIndex + 1, self.chartBars.count - 1 - removeIndex)];
+    [self.chartLines removeObjectsInRange:NSMakeRange(removeIndex, self.chartLines.count - removeIndex)];
+
+    [self drawBars:touchedModel frame:touchedSubBarFrame index:dimensionIndex + 1];
+
+    if (self.allSubBarInfoBlock) {
+        NSMutableArray<NSArray<DTDimensionModel *> *> *allBarAllData = [NSMutableArray array];
+        NSMutableArray<NSArray<UIColor *> *> *allBarAllColor = [NSMutableArray array];
+
+        for (NSUInteger i = 0; i < self.chartBars.count; ++i) {
+            DTBar *bar = self.chartBars[i];
+            if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
+                return;
+            }
+
+            DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
+
+            NSArray *itemDatas = heapBar.itemDatas.reverseObjectEnumerator.allObjects;
+            NSArray *allColor = heapBar.barAllColors.reverseObjectEnumerator.allObjects;
+            [allBarAllData addObject:itemDatas];
+            [allBarAllColor addObject:allColor];
+
+            if (i == dimensionIndex) {
+                self.touchDatas[i] = touchedModel;
+            } else if (i > dimensionIndex) {
+                self.touchDatas[i] = itemDatas.firstObject;
+            }
+        }
+
+        self.allSubBarInfoBlock(allBarAllData.copy, allBarAllColor.copy, self.touchDatas.copy);
+    }
+
 }
 
 #pragma mark - public method
@@ -237,6 +345,11 @@
         return;
     }
 
+    if (highlightTitle) {
+        _highlightTitle = highlightTitle;
+    }
+
+
     DTBar *bar = self.chartBars[dimensionIndex];
     if (![bar isKindOfClass:[DTDimensionHeapBar class]]) {
         self.touchHighlightedView.hidden = YES;
@@ -245,24 +358,30 @@
 
     DTDimensionHeapBar *heapBar = (DTDimensionHeapBar *) bar;
 
-    DTDimensionBar *subBar = [heapBar subBarFromTitle:highlightTitle];
+    DTDimensionBar *subBar = [heapBar subBarFromTitle:_highlightTitle];
     if (subBar) {
-        CGRect frame = subBar.frame;
-        frame.origin.x += CGRectGetMinX(heapBar.frame);
-        frame.origin.y += CGRectGetMinY(heapBar.frame);
-        if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
-            frame.origin.y -= (1 - frame.size.height) / 2;
-            frame.size.height = 1;
+        if (highlightTitle) {
+            CGRect frame = subBar.frame;
+            frame.origin.x += CGRectGetMinX(heapBar.frame);
+            frame.origin.y += CGRectGetMinY(heapBar.frame);
+            if (frame.size.height < 1) {    // 如果高亮的view高度太小，固定为1
+                frame.origin.y -= (1 - frame.size.height) / 2;
+                frame.size.height = 1;
+            }
+
+            self.touchHighlightedView.frame = frame;
+            [self.touchHighlightedView.superview bringSubviewToFront:self.touchHighlightedView];
+            self.touchHighlightedView.hidden = NO;
+
+        } else {
+            self.touchHighlightedView.hidden = YES;
+            _highlightTitle = nil;
+            [self processDrawBySubBar:subBar dimensionIndex:dimensionIndex];
         }
-
-        self.touchHighlightedView.frame = frame;
-        [self.touchHighlightedView.superview bringSubviewToFront:self.touchHighlightedView];
-        self.touchHighlightedView.hidden = NO;
-
     } else {
         self.touchHighlightedView.hidden = YES;
+        _highlightTitle = nil;
     }
-
 }
 
 #pragma mark - touch event
@@ -394,9 +513,13 @@
                     NSArray *allColor = heapBar.barAllColors.reverseObjectEnumerator.allObjects;
                     [allBarAllData addObject:itemDatas];
                     [allBarAllColor addObject:allColor];
-                }
 
-                self.touchDatas[dimensionIndex] = touchedModel;
+                    if (i == dimensionIndex) {
+                        self.touchDatas[i] = touchedModel;
+                    } else if (i > dimensionIndex) {
+                        self.touchDatas[i] = itemDatas.firstObject;
+                    }
+                }
 
                 self.allSubBarInfoBlock(allBarAllData.copy, allBarAllColor.copy, self.touchDatas.copy);
             }

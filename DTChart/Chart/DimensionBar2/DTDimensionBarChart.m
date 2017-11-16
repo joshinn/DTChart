@@ -44,6 +44,13 @@ CGFloat const DimensionLabelGap = 5;
 
 @property(nonatomic) NSMutableArray<DTDimensionBarModel *> *levelBarModels;
 
+@property(nonatomic) UIImageView *fakeView;
+
+@property(nonatomic) CGPoint panTranslate;
+@property(nonatomic) CGPoint originCenter;
+
+@property(nonatomic) CGPoint canSwipe;
+
 @end
 
 @implementation DTDimensionBarChart
@@ -55,6 +62,13 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
 - (void)initial {
     [super initial];
+    _fontSize = 10;
+
+    _fakeView = [[UIImageView alloc] init];
+    _fakeView.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.3].CGColor;
+    _fakeView.layer.shadowOffset = CGSizeMake(2, 2);
+    _fakeView.layer.shadowRadius = 4;
+
     self.userInteractionEnabled = YES;
     _prepare = NO;
 
@@ -92,7 +106,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 - (UILabel *)mainTitleLabel {
     if (!_mainTitleLabel) {
         _mainTitleLabel = [[UILabel alloc] init];
-        _mainTitleLabel.font = [UIFont systemFontOfSize:12];
+        _mainTitleLabel.font = [UIFont systemFontOfSize:_fontSize];
         _mainTitleLabel.textAlignment = NSTextAlignmentCenter;
         _mainTitleLabel.textColor = MainBarColor;
     }
@@ -102,7 +116,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 - (UILabel *)secondTitleLabel {
     if (!_secondTitleLabel) {
         _secondTitleLabel = [[UILabel alloc] init];
-        _secondTitleLabel.font = [UIFont systemFontOfSize:12];
+        _secondTitleLabel.font = [UIFont systemFontOfSize:_fontSize];
         _secondTitleLabel.textAlignment = NSTextAlignmentCenter;
         _secondTitleLabel.textColor = SecondBarColor;
     }
@@ -120,6 +134,17 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     _valueSelectable = valueSelectable;
 }
 
+- (void)setFontSize:(CGFloat)fontSize {
+    _fontSize = fontSize;
+
+    if (_mainTitleLabel) {
+        _mainTitleLabel.font = [UIFont systemFontOfSize:_fontSize];
+    }
+    if (_secondTitleLabel) {
+        _secondTitleLabel.font = [UIFont systemFontOfSize:_fontSize];
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -135,6 +160,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
     barChartCell.delegate = self;
     barChartCell.chartStyle = self.chartStyle;
+    barChartCell.fontSize = _fontSize;
     barChartCell.cellSize = CGSizeMake(CGRectGetWidth(tableView.bounds), tableView.rowHeight);
     barChartCell.titleWidths = self.titleWidths;
     barChartCell.titleGap = DimensionLabelGap;
@@ -153,6 +179,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     barChartCell.secondNegativeLimitX = self.secondNegativeLimitX;
 
     barChartCell.highlightTitle = self.highlightTitle;
+    barChartCell.enableSwipe = self.chartCellCanSwipe;
 
     NSUInteger index = (NSUInteger) indexPath.row;
     DTDimension2Model *data = self.mainData.listDimensions[index];
@@ -261,6 +288,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         data.axisPosition = sectionCellCount * i;
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
+        xLabel.font = [UIFont systemFontOfSize:_fontSize];
         if (self.secondData) {
             xLabel.textColor = MainBarColor;
         }
@@ -272,31 +300,31 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
         CGFloat x = (yLabelContentCellCount + self.coordinateAxisInsets.left + data.axisPosition) * self.coordinateAxisCellWidth;
         CGFloat y = CGRectGetMaxY(self.bounds) - self.coordinateAxisInsets.bottom * self.coordinateAxisCellWidth;
-        if (size.height < self.coordinateAxisCellWidth) {
-            y += (self.coordinateAxisCellWidth - size.height) / 2;
+//        if (size.height < self.coordinateAxisCellWidth) {
+        y += (self.coordinateAxisCellWidth - size.height) / 2;
 
-            if (i == 0) {
-                if (data.value < 0) {
-                    self.mainNegativeLimitX = x;
-                    self.mainNegativeLimitValue = data.value;
-                } else {
-                    self.mainNegativeLimitX = 0;
-                    self.mainNegativeLimitValue = 0;
-                }
-            }
-
-            if (data.value == 0) {
-                self.mainZeroX = x;
-                if (self.mainNegativeLimitValue == 0) {
-                    self.mainNegativeLimitX = self.mainZeroX;
-                }
-            }
-
-            if (i == self.xAxisLabelDatas.count - 1) {
-                self.mainPositiveLimitX = x;
-                self.mainPositiveLimitValue = data.value;
+        if (i == 0) {
+            if (data.value < 0) {
+                self.mainNegativeLimitX = x;
+                self.mainNegativeLimitValue = data.value;
+            } else {
+                self.mainNegativeLimitX = 0;
+                self.mainNegativeLimitValue = 0;
             }
         }
+
+        if (data.value == 0) {
+            self.mainZeroX = x;
+            if (self.mainNegativeLimitValue == 0) {
+                self.mainNegativeLimitX = self.mainZeroX;
+            }
+        }
+
+        if (i == self.xAxisLabelDatas.count - 1) {
+            self.mainPositiveLimitX = x;
+            self.mainPositiveLimitValue = data.value;
+        }
+//        }
 
         if (i == self.xAxisLabelDatas.count - 1) {
             x -= (size.width + 5);
@@ -366,7 +394,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
                     CGRect bounding = [rootItem.name boundingRectWithSize:CGSizeMake(0, self.coordinateAxisCellWidth)
                                                                   options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                                               attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:TitleLabelFontSize]}
+                                                               attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:_fontSize]}
                                                                   context:nil];
 
                     if (CGRectGetWidth(bounding) > self.titleWidths[idx].floatValue) {
@@ -481,6 +509,7 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
         data.axisPosition = sectionCellCount * i;
 
         DTChartLabel *xLabel = [DTChartLabel chartLabel];
+        xLabel.font = [UIFont systemFontOfSize:_fontSize];
         xLabel.textColor = SecondBarColor;
 
         xLabel.textAlignment = NSTextAlignmentCenter;
@@ -490,31 +519,31 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
 
         CGFloat x = (yLabelContentCellCount + barContentCellCount + self.coordinateAxisInsets.left + data.axisPosition) * self.coordinateAxisCellWidth;
         CGFloat y = CGRectGetMaxY(self.bounds) - self.coordinateAxisInsets.bottom * self.coordinateAxisCellWidth;
-        if (size.height < self.coordinateAxisCellWidth) {
-            y += (self.coordinateAxisCellWidth - size.height) / 2;
+//        if (size.height < self.coordinateAxisCellWidth) {
+        y += (self.coordinateAxisCellWidth - size.height) / 2;
 
-            if (i == 0) {
-                if (data.value < 0) {
-                    self.secondNegativeLimitX = x;
-                    self.secondNegativeLimitValue = data.value;
-                } else {
-                    self.secondNegativeLimitX = 0;
-                    self.secondNegativeLimitValue = 0;
-                }
-            }
-
-            if (data.value == 0) {
-                self.secondZeroX = x;
-                if (self.secondNegativeLimitValue == 0) {
-                    self.secondNegativeLimitX = self.secondZeroX;
-                }
-            }
-
-            if (i == self.xSecondAxisLabelDatas.count - 1) {
-                self.secondPositiveLimitX = x;
-                self.secondPositiveLimitValue = data.value;
+        if (i == 0) {
+            if (data.value < 0) {
+                self.secondNegativeLimitX = x;
+                self.secondNegativeLimitValue = data.value;
+            } else {
+                self.secondNegativeLimitX = 0;
+                self.secondNegativeLimitValue = 0;
             }
         }
+
+        if (data.value == 0) {
+            self.secondZeroX = x;
+            if (self.secondNegativeLimitValue == 0) {
+                self.secondNegativeLimitX = self.secondZeroX;
+            }
+        }
+
+        if (i == self.xSecondAxisLabelDatas.count - 1) {
+            self.secondPositiveLimitX = x;
+            self.secondPositiveLimitValue = data.value;
+        }
+//        }
 
         if (i == 0) {
             x += 5;
@@ -633,37 +662,105 @@ static NSString *const DTDimensionBarChartCellId = @"DTDimensionBarChartCellId";
     [self hideTouchMessage];
 }
 
-- (BOOL)chartCellCanLeftSwipe:(DTDimensionBarChartCell *)cell {
-    return self.chartCellCanSwipe;
-}
+- (void)chartCellLongPress:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data gesture:(UILongPressGestureRecognizer *)longPress {
+    switch (longPress.state) {
+        case UIGestureRecognizerStatePossible:
+            break;
+        case UIGestureRecognizerStateBegan: {
 
-- (BOOL)chartCellCanRightSwipe:(DTDimensionBarChartCell *)cell {
-    return self.chartCellCanSwipe;
-}
+            UIView *v = longPress.view;
+            NSUInteger dimensionIndex = v.tag - LabelIndexTagPrefix;
+            NSString *title = data.roots[dimensionIndex].name;
 
-- (void)chartCellLeftSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data dimensionIndex:(NSInteger)index {
+            CGPoint touchPoint = [longPress locationInView:self];
 
-    if (index < 0 || index >= data.roots.count) {
-        return;
-    }
+            CGPoint origin = [cell convertPoint:v.frame.origin toView:nil];
+            CGRect frame = (CGRect) {origin, v.frame.size};
+            _fakeView.frame = frame;
 
-    NSString *title = data.roots[(NSUInteger) index].name;
+            _canSwipe = CGPointZero;
+            if (self.chartCellLongPressBeginBlock) {
+                _canSwipe = self.chartCellLongPressBeginBlock(_fakeView, title, dimensionIndex);
+            }
 
-    if (self.chartCellSwipeBlock) {
-        self.chartCellSwipeBlock(YES, title, (NSUInteger) index);
-    }
-}
+            if (CGPointEqualToPoint(_canSwipe, CGPointZero)) {
+                return;
+            }
 
-- (void)chartCellRightSwipe:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data dimensionIndex:(NSInteger)index {
 
-    if (index < 0 || index >= data.roots.count) {
-        return;
-    }
+            UIGraphicsBeginImageContextWithOptions(v.bounds.size, NO, [UIScreen mainScreen].scale + 1);
+            [v drawViewHierarchyInRect:v.bounds afterScreenUpdates:YES];
+            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
 
-    NSString *title = data.roots[(NSUInteger) index].name;
+            _fakeView.image = image;
 
-    if (self.chartCellSwipeBlock) {
-        self.chartCellSwipeBlock(NO, title, (NSUInteger) index);
+
+            v.hidden = YES;
+            _originCenter = _fakeView.center;
+            _panTranslate = touchPoint;
+
+            CGSize size = v.frame.size;
+            size.width *= 1.5f;
+            size.height *= 1.5f;
+
+            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                _fakeView.frame = CGRectMake(CGRectGetMinX(frame) - (size.width - CGRectGetWidth(v.frame)) / 2, CGRectGetMinY(frame) - (size.height - CGRectGetHeight(v.frame)) / 2, size.width, size.height);
+                _fakeView.layer.shadowOpacity = 1;
+            }                completion:nil];
+
+        }
+            break;
+        case UIGestureRecognizerStateChanged: {
+
+            if (CGPointEqualToPoint(_canSwipe, CGPointZero)) {
+                return;
+            }
+            CGPoint touchPoint = [longPress locationInView:self];
+
+            CGFloat deltaX = (CGFloat) (30.f * atan((touchPoint.x - _panTranslate.x) / 15));
+            if (_canSwipe.x == 0 && deltaX < 0) {   ///< 无法左滑
+                return;
+            }
+            if (_canSwipe.y == 0 && deltaX > 0) {   ///< 无法右滑
+                return;
+            }
+            _fakeView.center = CGPointMake(_originCenter.x + deltaX, _originCenter.y);
+
+        }
+            break;
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled: {
+            if (CGPointEqualToPoint(_canSwipe, CGPointZero)) {
+                return;
+            }
+
+            _canSwipe = CGPointZero;
+
+            // 返回指定位置
+            UIView *v = longPress.view;
+            NSUInteger dimensionIndex = v.tag - LabelIndexTagPrefix;
+            NSString *title = data.roots[dimensionIndex].name;
+
+            CGPoint origin = [cell convertPoint:v.frame.origin toView:nil];
+
+            CGFloat deltaX = _fakeView.center.x - _originCenter.x;
+            BOOL isSwipe = fabs(deltaX) >= 30;
+            BOOL isLeft = deltaX < 0;
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                _fakeView.frame = (CGRect) {origin, v.frame.size};
+                _fakeView.layer.shadowOpacity = 0;
+            }                completion:^(BOOL finish) {
+                v.hidden = NO;
+
+                if (self.chartCellLongPressEndBlock) {
+                    self.chartCellLongPressEndBlock(_fakeView, isSwipe, isLeft, title, dimensionIndex);
+                }
+            }];
+        }
+            break;
+        case UIGestureRecognizerStateFailed:
+            break;
     }
 }
 

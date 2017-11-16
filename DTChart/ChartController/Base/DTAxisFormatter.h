@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
     DTAxisFormatterDateSubTypeTime = 1 << 3,
 };
 
+#define Powers @[@"⁰", @"¹", @"²", @"³", @"⁴", @"⁵", @"⁶", @"⁷", @"⁸", @"⁹"]
+
 @interface DTAxisFormatter : NSObject
 
 #pragma mark - y主轴
@@ -44,8 +46,8 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 @property(nonatomic) NSString *mainYAxisUnit;
 /**
- * DTAxisFormatterTypeNumber下，y主轴的数值的倍数，默认1
- * @note 一般是10的3次方，6次方，9次方
+ * DTAxisFormatterTypeNumber下，y主轴的数值10的次方数，默认0
+ * @note 一般是10的3、6、9次方…
  */
 @property(nonatomic) NSInteger mainYAxisNotation;
 /**
@@ -72,8 +74,8 @@ typedef NS_ENUM(NSInteger, DTAxisFormatterDateSubType) {
  */
 @property(nonatomic) NSString *secondYAxisUnit;
 /**
- * DTAxisFormatterTypeNumber下，y副轴的数值的倍数，默认1
- * @note 一般是10的3次方，6次方，9次方
+ * DTAxisFormatterTypeNumber下，y副轴的数值10的次方数，默认0
+ * @note 一般是10的3、6、9次方…
  */
 @property(nonatomic) NSInteger secondYAxisNotation;
 

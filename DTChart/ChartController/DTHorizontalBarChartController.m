@@ -384,7 +384,7 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
         }
     } else if (notation == 1000000) {
         if (unit.length == 0) {
-            return [NSString stringWithFormat:@"×\n10⁹"];
+            return [NSString stringWithFormat:@"×\n10⁶"];
         } else {
             return [NSString stringWithFormat:@"×\n10⁶\n%@", unit];
         }
@@ -394,6 +394,32 @@ static NSUInteger const ChartModePresentationYAxisCount = 10;
         } else {
             return [NSString stringWithFormat:@"×\n10⁹\n%@", unit];
         }
+    } else {
+//        return unit;
+    }
+
+    if (!unit) {
+        unit = @"";
+    }
+
+    if (notation > 0) {
+        NSMutableString *mutableString = [NSMutableString string];
+        [mutableString appendString:@"×\n10"];
+
+        NSString *notationStr = [NSString stringWithFormat:@"%@", @(notation)];
+        for (NSUInteger idx = 0; idx < notationStr.length; ++idx) {
+            NSString *sub = [notationStr substringWithRange:NSMakeRange(idx, 1)];
+            NSInteger index = sub.integerValue;
+            if (index >= 0 && index < Powers.count) {
+                NSString *p = Powers[(NSUInteger) index];
+                [mutableString appendString:p];
+            }
+        }
+
+        [mutableString appendString:@"\n"];
+        [mutableString appendString:unit];
+
+        return mutableString;
     } else {
         return unit;
     }

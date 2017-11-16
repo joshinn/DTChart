@@ -27,6 +27,8 @@
  */
 @property(nonatomic) id measureData;
 
+@property(nonatomic) NSArray<NSString *> *xLabelTitles;
+
 @property(nonatomic, copy) NSString *(^touchBurgerSubBarBlock)(NSArray<DTDimensionModel *> *allSubData, DTDimensionModel *touchData, id dimensionData, id measureData);
 
 @property(nonatomic, copy) void (^burgerAllSubBarInfoBlock)(NSArray<NSArray<DTDimensionModel *> *> *allSubData, NSArray<NSArray<UIColor *> *> *barAllColor, NSArray<DTDimensionModel *> *touchDatas, NSArray *dimensionDatas);

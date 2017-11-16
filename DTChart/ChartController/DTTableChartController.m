@@ -26,7 +26,7 @@
         _tableChart = [DTTableChart tableChartCustom:widths origin:origin widthCellCount:xCount heightCellCount:yCount];
         _headView = _tableChart.headView;
         _titleLabelHeight = _tableChart.titleCellHeight;
-        
+
         WEAK_SELF;
         [_tableChart setExpandTouchBlock:^(NSString *seriesId) {
             STRONG_SELF;
@@ -40,7 +40,14 @@
                 strongSelf.tableChartOrderTouchBlock(isMainAxis, column);
             }
         }];
-        
+
+        [_tableChart setChartDidScrollBlock:^(CGFloat value) {
+            STRONG_SELF;
+            if (strongSelf.tableChartDidScrollBlock) {
+                strongSelf.tableChartDidScrollBlock(value);
+            }
+        }];
+
         _chartView = _tableChart;
         _tableLeftOffset = 0;
     }
@@ -54,37 +61,37 @@
 
 - (void)setCollapseColumn:(NSInteger)collapseColumn {
     _collapseColumn = collapseColumn;
-    
+
     _tableChart.collapseColumn = _collapseColumn;
 }
 
 - (void)setHeadViewHeight:(CGFloat)headViewHeight {
     _headViewHeight = headViewHeight;
-    
+
     _tableChart.headViewHeight = _headViewHeight;
 }
 
 - (void)setTableLeftOffset:(CGFloat)tableLeftOffset {
     _tableLeftOffset = tableLeftOffset;
-    
+
     _tableChart.tableLeftOffset = _tableLeftOffset;
 }
 
 - (void)setTableChartStyle:(DTTableChartStyle)tableChartStyle {
     _tableChartStyle = tableChartStyle;
-    
+
     _tableChart.tableChartStyle = tableChartStyle;
 }
 
 - (void)setTitleLabelHeight:(CGFloat)titleLabelHeight {
     _titleLabelHeight = titleLabelHeight;
-    
+
     _tableChart.titleCellHeight = titleLabelHeight;
 }
 
 - (void)setChartHintTouchBlock:(NSString *(^)(NSInteger, NSInteger))chartHintTouchBlock {
     _chartHintTouchBlock = chartHintTouchBlock;
-    
+
     if (chartHintTouchBlock) {
         WEAK_SELF;
         [_tableChart setChartCellHintTouchBlock:^NSString *(NSInteger row, NSInteger index) {
@@ -97,28 +104,28 @@
 #pragma mark - private method
 
 - (void)processMainAxisLabelDataAndLines:(NSArray<DTListCommonData *> *)listData {
-    
+
     NSMutableArray<DTListCommonData *> *listSecondAxisData = [NSMutableArray array];
-    
+
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
     NSMutableArray<DTChartSingleData *> *rows = [NSMutableArray arrayWithCapacity:listData.count];
-    
+
     for (NSUInteger n = 0; n < listData.count; ++n) {
-        
+
         DTListCommonData *listCommonData = listData[n];
         if (!listCommonData.isMainAxis) { // 是副轴 过滤
             [listSecondAxisData addObject:listCommonData];
             continue;
         }
-        
-        
+
+
         NSArray<DTCommonData *> *values = listCommonData.commonDatas;
         NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
-        
+
         for (NSUInteger i = 0; i < values.count; ++i) {
-            
+
             DTCommonData *data = values[i];
-            
+
             if (n == 0) {
                 DTTableAxisLabelData *yLabelData = [[DTTableAxisLabelData alloc] initWithTitle:data.ptName value:i];
                 if (self.mainTitleOrderModels.count > i) {
@@ -129,21 +136,21 @@
                 }
                 [yAxisLabelDatas addObject:yLabelData];
             }
-            
+
             DTChartItemData *itemData = [DTChartItemData chartData];
             itemData.title = data.ptStringValue;
             [points addObject:itemData];
         }
-        
+
         DTTableChartSingleData *singleData = [DTTableChartSingleData singleData:points];
         singleData.singleId = listCommonData.seriesId;
         singleData.singleName = listCommonData.seriesName;
         [rows addObject:singleData];
     }
-    
+
     self.tableChart.yAxisLabelDatas = yAxisLabelDatas;
     self.tableChart.multiData = rows;
-    
+
     if (listSecondAxisData.count > 0) {
         [self processSecondAxisLabelDataAndLines:listSecondAxisData];
     } else {
@@ -157,18 +164,18 @@
 - (void)processSecondAxisLabelDataAndLines:(NSArray<DTListCommonData *> *)listData {
     NSMutableArray<DTAxisLabelData *> *yAxisLabelDatas = [NSMutableArray array];
     NSMutableArray<DTChartSingleData *> *columns = [NSMutableArray arrayWithCapacity:listData.count];
-    
+
     for (NSUInteger n = 0; n < listData.count; ++n) {
-        
+
         DTListCommonData *listCommonData = listData[n];
-        
+
         NSArray<DTCommonData *> *values = listCommonData.commonDatas;
         NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
-        
+
         for (NSUInteger i = 0; i < values.count; ++i) {
-            
+
             DTCommonData *data = values[i];
-            
+
             if (n == 0) {
                 DTTableAxisLabelData *yLabelData = [[DTTableAxisLabelData alloc] initWithTitle:data.ptName value:i];
                 if (self.secondTitleOrderModels.count > i) {
@@ -179,21 +186,21 @@
                 }
                 [yAxisLabelDatas addObject:yLabelData];
             }
-            
+
             DTChartItemData *itemData = [DTChartItemData chartData];
             itemData.title = data.ptStringValue;
             [points addObject:itemData];
         }
-        
+
         DTTableChartSingleData *singleData = [DTTableChartSingleData singleData:points];
         singleData.singleId = listCommonData.seriesId;
         singleData.singleName = listCommonData.seriesName;
         [columns addObject:singleData];
     }
-    
+
     self.tableChart.ySecondAxisLabelDatas = yAxisLabelDatas;
     self.tableChart.secondMultiData = columns;
-    
+
 }
 
 - (DTTableChartStyle)getTableChartStyle:(NSUInteger)mainAxisColumnCount secondAxis:(NSUInteger)secondAxisColumnCount {
@@ -226,7 +233,7 @@
     } else if (secondAxisColumnCount >= 5) {
         return DTTableChartStyleT2C1C4;
     }
-    
+
     return DTTableChartStyleC1C2;
 }
 
@@ -238,48 +245,52 @@
 }
 
 - (void)addExpandItems:(NSArray<DTListCommonData *> *)listData {
-    
+
     NSMutableArray<DTTableChartSingleData *> *mainRows = [NSMutableArray array];
     NSMutableArray<DTTableChartSingleData *> *secondRows = [NSMutableArray array];
-    
+
     for (NSUInteger n = 0; n < listData.count; ++n) {
-        
+
         DTListCommonData *listCommonData = listData[n];
-        
+
         NSArray<DTCommonData *> *values = listCommonData.commonDatas;
         NSMutableArray<DTChartItemData *> *points = [NSMutableArray array];
-        
+
         for (NSUInteger i = 0; i < values.count; ++i) {
-            
+
             DTCommonData *data = values[i];
-            
+
             DTChartItemData *itemData = [DTChartItemData chartData];
             itemData.title = data.ptStringValue;
             [points addObject:itemData];
         }
-        
+
         DTTableChartSingleData *singleData = [DTTableChartSingleData singleData:points];
         singleData.singleId = listCommonData.seriesId;
         singleData.singleName = listCommonData.seriesName;
         singleData.headerRow = NO;
-        
+
         if (listCommonData.isMainAxis) {
             [mainRows addObject:singleData];
         } else {
             [secondRows addObject:singleData];
         }
     }
-    
+
     [self.tableChart addExpandItems:mainRows];
+}
+
+- (CGPoint)getTableChartOffset {
+    return [self.tableChart getTableChartOffset];
 }
 
 #pragma mark - override
 
 - (void)setItems:(NSString *)chartId listData:(NSArray<DTListCommonData *> *)listData axisFormat:(DTAxisFormatter *)axisFormat {
     [super setItems:chartId listData:listData axisFormat:axisFormat];
-    
+
     [self processMainAxisLabelDataAndLines:listData];
-    
+
     if (self.tableChart.tableChartStyle == DTTableChartStyleNone) {
         self.tableChart.tableChartStyle = [self getTableChartStyle:self.tableChart.yAxisLabelDatas.count secondAxis:self.tableChart.ySecondAxisLabelDatas.count];
     }
@@ -287,15 +298,15 @@
 
 - (void)drawChart {
     [super drawChart];
-    
+
     self.tableChart.mainColor = self.mainColor;
     self.tableChart.secondColor = self.secondColor;
-    
+
     [self.tableChart drawChart];
 }
 
 - (void)addItemsListData:(NSArray<DTListCommonData *> *)listData withAnimation:(BOOL)animation {
-    
+
 }
 
 - (void)deleteItems:(NSArray<NSString *> *)seriesIds withAnimation:(BOOL)animation {

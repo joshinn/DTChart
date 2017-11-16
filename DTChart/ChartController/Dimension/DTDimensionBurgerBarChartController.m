@@ -84,6 +84,18 @@
     }
 }
 
+- (void)setXLabelTitles:(NSArray<NSString *> *)xLabelTitles {
+    _xLabelTitles = xLabelTitles;
+
+    NSMutableArray *xLabels = [NSMutableArray array];
+    for (NSString *title in xLabelTitles) {
+        DTAxisLabelData *labelData = [[DTAxisLabelData alloc] initWithTitle:title value:0];
+        [xLabels addObject:labelData];
+    }
+
+    _chart.xAxisLabelDatas = xLabels;
+}
+
 #pragma mark - override
 
 

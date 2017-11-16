@@ -19,7 +19,7 @@
 #define SecondBarColor DTColorPink
 #define SecondBarBorderColor DTColorPinkLight
 
-static CGFloat const TitleLabelFontSize = 10;   ///< 标题label的的字体大小
+UIKIT_EXTERN NSUInteger const LabelIndexTagPrefix;
 
 @protocol DTDimensionBarChartCellDelegate <NSObject>
 
@@ -29,6 +29,8 @@ static CGFloat const TitleLabelFontSize = 10;   ///< 标题label的的字体大�
 - (void)chartCellHintTouchBegin:(DTDimensionBarChartCell *)cell isMainAxisBar:(BOOL)isMain data:(DTDimension2Item *)touchData touch:(UITouch *)touch;
 
 - (void)chartCellHintTouchEnd;
+
+- (void)chartCellLongPress:(DTDimensionBarChartCell *)cell data:(DTDimension2Model *)data gesture:(UILongPressGestureRecognizer *)longPress;
 
 - (BOOL)chartCellCanLeftSwipe:(DTDimensionBarChartCell *)cell;
 
@@ -48,6 +50,8 @@ static CGFloat const TitleLabelFontSize = 10;   ///< 标题label的的字体大�
 @property(nonatomic, weak) id <DTDimensionBarChartCellDelegate> delegate;
 
 @property(nonatomic, getter=isSelectable) BOOL selectable;
+
+@property(nonatomic, getter=isEnableSwipe) BOOL enableSwipe;
 
 @property(nonatomic) CGSize cellSize;
 @property(nonatomic) NSArray<NSNumber *> *titleWidths;
@@ -73,6 +77,8 @@ static CGFloat const TitleLabelFontSize = 10;   ///< 标题label的的字体大�
 #pragma mark - common
 
 @property(nonatomic) DTDimensionBarStyle chartStyle;
+
+@property(nonatomic) CGFloat fontSize;
 
 /**
  * 高亮的sub bar标题
