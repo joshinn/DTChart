@@ -227,7 +227,7 @@ static NSString *const kChineseTimeKey = @"chinese";
     } else if (hour >= 7 && hour <= 8) {
         return @"辰";
     } else if (hour >= 9 && hour <= 10) {
-        return @"已";
+        return @"巳";
     } else if (hour >= 11 && hour <= 12) {
         return @"午";
     } else if (hour >= 13 && hour <= 14) {
