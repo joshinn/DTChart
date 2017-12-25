@@ -31,7 +31,7 @@
         _chart = [[DTDimensionBarChart alloc] initWithOrigin:origin xAxis:xCount yAxis:yCount];
         _chartView = _chart;
         self.chartMode = DTChartModePresentation;
-
+        
         WEAK_SELF;
         [_chart setTouchLabelBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Model *data, NSUInteger index) {
             if (weakSelf.controllerTouchLabelBlock) {
@@ -40,7 +40,7 @@
                 return nil;
             }
         }];
-
+        
         [_chart setTouchBarBlock:^NSString *(DTDimensionBarStyle chartStyle, NSUInteger row, DTDimension2Item *touchData, NSArray<DTDimension2Item *> *allSubData, BOOL isMainAxis) {
             if (weakSelf.controllerTouchBarBlock) {
                 id dimensionData = weakSelf.dimensionDatas.lastObject;
@@ -50,11 +50,11 @@
                 return nil;
             }
         }];
-
+        
         [_chart setItemColorBlock:^(NSArray<DTDimensionBarModel *> *barModels) {
             [weakSelf cacheMultiData:barModels];
         }];
-
+        
         [_chart setChartCellLongPressBeginBlock:^(UIView *fakeView, NSString *title, NSUInteger dimensionIndex) {
             if (weakSelf.controllerLongPressBeginBlock) {
                 return weakSelf.controllerLongPressBeginBlock(fakeView, title, dimensionIndex);
@@ -72,17 +72,19 @@
 
 - (void)setChartStyle:(DTDimensionBarStyle)chartStyle {
     _chartStyle = chartStyle;
-
+    
     self.chart.chartStyle = chartStyle;
 }
 
 - (void)setChartMode:(DTChartMode)chartMode {
     [super setChartMode:chartMode];
-
+    
     if (chartMode == DTChartModeThumb) {
         _chart.fontSize = 14;
+        _chart.thumdMode = YES;
     } else if (chartMode == DTChartModePresentation) {
         _chart.fontSize = 10;
+        _chart.thumdMode = NO;
     }
 }
 
@@ -95,7 +97,7 @@
 
 - (void)setHighlightTitle:(NSString *)highlightTitle {
     _highlightTitle = highlightTitle;
-
+    
     _chart.highlightTitle = highlightTitle;
     ControllerChartBarInfoBlock tempBlock = self.controllerBarInfoBlock;
     self.controllerBarInfoBlock = nil;
@@ -105,7 +107,7 @@
 
 - (void)setChartBarCanSwipe:(BOOL)chartBarCanSwipe {
     _chartBarCanSwipe = chartBarCanSwipe;
-
+    
     _chart.chartCellCanSwipe = chartBarCanSwipe;
 }
 
@@ -121,21 +123,21 @@
 
 - (void)setPreProcessBarInfo:(BOOL)preProcessBarInfo {
     _preProcessBarInfo = preProcessBarInfo;
-
+    
     _chart.preProcessBarInfo = preProcessBarInfo;
 }
 
 - (void)processXLabelData:(NSUInteger)axisCount axisMaxValue:(CGFloat)maxValue axisMinValue:(CGFloat)minValue isMainAxis:(BOOL)isMainAxis {
-
+    
     if (minValue >= 0) {
-
+        
         NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount yAxisMaxValue:maxValue isMainAxis:isMainAxis];
         if (isMainAxis) {
             self.chart.xAxisLabelDatas = xLabelDatas;
         } else {
             self.chart.xSecondAxisLabelDatas = xLabelDatas;
         }
-
+        
     } else {
         CGFloat max = 0;
         CGFloat min = 0;
@@ -148,32 +150,32 @@
             min = -maxValue;
             isReverse = YES;
         }
-
+        
         for (NSUInteger i = 1; i < axisCount; ++i) {
             NSMutableArray<DTAxisLabelData *> *xLabelDatas = [super generateYAxisLabelData:axisCount - i yAxisMaxValue:max isMainAxis:isMainAxis];
-
+            
             if (-min < xLabelDatas[i].value) {
                 NSMutableArray<DTAxisLabelData *> *negativeLabelDatas = [NSMutableArray array];
                 NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
                 NSInteger notation = isMainAxis ? self.axisFormatter.mainYAxisNotation : self.axisFormatter.secondYAxisNotation;
-
+                
                 CGFloat scale = 1;
                 for (NSUInteger idx = 0; idx < notation; ++idx) {
                     scale *= 10;
                 }
-
+                
                 for (NSUInteger j = 0; j < i; ++j) {
-
+                    
                     DTAxisLabelData *xLabelData = [[DTAxisLabelData alloc] initWithTitle:[NSString stringWithFormat:@"%@", @(-xLabelDatas[j + 1].value / scale)] value:-xLabelDatas[j + 1].value];
                     [negativeLabelDatas insertObject:xLabelData atIndex:0];
                     [indexSet addIndex:j];
                 }
                 [xLabelDatas insertObjects:negativeLabelDatas atIndexes:indexSet];
-
+                
                 if (isReverse) {
                     NSMutableArray<DTAxisLabelData *> *reverseLabelDatas = [xLabelDatas mutableCopy];
                     [xLabelDatas removeAllObjects];
-
+                    
                     for (DTAxisLabelData *labelData in reverseLabelDatas) {
                         labelData.value = labelData.value == 0 ? labelData.value : -labelData.value;
                         NSMutableString *mutableString = [[NSMutableString alloc] initWithString:labelData.title];
@@ -190,19 +192,19 @@
                         [xLabelDatas insertObject:labelData atIndex:0];
                     }
                 }
-
+                
                 if (isMainAxis) {
                     self.chart.xAxisLabelDatas = xLabelDatas;
                 } else {
                     self.chart.xSecondAxisLabelDatas = xLabelDatas;
                 }
-
+                
                 break;
             }
-
+            
         }
     }
-
+    
     if (isMainAxis) {
         self.chart.mainNotation = [self.axisFormatter getNotationLabelText:YES];
     } else {
@@ -214,13 +216,13 @@
  * 把柱状体的颜色信息缓存起来
  */
 - (void)cacheMultiData:(NSArray<DTDimensionBarModel *> *)barInfos {
-
+    
     BOOL changed = NO;
-
+    
     if (self.preProcessBarInfo) {
         [self.levelBarModels removeAllObjects];
     }
-
+    
     for (DTDimensionBarModel *barInfo in barInfos) {
         BOOL exist = NO;
         for (DTDimensionBarModel *barModel in self.levelBarModels) {
@@ -229,25 +231,25 @@
                 break;
             }
         }
-
+        
         if (!exist) {
             [self.levelBarModels addObject:barInfo];
             changed = YES;
         }
     }
-
+    
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
     if (self.levelBarModels.count > 0) {
         dataDic[@"items"] = self.levelBarModels.copy;
         [DTManager addChart:self.chartId object:@{@"data": dataDic}];
     }
-
+    
     if (changed && self.controllerBarInfoBlock) {
         DTLog(@"cache data controllerBarInfoBlock");
         id dimensionData = self.dimensionDatas.lastObject;
         self.controllerBarInfoBlock(self.levelBarModels.copy, dimensionData);
     }
-
+    
 }
 
 
@@ -255,34 +257,33 @@
 
 - (void)drawChart {
     [super drawChart];
-
-
+    
     if (self.chartStyle == DTDimensionBarStyleHeap) {
-
+        
         [self.levelBarModels removeAllObjects];
-
+        
         if (![DTManager checkExistByChartId:self.chartId]) {
-
+            
             [self.chart drawChart:nil];
-
+            
         } else {
-
+            
             // 加载保存的数据信息（颜色等）
             NSDictionary *chartDic = [DTManager queryByChartId:self.chartId];
             NSDictionary *dataDic = chartDic[@"data"];
             NSArray *items = dataDic[@"items"];
-
+            
             [self.levelBarModels addObjectsFromArray:items];
-
+            
             if (!self.preProcessBarInfo && self.controllerBarInfoBlock) {
                 DTLog(@"draw chart controllerBarInfoBlock");
                 id dimensionData = self.dimensionDatas.lastObject;
                 self.controllerBarInfoBlock(self.levelBarModels.copy, dimensionData);
             }
-
+            
             [self.chart drawChart:items];
         }
-
+        
     } else {
         [self.chart drawChart:nil];
     }
@@ -294,22 +295,27 @@
     if (mainData && secondData && mainData.listDimensions.count != secondData.listDimensions.count) {
         return;
     }
-
+    
     DTAxisFormatter *axisFormatter = [DTAxisFormatter axisFormatter];
     axisFormatter.mainYAxisType = DTAxisFormatterTypeNumber;
     axisFormatter.secondYAxisType = DTAxisFormatterTypeNumber;
     self.axisFormatter = axisFormatter;
-
+    
+    NSUInteger xLabelCount = 4;
+    if (self.chartMode == DTChartModeThumb) {
+        xLabelCount = 2;
+    }
+    
     if (mainData) {
         self.chart.mainData = mainData;
-        [self processXLabelData:4 axisMaxValue:mainData.maxValue axisMinValue:mainData.minValue isMainAxis:YES];
+        [self processXLabelData:xLabelCount axisMaxValue:mainData.maxValue axisMinValue:mainData.minValue isMainAxis:YES];
     } else {
         self.chart.mainData = nil;
     }
-
+    
     if (secondData) {
         self.chart.secondData = secondData;
-        [self processXLabelData:4 axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
+        [self processXLabelData:xLabelCount axisMaxValue:secondData.maxValue axisMinValue:secondData.minValue isMainAxis:NO];
     } else {
         self.chart.secondData = nil;
     }
@@ -317,3 +323,4 @@
 
 
 @end
+

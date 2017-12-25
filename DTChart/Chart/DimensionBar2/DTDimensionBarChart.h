@@ -60,6 +60,11 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 @property(nonatomic) CGFloat fontSize;
 
 /**
+ * 是缩略图模式，会对一些UI进行特别处理
+ */
+@property(nonatomic, getter=isThumbMode) BOOL thumdMode;
+
+/**
  * @return (l, r) l:方向左，r:方向右，0:NO，1:YES
  */
 @property(nonatomic, copy) CGPoint (^chartCellLongPressBeginBlock)(UIView *fakeView, NSString *title, NSUInteger dimensionIndex);
@@ -70,3 +75,4 @@ UIKIT_EXTERN CGFloat const DimensionLabelGap;
 - (void)drawChart:(NSArray<DTDimensionBarModel *> *)itemBarInfos;
 
 @end
+
