@@ -153,8 +153,8 @@
     NSInteger notation = 0;
 
     // 确定坐标轴最大值
-    if ((isMainAxis && [self.axisFormatter.mainYAxisFormat containsString:@"%.0f"])
-            || (!isMainAxis && [self.axisFormatter.secondYAxisFormat containsString:@"%.0f"])) {
+    if ((isMainAxis && ([self.axisFormatter.mainYAxisFormat containsString:@"%.0f"] || [self.axisFormatter.mainYAxisFormat containsString:@"%.1f"]))
+        || (!isMainAxis && ([self.axisFormatter.secondYAxisFormat containsString:@"%.0f"] || [self.axisFormatter.secondYAxisFormat containsString:@"%.1f"]))) {
 
         maxY *= scale;
         yScaled = YES;
