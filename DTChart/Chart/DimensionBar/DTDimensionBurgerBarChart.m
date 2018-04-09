@@ -241,6 +241,9 @@ static NSInteger const XLabelTagPrefix = 12309050;
             xLabel.tag = XLabelTagPrefix + index;
 
             CGSize size = [xLabel.text sizeWithAttributes:@{NSFontAttributeName: xLabel.font}];
+            if (self.xLabelLimitWidth) {
+                size.width = MIN(size.width, barWidth + self.barGap * self.coordinateAxisCellWidth);
+            }
 
             CGFloat x = CGRectGetMidX(heapBar.frame) - size.width / 2 + self.coordinateAxisInsets.left * self.coordinateAxisCellWidth;
             CGFloat y = CGRectGetMaxY(self.contentView.frame);
